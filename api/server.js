@@ -24,18 +24,7 @@ var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = 'secretKey';
 
-var users = [
-    {
-        id: 1,
-        username: 'nico',
-        password: 'test'
-    },
-    {
-        id: 2,
-        username: 'cyrille',
-        password :'test'
-    }
-];
+var users = require('./db/users');
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     console.log('payload received', jwt_payload);
@@ -74,8 +63,7 @@ app.post("/login", function(req, res) {
     if(!user){
         res.status(401).json({message:"L'utilisateur n'a pas été trouvé"});
     }
-
-    if (user.password === req.body.password) {
+    else if(user.password === req.body.password) {
         // Now we use the ID to identify the user
         var payload = {id: user.id};
         var token = jwt.sign(payload, jwtOptions.secretOrKey);

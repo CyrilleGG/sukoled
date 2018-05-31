@@ -126,12 +126,3 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/node,linux,macos,windows
-
-
-
-
-#Ignore folder node_modules
-front/node_modules/
-
-#Except for :
-# front/node_modules/!folder-name

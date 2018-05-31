@@ -19,6 +19,8 @@ const knex = require('knex');
     connection:'' // se connecter sur une base de donner postgrsql - demander à Cyril car lié à Heroku
 }) */
 const db = require('./db');
+var cors = require('cors');
+app.use(cors());
 
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();

@@ -26,8 +26,6 @@ var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = 'secretKey';
 
-var users = require('./db/users');
-
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     console.log('payload received', jwt_payload);
     //database call:
@@ -51,42 +49,13 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 // Routes
-app.get("/", function(req, res) {
-    res.json({message: "Express is up!"});
-});
-
-app.post("/login", function(req, res) {
-    if (req.body.username && req.body.password) {
-        var username = req.body.username;
-        var password = req.body.password;
-    }
-    //database call :
-    var user = users[_.findIndex(users, {username:username})];
-    if(!user){
-        res.status(401).json({message:"L'utilisateur n'a pas été trouvé"});
-    }
-    else if(user.password === req.body.password) {
-        // Now we use the ID to identify the user
-        var payload = {id: user.id};
-        var token = jwt.sign(payload, jwtOptions.secretOrKey);
-        res.json({message:"Ok", token:token});
-    } else {
-        res.status(401).json({message:"Le mot de passe ne correspond pas"});
-    }
-});
-
-app.get("/secret", passport.authenticate('jwt', {session:false}), function(req, res){
+app.get("/", function(req, res) { res.json({message: "Express is up!"}); });
+app.post('/login', require('./routes/login'));
+app.post("/secret", passport.authenticate('jwt', {session:false}), function(req, res){
     res.json("Vous êtes connecté, sans ça vous ne pourriez pas voir ce message."); 
 });
 
 
-
-
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
 
 
 
@@ -94,9 +63,6 @@ app.use(function (req, res, next) {
 app.listen(PORT, function () { // 3000 = nom du port sur lequel le serveur va être lancé
     console.log(`Example app listening on port ${PORT}!`)
 });
-
-
-
 
 // Routes
 // app.get('/users', require('./routes/getUsers'));

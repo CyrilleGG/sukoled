@@ -2,11 +2,13 @@ module.exports = [
     {
         id: 1,
         username: 'nico',
-        password: 'test'
+        password: 'test',
+        role:'user'
     },
     {
         id: 2,
         username: 'cyrille',
-        password :'test'
+        password :'test',
+        role:'mod'
     }
 ];

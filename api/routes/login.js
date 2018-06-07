@@ -22,7 +22,7 @@ module.exports = (req, res) => {
         // Now we use the ID to identify the user
         var payload = {id: user.id};
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
-        res.json({message:"Ok", token:token});
+        res.json({message:"Ok", token:token, username:username, role:user.role});
     } else {
         res.status(401).json({message:"Le mot de passe ne correspond pas"});
     }

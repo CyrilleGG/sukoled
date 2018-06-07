@@ -5,18 +5,15 @@ const express = require('express'); // appelle express dans une variable
 const app = express(); // équivaut à une instance de express
 const bodyParser = require("body-parser");
 const jwt = require('jsonwebtoken');
-
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const passportJWT = require('passport-jwt');
-
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
-
 const knex = require('knex');
 /* const db = knex({
     client:'pg',
-    connection:'' // se connecter sur une base de donner postgrsql - demander à Cyril car lié à Heroku
+    connection:'' // se connecter sur une base de donnée postgrsql - demander à Cyril car lié à Heroku
 }) */
 const db = require('./db');
 var cors = require('cors');
@@ -53,6 +50,9 @@ app.get("/", function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/login', require('./routes/login'));
 app.post("/secret", passport.authenticate('jwt', {session:false}), function(req, res){
     res.json("Vous êtes connecté, sans ça vous ne pourriez pas voir ce message."); 
+});
+app.get('/user/:id', function (req, res, next) {
+    res.send('USER');
 });
 
 

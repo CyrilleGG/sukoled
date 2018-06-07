@@ -8,7 +8,13 @@ module.exports = [
     {
         id: 2,
         username: 'cyrille',
-        password :'test',
+        password:'test',
         role:'mod'
+    },
+    {
+        id: 3,
+        username: 'dona',
+        password: 'test',
+        role:'contrib'
     }
 ];

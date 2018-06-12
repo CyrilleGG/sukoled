@@ -11,11 +11,14 @@ const passportJWT = require('passport-jwt');
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 const knex = require('knex');
-/* const db = knex({
-    client:'pg',
-    connection:'' // se connecter sur une base de donnée postgrsql - demander à Cyril car lié à Heroku
-}) */
 const db = require('./db');
+var pg = require('knex')({
+    client:'pg',
+    connection: 'postgres://lpcbrcdmurqmbq:925a55a6db9dc1c88c272a80da7166da31e635b27ff6c1911636095a6a0eb8a2@ec2-46-51-179-166.eu-west-1.compute.amazonaws.com:5432/dbnba4ihfii687?ssl=true'
+});
+
+// db.select().from('activities')
+
 var cors = require('cors');
 app.use(cors());
 
@@ -45,15 +48,26 @@ app.use(bodyParser.urlencoded({
 //parse application/json
 app.use(bodyParser.json())
 
+
+//function is logged
+function isLogged() {
+    return function(req,res,next){
+        if (req.isAuthenticated()) {
+            return next();
+        } else {
+            res.redirect('/');
+        }
+    }
+}
+
 // Routes
 app.get("/", function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/login', require('./routes/login'));
+// app.post('/login', require('./routes/logindata'));
 app.post("/secret", passport.authenticate('jwt', {session:false}), function(req, res){
     res.json("Vous êtes connecté, sans ça vous ne pourriez pas voir ce message."); 
 });
-app.get('/user/:id', function (req, res, next) {
-    res.send('USER');
-});
+// app.get('/welcome', passport.isLogged() );
 
 
 

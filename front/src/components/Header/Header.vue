@@ -1,25 +1,28 @@
 <template>
   <div id="header" class="row">
-    <div class="col-lg-2 py-1">
+
+    <div class="col-lg-2 py-2">
       <img class="my-auto" src="../../assets/logo.png" alt="Natixis logo">
     </div>
-    <nav class="col-lg-8 navbar navbar-expand-lg">
-      <ul id="main-nav" class="navbar-nav pl-2">
-        <li class="nav-item mx-3"><a href="#" class="nav-link">Dashboard</a></li>
-        <li class="nav-item mx-3"><a href="#" class="nav-link">Admin</a></li>
-        <li class="nav-item mx-3"><a href="#" class="nav-link">Contribute</a></li>
-      </ul>
-    </nav>
-    <div class="col-lg-2 navbar navbar-expand-lg justify-content-end pr-0">
-      <ul id="second-nav" class="navbar-nav">
-        <li class="nav-item">
-          <a href="#" class="nav-link">cc</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link">cc</a>
-        </li>
-      </ul>
-    </div>
+
+    <b-navbar toggleable='lg' class="col-lg-10 pl-5">
+      <b-collapse is-nav>
+
+        <b-navbar-nav>
+          <b-nav-item href="#">Dashboard</b-nav-item>
+          <b-nav-item href="#">Admin</b-nav-item>
+          <b-nav-item href="#">Contribute</b-nav-item>
+        </b-navbar-nav>
+
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item>cc</b-nav-item>
+          <b-nav-item-dropdown text="cc" right>
+            <b-dropdown-item href="#">Disconnect</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+
+      </b-collapse>
+    </b-navbar>
   </div>
 </template>
 
@@ -42,22 +45,22 @@ export default {
 }
 
 #header img {
-  max-height: 50px;
+  max-height: 40px;
 }
 
-#header .navbar .nav-item {
+#header .navbar .nav-item a {
   color: #999999;
   text-transform: uppercase;
   transition: 0.3s ease;
 }
 
-#header .navbar .nav-item:hover {
+#header .navbar-nav .nav-item:hover a {
   color: #8e44ad;
 }
 
-#header #second-nav .nav-link {
+/* #header #second-nav .nav-link {
   width: 60px;
   height: 60px;
-}
+} */
 
 </style>

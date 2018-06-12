@@ -1,30 +1,38 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view @auth="setAuth" />
   </div>
 </template>
 
 <script>
-import { data } from './db.js'
-
 export default {
   name: 'App',
 
   data () {
     return {
-      data
+      auth: false
+    }
+  },
+
+  methods: {
+    setAuth (status) {
+      this.$data.auth = status
     }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
   color: #2c3e50;
-  margin-top: 60px;
+  background-color: #f3f3f3;
 }
+
+a, a:hover, a:link, a:visited {
+  color: inherit;
+}
+
 </style>

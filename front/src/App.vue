@@ -14,6 +14,12 @@ export default {
     }
   },
 
+  created () {
+    this.$bus.$on('auth', (status) => {
+      this.$data.auth = status
+    })
+  },
+
   methods: {
     setAuth (status) {
       this.$data.auth = status

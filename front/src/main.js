@@ -12,9 +12,6 @@ Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
-/* bus instance */
-Vue.prototype.$bus = new Vue()
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

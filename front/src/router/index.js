@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login/Login'
-import Welcome from '@/components/Welcome/Welcome'
+import Viewer from '@/components/Viewer/Viewer'
+import Contributor from '@/components/Contributor/Contributor'
+import Admin from '@/components/Admin/Admin'
 
 Vue.use(Router)
 
@@ -12,9 +14,17 @@ export default new Router({
       path: '/',
       component: Login
     }, {
-      name: 'welcome',
-      path: '/welcome',
-      component: Welcome
+      name: 'viewer',
+      path: '/viewer',
+      component: Viewer
+    }, {
+      name: 'contributor',
+      path: '/contributor',
+      component: Contributor
+    }, {
+      name: 'admin',
+      path: '/admin',
+      component: Admin
     }
   ]
 })

@@ -21,7 +21,8 @@ export default {
       input: {
         username: '',
         password: ''
-      }
+      },
+      data: null
     }
   },
 
@@ -29,13 +30,27 @@ export default {
     login () {
       if (this.input.username !== '' && this.input.password !== '') {
         axios.post('http://localhost:3000/login', this.input)
+
           .then((response) => {
             console.log('Success!')
-            this.$router.replace({name: 'welcome'})
+
+            this.$emit('auth', true)
+            this.$root.$data.userInfo = response.data
+
+            const role = this.$root.$data.userInfo.role
+            if (role == 'mod') {
+              this.$router.replace({name: 'admin'})
+            } else if (role == 'contrib'){
+              this.$router.replace({name: 'contributor'})
+            } else {
+              this.$router.replace({name: 'viewer'})
+            }
           })
+
           .catch((error) => {
             console.log('NOPE')
           })
+
       } else {
         console.log('Please, enter a username and a password')
       }

@@ -39,11 +39,11 @@ export default {
 
             const role = this.$root.$data.userInfo.role
             if (role == 'mod') {
-              this.$router.replace({name: 'admin'})
+              this.$router.replace( {name: 'admin'} )
             } else if (role == 'contrib'){
-              this.$router.replace({name: 'contributor'})
+              this.$router.replace( {name: 'contributor'} )
             } else {
-              this.$router.replace({name: 'viewer'})
+              this.$router.replace( {name: 'viewer'} )
             }
           })
 

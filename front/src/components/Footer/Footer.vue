@@ -1,6 +1,8 @@
 <template>
-  <div id="footer">
-    le footer
+  <div id="footer" class="row">
+    <p class="col-lg-12 m-0 py-3 text-center">
+      Copyright © 2018 <span class="text-uppercase">Natixis</span>. All rights reserved.
+    </p>
   </div>
 </template>
 
@@ -17,5 +19,19 @@ export default {
 </script>
 
 <style scoped>
+
+#footer {
+  background-color: #ffffff;
+}
+
+#footer p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  color: #bbbbbb
+}
+
+#footer p span {
+  color: #8e44ad;
+}
 
 </style>

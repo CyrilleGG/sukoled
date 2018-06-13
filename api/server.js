@@ -49,24 +49,12 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 
-//function is logged
-function isLogged() {
-    return function(req,res,next){
-        if (req.isAuthenticated()) {
-            return next();
-        } else {
-            res.redirect('/');
-        }
-    }
-}
-
 // Routes
-app.get("/", function(req, res) { res.json({message: "Express is up!"}); });
+app.get('/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/login', require('./routes/login'));
-// app.post('/login', require('./routes/logindata'));
-app.post("/secret", passport.authenticate('jwt', {session:false}), function(req, res){
-    res.json("Vous êtes connecté, sans ça vous ne pourriez pas voir ce message."); 
-});
+app.post('/createdep', require('./routes/createdep'));
+app.get('/raf', require('./routes/raf'));
+app.get('/filiale', require('./routes/filiale'));
 // app.get('/welcome', passport.isLogged() );
 
 

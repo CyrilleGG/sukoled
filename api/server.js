@@ -24,7 +24,7 @@ app.use(cors());
 
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = 'secretKey';
+jwtOptions.secretOrKey = '$Tne"é9:§§"__ù';
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     console.log('payload received', jwt_payload);
@@ -52,10 +52,14 @@ app.use(bodyParser.json())
 // Routes
 app.get('/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/login', require('./routes/login'));
-app.post('/createdep', require('./routes/createdep'));
 app.get('/raf', require('./routes/raf'));
 app.get('/filiale', require('./routes/filiale'));
-// app.get('/welcome', passport.isLogged() );
+app.get('/contribraf', require('./routes/contributionListRAF'))
+app.get('/contribfiliale', require('./routes/contributionListFiliale'))
+
+var createcontrib = require('./routes/createcontrib');
+app.post('/createcontrib', createcontrib.sendInfoToDB);
+app.get('/createcontrib', createcontrib.sendJSONData);
 
 
 
@@ -65,8 +69,3 @@ app.get('/filiale', require('./routes/filiale'));
 app.listen(PORT, function () { // 3000 = nom du port sur lequel le serveur va être lancé
     console.log(`Example app listening on port ${PORT}!`)
 });
-
-// Routes
-// app.get('/users', require('./routes/getUsers'));
-// app.get('/users/:username', require('./routes/getUsersByUsername'));
-// // app.get('/passport', require('./routes/passport'));

@@ -4,7 +4,7 @@ import Login from '@/components/Login/Login'
 import Viewer from '@/components/Viewer/Viewer'
 import Contributor from '@/components/Contributor/Contributor'
 import Admin from '@/components/Admin/Admin'
-import CreateDep from '@/components/CreateDep/Createdep'
+import CreateContrib from '@/components/CreateContrib/CreateContrib'
 
 Vue.use(Router)
 
@@ -27,9 +27,10 @@ export default new Router({
       path: '/admin',
       component: Admin
     }, {
-      name: 'createdep',
-      path: '/createdep',
-      component: CreateDep
+      // Vue contrib
+      name: 'createcontrib',
+      path: '/createcontrib',
+      component: CreateContrib
     }
   ]
 })

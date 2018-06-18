@@ -54,8 +54,7 @@ app.get('/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/login', require('./routes/login'));
 app.get('/raf', require('./routes/raf'));
 app.get('/filiale', require('./routes/filiale'));
-app.get('/contribraf', require('./routes/contributionListRAF'))
-app.get('/contribfiliale', require('./routes/contributionListFiliale'))
+app.get('/contribution', require('./routes/contributionList'))
 
 var createcontrib = require('./routes/createcontrib');
 app.post('/createcontrib', createcontrib.sendInfoToDB);

@@ -5,7 +5,8 @@ var knex = require('knex')({
 });
 
 module.exports = (req, res) => {
-    knex('contributions').select('name', 'period', 'department_id').whereNot({department_id:'fc4db27d-5e97-4e6d-b208-f7534dde3058'})
+    knex('contributions').join('departments','contributions.department_id','=','departments.id')
+    .select('contributions.name', 'contributions.period', 'departments.name as slug')
     .then((contributions) => {
         res.json(contributions);
         console.log(contributions);

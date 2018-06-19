@@ -15,15 +15,21 @@ module.exports = {
         var dep = req.body.department_id
         var departmentID = knex.from('departments').where({'slug':dep}).select('id')
 
-        knex('contributions').insert({name:req.body.name, 
+        return knex('contributions').insert({name:req.body.name, 
             period:req.body.period,
             user_id:req.body.user_id,
             department_id:departmentID,
             limit:req.body.limit,
             threshold:req.body.threshold})
-            .then(function(result) {
-                // res.json(`Successfully created ${req.body.name} / ${req.body.period} / ${req.body.user_id} / ${departmentID} / ${req.body.limit} / ${req.body.threshold} / !`)
+            .returning('id')
+            .then(function(response){
+                return knex('inputs_contributions').insert({input_type:req.body.input,
+                    name:req.body.inputName,
+                    description:req.body.description,
+                    contribution_id:response[0]
+                })
             })
+
         next()
     },
 

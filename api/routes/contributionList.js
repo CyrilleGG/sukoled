@@ -6,7 +6,7 @@ var knex = require('knex')({
 
 module.exports = (req, res) => {
     knex('contributions').join('departments','contributions.department_id','=','departments.id')
-    .select('contributions.name', 'contributions.period', 'departments.name as slug')
+    .select('contributions.name', 'contributions.period', 'departments.name as slug', 'contributions.id')
     .then((contributions) => {
         res.json(contributions);
         console.log(contributions);

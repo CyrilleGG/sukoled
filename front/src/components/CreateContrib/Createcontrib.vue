@@ -20,6 +20,10 @@
       <input type="text" name="limit" v-model="input.limit" id="limit" placeholder="Limit">
       <p> Treshold (text) </p>
       <input type="text" name="threshold" v-model="input.threshold" id="threshold" placeholder="Treshold">
+      <input type="text" name="input" v-model="input.input" id="input" placeholder="Input">
+      <input type="text" name="inputName" v-model="input.inputName" id="inputName" placeholder="inputName">
+      <input type="text" name="description" v-model="input.description" id="description" placeholder="Description">
+
       <input type="submit" value="Login" v-on:click.prevent="sendToDb()">
     </form>
   </div>
@@ -41,7 +45,10 @@ export default {
         user_id:'',
         department_id:'',
         limit:'',
-        threshold:''
+        threshold:'',
+        input:'',
+        inputName:'',
+        description:''
       },
       data: null,
       selected:null,
@@ -56,7 +63,7 @@ export default {
   methods: {
     sendToDb () {
       // Envoyer ces infos au back
-      if (this.input.name !== '' && this.input.period !== '' && this.input.user_id !== '' && this.input.department_id !== '' && this.input.limit !== '' && this.input.threshold !== '') {
+      if (this.input.name !== '' && this.input.period !== '' && this.input.user_id !== '' && this.input.department_id !== '' && this.input.limit !== '' && this.input.threshold !== '' && this.input.input !== '' && this.input.inputName !== '' && this.input.description !== '') {
         axios.post('http://localhost:3000/createcontrib', this.input)
 
           .then((response) => {

@@ -56,6 +56,8 @@ app.get('/raf', require('./routes/raf'));
 app.get('/filiale', require('./routes/filiale'));
 app.get('/contribution', require('./routes/contributionList'))
 
+app.get('/contribution/:id', require('./routes/contributionId'))
+
 var createcontrib = require('./routes/createcontrib');
 app.post('/createcontrib', createcontrib.sendInfoToDB);
 app.get('/createcontrib', createcontrib.sendJSONData);

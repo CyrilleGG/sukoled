@@ -10,7 +10,7 @@ const passportJWT = require('passport-jwt');
 var jwtOptions = {}
 const ExtractJwt = passportJWT.ExtractJwt;
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = 'secretKey';
+jwtOptions.secretOrKey = '$Tne"é9:§§"__ù';
 
 module.exports = (req, res) => {
     if (req.body.username && req.body.password) {

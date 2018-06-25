@@ -24,7 +24,7 @@ app.use(cors());
 
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = 'secretKey';
+jwtOptions.secretOrKey = '$Tne"é9:§§"__ù';
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     console.log('payload received', jwt_payload);
@@ -49,25 +49,18 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 
-//function is logged
-function isLogged() {
-    return function(req,res,next){
-        if (req.isAuthenticated()) {
-            return next();
-        } else {
-            res.redirect('/');
-        }
-    }
-}
-
 // Routes
-app.get("/", function(req, res) { res.json({message: "Express is up!"}); });
+app.get('/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/login', require('./routes/login'));
-// app.post('/login', require('./routes/logindata'));
-app.post("/secret", passport.authenticate('jwt', {session:false}), function(req, res){
-    res.json("Vous êtes connecté, sans ça vous ne pourriez pas voir ce message."); 
-});
-// app.get('/welcome', passport.isLogged() );
+app.get('/raf', require('./routes/raf'));
+app.get('/filiale', require('./routes/filiale'));
+app.get('/contribution', require('./routes/contributionList'))
+
+app.get('/contribution/:id', require('./routes/contributionId'))
+
+var createcontrib = require('./routes/createcontrib');
+app.post('/createcontrib', createcontrib.sendInfoToDB);
+app.get('/createcontrib', createcontrib.sendJSONData);
 
 
 
@@ -77,8 +70,3 @@ app.post("/secret", passport.authenticate('jwt', {session:false}), function(req,
 app.listen(PORT, function () { // 3000 = nom du port sur lequel le serveur va être lancé
     console.log(`Example app listening on port ${PORT}!`)
 });
-
-// Routes
-// app.get('/users', require('./routes/getUsers'));
-// app.get('/users/:username', require('./routes/getUsersByUsername'));
-// // app.get('/passport', require('./routes/passport'));

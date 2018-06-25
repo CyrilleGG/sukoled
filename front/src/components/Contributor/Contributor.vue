@@ -1,6 +1,6 @@
 <template>
   <div id="Contributor" class="container-fluid">
-    <Header :role="userInfo.role" />
+    <Header :role="this.$root.$data.userInfo.role" />
     <h1>WELCOME CONTRIBUTOR !</h1>
     <Footer />
   </div>
@@ -20,15 +20,16 @@ export default {
 
   data () {
     return {
-      userInfo: null
+      // c
     }
   },
 
   created () {
     if (!this.$parent.$data.auth) {
       this.$router.replace({ name: 'login' })
+    } else if (this.$root.$data.userInfo.role == 'user') {
+      this.$router.replace({ name: 'viewer' })
     }
-    this.$data.userInfo = this.$root.$data.userInfo
   }
 }
 </script>

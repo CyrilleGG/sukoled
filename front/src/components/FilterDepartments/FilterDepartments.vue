@@ -1,27 +1,27 @@
 <template>
   <div class="col-lg-2 pr-0">
-    <b-form-select id="filter-periodicities" v-model="selected" :options="options" v-on:change="updateFilter ($event)"></b-form-select>
+    <b-form-select id="filter-departments" v-model="selected" :options="options" v-on:change="updateFilter($event)"></b-form-select>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'FilterPeriodicities',
+  name: 'FilterDepartments',
   data () {
     return {
       selected: 'all',
       options: {
         all: 'All',
-        monthly: 'Monthly',
-        quarterly: 'Quarterly'
+        raf: 'RAF',
+        subsidaries: 'Subsidaries'
       }
     }
   },
 
   methods: {
     updateFilter (selected) {
-      this.$emit('selected-periodicity', selected)
+      this.$emit('selected-department', selected)
     }
   }
 }

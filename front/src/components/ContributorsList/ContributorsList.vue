@@ -1,0 +1,164 @@
+<template>
+  <div class="col-lg-12">
+
+    <div class="row mb-3">
+      <filter-departments v-on:selected-department="selectedDepartment = $event" />
+      <filter-periodicities v-on:selected-periodicity="selectedPeriodicity = $event" />
+      <filter-monthly v-if="selectedPeriodicity == 'monthly'" />
+      <filter-quarterly v-if="selectedPeriodicity == 'quarterly'" />
+    </div>
+
+    <div class="row">
+      <div id="contributors-list" class="col-lg-12">
+        <div id="contributors-list-header" class="row px-2">
+
+          <div class="col-lg-1 d-flex justify-content-center align-items-center">
+            <b-form-checkbox class="mr-0" v-model="checked" v-on:change="all ($event)"></b-form-checkbox>
+          </div>
+          <p class="col-lg-1 my-auto text-center text-uppercase">Order</p>
+          <p class="col-lg-3 my-auto text-uppercase">Contribution</p>
+          <p class="col-lg-2 my-auto text-center text-uppercase">Last request</p>
+          <p class="col-lg-2 my-auto text-center text-uppercase">Last iteration</p>
+          <p class="col-lg-1 my-auto text-center text-uppercase">Status</p>
+
+        </div>
+
+        <b-list-group id="contributors-list-items" class="row" flush>
+          <contributors-list-item
+            v-for="contribution in contributions"
+            v-if="(contribution.department == selectedDepartment || selectedDepartment == 'all') && (contribution.period == selectedPeriodicity || selectedPeriodicity == 'all')"
+            v-bind:key="contribution.id"
+            v-bind:checked="contribution.checked"
+            v-bind:order="contribution.order"
+            v-bind:name="contribution.name"
+            v-bind:created_at="contribution.created_at"
+            v-bind:modified_at="contribution.modified_at"
+            v-bind:status_admin="contribution.status_admin"
+            v-on:check-state="updateCheckedItems ($event)"
+          />
+        </b-list-group>
+        
+      </div>
+    </div>
+
+    <p>{{ selectedContributions }}</p>
+
+  </div> 
+</template>
+
+<script>
+import ContributorsListItem from '@/components/ContributorsListItem/ContributorsListItem'
+import FilterDepartments from '@/components/FilterDepartments/FilterDepartments'
+import FilterPeriodicities from '@/components/FilterPeriodicities/FilterPeriodicities'
+import FilterMonthly from '@/components/FilterMonthly/FilterMonthly'
+import FilterQuarterly from '@/components/FilterQuarterly/FilterQuarterly'
+
+export default {
+  name: 'ContributorsList',
+
+  components: {
+    FilterDepartments,
+    FilterPeriodicities,
+    FilterMonthly,
+    FilterQuarterly,
+    ContributorsListItem
+  },
+
+  data () {
+    return {
+      checked: false,
+      selectedPeriodicity: 'all',
+      selectedDepartment: 'all',
+      contributions: [
+        {
+          id: 0,
+          order: 1,
+          name: 'Watchlist exposures',
+          department: 'raf',
+          period: 'monthly',
+          created_at: '26-06-2918',
+          modified_at: '29-06-2018',
+          status_admin: 'progress',
+          checked: false
+        }, {
+          id: 1,
+          order: 1,
+          name: 'Credit RWA',
+          department: 'subsidaries',
+          period: 'quarterly',
+          created_at: '15-06-2018',
+          modified_at: '20-06-2018',
+          status_admin: 'hold',
+          checked: false
+        }
+      ],
+      selectedContributions: []
+    }
+  },
+
+  created () {
+    // c
+  },
+
+  methods: {
+    updateCheckedItems (contribution) {
+      const contributions = this.$data.contributions
+      const selected = this.$data.selectedContributions
+      if (contribution[0] == true) {
+        for (var i = 0; i < contributions.length; i++) {
+          if (contributions[i].name == contribution[1].name) {
+            this.$data.contributions[i].checked = true
+          }
+        }
+        this.$data.selectedContributions.push(contribution[1])
+      } else {
+        for (var i = 0; i < contributions.length; i++) {
+          if (contributions[i].name == contribution[1].name) {
+            this.$data.contributions[i].checked = false
+          }
+        }
+        for (var j = 0; j < selected.length; j++) {
+          if (contribution[1].name == selected[j].name) {
+            this.$data.selectedContributions.splice(j, 1)
+          }
+        }
+      }
+    },
+
+    all (check) {
+      const contributions = this.$data.contributions
+      var selected = this.$data.selectedContributions
+      if (check == true) {
+        for (var i = 0; i < contributions.length; i++) {
+          for (var j = 0; j < selected.length; j++) {
+            if (contributions[i].name == selected[j].name) {
+              this.$data.selectedContributions.splice(j, 1)
+            }
+          }
+          this.$data.selectedContributions.push(contributions[i])
+          contributions[i].checked = true
+        }
+      } else {
+        for (var i = 0; i < contributions.length; i++) {
+          contributions[i].checked = false
+          this.$data.selectedContributions.splice(i)
+        }
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+#contributors-list {
+  border-radius: 5px 5px 0 0;
+  background-color: #ffffff;
+}
+
+#contributors-list #contributors-list-header {
+  height: 60px;
+  box-shadow: 0px 7px 7px rgba(0,0,0,0.05);
+}
+
+</style>

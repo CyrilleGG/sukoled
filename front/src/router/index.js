@@ -4,6 +4,8 @@ import Login from '@/components/Login/Login'
 import Viewer from '@/components/Viewer/Viewer'
 import Contributor from '@/components/Contributor/Contributor'
 import Admin from '@/components/Admin/Admin'
+import AdminReviewContribution from '@/components/AdminReviewContribution/AdminReviewContribution'
+import AdminNewCampaign from '@/components/AdminNewCampaign/AdminNewCampaign'
 
 Vue.use(Router)
 
@@ -25,6 +27,14 @@ export default new Router({
       name: 'admin',
       path: '/admin',
       component: Admin
+    }, {
+      name: 'admin-review-contribution',
+      path: '/admin/review',
+      component: AdminReviewContribution
+    }, {
+      name: 'admin-new-campaign',
+      path: '/admin/new-campaign',
+      component: AdminNewCampaign
     }
   ]
 })

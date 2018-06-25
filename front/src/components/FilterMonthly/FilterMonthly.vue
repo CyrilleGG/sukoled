@@ -1,19 +1,19 @@
 <template>
   <div class="col-lg-2 pr-0">
-    <b-form-select id="filter-contributors" v-model="selected" :options="options"></b-form-select>
+    <b-form-select id="filter-monthly" v-model="selected" :options="options"></b-form-select>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'FilterContributors',
+  name: 'FilterMonthly',
   data () {
     return {
-      selected: 'raf',
+      selected: 'jan',
       options: {
-        raf: 'RAF',
-        affiliates: 'Affiliates',
+        jan: 'January',
+        feb: 'February',
         all: 'All'
       }
     }

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import CreateContrib from '@/components/CreateContrib/CreateContrib'
 import Login from '@/components/Login/Login'
 import Viewer from '@/components/Viewer/Viewer'
 import Contributor from '@/components/Contributor/Contributor'
@@ -35,6 +36,11 @@ export default new Router({
       name: 'admin-new-campaign',
       path: '/admin/new-campaign',
       component: AdminNewCampaign
+    }, {
+      // Vue contrib
+      name: 'createcontrib',
+      path: '/createcontrib',
+      component: CreateContrib
     }
   ]
 })

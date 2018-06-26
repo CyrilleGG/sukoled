@@ -7,13 +7,13 @@ module.exports = [
     },
     {
         id: 2,
-        username: 'dona',
+        username: 'cyrille',
         password:'test',
         role:'mod'
     },
     {
         id: 3,
-        username: 'cyrille',
+        username: 'dona',
         password: 'test',
         role:'contrib'
     }

@@ -1,10 +1,13 @@
 <template>
   <div class="form-container">
-    <h1>{{ msg }}</h1>
     <form id="login-form">
+
       <input type="text" name="username" v-model="input.username" id="username" placeholder="Username">
+
       <input type="password" name="password" v-model="input.password" id="password" placeholder="Password">
+
       <input type="submit" value="Login" v-on:click.prevent="login()">
+      
     </form>
   </div>
 </template>
@@ -15,9 +18,9 @@ import VueAxios from 'vue-axios'
 
 export default {
   name: 'Login',
+  
   data () {
     return {
-      msg: 'Welcome to Bac à sable',
       input: {
         username: '',
         password: ''
@@ -39,11 +42,11 @@ export default {
 
             const role = this.$root.$data.userInfo.role
             if (role == 'mod') {
-              this.$router.replace({name: 'admin'})
+              this.$router.replace( {name: 'admin'} )
             } else if (role == 'contrib'){
-              this.$router.replace({name: 'contributor'})
+              this.$router.replace( {name: 'contributor'} )
             } else {
-              this.$router.replace({name: 'viewer'})
+              this.$router.replace( {name: 'viewer'} )
             }
           })
 

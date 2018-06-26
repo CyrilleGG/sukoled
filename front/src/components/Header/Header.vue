@@ -1,13 +1,12 @@
 <template>
-  <div id="header" class="row">
+  <div id="header" class="row fixed-top">
 
     <div class="col-lg-2 py-2">
       <img class="my-auto" src="../../assets/logo.png" alt="Natixis logo">
     </div>
 
-    <b-navbar toggleable='lg' class="col-lg-10 pl-5">
-      <b-collapse is-nav>
-
+    <b-navbar toggleable='lg' class="col-lg-10 py-0 pl-5 pr-0">
+      <b-collapse is-nav id="nav-collapse">
         <b-navbar-nav>
           <b-nav-item href="#">Dashboard</b-nav-item>
           <b-nav-item href="#">Admin</b-nav-item>
@@ -23,6 +22,7 @@
 
       </b-collapse>
     </b-navbar>
+
   </div>
 </template>
 
@@ -30,22 +30,32 @@
 
 export default {
   name: 'Header',
+  
   props: [
     'role'
-  ]
+  ],
+
+  methods: {
+    logout () {
+      this.$bus.$emit('auth', false)
+      this.$root.$data.userInfo = {}
+      this.$router.replace( {name: 'login'} )
+    }
+  }
 }
 </script>
 
 <style scoped>
 
 #header {
-  height: 60px;
+  max-width: 101%;
+  height: 70px;
   font-family: 'Poppins', sans-serif;
   background-color: #ffffff;
 }
 
 #header img {
-  max-height: 40px;
+  max-height: 20px;
 }
 
 #header .navbar .nav-item a {

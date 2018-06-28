@@ -1,4 +1,4 @@
-module.exports = [
+module.exports = [ // Liste fictive d'utilisateur
     {
         id: 1,
         username: 'nico',

@@ -1,3 +1,6 @@
+// TO
+// DELETE
+
 passport.use(new Strategy(
     function(username, password, cb) {
       db.users.findByUsername(username, function(err, user) {

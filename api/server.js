@@ -1,5 +1,6 @@
 const PORT = process.env.PORT || 3000; // process utilisé par l'application nodeJS.
 
+// Appel des modules utilisés
 const _ = require('lodash');
 const express = require('express'); // appelle express dans une variable
 const app = express(); // équivaut à une instance de express
@@ -17,11 +18,11 @@ var pg = require('knex')({
     connection: 'postgres://lpcbrcdmurqmbq:925a55a6db9dc1c88c272a80da7166da31e635b27ff6c1911636095a6a0eb8a2@ec2-46-51-179-166.eu-west-1.compute.amazonaws.com:5432/dbnba4ihfii687?ssl=true'
 });
 
-// db.select().from('activities')
-
+// Appel de CORS, pour éviter les problèmes côté client lors des appels à la BDD
 var cors = require('cors');
 app.use(cors());
 
+// Module d'authentification
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = '$Tne"é9:§§"__ù';
@@ -37,15 +38,10 @@ var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     }
 });
 passport.use(strategy);
-
 app.use(passport.initialize());
-
-//parse application for easier testing
 app.use(bodyParser.urlencoded({
     extended:true
 }));
-
-//parse application/json
 app.use(bodyParser.json())
 
 
@@ -54,9 +50,16 @@ app.get('/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/login', require('./routes/login'));
 app.get('/raf', require('./routes/raf'));
 app.get('/filiale', require('./routes/filiale'));
-app.get('/contribution', require('./routes/contributionList'))
+app.get('/contributions', require('./routes/contributionList'))
 
-app.get('/contribution/:id', require('./routes/contributionId'))
+// app.get('/contribution/:contribution_id', require('./routes/contributionId'))
+var contributionId = require('./routes/contributionId')
+app.get('/contribution/:contribution_id', contributionId.sendInfoToClient)
+
+app.get('/contribution/:contribution_id/version/:version_id', require('./routes/versionid'))
+
+app.post('/contribution/:contribution_id/version/:version_id/refused', require('./routes/versionidrefused'))
+app.patch('/contribution/:contribution_id/version/:version_id/accept', require('./routes/versionidaccept'))
 
 var createcontrib = require('./routes/createcontrib');
 app.post('/createcontrib', createcontrib.sendInfoToDB);
@@ -67,6 +70,6 @@ app.get('/createcontrib', createcontrib.sendJSONData);
 
 
 
-app.listen(PORT, function () { // 3000 = nom du port sur lequel le serveur va être lancé
+app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé
     console.log(`Example app listening on port ${PORT}!`)
 });

@@ -1,7 +1,7 @@
 <template>
-  <div class="col-lg-2 my-auto text-right">
+  <div class="col-lg-1 my-auto text-right">
 
-    <b-button v-if="status_admin == 'hold'" class="py-1 px-3" size="sm" variant="outline-primary">resend</b-button>
+    <b-button v-if="status == 'hold'" class="py-1 px-3" size="sm" variant="outline-primary">resend</b-button>
 
     <b-button v-else class="py-1 px-3" :to="{ path: 'review'}" append size="sm" variant="outline-primary">view</b-button>
     
@@ -11,10 +11,10 @@
 <script>
 
 export default {
-  name: 'AdminAction',
+  name: 'Action',
 
   props: [
-    'status_admin'
+    'status'
   ]
 }
 </script>

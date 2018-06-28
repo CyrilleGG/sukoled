@@ -45,8 +45,8 @@
 
             <div class="row">
               <div class="col-lg-12 px-0 text-right">
-                <b-button class="mx-1 edit" size="md" v-on:click="hideComment ()">Cancel</b-button>
-                <b-button class="mx-1 validate" :to="{ path: './'}" replace size="md">Send Request</b-button>
+                <b-button class="mx-1 purple" size="md" v-on:click="hideComment ()">Cancel</b-button>
+                <b-button class="mx-1 orange" :to="{ path: './'}" replace size="md">Send Request</b-button>
               </div>
             </div>
 

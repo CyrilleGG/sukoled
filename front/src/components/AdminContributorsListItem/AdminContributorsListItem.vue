@@ -22,9 +22,9 @@
         {{ modified_at }}
       </p>
 
-      <status v-bind:status_admin="status_admin" />
+      <status v-bind:status="status_admin" />
 
-      <admin-action v-bind:status_admin="status_admin"></admin-action>
+      <action v-bind:status="status_admin" />
             
     </div>
   </b-list-group-item>
@@ -32,14 +32,14 @@
 
 <script>
 import Status from '@/components/Status/Status'
-import AdminAction from '@/components/AdminAction/AdminAction'
+import Action from '@/components/Action/Action'
 
 export default {
-  name: 'ContributorsListItem',
+  name: 'AdminContributorsListItem',
 
   components: {
     Status,
-    AdminAction
+    Action
   },
 
   props: [

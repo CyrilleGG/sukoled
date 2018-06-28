@@ -1,7 +1,7 @@
 <template>
-<div class="col-lg-1 my-auto">
-  <p class="status d-inline mb-0 py-2 px-3 text-uppercase" v-bind:class="[status_admin]">
-    {{ status_admin }}
+<div class="col-lg-2 my-auto">
+  <p class="status d-inline mb-0 py-2 px-3 text-uppercase" v-bind:class="displayClass ()">
+    {{ status }}
   </p>
 </div>
 </template>
@@ -12,8 +12,18 @@ export default {
   name: 'Status',
 
   props: [
-    'status_admin'
-  ]
+    'status'
+  ],
+
+  methods: {
+    displayClass () {
+      if (this.$props.status == 'not delivered') {
+        return 'not-delivered'
+      } else {
+        return this.$props.status
+      }
+    }
+  }
 }
 </script>
 
@@ -31,15 +41,15 @@ export default {
   background-color: #2ecc71;
 }
 
-.progress {
+.progress, .invalid {
   background-color: #fdad2a;
 }
 
-.hold {
+.hold, .not-delivered {
   background-color: #f93519;
 }
 
-.delivered {
+.delivered, .pending {
   background-color: #914eb7;
 }
 

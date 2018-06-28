@@ -20,11 +20,12 @@
           <p class="col-lg-2 my-auto text-center text-uppercase">Last request</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last iteration</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Status</p>
+          <p class="col-lg-2 my-auto text-right text-uppercase">Action</p>
 
         </div>
 
         <b-list-group id="contributors-list-items" class="row" flush>
-          <contributors-list-item
+          <admin-contributors-list-item
             v-for="contribution in contributions"
             v-if="(contribution.department == selectedDepartment || selectedDepartment == 'all') && (contribution.period == selectedPeriodicity || selectedPeriodicity == 'all')"
             v-bind:key="contribution.id"
@@ -47,21 +48,21 @@
 </template>
 
 <script>
-import ContributorsListItem from '@/components/ContributorsListItem/ContributorsListItem'
+import AdminContributorsListItem from '@/components/AdminContributorsListItem/AdminContributorsListItem'
 import FilterDepartments from '@/components/FilterDepartments/FilterDepartments'
 import FilterPeriodicities from '@/components/FilterPeriodicities/FilterPeriodicities'
 import FilterMonthly from '@/components/FilterMonthly/FilterMonthly'
 import FilterQuarterly from '@/components/FilterQuarterly/FilterQuarterly'
 
 export default {
-  name: 'ContributorsList',
+  name: 'AdminContributorsList',
 
   components: {
     FilterDepartments,
     FilterPeriodicities,
     FilterMonthly,
     FilterQuarterly,
-    ContributorsListItem
+    AdminContributorsListItem
   },
 
   data () {
@@ -158,6 +159,7 @@ export default {
 
 #contributors-list #contributors-list-header {
   height: 60px;
+  color: #999999;
   box-shadow: 0px 7px 7px rgba(0,0,0,0.05);
 }
 

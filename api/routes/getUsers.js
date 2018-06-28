@@ -1,3 +1,6 @@
+// TO
+// DELETE
+
 module.exports = (req, res) => {
     res.json({
         statusCode:200,

@@ -15,7 +15,7 @@
       <p> User (user) </p>
       <input type="text" name="user_id" v-model="input.user_id" id="user_id" placeholder="User">
       <p> Department (nom en minuscule) </p>
-      <input type="department_id" name="department_id" v-model="input.department_id" id="department_id" placeholder="Department">
+      <input type="text" name="department_id" v-model="input.department_id" id="department_id" placeholder="Department">
       <p> Limit (text) </p>
       <input type="text" name="limit" v-model="input.limit" id="limit" placeholder="Limit">
       <p> Treshold (text) </p>
@@ -23,6 +23,7 @@
       <input type="text" name="input" v-model="input.input" id="input" placeholder="Input">
       <input type="text" name="inputName" v-model="input.inputName" id="inputName" placeholder="inputName">
       <input type="text" name="description" v-model="input.description" id="description" placeholder="Description">
+      <input type="text" name="file" v-model="input.file" id="file" placeholder="File">
 
       <input type="submit" value="Login" v-on:click.prevent="sendToDb()">
     </form>
@@ -43,12 +44,17 @@ export default {
         name: '',
         period: '',
         user_id:'',
-        department_id:'',
+        department_id:'', // get la liste de departements
         limit:'',
         threshold:'',
         input:'',
         inputName:'',
-        description:''
+        description:'',
+        file:'',
+        status_admin:'hold',
+        status_contributor:'not delivered',
+        starts_at:'2018-06-20 10:37:07.288293+00',
+        ends_at:'2018-06-20 10:37:07.288293+01'
       },
       data: null,
       selected:null,
@@ -63,7 +69,7 @@ export default {
   methods: {
     sendToDb () {
       // Envoyer ces infos au back
-      if (this.input.name !== '' && this.input.period !== '' && this.input.user_id !== '' && this.input.department_id !== '' && this.input.limit !== '' && this.input.threshold !== '' && this.input.input !== '' && this.input.inputName !== '' && this.input.description !== '') {
+      if (this.input.name !== '' && this.input.period !== '' && this.input.user_id !== '' && this.input.department_id !== '' && this.input.limit !== '' && this.input.threshold !== '' && this.input.input !== '' && this.input.inputName !== '' && this.input.description !== '' && this.input.file !== '' && this.input.starts_at !== '' && this.input.ends_at !=='') {
         axios.post('http://localhost:3000/createcontrib', this.input)
 
           .then((response) => {

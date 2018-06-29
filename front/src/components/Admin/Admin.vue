@@ -4,7 +4,7 @@
     <Header :role="this.$root.$data.userInfo.role" />
 
     <div class="row py-5 page-content">
-      <div class="col-lg-8 mx-auto">
+      <div class="col-lg-9 mx-auto">
 
         <div class="row mb-5">
           <h2 class="col-lg-12 pl-0 text-uppercase">Contributions</h2>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="row">
-          <contributors-list />
+          <admin-contributors-list />
         </div>
 
       </div>
@@ -29,11 +29,11 @@
     
   </div>
 </template>
-s
+
 <script>
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
-import ContributorsList from '@/components/ContributorsList/ContributorsList'
+import AdminContributorsList from '@/components/AdminContributorsList/AdminContributorsList'
 
 export default {
   name: 'Admin',
@@ -41,7 +41,7 @@ export default {
   components: {
     Header,
     Footer,
-    ContributorsList
+    AdminContributorsList
   },
 
   data () {

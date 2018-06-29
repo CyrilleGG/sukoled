@@ -21,7 +21,7 @@ module.exports = {
             department_id:departmentID,
             limit:req.body.limit,
             threshold:req.body.threshold})
-            .returning('id')
+            .returning('id') // select
             .then(function(response){
                 return knex('inputs_contributions')
                 // Insertion des données dans la table 'inputs_contributions' (nécessite l'ID de la contribution)

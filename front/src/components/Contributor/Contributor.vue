@@ -56,21 +56,63 @@ export default {
       contributions: {
         ongoing: [
           {
-            name: 'alex'
+            name: 'Global Exposure',
+            department_name: 'RAF',
+            starts_at: '01-06-2918',
+            ends_at: '30-06-2018',
+            status_contributor: 'invalid',
           }, {
-            name: 'tom'
+            name: 'Lease',
+            department_name: 'Lease',
+            starts_at: '01-06-2018',
+            ends_at: '30-06-2018',
+            status_contributor: 'not delivered',
           }, {
-            name: 'garry'
+            name: 'Factor',
+            department_name: 'Factor',
+            starts_at: '01-06-2018',
+            ends_at: '30-06-2018',
+            status_contributor: 'pending',
           }
         ],
 
         history: [
           {
-            name: 'jennyfer'
+            name: 'Global Exposure',
+            department_name: 'RAF',
+            starts_at: '01-05-2918',
+            ends_at: '30-05-2018',
+            status_contributor: 'done',
           }, {
-            name: 'marie'
+            name: 'Lease',
+            department_name: 'Lease',
+            starts_at: '01-05-2018',
+            ends_at: '30-05-2018',
+            status_contributor: 'done',
           }, {
-            name: 'camille'
+            name: 'Factor',
+            department_name: 'Factor',
+            starts_at: '01-05-2018',
+            ends_at: '30-05-2018',
+            status_contributor: 'done',
+          }, {
+            name: 'Global Exposure',
+            department_name: 'RAF',
+            starts_at: '01-04-2918',
+            ends_at: '30-04-2018',
+            status_contributor: 'done',
+          }, {
+            name: 'Lease',
+            department_name: 'Lease',
+            starts_at: '01-04-2018',
+            ends_at: '30-04-2018',
+            status_contributor: 'done',
+          }, {
+            name: 'Factor',
+            department_name: 'Factor',
+            starts_at: '01-04-2018',
+            ends_at: '30-04-2018',
+            status_contributor: 'done',
           }
         ]
       }

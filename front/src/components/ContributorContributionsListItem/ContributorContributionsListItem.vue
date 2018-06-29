@@ -2,11 +2,14 @@
   <div class="contributions-list-item col-lg-12 mb-2">
     <div class="row px-2 h-100">
 
-      <p class="col-lg-1 my-auto text-center">RAF</p>
+      <div class="contribution-name col-lg-2 my-auto">
+        <p class="mb-0 ">{{ department_name }}</p>
+        <p v-if="department_name == 'RAF'" class="mb-0 font-italic">{{ name }}</p>
+      </div>
 
-      <p class="col-lg-3 my-auto">Report July 2018</p>
+      <p class="col-lg-2 my-auto">{{ starts_at }}</p>
 
-      <p class="col-lg-2 my-auto">June 30, 2018</p>
+      <p class="col-lg-2 my-auto">{{ ends_at }}</p>
 
       <p class="col-lg-3 my-auto text-center">0</p>
 
@@ -30,11 +33,13 @@ export default {
     Action
   },
 
-  data () {
-    return {
-      status_contributor: 'not delivered'
-    }
-  },
+  props: [
+    'name',
+    'department_name',
+    'starts_at',
+    'ends_at',
+    'status_contributor'
+  ],
 
   methods: {
     // c
@@ -48,6 +53,10 @@ export default {
   border-radius: 0 0 10px 10px;
   height: 60px;
   background-color: #ffffff;
+}
+
+.contribution-name p:nth-child(2) {
+  font-size: 0.8rem;
 }
 
 </style>

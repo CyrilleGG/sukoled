@@ -2,8 +2,8 @@
   <div class="col-lg-12">
     <div id="contributions-list-header" class="row mb-2 px-2">
 
-      <p class="col-lg-1 my-auto text-center text-uppercase">Type</p>
-      <p class="col-lg-3 my-auto text-uppercase">Name</p>
+      <p class="col-lg-2 my-auto text-uppercase">Type</p>
+      <p class="col-lg-2 my-auto text-uppercase">Name</p>
       <p class="col-lg-2 my-auto text-uppercase">Deadline</p>
       <p class="col-lg-3 my-auto text-center text-uppercase">Modifications</p>
       <p class="col-lg-2 my-auto text-uppercase">Status</p>
@@ -12,8 +12,14 @@
     </div>
     <div class="row">
 
-      <contributor-contributions-list-item></contributor-contributions-list-item>
-      <contributor-contributions-list-item></contributor-contributions-list-item>
+      <contributor-contributions-list-item
+        v-for="(contribution, index) in contributions"
+        v-bind:key="index"
+        v-bind:name="contribution.name"
+        v-bind:department_name="contribution.department_name"
+        v-bind:starts_at="contribution.starts_at"
+        v-bind:ends_at="contribution.ends_at"
+        v-bind:status_contributor="contribution.status_contributor" />
 
     </div>
   </div>

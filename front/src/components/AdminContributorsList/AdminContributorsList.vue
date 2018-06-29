@@ -26,9 +26,9 @@
 
         <b-list-group id="contributors-list-items" class="row" flush>
           <admin-contributors-list-item
-            v-for="contribution in contributions"
+            v-for="(contribution, index) in contributions"
             v-if="(contribution.department == selectedDepartment || selectedDepartment == 'all') && (contribution.period == selectedPeriodicity || selectedPeriodicity == 'all')"
-            v-bind:key="contribution.id"
+            v-bind:key="index"
             v-bind:checked="contribution.checked"
             v-bind:order="contribution.order"
             v-bind:name="contribution.name"
@@ -72,17 +72,15 @@ export default {
       selectedDepartment: 'all',
       contributions: [
         {
-          id: 0,
           order: 1,
           name: 'Watchlist exposures',
           department: 'raf',
           period: 'monthly',
           created_at: '26-06-2918',
           modified_at: '29-06-2018',
-          status_admin: 'progress',
+          status_admin: 'delivered',
           checked: false
         }, {
-          id: 1,
           order: 1,
           name: 'Credit RWA',
           department: 'subsidaries',

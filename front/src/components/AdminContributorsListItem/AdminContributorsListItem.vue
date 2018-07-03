@@ -7,7 +7,7 @@
       </div>
 
       <p class="col-lg-1 my-auto text-center">
-        {{ order }}
+        <!-- {{ order }} --> 1
       </p>
 
       <p class="col-lg-3 my-auto">
@@ -15,11 +15,11 @@
       </p>
 
       <p class="col-lg-2 my-auto text-center">
-        {{ created_at }}
+        <!-- {{ created_at }} --> date de req
       </p>
 
       <p class="col-lg-2 my-auto text-center">
-        {{ modified_at }}
+        <!-- {{ modified_at }} --> date de modif
       </p>
 
       <status v-bind:status="status_admin" />

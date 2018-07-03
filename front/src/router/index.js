@@ -1,12 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import CreateContrib from '@/components/CreateContrib/CreateContrib'
+
 import Login from '@/components/Login/Login'
+
 import Viewer from '@/components/Viewer/Viewer'
+
 import Contributor from '@/components/Contributor/Contributor'
+import ContributorAddContribution from '@/components/ContributorAddContribution/ContributorAddContribution'
+import  ContributorReviewContribution from '@/components/ContributorReviewContribution/ContributorReviewContribution'
+
 import Admin from '@/components/Admin/Admin'
 import AdminReviewContribution from '@/components/AdminReviewContribution/AdminReviewContribution'
 import AdminNewCampaign from '@/components/AdminNewCampaign/AdminNewCampaign'
+
 
 Vue.use(Router)
 
@@ -24,6 +32,14 @@ export default new Router({
       name: 'contributor',
       path: '/contributor',
       component: Contributor
+    }, {
+      name: 'contributor-add-contribution',
+      path: '/contributor/add-contribution',
+      component: ContributorAddContribution
+    }, {
+      name: 'contributor-review-contribution',
+      path: '/contributor/review',
+      component: ContributorReviewContribution
     }, {
       name: 'admin',
       path: '/admin',

@@ -32,7 +32,7 @@ export default {
   methods: {
     login () {
       if (this.input.username !== '' && this.input.password !== '') {
-        axios.post('http://localhost:3000/login', this.input)
+        axios.post('http://localhost:3000/api/login', this.input)
 
           .then((response) => {
             console.log('Success!')

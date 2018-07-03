@@ -94,6 +94,7 @@ export default {
           checked: false
         }
       ],
+      
       selectedContributions: []
     }
   },

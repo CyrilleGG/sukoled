@@ -11,6 +11,7 @@ const Strategy = require('passport-local').Strategy;
 const passportJWT = require('passport-jwt');
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
+const mysql = require('mysql');
 const db = require('./db');
 var knex = require('knex')({
     client:'mysql',
@@ -45,24 +46,24 @@ app.use(bodyParser.json())
 
 
 // Routes
-app.get('/', function(req, res) { res.json({message: "Express is up!"}); });
-app.post('/login', require('./routes/login'));
-app.get('/raf', require('./routes/raf'));
-app.get('/filiale', require('./routes/filiale'));
-app.get('/contributions', require('./routes/contributionList'))
+app.get('/api/', function(req, res) { res.json({message: "Express is up!"}); });
+app.post('/api/login', require('./routes/login'));
+app.get('/api/raf', require('./routes/raf'));
+app.get('/api/filiale', require('./routes/filiale'));
+app.get('/api/contributions', require('./routes/contributionList'))
 
 // app.get('/contribution/:contribution_id', require('./routes/contributionId'))
 var contributionId = require('./routes/contributionId')
-app.get('/contribution/:contribution_id', contributionId.sendInfoToClient)
+app.get('/api/contribution/:contribution_id', contributionId.sendInfoToClient)
 
-app.get('/contribution/:contribution_id/version/:version_id', require('./routes/versionid'))
+app.get('/api/contribution/:contribution_id/version/:version_id', require('./routes/versionid'))
 
-app.post('/contribution/:contribution_id/version/:version_id/refused', require('./routes/versionidrefused'))
-app.patch('/contribution/:contribution_id/version/:version_id/accept', require('./routes/versionidaccept'))
+app.post('/api/contribution/:contribution_id/version/:version_id/refused', require('./routes/versionidrefused'))
+app.patch('/api/contribution/:contribution_id/version/:version_id/accept', require('./routes/versionidaccept'))
 
 var createcontrib = require('./routes/createcontrib');
-app.post('/createcontrib', createcontrib.sendInfoToDB);
-app.get('/createcontrib', createcontrib.sendJSONData);
+app.post('/api/createcontrib', createcontrib.sendInfoToDB);
+app.get('/api/createcontrib', createcontrib.sendJSONData);
 
 
 

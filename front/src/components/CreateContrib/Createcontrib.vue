@@ -70,7 +70,7 @@ export default {
     sendToDb () {
       // Envoyer ces infos au back
       if (this.input.name !== '' && this.input.period !== '' && this.input.user_id !== '' && this.input.department_id !== '' && this.input.limit !== '' && this.input.threshold !== '' && this.input.input !== '' && this.input.inputName !== '' && this.input.description !== '' && this.input.file !== '' && this.input.starts_at !== '' && this.input.ends_at !=='') {
-        axios.post('http://localhost:3000/createcontrib', this.input)
+        axios.post('http://localhost:3000/api/createcontrib', this.input)
 
           .then((response) => {
             console.log('Success!')

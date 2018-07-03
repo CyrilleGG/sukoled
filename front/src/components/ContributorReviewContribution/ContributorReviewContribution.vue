@@ -1,5 +1,5 @@
 <template>
-  <div id="AdminReviewContribution" class="container-fluid">
+  <div id="ContributorReviewContribution" class="container-fluid">
 
     <Header :role="this.$root.$data.userInfo.role" />
 
@@ -41,7 +41,7 @@
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's comment</p>
           <p class="col-lg-12 mb-3 pl-0">The comment of the contributor for this contribution</p>
 
-          <b-form id="request-modification" class="col-lg-11 mt-4">
+          <!-- <b-form id="request-modification" class="col-lg-11 mt-4">
 
             <b-form-group id="comment-group" class="row">
               <b-form-textarea id="comment" class="col-lg-12" v-model="comment" placeholder="Write your request..." :rows="4"></b-form-textarea>
@@ -54,7 +54,7 @@
               </div>
             </div>
 
-          </b-form>
+          </b-form> -->
         </div>
 
         <div id="actions" class="row">
@@ -77,7 +77,7 @@ import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 
 export default {
-  name: 'AdminReviewContribution',
+  name: 'ContributorReviewContribution',
 
   components: {
     Header,
@@ -93,8 +93,6 @@ export default {
   created () {
     if (!this.$parent.$data.auth) {
       this.$router.replace({ name: 'login' })
-    } else if (this.$root.$data.userInfo.role == 'contrib') {
-      this.$router.replace({ name: 'contributor' })
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
@@ -120,17 +118,17 @@ export default {
 
 <style scoped>
 
-#AdminReviewContribution .page-content {
+#ContributorReviewContribution .page-content {
   margin-top: 70px;
   min-height: 85vh;
 }
 
-#AdminReviewContribution .content {
+#ContributorReviewContribution .content {
   background-color: #ffffff;
   box-shadow: 5px 5px 30px rgba(0,0,0,0.1)
 }
 
-#AdminReviewContribution .step {
+#ContributorReviewContribution .step {
   left: -25px;
   top: 30px;
   width: 50px;
@@ -140,60 +138,60 @@ export default {
   background-color: #8e44ad;
 }
 
-#AdminReviewContribution h3 {
+#ContributorReviewContribution h3 {
   font-size: 1.2rem;
 }
 
-#AdminReviewContribution table {
+#ContributorReviewContribution table {
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   overflow: hidden;
 }
 
-#AdminReviewContribution table tr:first-child {
+#ContributorReviewContribution table tr:first-child {
   box-shadow: 0px 7px 7px rgba(0,0,0,0.05);
 }
 
-#AdminReviewContribution table .last {
+#ContributorReviewContribution table .last {
   background-color: rgba(126,68,170, 0.2);
 }
 
-#AdminReviewContribution #request-modification {
+#ContributorReviewContribution #request-modification {
   display: none;
 }
 
-#AdminReviewContribution #comment {
+#ContributorReviewContribution #comment {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
 }
 
-#AdminReviewContribution .purple {
+#ContributorReviewContribution .purple {
   border-color: #8e44ad;
   color: #ffffff;
   background-color: #8e44ad;
 }
 
-#AdminReviewContribution .purple:hover {
+#ContributorReviewContribution .purple:hover {
   border-color: #793a93;
   background-color: #793a93;
 }
 
-#AdminReviewContribution .orange {
+#ContributorReviewContribution .orange {
   border-color: #fdad2a;
   background-color: #fdad2a;
 }
 
-#AdminReviewContribution .orange:hover {
+#ContributorReviewContribution .orange:hover {
   border-color: #e59d00;
   background-color: #e59d00;
 }
 
-#AdminReviewContribution .green {
+#ContributorReviewContribution .green {
   border-color: #2ecc71;
   color: #ffffff;
   background-color: #2ecc71;
 }
 
-#AdminReviewContribution .green:hover {
+#ContributorReviewContribution .green:hover {
   border-color: #29b362;
   background-color: #29b362;
 }

@@ -54,7 +54,8 @@ app.get('/api/contributions', require('./routes/contributionList'))
 
 // app.get('/contribution/:contribution_id', require('./routes/contributionId'))
 var contributionId = require('./routes/contributionId')
-app.get('/api/contribution/:contribution_id', contributionId.sendInfoToClient)
+app.get('/api/contribution/:contribution_id', contributionId.sendInfoToClient) //
+app.post('/api/campaign', require ('./routes/campaign.js'))
 
 app.get('/api/contribution/:contribution_id/version/:version_id', require('./routes/versionid'))
 

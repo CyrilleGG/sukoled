@@ -1,3 +1,4 @@
+// api\routes\versionidrefused.js
 var knex = require('knex')({
     client:'mysql',
     connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
@@ -7,7 +8,7 @@ var knex = require('knex')({
 
 module.exports = (req,res,next) => {
     var contributionId = req.param('contribution_id');
-    var vid = req.param('version_id');
+    var versionId = req.param('version_id');
 
     var file = "file";
     var user_id = "nico";
@@ -18,13 +19,13 @@ module.exports = (req,res,next) => {
 
     return knex('versions').insert({
         // contribution_id:contributionId,
-        // parent_version:vid,
+        // parent_version:versionId,
         // file:req.body.file,
         // user_id:req.body.user_id,
         // status_admin:req.body.status_admin,
         // status_contributor:req.body.status_contributor
         contribution_id:contributionId,
-        parent_version:vid,
+        parent_version:versionId,
         file:file,
         user_id:user_id,
         status_admin:status_admin,

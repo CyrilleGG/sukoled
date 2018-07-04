@@ -27,7 +27,7 @@ module.exports.getDepartments = async function(dep) {
         // res.status(200).json(dep);
     })
     .catch((error) => {
-        console.log('false');
+        console.log(error);
     });
 }
 
@@ -41,4 +41,35 @@ module.exports.getVersionWContributionId = async function(contributionId){
     return knex('versions').select('versions.id as version_id').where({'contribution_id':contributionId}).then((result)=>{
         return result
     })
+}
+
+module.exports.getDepSlugByVersion = async function(version_id){
+    return knex('versions')
+    .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
+    .join('departments','contributions.department_id','=','departments.id')
+    .where({'versions.id':version_id})
+    .select('departments.slug')
+    .then(function(response){
+        // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+        console.log(response)
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+module.exports.getContribNameByVersion = async function(version_id){
+    return knex('versions')
+    .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
+    .where({'versions.id':version_id})
+    .select('contributions.name')
+    .then(function(responseB){
+        // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+        console.log(responseB)
+        return responseB;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 }

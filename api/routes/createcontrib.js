@@ -57,12 +57,10 @@ module.exports = {
         const users = await modules.getUsers();
         const departments = await modules.getDepartments();
 
-        console.log(users);
         const data = {
             departments,
             users
         }
-        console.log('JSONData2');
         res.status(200).json(data);
     },
 }

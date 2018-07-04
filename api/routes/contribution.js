@@ -10,7 +10,16 @@ module.exports = (req, res) => {
     .join('inputs_contributions', 'contributions.id', '=', 'inputs_contributions.contribution_id')
     .join('policies', 'contributions.id', '=', 'policies.contribution_id')
     .join('versions' ,'contributions.id' ,'=', 'versions.contribution_id')
-    .select( 'contributions.id', 'contributions.name', 'contributions.period', 'departments.name as slug', 'inputs_contributions.input_type', 'policies.user_id', 'policies.can_write', 'policies.can_read')
+    .select(
+        'contributions.id', 
+        'contributions.name', 
+        'contributions.period', 
+        'departments.name as slug', 
+        'inputs_contributions.input_type', 
+        'policies.user_id', 
+        'policies.can_write', 
+        'policies.can_read'
+    )
     .then((contributions) => {
         console.log(contributions);
         res.json(contributions);

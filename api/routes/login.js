@@ -1,9 +1,5 @@
 const db = require('../db');
 var users = require('../db/users.js');
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const passportJWT = require('passport-jwt');

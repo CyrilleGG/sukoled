@@ -48,13 +48,11 @@ app.use(bodyParser.json())
 // Routes
 app.get('/api/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/api/login', require('./routes/login'));
-app.get('/api/raf', require('./routes/raf'));
-app.get('/api/filiale', require('./routes/filiale'));
-app.get('/api/contributionList', require('./routes/contributionList'))
+app.get('/api/contributionList', require('./routes/contributionList')) // --
 
 var contributionId = require('./routes/contributionId')
-app.get('/api/contribution/:contribution_id/:user_id', contributionId.sendInfoToClient) // :user_id for testing
-app.post('/api/campaign/'/*'/api/campaign/:contribution_id'*/, require ('./routes/campaign.js'))
+app.get('/api/contribution/:contribution_id', contributionId.sendInfoToClient) //
+app.post('/api/campaign/:contribution_id', require ('./routes/campaign.js'))
 
 // Route pour récupérer les données d'une version
 app.get('/api/contribution/:contribution_id/version/:version_id', require('./routes/versionid'))

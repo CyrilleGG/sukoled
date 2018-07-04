@@ -7,8 +7,8 @@ var knex = require('knex')({
 // Créer une nouvelle version avec les mêmes paramètres que la précédente mais en changeant les status.
 
 module.exports = (req,res,next) => {
-    var contributionId = req.param('contribution_id');
-    var versionId = req.param('version_id');
+    var contributionId = req.params.contribution_id;
+    var versionId = req.params.version_id;
 
     var file = "file";
     var user_id = "nico";

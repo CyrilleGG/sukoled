@@ -6,10 +6,11 @@ var knex = require('knex')({
 // GET des informations de la table et 'version' en fonction de l'id renvoyé dans l'URL.
 
 module.exports = (req,res) => {
-    var contributionId = req.param('contribution_id');
-    var vid = req.param('version_id');
+    var contributionId = req.params.contribution_id;
+    var vid = req.params.version_id;
 
-    knex('versions').join('contributions', 'versions.contribution_id', '=', 'contributions.id').join('inputs_contributions', 'versions.contribution_id', '=', 'inputs_contributions.contribution_id')
+    knex('versions').join('contributions', 'versions.contribution_id', '=', 'contributions.id')
+    .join('inputs_contributions', 'versions.contribution_id', '=', 'inputs_contributions.contribution_id')
     .select('*')
     .where({'versions.contribution_id':contributionId, 'versions.id':vid})
     .then((versions) => {

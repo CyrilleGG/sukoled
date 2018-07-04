@@ -50,22 +50,26 @@ app.get('/api/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/api/login', require('./routes/login'));
 app.get('/api/raf', require('./routes/raf'));
 app.get('/api/filiale', require('./routes/filiale'));
-app.get('/api/contributions', require('./routes/contributionList'))
+app.get('/api/contributionList', require('./routes/contributionList'))
 
-// app.get('/contribution/:contribution_id', require('./routes/contributionId'))
 var contributionId = require('./routes/contributionId')
-app.get('/api/contribution/:contribution_id', contributionId.sendInfoToClient) //
+app.get('/api/contribution/:contribution_id/:user_id', contributionId.sendInfoToClient) // :user_id for testing
 app.post('/api/campaign/'/*'/api/campaign/:contribution_id'*/, require ('./routes/campaign.js'))
 
+// Route pour récupérer les données d'une version
 app.get('/api/contribution/:contribution_id/version/:version_id', require('./routes/versionid'))
 
+// Routes pour refuser ou accepter une version : si refusé alors on crée une nouvelle version, si accepté alors on la patch
 app.post('/api/contribution/:contribution_id/version/:version_id/refused', require('./routes/versionidrefused'))
 app.patch('/api/contribution/:contribution_id/version/:version_id/accept', require('./routes/versionidaccept'))
 
 var createcontrib = require('./routes/createcontrib');
-app.post('/api/createcontrib', createcontrib.sendInfoToDB);
 app.get('/api/createcontrib', createcontrib.sendJSONData);
+app.post('/api/createcontrib', createcontrib.sendInfoToDB);
 
+var contributionFiliale = require('./routes/contributionFiliale');
+app.get('/api/contributionFiliale/:version_id', contributionFiliale.sendJSONDataFiliale);
+app.post('/api/contributionFiliale/:version_id', contributionFiliale.sendInfoToDBFiliale);
 
 
 

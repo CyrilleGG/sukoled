@@ -8,7 +8,7 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = (req,res,next) => {
     let versionId = uuidv4();
-    // var contributionId = req.param('contribution_id');
+    // var contributionId = req.params('contribution_id');
 
     return knex('versions').insert({
         id:versionId,
@@ -20,7 +20,6 @@ module.exports = (req,res,next) => {
         status_contributor:'not delivered',
         starts_at:req.body.starts_at,
         ends_at:req.body.ends_at,
-        parent_version_id:versionId
     })
         .then(function(response){
             next();

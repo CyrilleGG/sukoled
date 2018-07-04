@@ -50,8 +50,6 @@ module.exports.getDepSlugByVersion = async function(version_id){
     .where({'versions.id':version_id})
     .select('departments.slug')
     .then(function(response){
-        // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-        console.log(response)
         return response;
     })
     .catch((error) => {
@@ -64,10 +62,9 @@ module.exports.getContribNameByVersion = async function(version_id){
     .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
     .where({'versions.id':version_id})
     .select('contributions.name')
-    .then(function(responseB){
+    .then(function(response){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-        console.log(responseB)
-        return responseB;
+        return response;
     })
     .catch((error) => {
         console.log(error);

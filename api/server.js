@@ -60,18 +60,25 @@ app.post('/api/campaign/'/*'/api/campaign/:contribution_id'*/, require ('./route
 app.get('/api/contribution/:contribution_id/version/:version_id', require('./routes/versionid'))
 
 // Routes pour refuser ou accepter une version : si refusé alors on crée une nouvelle version, si accepté alors on la patch
-app.post('/api/contribution/:contribution_id/version/:version_id/refused', require('./routes/versionidrefused'))
-app.patch('/api/contribution/:contribution_id/version/:version_id/accept', require('./routes/versionidaccept'))
+var contribRefused = require('.routes/versionidrefused');
+app.get('/api/contributionRefused/:version_id', contribRefused.sendJSONDataRefuse);
+app.post('/api/contributionRefused/:version_id', contribrefused.sendInfoToDBRefuse);
+app.patch('/api/contributionAccept/:version_id', require('./routes/versionidaccept'));
 
+// Création d'une contribution : to delete 
 var createcontrib = require('./routes/createcontrib');
 app.get('/api/createcontrib', createcontrib.sendJSONData);
 app.post('/api/createcontrib', createcontrib.sendInfoToDB);
 
+// Contributeur : Création d'une version d'une contribution Non-Raf
 var contributionFiliale = require('./routes/contributionFiliale');
 app.get('/api/contributionFiliale/:version_id', contributionFiliale.sendJSONDataFiliale);
 app.post('/api/contributionFiliale/:version_id', contributionFiliale.sendInfoToDBFiliale);
 
-
+// Contributeur : Création d'une version d'une contribution Raf
+var contributionRaf = require('./routes/contributionRaf');
+app.get('/api/contributionRaf/:version_id', contributionRaf.sendJSONDataRaf);
+app.post('/api/contributionRaf/:version_id', contributionRaf.sendInfoToDBRaf);
 
 
 

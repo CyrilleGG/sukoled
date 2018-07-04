@@ -28,8 +28,8 @@ module.exports = {
         })
             .then(function(response){
                 let input_id = uuidv4();
-                return  knex('inputs_contributions')
-                    // Insertion des données dans la table 'inputs_contributions' - contribution_id est l'id généré précédemment
+                return  knex('contributions_inputs')
+                    // Insertion des données dans la table 'contributions_inputs' - contribution_id est l'id généré précédemment
                     .insert({
                         id: input_id,
                         input_type:req.body.input,

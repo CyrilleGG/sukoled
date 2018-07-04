@@ -6,7 +6,6 @@ var knex = require('knex')({
 // Changer les status d'une contribution afin de lui donner le status "acceptée"
 
 module.exports = (req,res,next) => {
-    var contributionId = req.params.contribution_id;
     var versionId = req.params.version_id;
 
     knex('versions')

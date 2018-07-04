@@ -53,10 +53,12 @@ module.exports = {
         const modules = require('./modules');
         const department_slug = await modules.getDepSlugByVersion(version_id);
         const contribution_name = await modules.getContribNameByVersion(version_id);
+        const comment_admin = await modules.getAdminComment(version_id);
 
         const data = {
             department_slug,
-            contribution_name
+            contribution_name,
+            comment_admin
         }
         res.status(200).json(data);
     },

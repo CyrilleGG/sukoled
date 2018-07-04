@@ -76,3 +76,16 @@ module.exports.getContribNameByVersion = async function(version_id){
         console.log(error);
     });
 }
+
+module.exports.getAdminComment = async function(version_id){
+    return knex('versions')
+    .where({'versions.id':version_id})
+    .select('comment_admin')
+    .then(function(response){
+        // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}

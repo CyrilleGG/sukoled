@@ -41,6 +41,9 @@
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's comment</p>
           <p class="col-lg-12 mb-3 pl-0">The comment of the contributor for this contribution</p>
 
+          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your highlights</p>
+          <p class="col-lg-12 mb-3 pl-0">The highlights for this contribution</p>
+
           <b-form id="request-modification" class="col-lg-11 mt-4">
 
             <b-form-group id="comment-group" class="row">

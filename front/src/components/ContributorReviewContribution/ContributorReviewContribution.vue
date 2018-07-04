@@ -4,14 +4,19 @@
     <Header :role="this.$root.$data.userInfo.role" />
 
     <div class="row py-5 page-content">
-      <div class="col-lg-6  my-auto mx-auto">
+      <div class="col-lg-7  my-auto mx-auto">
 
-        <div class="row mb-3 rounded py-4 pl-5 content">
+        <div class="row mb-3 rounded py-4 px-5 content">
 
-          <h3 class="col-lg-12 pl-0">Review the contribution</h3>
-          <p class="col-lg-12 mb-4 pl-0 font-italic">Watchlist exposures</p>
+          <h3 class="col-lg-12 pl-0">Review your contribution</h3>
+          <p class="col-lg-12 pl-0 font-italic">Watchlist exposures</p>
 
-          <table class="col-lg-11 d-block mb-4 rounded">
+          <div id="admin-comment" class="col-lg-12 mb-4 rounded p-3">
+            <img src="@/assets/icons/warning.png" width="40px" alt="Warning">
+            <p class="d-inline-block mb-0 ml-3">Admin's comment</p>
+          </div>
+
+          <table class="col-lg-12 d-block mb-4 rounded">
             <tr class="row">
 
               <th class="col-lg-6 py-3 pl-5">Name</th>
@@ -38,8 +43,11 @@
             </tr>
           </table>
 
-          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's comment</p>
-          <p class="col-lg-12 mb-3 pl-0">The comment of the contributor for this contribution</p>
+          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your comment</p>
+          <p class="col-lg-12 mb-4 pl-0">The comment of the contributor for this contribution</p>
+
+          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your highlights</p>
+          <p class="col-lg-12 mb-3 pl-0">The highlights for this contribution</p>
 
           <!-- <b-form id="request-modification" class="col-lg-11 mt-4">
 
@@ -59,9 +67,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="mx-1 ml-auto purple" :to="{ path: './'}" replace size="md">Edit</b-button>
-          <b-button class="mx-1 orange" size="md" v-on:click="displayComment ()">Request a modification</b-button>
-          <b-button class="mx-1 green" :to="{ path: './'}" replace size="md">Validate</b-button>
+          <b-button class="mx-1 ml-auto purple" :to="{ path: './'}" replace size="md">Modify the contribution</b-button>
         </div>
 
       </div>
@@ -140,6 +146,14 @@ export default {
 
 #ContributorReviewContribution h3 {
   font-size: 1.2rem;
+}
+
+#ContributorReviewContribution #admin-comment {
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+#ContributorReviewContribution #admin-comment p {
+  line-height: 40px;
 }
 
 #ContributorReviewContribution table {

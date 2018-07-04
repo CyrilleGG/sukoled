@@ -22,14 +22,14 @@ module.exports = (req,res,next) => {
         // parent_version:versionId,
         // file:req.body.file,
         // user_id:req.body.user_id,
-        // status_admin:req.body.status_admin,
-        // status_contributor:req.body.status_contributor
+        // status_admin:'progress',
+        // status_contributor:'invalid'
         contribution_id:contributionId,
         parent_version:versionId,
         file:file,
         user_id:user_id,
-        status_admin:status_admin,
-        status_contributor:status_contributor,
+        status_admin:'progress',
+        status_contributor:'invalid',
         starts_at:starts_at,
         ends_at:ends_at
     })

@@ -40,7 +40,7 @@ export default {
     return {
       msg: 'Create a new contribution here',
       input: {
-        // Input demandés vide
+        // Input demandés vide -- remplit pour testing
         name: '',
         period: '',
         user_id:'',

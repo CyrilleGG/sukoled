@@ -2,9 +2,6 @@ var knex = require('knex')({
     client:'mysql',
     connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
 });
-const db = require('../db');
-var users = require('../db/users.js');
-const _ = require('lodash');
 const uuidv4 = require('uuid/v4');
 
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.

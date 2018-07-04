@@ -8,11 +8,11 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = (req,res,next) => {
     let versionId = uuidv4();
-    // var contributionId = req.params('contribution_id');
+    var contributionId = req.params('contribution_id');
 
     return knex('versions').insert({
         id:versionId,
-        // contribution_id:contributionId,
+        contribution_id:contributionId,
         contribution_id:req.body.contribution_id,
         file:'null',
         user_id:req.body.user_id,

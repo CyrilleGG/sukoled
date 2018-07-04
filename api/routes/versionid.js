@@ -10,7 +10,7 @@ module.exports = (req,res) => {
     var vid = req.params.version_id;
 
     knex('versions').join('contributions', 'versions.contribution_id', '=', 'contributions.id')
-    .join('inputs_contributions', 'versions.contribution_id', '=', 'inputs_contributions.contribution_id')
+    .join('contributions_inputs', 'versions.contribution_id', '=', 'contributions_inputs.contribution_id')
     .select('*')
     .where({'versions.contribution_id':contributionId, 'versions.id':vid})
     .then((versions) => {

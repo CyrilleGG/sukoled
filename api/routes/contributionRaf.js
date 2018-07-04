@@ -7,7 +7,7 @@ const uuidv4 = require('uuid/v4');
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.    
 
 module.exports = {
-    sendInfoToDBFiliale:async function(req, res, next) {
+    sendInfoToDBRaf:async function(req, res, next) {
         let new_version_id = uuidv4();
         // Récupération des données
         const version_id = req.params.version_id;
@@ -17,15 +17,16 @@ module.exports = {
         const contribution_id = 
             knex('versions')
             .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
-            .select('contributions.id')      
+            .select('contributions.id')
+            .then(function(response){
+                return response
+            })
 
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
         .insert({
             // Informations remplies par le contributeur
             file:req.body.file,
-            comment_contributor:req.body.comment,
-            highlight:req.body.hightlight,
             // Informations remplies automatiquement mais nécessaire pour la DB
             id:new_version_id,
             status_admin:'delivered',
@@ -46,7 +47,7 @@ module.exports = {
         });
     },
 
-    sendJSONDataFiliale:async function(req, res) {
+    sendJSONDataRaf:async function(req, res) {
 
         const version_id = req.params.version_id;
         // Appel de modules (routes/modules.js)

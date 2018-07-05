@@ -11,6 +11,8 @@
       <input type="text" name="starts_at" v-model="input.starts_at" id="starts_at" placeholder="Starts_at">
       <p> Ends_at (timestamp) </p>
       <input type="text" name="ends_at" v-model="input.ends_at" id="ends_at" placeholder="Ends_at">
+      <p> Name (timestamp) </p>
+      <input type="text" name="name" v-model="input.name" id="name" placeholder="Name">
       <input type="submit" value="Login" v-on:click.prevent="sendToDb()">
     </form>
   </div>
@@ -30,7 +32,8 @@ export default {
         user_id: '', //'nico',
         starts_at: '', //'2018-06-20 10:37:07.288293+00',
         ends_at: '', //'2018-06-20 10:37:07.288293+01',
-        contribution_id:''
+        contribution_id:'',
+        name:''
       },
       data: null,
       selected:null
@@ -40,8 +43,8 @@ export default {
   methods: {
     sendToDb () {
       // Envoyer ces infos au back
-      if (this.input.user_id !== '' && this.input.starts_at !== '' && this.input.ends_at !=='' && this.input.contribution_id !=='') {
-        axios.post('http://localhost:3000/api/campaign', this.input)
+      if (this.input.user_id !== '' && this.input.starts_at !== '' && this.input.ends_at !=='' && this.input.contribution_id !=='' && this.input.name !=='') {
+        axios.post('http://localhost:3000/api/campaign/', this.input)
 
           .then((response) => {
             console.log('Success!')

@@ -47,16 +47,27 @@ module.exports = {
     sendJSONDataRefuse:async function(req, res) {
 
         const version_id = req.params.version_id;
-        return knex('versions')
-        .select(
-            'versions.file as file', 
-            'versions.comment_contributor as comment_contributor', 
-            'contributions.name as contribution_name', 
-        )
-        .where({'id':version_id})
-        .join('versions', 'contributions.id', '=', 'versions.contribution_id')
-        .then((response) => {
-            return res.status(200).json(response);
-        });
+        const user_id = req.params.user_id;
+        // Appel des modules (routes/modules.js)
+        const modules = require('./modules')
+        const query = await modules.getPoliciesWVersionId(version_id, user_id);
+        if (query == 1) {
+            return knex('versions')
+            .select(
+                'versions.file_binary as file', 
+                'versions.comment_contributor as comment_contributor', 
+                'contributions.name as contribution_name', 
+            )
+            .where({'versions.id':version_id})
+            .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
+            .then((response) => {
+                return res.status(200).json(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        } else {
+            res.json(null);
+        }
     }
 }

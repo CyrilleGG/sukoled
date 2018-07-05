@@ -13,6 +13,7 @@ module.exports = {
         const version_id = req.params.version_id;
         const starts_at = knex('versions').select('starts_at').where({'id':version_id});
         const ends_at = knex('versions').select('ends_at').where({'id':version_id});
+        const version_name = knex('versions').select('name').where({'id':version_id});
         const user_id = req.body.user_id;
         const contribution_id = 
             knex('versions')
@@ -33,6 +34,7 @@ module.exports = {
             contribution_id:contribution_id,
             parent_version_id:version_id,
             user_id:user_id,
+            name:version_name,
             starts_at:starts_at,
             ends_at:ends_at,
             user_id:req.body.user_id
@@ -49,17 +51,23 @@ module.exports = {
     sendJSONDataFiliale:async function(req, res) {
 
         const version_id = req.params.version_id;
-        // Appel de modules (routes/modules.js)
-        const modules = require('./modules');
-        const department_slug = await modules.getDepSlugByVersion(version_id);
-        const contribution_name = await modules.getContribNameByVersion(version_id);
-        const comment_admin = await modules.getAdminComment(version_id);
+        const user_id = req.params.user_id;
+        // Appel des modules (routes/modules.js)
+        const modules = require('./modules')
+        const query = await modules.getPoliciesWVersionId(version_id, user_id);
+        if (query == 1) {
+            const department_slug = await modules.getDepSlugByVersion(version_id);
+            const version_name = await modules.getVersionNameByVersion(version_id);
+            const comment_admin = await modules.getAdminComment(version_id);
 
-        const data = {
-            department_slug,
-            contribution_name,
-            comment_admin
+            const data = {
+                department_slug,
+                version_name,
+                comment_admin
+            }
+            res.status(200).json(data);
+        } else {
+            res.json(null)
         }
-        res.status(200).json(data);
     },
 }

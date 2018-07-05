@@ -15,12 +15,14 @@ module.exports = {
         return knex('contributions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
         .insert({
+            // Informations remplies par l'administrateur'
             name:req.body.name, 
             period:req.body.period,
             user_id:req.body.user_id,
-            department_id:departmentID,
             limit:req.body.limit,
             threshold:req.body.threshold,
+            department_id:departmentID,
+            // Information générée
             id:contribution_id
         })
             .then(function(response){

@@ -100,14 +100,14 @@ export default {
   },
 
   created () {
-    axios.get('http://localhost:3000/contributions')
-      .then((response) => {
-        console.log(response)
-      })
+    // axios.get('http://localhost:3000/contributions')
+    //   .then((response) => {
+    //     console.log(response)
+    //   })
 
-      .catch((error) => {
-        console.log('No contribs')
-      })
+    //   .catch((error) => {
+    //     console.log('No contribs')
+    //   })
   },
 
   methods: {

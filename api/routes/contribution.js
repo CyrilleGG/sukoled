@@ -21,7 +21,6 @@ module.exports = (req, res) => {
         'policies.can_read'
     )
     .then((contributions) => {
-        console.log(contributions);
         res.json(contributions);
     })
     .catch((error) => {

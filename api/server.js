@@ -50,18 +50,18 @@ app.get('/api/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/api/login', require('./routes/login'));
 
 var contributionId = require('./routes/contributionId')
-app.get('/api/contribution/:contribution_id/:user_id', contributionId.sendInfoToClient) // user_id
+app.get('/api/contribution/:contribution_id/user/:user_id', contributionId.sendInfoToClient) // user_id
 app.post('/api/campaign/', require ('./routes/campaign.js')) // /:contribution_id ?
 
 // Route pour récupérer les données d'une version
 var versionView = require('./routes/versionView');
-app.get('/api/versionView/:version_id/:user_id', versionView.SendJSONDataContribView) // version_id
+app.get('/api/versionView/:version_id/user/:user_id', versionView.SendJSONDataContribView) // version_id
 // app.post('/api/contributionView/:version_id', contributionView.SendInfoToClientContribView)
 // app.get('/api/contributionView/:version_id', require('./routes/versionid'))
 
 // Routes pour refuser ou accepter une version : si refusé alors on crée une nouvelle version, si accepté alors on la patch
 var contribRefused = require('./routes/versionidrefused');
-app.get('/api/versionRefused/:version_id/:user_id', contribRefused.sendJSONDataRefuse); // user_id
+app.get('/api/versionRefused/:version_id/user/:user_id', contribRefused.sendJSONDataRefuse); // user_id
 app.post('/api/versionRefused/:version_id', contribRefused.sendInfoToDBRefuse); // version_id
 app.patch('/api/versionAccept/:version_id', require('./routes/versionidaccept'));
 
@@ -72,19 +72,24 @@ app.post('/api/createcontrib', createcontrib.sendInfoToDB);
 
 // Contributeur : Création d'une version d'une contribution Non-Raf
 var contributionFiliale = require('./routes/contributionFiliale');
-app.get('/api/contributionFiliale/:version_id/:user_id', contributionFiliale.sendJSONDataFiliale); // :user_id
+app.get('/api/contributionFiliale/:version_id/user/:user_id', contributionFiliale.sendJSONDataFiliale); // :user_id
 app.post('/api/contributionFiliale/:version_id', contributionFiliale.sendInfoToDBFiliale);
 
 // Contributeur : Création d'une version d'une contribution Raf
 var contributionRaf = require('./routes/contributionRaf');
-app.get('/api/contributionRaf/:version_id/:user_id', contributionRaf.sendJSONDataRaf); // user_id
+app.get('/api/contributionRaf/:version_id/user/:user_id', contributionRaf.sendJSONDataRaf); // user_id
 app.post('/api/contributionRaf/:version_id', contributionRaf.sendInfoToDBRaf);
 
 var contributor = require('./routes/contributor')
 app.get('/api/contributor/:user_id', contributor.home)
 
 var inputs = require('./routes/inputs')
-app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version)
+app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version) // user_id
+
+var createPolicies = require('./routes/createPolicies')
+app.get('/api/createPolicies', createPolicies.sendJSONDataPolicies)
+app.post('/api/createPolicies', createPolicies.sendInfoToDBPolicies)
+app.delete('/api/createPolicies', createPolicies.deletePolicies)
 
 var contributions = require('./routes/contributions')
 app.get('/api/contributions', contributions.list)

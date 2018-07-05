@@ -9,7 +9,6 @@ module.exports = {
     sendInfoToClient:async function(req, res) {
         
         //Permet de vérifier les droits users avant d'envoyer le json
-
         const contribution_id = req.params.contribution_id;
         const user_id = req.params.user_id;
         const modules = require('./modules');
@@ -27,11 +26,8 @@ module.exports = {
                     data_version[prop] = versions[prop]
                 }
             }
-            console.log(data_version);
     
             var data = Object.assign({},...contributions, {"Versions":data_version})
-            console.log(data)
-    
             return res.json(data);
             // res.json('ok');
         } else {

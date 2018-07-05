@@ -143,7 +143,7 @@ module.exports.getVersionFile = async function(version_id){
     .select('file_binary')
     .then(function(response){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-        return response;
+        return response[0].file_binary;
     })
     .catch((error) => {
         console.log(error);

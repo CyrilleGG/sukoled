@@ -15,6 +15,7 @@ import ContributorPreviewContribution from '@/components/ContributorPreviewContr
 import Admin from '@/components/Admin/Admin'
 import AdminReviewContribution from '@/components/AdminReviewContribution/AdminReviewContribution'
 import AdminNewCampaign from '@/components/AdminNewCampaign/AdminNewCampaign'
+import CreateNewCampaign from '@/components/CreateNewCampaign/Createnewcampaign'
 
 
 Vue.use(Router)
@@ -62,6 +63,10 @@ export default new Router({
       name: 'createcontrib',
       path: '/createcontrib',
       component: CreateContrib
+    }, {
+      name: 'createnewcampaign',
+      path: '/createnewcampaign',
+      component: CreateNewCampaign
     }
   ]
 })

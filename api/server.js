@@ -11,6 +11,7 @@ const Strategy = require('passport-local').Strategy;
 const passportJWT = require('passport-jwt');
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
+const mysql = require('mysql');
 const db = require('./db');
 var knex = require('knex')({
     client:'mysql',
@@ -45,28 +46,48 @@ app.use(bodyParser.json())
 
 
 // Routes
-app.get('/', function(req, res) { res.json({message: "Express is up!"}); });
-app.post('/login', require('./routes/login'));
-app.get('/raf', require('./routes/raf'));
-app.get('/filiale', require('./routes/filiale'));
-app.get('/contributions', require('./routes/contributionList'))
+app.get('/api/', function(req, res) { res.json({message: "Express is up!"}); });
+app.post('/api/login', require('./routes/login'));
 
-// app.get('/contribution/:contribution_id', require('./routes/contributionId'))
 var contributionId = require('./routes/contributionId')
-app.get('/contribution/:contribution_id', contributionId.sendInfoToClient)
+app.get('/api/contribution/:contribution_id/:user_id', contributionId.sendInfoToClient) // user_id
+app.post('/api/campaign/', require ('./routes/campaign.js')) // /:contribution_id ?
 
-app.get('/contribution/:contribution_id/version/:version_id', require('./routes/versionid'))
+// Route pour récupérer les données d'une version
+var versionView = require('./routes/versionView');
+app.get('/api/versionView/:version_id/:user_id', versionView.SendJSONDataContribView) // version_id
+// app.post('/api/contributionView/:version_id', contributionView.SendInfoToClientContribView)
+// app.get('/api/contributionView/:version_id', require('./routes/versionid'))
 
-app.post('/contribution/:contribution_id/version/:version_id/refused', require('./routes/versionidrefused'))
-app.patch('/contribution/:contribution_id/version/:version_id/accept', require('./routes/versionidaccept'))
+// Routes pour refuser ou accepter une version : si refusé alors on crée une nouvelle version, si accepté alors on la patch
+var contribRefused = require('./routes/versionidrefused');
+app.get('/api/versionRefused/:version_id/:user_id', contribRefused.sendJSONDataRefuse); // user_id
+app.post('/api/versionRefused/:version_id', contribRefused.sendInfoToDBRefuse); // version_id
+app.patch('/api/versionAccept/:version_id', require('./routes/versionidaccept'));
 
+// Création d'une contribution : to delete
 var createcontrib = require('./routes/createcontrib');
-app.post('/createcontrib', createcontrib.sendInfoToDB);
-app.get('/createcontrib', createcontrib.sendJSONData);
+app.get('/api/createcontrib/:version_id', createcontrib.sendJSONData); // Pas de droits hors admin
+app.post('/api/createcontrib', createcontrib.sendInfoToDB);
 
+// Contributeur : Création d'une version d'une contribution Non-Raf
+var contributionFiliale = require('./routes/contributionFiliale');
+app.get('/api/contributionFiliale/:version_id/:user_id', contributionFiliale.sendJSONDataFiliale); // :user_id
+app.post('/api/contributionFiliale/:version_id', contributionFiliale.sendInfoToDBFiliale);
 
+// Contributeur : Création d'une version d'une contribution Raf
+var contributionRaf = require('./routes/contributionRaf');
+app.get('/api/contributionRaf/:version_id/:user_id', contributionRaf.sendJSONDataRaf); // user_id
+app.post('/api/contributionRaf/:version_id', contributionRaf.sendInfoToDBRaf);
 
+var contributor = require('./routes/contributor')
+app.get('/api/contributor/:user_id', contributor.home)
 
+var inputs = require('./routes/inputs')
+app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version)
+
+var contributions = require('./routes/contributions')
+app.get('/api/contributions', contributions.list)
 
 
 app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé

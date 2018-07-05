@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import CreateContrib from '@/components/CreateContrib/CreateContrib'
+import CreateNewCampaign from '@/components/CreateNewCampaign/Createnewcampaign'
 
 import Login from '@/components/Login/Login'
 
@@ -15,7 +16,7 @@ import ContributorPreviewContribution from '@/components/ContributorPreviewContr
 import Admin from '@/components/Admin/Admin'
 import AdminReviewContribution from '@/components/AdminReviewContribution/AdminReviewContribution'
 import AdminNewCampaign from '@/components/AdminNewCampaign/AdminNewCampaign'
-import CreateNewCampaign from '@/components/CreateNewCampaign/Createnewcampaign'
+import AdminManagePolicies from '@/components/AdminManagePolicies/AdminManagePolicies'
 
 
 Vue.use(Router)
@@ -58,6 +59,10 @@ export default new Router({
       name: 'admin-new-campaign',
       path: '/admin/new-campaign',
       component: AdminNewCampaign
+    }, {
+      name: 'admin-manage-policies',
+      path: '/admin/manage-policies',
+      component: AdminManagePolicies
     }, {
       // Vue contrib
       name: 'createcontrib',

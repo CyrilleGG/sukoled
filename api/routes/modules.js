@@ -9,7 +9,6 @@ var users = require('../db/users.js');
 
 // Récupération de la liste des users
 module.exports.getUsers = async function(user) {
-    console.log('getUsers')
     var user = users.map(a => a.username);
     return user;
     // res.status(200).json(user)
@@ -17,7 +16,6 @@ module.exports.getUsers = async function(user) {
 
 // Récupération de la liste des départements
 module.exports.getDepartments = async function(dep) {
-    console.log('getDep')
     var dep = null;
     return knex('departments')
     .select('slug','name')
@@ -59,7 +57,7 @@ module.exports.getDepSlugByVersion = async function(version_id){
     .where({'versions.id':version_id})
     .select('departments.slug')
     .then(function(response){
-        return response;
+        return response[0].slug;
     })
     .catch((error) => {
         console.log(error);
@@ -74,7 +72,7 @@ module.exports.getContribNameByVersion = async function(version_id){
     .select('contributions.name')
     .then(function(response){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-        return response;
+        return response[0].name;
     })
     .catch((error) => {
         console.log(error);
@@ -88,7 +86,7 @@ module.exports.getVersionNameByVersion = async function(version_id){
     .select('versions.name')
     .then(function(response){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-        return response;
+        return response[0].name;
     })
     .catch((error) => {
         console.log(error);
@@ -102,7 +100,7 @@ module.exports.getAdminComment = async function(version_id){
     .select('comment_admin')
     .then(function(response){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-        return response;
+        return response[0].comment_admin;
     })
     .catch((error) => {
         console.log(error);
@@ -116,7 +114,7 @@ module.exports.getContributorComment = async function(version_id){
     .select('comment_contributor')
     .then(function(response){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-        return response;
+        return response[0].comment_contributor;
     })
     .catch((error) => {
         console.log(error);
@@ -131,7 +129,7 @@ module.exports.getHighlight = async function(version_id){
     .then(function(response){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
         // console.log(response[0].highlight)
-        return response;
+        return response[0].highlight;
     })
     .catch((error) => {
         console.log(error);
@@ -168,6 +166,23 @@ module.exports.getPoliciesWContribId = async function(contribution_id, user_id){
 }
 
 module.exports.getPoliciesWVersionId = async function(version_id, user_id){
+    return knex('policies')
+    .join('contributions', 'policies.contribution_id', '=', 'contributions.id')
+    .join('versions', 'contributions.id', '=', 'versions.contribution_id')
+    .where({
+        'versions.id':version_id,
+        'policies.user_id':user_id
+    })
+    .select('policies.can_read')
+    .then(function(response){
+        return response[0].can_read
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
+module.exports.getContribWPolicies = async function(version_id, user_id){
     return knex('policies')
     .join('contributions', 'policies.contribution_id', '=', 'contributions.id')
     .join('versions', 'contributions.id', '=', 'versions.contribution_id')

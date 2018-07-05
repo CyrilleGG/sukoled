@@ -81,6 +81,9 @@ app.post('/api/contributionRaf/:version_id', contributionRaf.sendInfoToDBRaf);
 var contributor = require('./routes/contributor')
 app.get('/api/contributor/:user_id', contributor.home)
 
+var inputs = require('./routes/inputs')
+app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version)
+
 
 app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé
     console.log(`Example app listening on port ${PORT}!`)

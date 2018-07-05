@@ -49,25 +49,11 @@
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your highlights</p>
           <p class="col-lg-12 mb-3 pl-0">The highlights for this contribution</p>
 
-          <!-- <b-form id="request-modification" class="col-lg-11 mt-4">
-
-            <b-form-group id="comment-group" class="row">
-              <b-form-textarea id="comment" class="col-lg-12" v-model="comment" placeholder="Write your request..." :rows="4"></b-form-textarea>
-            </b-form-group>
-
-            <div class="row">
-              <div class="col-lg-12 px-0 text-right">
-                <b-button class="mx-1 purple" size="md" v-on:click="hideComment ()">Cancel</b-button>
-                <b-button class="mx-1 orange" :to="{ path: './'}" replace size="md">Send Request</b-button>
-              </div>
-            </div>
-
-          </b-form> -->
         </div>
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="mx-1 ml-auto purple" :to="{ path: './'}" replace size="md">Modify the contribution</b-button>
+          <b-button class="mx-1 ml-auto purple" :to="{ path: '/contributor/modify'}" size="md">Modify the contribution</b-button>
         </div>
 
       </div>

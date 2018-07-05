@@ -4,124 +4,8 @@
     <Header :role="this.$root.$data.userInfo.role" />
 
     <div class="row py-5 page-content">
-      <b-form id="new-campaign" class="col-lg-6  my-auto mx-auto">
-
-
-
-        <b-form-group class="row mb-5 rounded py-4 pl-5 pr-5 content">
-          
-          <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">1</span>
-
-          <h3 class="col-lg-12 mb-2 pl-5">Share your contribution</h3>
-          <p class="col-lg-12 mb-5 pl-5">Upload your Excel file here and wait until it is uploaded. The file must be in the required format.</p>
-
-          <div class="col-lg-12 pl-5">
-            <div class="row pl-3">
-
-              <div id="excel-input" class="d-flex align-items-center mb-3">
-                <label id="excel-label" class="d-flex align-items-center mb-0 rounded" for="excel">
-                  <div id="upload-img" class="d-flex justify-content-center align-items-center">
-                    <img v-if="this.input.excel == null" src="@/assets/icons/upload.png" width="30px" alt="Upload">
-                    <img v-if="this.input.excel !== null" src="@/assets/icons/checked.png" width="30px" alt="Upload">
-                  </div>
-
-                  <span v-if="this.input.excel == null" id="upload-text" class="text-center text-uppercase">Upload</span>
-                  <span v-if="this.input.excel !== null" id="upload-text" class="text-center text-uppercase text-white">Uploaded</span>
-                </label>
-
-                <p v-if="this.input.excel !== null" id="file-name" class="mb-0 ml-3">{{ this.input.excel.name }}</p>
-
-                <input id="excel" ref="excel" class="d-none" v-on:change="uploadExcel ()" type="file" name="excel">
-
-              </div>
-
-              <p id="download" class="col-lg-12">or download <a href="#">the example (200 Mo)</a></p>
-
-            </div>
-          </div>
-        </b-form-group>
-
-
-
-        <b-form-group class="row mb-5 rounded py-4 pl-5 pr-5 content">
-          
-          <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
-
-          <h3 class="col-lg-12 mb-2 pl-5">Write your comments</h3>
-          <p class="col-lg-12 mb-5 pl-5">Write down your comments and annotations, regarding your contribution</p>
-
-          <div class="col-lg-12 pl-5">
-            <div class="row">
-
-              <b-form-textarea id="comments" class="col-lg-12" v-model="input.comments" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea>
-
-            </div>
-          </div>
-        </b-form-group>
-
-
-
-        <b-form-group class="row mb-5 rounded py-4 pl-5 pr-5 content">
-          
-          <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
-
-          <h3 class="col-lg-12 mb-2 pl-5">Write your highlights</h3>
-          <p class="col-lg-12 mb-5 pl-5">Write down your highlights regarding your contribution</p>
-
-          <div class="col-lg-12 pl-5">
-            <div class="row">
-
-              <b-form-textarea id="highlights" class="col-lg-12" v-model="input.highlights" placeholder="Write your highlights..." :rows="4" name="highlights"></b-form-textarea>
-
-            </div>
-          </div>
-        </b-form-group>
-
-
-
-        <b-form-group class="row mb-5 rounded py-4 pl-5 pr-5 content">
-          
-          <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">4</span>
-
-          <h3 class="col-lg-12 mb-2 pl-5">Add other elements</h3>
-          <p class="col-lg-12 mb-5 pl-5">You can upload additional elements (text, image) in order to complete your contribution</p>
-
-          <div class="col-lg-12 pl-5">
-            <div class="row pl-3">
-
-              <div id="additional-files-input">
-                <label id="additional-files-label" class="text-uppercase" for="excel">
-                  <span class="d-inline-block mr-3 rounded-circle text-center align-middle font-weight-light">+</span> Add elements
-                </label>
-                <input id="additional-files" ref="additionalFiles" class="d-none" v-on:change="uploadFile ()" type="file" name="additional-files">
-              </div>
-
-            </div>
-          </div>
-        </b-form-group>
-
-
-        <div id="actions" class="row">
-          <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" size="md" v-b-modal.confirm>Submit</b-button>
-        </div>
-
-        <b-modal id="confirm" ref="confirm" hide-footer>
-          <p>You are about to add a contribution with the following information:</p>
-          <p>Excel file:  {{ this.input.excel.name }}</p>
-          <p>Your comments:</p>
-          <p class="font-italic">{{ input.comments }}</p>
-          <p>Your highlights:</p>
-          <p class="font-italic">{{ input.highlights }}</p>
-          <p>Additional files:</p>
-          <ul>
-            <li>file</li>
-          </ul>
-          <b-button size="md" v-on:click="closeModal ()">Cancel</b-button>
-          <b-button class="green" :to="{ path: './'}" replace size="md">Confirm</b-button>
-        </b-modal>
-
-      </b-form>
+      <contributor-form-lease v-if="this.department == 'lease'" />
+      <contributor-form-raf v-if="this.department == 'raf'" />
     </div>
 
     <Footer />
@@ -132,23 +16,22 @@
 <script>
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
+import ContributorFormLease from '@/components/ContributorFormLease/ContributorFormLease'
+import ContributorFormRaf from '@/components/ContributorFormRaf/ContributorFormRaf'
 
 export default {
   name: 'ContributorAddContribution',
 
   components: {
     Header,
-    Footer
+    Footer,
+    ContributorFormLease,
+    ContributorFormRaf
   },
 
   data () {
     return {
-      input: {
-        excel: null,
-        comments: '',
-        highlights: '',
-        additionalFiles: []
-      }
+      department: 'lease'
     }
   },
 

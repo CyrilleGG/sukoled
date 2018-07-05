@@ -31,6 +31,7 @@ module.exports.getDepartments = async function(dep) {
     });
 }
 
+// Envoie des données de la contribution
 module.exports.getContributionById = async function(contributionId){
     return knex('contributions')
     .select('id as contribution_id', 'name', 'period')
@@ -40,6 +41,7 @@ module.exports.getContributionById = async function(contributionId){
     })
 }
 
+// Envoie des versions liés à la contribution
 module.exports.getVersionWContributionId = async function(contributionId){
     return knex('versions')
     .select('versions.id as version_id')
@@ -49,6 +51,7 @@ module.exports.getVersionWContributionId = async function(contributionId){
     })
 }
 
+// Envoie du department lié à la version
 module.exports.getDepSlugByVersion = async function(version_id){
     return knex('versions')
     .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
@@ -63,6 +66,7 @@ module.exports.getDepSlugByVersion = async function(version_id){
     });
 }
 
+// Envoie du nom de la contribution lié à la version
 module.exports.getContribNameByVersion = async function(version_id){
     return knex('versions')
     .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
@@ -77,6 +81,21 @@ module.exports.getContribNameByVersion = async function(version_id){
     });
 }
 
+// Envoie du nom de la version
+module.exports.getVersionNameByVersion = async function(version_id){
+    return knex('versions')
+    .where({'versions.id':version_id})
+    .select('versions.name')
+    .then(function(response){
+        // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+// Envoie du commentaire administrateur lié à la version
 module.exports.getAdminComment = async function(version_id){
     return knex('versions')
     .where({'versions.id':version_id})
@@ -88,4 +107,79 @@ module.exports.getAdminComment = async function(version_id){
     .catch((error) => {
         console.log(error);
     });
+}
+
+// Envoie du commentaire du contributeur lié à la version
+module.exports.getContributorComment = async function(version_id){
+    return knex('versions')
+    .where({'versions.id':version_id})
+    .select('comment_contributor')
+    .then(function(response){
+        // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+// Envoie de l'highlight lié à la version
+module.exports.getHighlight = async function(version_id){
+    return knex('versions')
+    .where({'versions.id':version_id})
+    .select('highlight')
+    .then(function(response){
+        // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+        // console.log(response[0].highlight)
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+// Envoie du fichier (file_binary) lié à la version
+module.exports.getVersionFile = async function(version_id){
+    return knex('versions')
+    .where({'versions.id':version_id})
+    .select('file_binary')
+    .then(function(response){
+        // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+module.exports.getPoliciesWContribId = async function(contribution_id, user_id){
+    return knex('policies')
+    .where({
+        'policies.contribution_id':contribution_id,
+        'policies.user_id':user_id
+    })
+    .select('policies.can_read')
+    .then(function(response){
+        return response[0].can_read
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
+module.exports.getPoliciesWVersionId = async function(version_id, user_id){
+    return knex('policies')
+    .join('contributions', 'policies.contribution_id', '=', 'contributions.id')
+    .join('versions', 'contributions.id', '=', 'versions.contribution_id')
+    .where({
+        'versions.id':version_id,
+        'policies.user_id':user_id
+    })
+    .select('policies.can_read')
+    .then(function(response){
+        return response[0].can_read
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
 }

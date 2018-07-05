@@ -7,29 +7,35 @@ var knex = require('knex')({
 
 module.exports = {
     sendInfoToClient:async function(req, res) {
-        var contributionId = req.param('contribution_id');
         
-        console.log("____________________________________________________")
-        
+        //Permet de vérifier les droits users avant d'envoyer le json
+
+        const contribution_id = req.params.contribution_id;
+        const user_id = req.params.user_id;
         const modules = require('./modules');
-        const contributions = await modules.getContributionById(contributionId);
-        const versions = await modules.getVersionWContributionId(contributionId);
-
-        console.log("____________________________________________________")
-
-        var data = (contributions.concat({versions:versions}));
-
-        var data_version = {};
-        for (var prop in versions) {
-            if (versions.hasOwnProperty(prop)) {
-                data_version[prop2] = versions[prop]
+        const query = await modules.getPoliciesWContribId(contribution_id, user_id);
+        if (query == 1) {
+            const modules = require('./modules');
+            const contributions = await modules.getContributionById(contribution_id);
+            const versions = await modules.getVersionWContributionId(contribution_id);
+    
+            var data = (contributions.concat({versions:versions}));
+    
+            var data_version = {};
+            for (var prop in versions) {
+                if (versions.hasOwnProperty(prop)) {
+                    data_version[prop] = versions[prop]
+                }
             }
+            console.log(data_version);
+    
+            var data = Object.assign({},...contributions, {"Versions":data_version})
+            console.log(data)
+    
+            return res.json(data);
+            // res.json('ok');
+        } else {
+            res.json(null);
         }
-        console.log(data_version);
-
-        var data = Object.assign({},...contributions, {"Versions":data_version})
-        console.log(data)
-
-        return res.json(data);
     }
 }

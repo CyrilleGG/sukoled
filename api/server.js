@@ -48,7 +48,6 @@ app.use(bodyParser.json())
 // Routes
 app.get('/api/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/api/login', require('./routes/login'));
-app.get('/api/contributionList', require('./routes/contributionList')) // --
 
 var contributionId = require('./routes/contributionId')
 app.get('/api/contribution/:contribution_id/:user_id', contributionId.sendInfoToClient) // user_id
@@ -86,6 +85,9 @@ app.get('/api/contributor/:user_id', contributor.home)
 
 var inputs = require('./routes/inputs')
 app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version)
+
+var contributions = require('./routes/contributions')
+app.get('/api/contributions', contributions.list)
 
 
 app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé

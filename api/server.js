@@ -63,7 +63,7 @@ app.get('/api/contributionRefused/:version_id', contribRefused.sendJSONDataRefus
 app.post('/api/contributionRefused/:version_id', contribRefused.sendInfoToDBRefuse);
 app.patch('/api/contributionAccept/:version_id', require('./routes/versionidaccept'));
 
-// Création d'une contribution : to delete 
+// Création d'une contribution : to delete
 var createcontrib = require('./routes/createcontrib');
 app.get('/api/createcontrib', createcontrib.sendJSONData);
 app.post('/api/createcontrib', createcontrib.sendInfoToDB);
@@ -78,6 +78,8 @@ var contributionRaf = require('./routes/contributionRaf');
 app.get('/api/contributionRaf/:version_id', contributionRaf.sendJSONDataRaf);
 app.post('/api/contributionRaf/:version_id', contributionRaf.sendInfoToDBRaf);
 
+var contributor = require('./routes/contributor')
+app.get('/api/contributor/:user_id', contributor.home)
 
 
 app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé

@@ -98,23 +98,8 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" size="md" v-b-modal.confirm>Submit</b-button>
+          <b-button class="ml-auto green" :to="{ path: 'preview'}" append size="md">Submit</b-button>
         </div>
-
-        <b-modal v-if="this.input.excel !== null" id="confirm" ref="confirm" hide-footer>
-          <p>You are about to send a contribution with the following information:</p>
-          <p>Excel file:  {{ this.input.excel.name }}</p>
-          <p>Your comments:</p>
-          <p class="font-italic">{{ input.comments }}</p>
-          <p>Your highlights:</p>
-          <p class="font-italic">{{ input.highlights }}</p>
-          <p>Additional files:</p>
-          <ul>
-            <li>file</li>
-          </ul>
-          <b-button size="md" v-on:click="closeModal ()">Cancel</b-button>
-          <b-button class="green" :to="{ path: './'}" replace size="md">Confirm</b-button>
-        </b-modal>
 
       </b-form>
 </template>
@@ -175,11 +160,6 @@ export default {
 
 #form-lease h3 {
   font-size: 1.2rem;
-}
-
-#form-lease .list-group {
-  max-height: 160px;
-  overflow: scroll;
 }
 
 #form-lease #excel-input #excel-label {

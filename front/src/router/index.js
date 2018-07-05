@@ -8,9 +8,9 @@ import Login from '@/components/Login/Login'
 import Viewer from '@/components/Viewer/Viewer'
 
 import Contributor from '@/components/Contributor/Contributor'
-import ContributorAddContribution from '@/components/ContributorAddContribution/ContributorAddContribution'
-import  ContributorReviewContribution from '@/components/ContributorReviewContribution/ContributorReviewContribution'
-import ContributorModifyContribution from '@/components/ContributorModifyContribution/ContributorModifyContribution'
+import ContributorSendContribution from '@/components/ContributorSendContribution/ContributorSendContribution'
+import ContributorReviewContribution from '@/components/ContributorReviewContribution/ContributorReviewContribution'
+import ContributorPreviewContribution from '@/components/ContributorPreviewContribution/ContributorPreviewContribution'
 
 import Admin from '@/components/Admin/Admin'
 import AdminReviewContribution from '@/components/AdminReviewContribution/AdminReviewContribution'
@@ -34,17 +34,17 @@ export default new Router({
       path: '/contributor',
       component: Contributor
     }, {
-      name: 'contributor-add-contribution',
-      path: '/contributor/add-contribution',
-      component: ContributorAddContribution
+      name: 'contributor-send-contribution',
+      path: '/contributor/send-contribution',
+      component: ContributorSendContribution
     }, {
       name: 'contributor-review-contribution',
       path: '/contributor/review',
       component: ContributorReviewContribution
     }, {
-      name: 'contributor-modify-contribution',
-      path: '/contributor/modify',
-      component: ContributorModifyContribution
+      name: 'contributor-preview-contribution',
+      path: '/contributor/send-contribution/preview',
+      component: ContributorPreviewContribution
     }, {
       name: 'admin',
       path: '/admin',

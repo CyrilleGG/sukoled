@@ -53,7 +53,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="mx-1 ml-auto purple" :to="{ path: '/contributor/modify'}" size="md">Modify the contribution</b-button>
+          <b-button class="mx-1 ml-auto purple" :to="{ path: 'send-contribution'}" size="md">Modify the contribution</b-button>
         </div>
 
       </div>

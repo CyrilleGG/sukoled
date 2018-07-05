@@ -1,5 +1,5 @@
 <template>
-  <div id="ContributorModifyContribution" class="container-fluid">
+  <div id="ContributorSendContribution" class="container-fluid">
 
     <Header :role="this.$root.$data.userInfo.role" />
 
@@ -20,7 +20,7 @@ import ContributorFormLease from '@/components/ContributorFormLease/ContributorF
 import ContributorFormRaf from '@/components/ContributorFormRaf/ContributorFormRaf'
 
 export default {
-  name: 'ContributorModifyContribution',
+  name: 'ContributorSendContribution',
 
   components: {
     Header,
@@ -31,7 +31,7 @@ export default {
 
   data () {
     return {
-      department: 'raf',
+      department: 'lease'
     }
   },
 
@@ -64,7 +64,7 @@ export default {
 
 <style scoped>
 
-#ContributorModifyContribution .page-content {
+#ContributorSendContribution .page-content {
   margin-top: 70px;
   min-height: 85vh;
 }

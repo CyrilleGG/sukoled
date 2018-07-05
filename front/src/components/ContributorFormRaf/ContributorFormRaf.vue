@@ -49,18 +49,8 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" size="md" v-b-modal.confirm>Submit</b-button>
+          <b-button class="ml-auto green" :to="{ path: 'preview'}" append size="md">Submit</b-button>
         </div>
-
-        <b-modal id="confirm" ref="confirm" hide-footer>
-          <p>You are about to send a contribution with the following information:</p>
-          <p>Input one:  {{ this.input.inputOne }}</p>
-          <p>Input two:  {{ this.input.inputTwo }}</p>
-          <p>Your comments:</p>
-          <p class="font-italic">{{ input.comments }}</p>
-          <b-button size="md" v-on:click="closeModal ()">Cancel</b-button>
-          <b-button class="green" :to="{ path: './'}" replace size="md">Confirm</b-button>
-        </b-modal>
 
       </b-form>
 </template>
@@ -122,65 +112,9 @@ export default {
   font-size: 1.2rem;
 }
 
-#form-raf .list-group {
-  max-height: 160px;
-  overflow: scroll;
-}
-
-#form-raf #excel-input #excel-label {
-  overflow: hidden;
-  transition: 0.3s ease;
-}
-
-#form-raf #excel-input #excel-label:hover {
-  cursor: pointer;
-  box-shadow: 0 5px 3px rgba(0,0,0,0.2);
-}
-
-#form-raf #excel-input #excel-label #upload-img {
-  height: 60px;
-  width: 60px;
-  background: linear-gradient(#eeeeee, #dedede);
-  transition: 0.3s ease;
-}
-
-#form-raf #excel-input #excel-label span {
-  line-height: 60px;
-  width: 200px;
-  font-size: 1.2rem;
-  color: #999999;
-  background-color: #eeeeee;
-  transition: 0.3s ease;
-}
-
-#form-raf #download {
-  font-size: 0.9rem;
-}
-
-#form-raf #download a {
-  color: #007bff;
-  text-decoration: underline;
-}
-
 #form-raf textarea {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
-}
-
-#form-raf #additional-files-input #additional-files-label {
-  color: #8e44ad;
-}
-
-#form-raf #additional-files-input #additional-files-label:hover {
-  cursor: pointer;
-}
-
-#form-raf #additional-files-input #additional-files-label span {
-  width: 35px;
-  line-height: 35px;
-  font-size: 1.8rem;
-  color: #ffffff;
-  background-color: #8e44ad;
 }
 
 #form-raf #confirm span {

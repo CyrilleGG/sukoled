@@ -22,6 +22,7 @@ new Vue({
   components: { App },
   template: '<App/>',
   data: {
-    userInfo: {}
+    userInfo: {},
+    formInput: {}
   }
 })

@@ -48,6 +48,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import AdminContributorsListItem from '@/components/AdminContributorsListItem/AdminContributorsListItem'
 import FilterDepartments from '@/components/FilterDepartments/FilterDepartments'
 import FilterPeriodicities from '@/components/FilterPeriodicities/FilterPeriodicities'
@@ -91,12 +94,20 @@ export default {
           checked: false
         }
       ],
+      
       selectedContributions: []
     }
   },
 
   created () {
-    // c
+    axios.get('http://localhost:3000/contributions')
+      .then((response) => {
+        console.log(response)
+      })
+
+      .catch((error) => {
+        console.log('No contribs')
+      })
   },
 
   methods: {

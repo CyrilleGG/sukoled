@@ -2,9 +2,9 @@
   <div class="form-container">
     <form id="login-form">
 
-      <input type="text" name="username" v-model="input.username" id="username" placeholder="Username">
+      <input id="username" v-model="input.username" type="text" placeholder="Username" name="username">
 
-      <input type="password" name="password" v-model="input.password" id="password" placeholder="Password">
+      <input id="password" v-model="input.password" type="password" placeholder="Password" name="password">
 
       <input type="submit" value="Login" v-on:click.prevent="login()">
       

@@ -26,13 +26,20 @@ export default {
 </script>
 
 <style>
+
 body {
   margin: 0;
   font-family: 'Lato', sans-serif;
   color: #2c3e50;
   background-color: #f3f3f3;
 }
+
 a, a:hover, a:link, a:visited {
   color: inherit;
 }
+
+fieldset>div {
+  width: 100%;
+}
+
 </style>

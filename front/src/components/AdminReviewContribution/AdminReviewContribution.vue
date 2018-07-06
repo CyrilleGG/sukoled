@@ -108,7 +108,7 @@ export default {
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
 
-    axios.get('/api/inputs/contribution_id='+ contribution_id +'/version/version_id='+ version_id)
+    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
       .then((response) => {
         console.log(response)
       })

@@ -25,7 +25,7 @@ module.exports = (req, res) => {
         // Si le mot de passe correspond au pseudonyme utilisateur, on envoie un token, sinon on renvoie un message d'erreur.
         var payload = {id: user.id};
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
-        res.json({message:"Ok", token:token, username:username, role:user.role});
+        res.json({token:token, username:username, role:user.role, user_id:user.id});
     } else {
         res.status(401).json({message:"Le mot de passe ne correspond pas"});
     }

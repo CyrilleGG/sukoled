@@ -1,0 +1,29 @@
+version: "3.1"
+
+services:
+  api:
+    image: "node:8-alpine"
+    restart: "unless-stopped"
+    command: "node /src/api/server.js"
+    volumes:
+      - "./api:/src/api"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "database"
+
+  database:
+    image: "mysql:5.7"
+    restart: "unless-stopped"
+    environment:
+      MYSQL_ROOT_PASSWORD: "WuY6WCxU"
+      MYSQL_DATABASE: "hestia"
+      MYSQL_USER: "natixis"
+      MYSQL_PASSWORD: "RpT4nvTV"
+    volumes:
+      - "hestia:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+
+volumes:
+  hestia:

@@ -89,6 +89,7 @@
                   <span class="d-inline-block mr-3 rounded-circle text-center align-middle font-weight-light">+</span> Add elements
                 </label>
                 <input id="additional-files" ref="additionalFiles" class="d-none" v-on:change="uploadFile ()" type="file" name="additional-files">
+                <!-- <p id="highlights" class="col-lg-12" v-model="input.additionalFiles" placeholder="Write your highlights..." :rows="4" name="highlights"></p> -->
               </div>
 
             </div>
@@ -98,7 +99,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" :to="{ path: 'preview'}" append size="md">Submit</b-button>
+          <b-button class="ml-auto green" v-on:click="transfer ()" :to="{ path: 'preview'}" append size="md">Submit</b-button>
         </div>
 
       </b-form>
@@ -135,8 +136,8 @@ export default {
       this.$data.input.additionalFiles.push(this.$refs.additionalFiles.files[0])
     },
 
-    closeModal () {
-      this.$refs.confirm.hide()
+    transfer () {
+      this.$root.$data.formInput=this.$data.input
     }
   }
 }

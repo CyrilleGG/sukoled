@@ -12,7 +12,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
 
-              <table class="col-lg-11 d-block mb-3 rounded">
+              <!-- <table class="col-lg-11 d-block mb-3 rounded">
                 <tr class="row">
 
                   <th class="col-lg-6 py-3 pl-5">Name</th>
@@ -37,6 +37,33 @@
                   <td class="col-lg-2 py-3 text-center last">€ 80 bm</td>
 
                 </tr>
+              </table> -->
+
+              <table class="col-lg-11 d-block mb-3 rounded">
+                <tr class="row">
+
+                  <th class="col-lg-6 py-3 pl-5">Name</th>
+                  <th class="col-lg-2 py-3 text-center">January</th>
+                  <th class="col-lg-2 py-3 text-center">February</th>
+                  <th class="col-lg-2 py-3 text-center">March</th>
+
+                </tr>
+                <tr class="row">
+
+                  <td class="col-lg-6 py-3 pl-5">Q1Gross EAD*</td>
+                  <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
+                  <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
+                  <td class="col-lg-2 py-3 text-center last">{{inputOne}}</td>
+
+                </tr>
+                <tr class="row">
+
+                  <td class="col-lg-6 py-3 pl-5">Net EAD*</td>
+                  <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
+                  <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
+                  <td class="col-lg-2 py-3 text-center last">{{inputTwo}}</td>
+
+                </tr>
               </table>
 
             </div>
@@ -49,7 +76,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your comments</h3>
-          <p class="col-lg-12 mb-3 pl-5">comment</p>
+          <p class="col-lg-12 mb-3 pl-5">{{comments}}</p>
         </div>
 
 
@@ -69,6 +96,10 @@ export default {
     // c
   },
 
+  created(){
+    this.$data.input=this.$root.$data.formInput
+  },
+
   data () {
     return {
       // c
@@ -76,7 +107,23 @@ export default {
   },
 
   methods: {
-    // c
+    sendToDb () {
+      // Envoyer ces infos au back
+      if (this.input.inputOne !== null && this.input.inputTwo !== null) {
+        axios.post('http://localhost:3000/api/contributionRaf/:version_id/user/:user_id', this.input)
+
+          .then((response) => {
+            console.log('Success!')
+          })
+
+          .catch((error) => {
+            console.log('NOPE')
+          })
+
+      } else {
+        console.log('Please, complete every step')
+      }
+    }
   }
 }
 </script>

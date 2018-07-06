@@ -12,7 +12,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
 
-              <table class="col-lg-11 d-block mb-3 rounded">
+              <!-- <table class="col-lg-11 d-block mb-3 rounded">
                 <tr class="row">
 
                   <th class="col-lg-6 py-3 pl-5">Name</th>
@@ -37,7 +37,8 @@
                   <td class="col-lg-2 py-3 text-center last">€ 80 bm</td>
 
                 </tr>
-              </table>
+              </table> -->
+              {{input.excel}}
 
             </div>
           </div>
@@ -49,7 +50,8 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your comments</h3>
-          <p class="col-lg-12 mb-3 pl-5">comment</p>
+          <p class="col-lg-12 mb-3 pl-5">{{input.comments}}</p>
+          <!-- <b-form-textarea id="comments" class="col-lg-12" v-model="input.comments" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea> -->
         </div>
 
 
@@ -58,7 +60,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your highlights</h3>
-          <p class="col-lg-12 mb-3 pl-5">highlights</p>
+          <p class="col-lg-12 mb-3 pl-5">{{input.highlights}}</p>
         </div>
 
 
@@ -67,13 +69,13 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">4</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your additional elements</h3>
-          <p class="col-lg-12 mb-3 pl-5">files</p>
+          <p class="col-lg-12 mb-3 pl-5">{{additionalFiles}}</p>
         </div>
 
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" :to="{ path: '../'}" replace size="md">Confirm</b-button>
+          <b-button class="ml-auto green" :to="{ path: '../'}" replace size="md" v-on:click.prevent='sendToDb(); cleanFormInput()'>Confirm</b-button>
         </div>
 
       </div>
@@ -89,12 +91,37 @@ export default {
 
   data () {
     return {
-      // c
+        input: {
+        excel: null,
+        comments: '',
+        highlights: '',
+        additionalFiles: []
+      }
     }
   },
 
+  created(){
+          this.$data.input=this.$root.$data.formInput
+  },
+
   methods: {
-    // c
+    sendToDb () {
+      // Envoyer ces infos au back
+      if (this.input.excel !== null) {
+        axios.post('http://localhost:3000/api/contributionFiliale/:version_id/user/:user_id', this.input)
+
+          .then((response) => {
+            console.log('Success!')
+          })
+
+          .catch((error) => {
+            console.log('NOPE')
+          })
+
+      } else {
+        console.log('Please, complete every step')
+      }
+    }
   }
 }
 </script>

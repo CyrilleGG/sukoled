@@ -56,7 +56,7 @@ module.exports = {
         // Appel des modules (routes/modules.js)
         const modules = require('./modules')
         const query = await modules.getPoliciesWVersionId(version_id, user_id);
-        if (query == 1) {
+        if ((query == 1) || (role=='admin')) {
             const department_slug = await modules.getDepSlugByVersion(version_id);
             const version_name = await modules.getVersionNameByVersion(version_id);
             const comment_admin = await modules.getAdminComment(version_id);

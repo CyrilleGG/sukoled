@@ -85,8 +85,8 @@ export default {
       this.$data.input.additionalFiles.push(this.$refs.additionalFiles.files[0])
     },
 
-    closeModal () {
-      this.$refs.confirm.hide()
+    transfer () {
+      this.$root.$data.formInput=this.$data.input
     }
   }
 }

@@ -15,22 +15,28 @@
       </p>
 
       <p class="col-lg-2 my-auto text-center">
-        {{ starts_at }}
+        {{ moment (starts_at) }}
       </p>
 
       <p class="col-lg-2 my-auto text-center">
-        {{ modified_at }}
+        {{ moment (modified_at) }}
       </p>
 
       <status v-bind:status="status_admin" />
 
-      <action v-bind:status="status_admin" />
+      <action 
+        v-bind:status="status_admin" 
+        v-bind:contribution_id="contribution_id"
+        v-bind:version_id="version_id"
+      />
             
     </div>
   </b-list-group-item>
 </template>
 
 <script>
+import moment from 'moment'
+
 import Status from '@/components/Status/Status'
 import Action from '@/components/Action/Action'
 
@@ -48,7 +54,9 @@ export default {
     'name',
     'starts_at',
     'modified_at',
-    'status_admin'
+    'status_admin',
+    'contribution_id',
+    'version_id'
   ],
 
   data () {
@@ -61,6 +69,10 @@ export default {
     updateCheck (value) {
       this.$data.check = value
       this.$emit('check-state', [this.$data.check, this.$props])
+    },
+
+    moment (date) {
+      return moment(date).format('MMMM Do, YYYY')
     }
   }
 }

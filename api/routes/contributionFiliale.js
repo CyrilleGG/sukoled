@@ -24,9 +24,9 @@ module.exports = {
         // Insertion des données dans la table 'contributions' - id est généré précédemment
         .insert({
             // Informations remplies par le contributeur
-            file:req.body.file,
-            comment_contributor:req.body.comment,
-            highlight:req.body.hightlight,
+            file:req.body.excel,
+            comment_contributor:req.body.comments,
+            highlight:req.body.hightlights,
             // Informations remplies automatiquement mais nécessaire pour la DB
             id:new_version_id,
             status_admin:'delivered',

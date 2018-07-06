@@ -76,8 +76,11 @@
 </template>
 
 <script>
-import Footer from '@/components/Footer/Footer'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import Header from '@/components/Header/Header'
+import Footer from '@/components/Footer/Footer'
 
 export default {
   name: 'AdminReviewContribution',
@@ -101,6 +104,18 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
+
+    const contribution_id = this.$route.query.contribution_id
+    const version_id = this.$route.query.version_id
+
+    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
+      .then((response) => {
+        console.log(response)
+      })
+
+      .catch((error) => {
+        console.log('error')
+      })
   },
 
   methods: {

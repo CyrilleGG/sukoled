@@ -35,6 +35,8 @@
             v-bind:starts_at="contribution.version_starts_at"
             v-bind:modified_at="contribution.version_created_at"
             v-bind:status_admin="contribution.version_status_admin"
+            v-bind:contribution_id="contribution.contribution_id"
+            v-bind:version_id="contribution.version_id"
             v-on:check-state="updateCheckedItems ($event)"
           />
         </b-list-group>

@@ -30,11 +30,11 @@
             v-if="(contribution.department == selectedDepartment || selectedDepartment == 'all') && (contribution.period == selectedPeriodicity || selectedPeriodicity == 'all')"
             v-bind:key="index"
             v-bind:checked="contribution.checked"
-            v-bind:order="contribution.order"
-            v-bind:name="contribution.name"
-            v-bind:created_at="contribution.created_at"
-            v-bind:modified_at="contribution.modified_at"
-            v-bind:status_admin="contribution.status_admin"
+            v-bind:order="contribution.contribution_order"
+            v-bind:name="contribution.contribution_name"
+            v-bind:starts_at="contribution.version_starts_at"
+            v-bind:modified_at="contribution.version_created_at"
+            v-bind:status_admin="contribution.version_status_admin"
             v-on:check-state="updateCheckedItems ($event)"
           />
         </b-list-group>
@@ -73,41 +73,24 @@ export default {
       checked: false,
       selectedPeriodicity: 'all',
       selectedDepartment: 'all',
-      contributions: [
-        {
-          order: 1,
-          name: 'Watchlist exposures',
-          department: 'raf',
-          period: 'monthly',
-          created_at: '26-06-2918',
-          modified_at: '29-06-2018',
-          status_admin: 'delivered',
-          checked: false
-        }, {
-          order: 1,
-          name: 'Credit RWA',
-          department: 'subsidaries',
-          period: 'quarterly',
-          created_at: '15-06-2018',
-          modified_at: '20-06-2018',
-          status_admin: 'hold',
-          checked: false
-        }
-      ],
+      contributions: [],
       
       selectedContributions: []
     }
   },
 
   created () {
-    // axios.get('http://localhost:3000/contributions')
-    //   .then((response) => {
-    //     console.log(response)
-    //   })
+    axios.get('http://localhost:3000/api/contributions')
+      .then((response) => {
+        for (var i = 0; i < response.data.contributions.length; i++) {
+          response.data.contributions[i].checked = false
+        }
+        this.$data.contributions = response.data.contributions
+      })
 
-    //   .catch((error) => {
-    //     console.log('No contribs')
-    //   })
+      .catch((error) => {
+        console.log('No contribs')
+      })
   },
 
   methods: {
@@ -135,7 +118,7 @@ export default {
       }
     },
 
-    all (check) {
+    all (check) {                                               // bug : dernier élément du tableau contributions push dans selectedContributions
       const contributions = this.$data.contributions
       var selected = this.$data.selectedContributions
       if (check == true) {

@@ -7,7 +7,7 @@
       </div>
 
       <p class="col-lg-1 my-auto text-center">
-        <!-- {{ order }} --> 1
+        {{ order }}
       </p>
 
       <p class="col-lg-3 my-auto">
@@ -15,11 +15,11 @@
       </p>
 
       <p class="col-lg-2 my-auto text-center">
-        <!-- {{ created_at }} --> date de req
+        {{ starts_at }}
       </p>
 
       <p class="col-lg-2 my-auto text-center">
-        <!-- {{ modified_at }} --> date de modif
+        {{ modified_at }}
       </p>
 
       <status v-bind:status="status_admin" />
@@ -46,7 +46,7 @@ export default {
     'checked',
     'order',
     'name',
-    'created_at',
+    'starts_at',
     'modified_at',
     'status_admin'
   ],

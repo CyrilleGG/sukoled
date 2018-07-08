@@ -16,31 +16,47 @@ module.exports = {
             knex('versions')
             .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
             .select('contributions.id')
-            .then(function(response){
-                return response
-        })
-        const file = knex('versions').select('file').where({'id':version_id});
-        const starts_at = knex('versions').select('starts_at').where({'id':version_id});
-        const ends_at = knex('versions').select('ends_at').where({'id':version_id});
+        //     .then(function(response){
+        //         return response
+        // })
+        const file = knex('versions').select('file_binary').where({'id':versionId});
+        const starts_at = knex('versions').select('starts_at').where({'id':versionId});
+        console.log(starts_at)
+        const ends_at = knex('versions').select('ends_at').where({'id':versionId});
 
-        return knex('versions').insert({
-            id:new_version_id,
-            contribution_id:contributionId,
-            parent_version:versionId,
-            file:file,
-            user_id:req.body.user_id,
-            comment_admin:req.body.comment,
-            status_admin:'progress',
-            status_contributor:'invalid',
-            starts_at:starts_at,
-            ends_at:ends_at
+        const testdebog = knex('versions').insert({
+            id: new_version_id,
+            contribution_id: contributionId,
+            parent_version_id: versionId,
+            file_binary: file,
+            user_id: req.body.user_id,
+            comment_admin: req.body.comment,
+            status_admin: 'progress',
+            status_contributor: 'invalid',
+            starts_at: starts_at,
+            ends_at: ends_at
         })
-            .then(function(response){
-                next();
-        })
-            .catch(function(err) {
-                console.log(err)
-        })
+        console.log(testdebog)
+
+        // return knex('versions').insert({
+        //     id:new_version_id,
+        //     contribution_id:contributionId,
+        //     parent_version_id:versionId,
+        //     file_binary:file,
+        //     user_id:req.body.user_id,
+        //     comment_admin:req.body.comment,
+        //     status_admin:'progress',
+        //     status_contributor:'invalid',
+        //     starts_at:starts_at,
+        //     ends_at:ends_at
+        // })
+        //     .then(function(response){
+        //         console.log(response);
+        //         next();
+        // })
+        //     .catch(function(err) {
+        //         console.log(err)
+        // })
     },
     
 

@@ -84,7 +84,7 @@ var contributor = require('./routes/contributor')
 app.get('/api/contributor/:user_id', contributor.home)
 
 var inputs = require('./routes/inputs')
-app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version) // user_id
+app.get('/api/inputs/:contribution_id/version/:version_id/:user_id', inputs.version) // user_id
 
 var createPolicies = require('./routes/createPolicies')
 app.get('/api/createPolicies', createPolicies.sendJSONDataPolicies)

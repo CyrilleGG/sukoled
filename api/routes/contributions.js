@@ -15,6 +15,7 @@ module.exports = {
             'department.name AS department_name',
             'contribution.id AS contribution_id',
             'contribution.name AS contribution_name',
+            'contribution.period AS contribution_period',
             'contribution.order AS contribution_order'
         )
         .from('versions as version')

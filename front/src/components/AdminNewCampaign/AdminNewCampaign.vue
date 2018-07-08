@@ -39,17 +39,17 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-radio-group id="departments" class="col-lg-6 my-auto" v-model="selectedDepartment" :options="departments" name="departments"></b-form-radio-group>
+              <b-form-radio-group id="departments" class="col-lg-6 my-2" v-model="selectedDepartment" :options="departments" name="departments"></b-form-radio-group>
 
-              <b-list-group v-if="selectedDepartment == 'raf'" class="col-lg-4">
+              <b-list-group v-if="selectedDepartment == 'raf'" class="col-lg-6">
                 <b-list-group-item v-for="(contribution, index) in contributions.raf" :key="index">
-                  <b-form-checkbox v-model="input.contributions" :value="contribution.value">{{ contribution.text }}</b-form-checkbox>
+                  <b-form-checkbox v-model="input.contributions" :value="contribution.value">{{ contribution.contribution_name }}</b-form-checkbox>
                 </b-list-group-item>
               </b-list-group>
 
-              <b-list-group v-else class="col-lg-4">
+              <b-list-group v-else class="col-lg-6">
                 <b-list-group-item v-for="(contribution, index) in contributions.subsidaries" :key="index">
-                  <b-form-checkbox v-model="input.contributions" :value="contribution.value">{{ contribution.text }}</b-form-checkbox>
+                  <b-form-checkbox v-model="input.contributions" :value="contribution.value">{{ contribution.contribution_name }}</b-form-checkbox>
                 </b-list-group-item>
               </b-list-group>
 
@@ -98,6 +98,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 
@@ -114,7 +117,10 @@ export default {
       selectedPeriodicity: 'monthly',
       selectedDepartment: 'raf',
 
-      periodicities: ['monthly', 'quarterly'],
+      periodicities: [
+        { value: 'monthly', text: 'Monthly' },
+        { value: 'quarterly', text: 'Quarterly' }
+      ],
       months: [
         { value: 'jan', text: 'January' },
         { value: 'feb', text: 'February' },
@@ -136,24 +142,23 @@ export default {
         { value: 'q4', text: 'Q4' }
       ],
 
-      departments:['raf', 'subsidaries'],
+      departments:[
+        { value: 'raf', text: 'RAF' },
+        { value: 'subsidaries', text: 'Subsidaries' }
+      ],
       contributions: {
-        raf: [
-          { value: '1dsffs', text: 'Global VaR' },
-          { value: '2jibdt', text: 'Credit RWA' },
-          { value: '3arllk', text: 'NPL rate' },
-          { value: '4pokmp', text: 'Cost of risk' }
-        ],
-        subsidaries: [
-          { value: '12jsfb', text: 'Lease'}
-        ]
+        raf: [],
+        subsidaries: []
       },
 
       input: {
         starts_at: '',
+        ends_at: '',
         contributions: [],
         message: null
-      }
+      },
+
+      data: null
     }
   },
 
@@ -165,6 +170,22 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
+
+    axios.get('http://localhost:3000/api/contributions')
+      .then((response) => {
+        // this.$data.data = response.data.contributions
+        // console.log(response.data.contributions)
+        for (var i = 0; i < response.data.contributions.length; i++) {
+          if (response.data.contributions[i].department_name == 'RAF') {
+            this.$data.contributions.raf.push(response.data.contributions[i])
+          } else {
+            this.$data.contributions.subsidaries.push(response.data.contributions[i])
+          }
+        }
+      })
+      .catch((error) => {
+        console.log('No contribs')
+      })
   },
 
   methods: {

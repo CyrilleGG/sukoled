@@ -3,7 +3,7 @@ var knex = require('knex')({
     connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
 });
 const uuidv4 = require('uuid/v4');
-const xlsx = require('node-xlsx').default;
+// const xlsx = require('node-xlsx').default;
 
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.    
 

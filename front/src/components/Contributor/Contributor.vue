@@ -36,6 +36,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import ContributorContributionsList from '@/components/ContributorContributionsList/ContributorContributionsList'
@@ -52,70 +55,7 @@ export default {
   data () {
     return {
       numOfAlerts: 3,
-
-      contributions: {
-        ongoing: [
-          {
-            name: 'Global Exposure',
-            department_name: 'RAF',
-            starts_at: '01-06-2918',
-            ends_at: '30-06-2018',
-            status_contributor: 'invalid',
-          }, {
-            name: 'Lease',
-            department_name: 'Lease',
-            starts_at: '01-06-2018',
-            ends_at: '30-06-2018',
-            status_contributor: 'not delivered',
-          }, {
-            name: 'Factor',
-            department_name: 'Factor',
-            starts_at: '01-06-2018',
-            ends_at: '30-06-2018',
-            status_contributor: 'pending',
-          }
-        ],
-
-        history: [
-          {
-            name: 'Global Exposure',
-            department_name: 'RAF',
-            starts_at: '01-05-2918',
-            ends_at: '30-05-2018',
-            status_contributor: 'done',
-          }, {
-            name: 'Lease',
-            department_name: 'Lease',
-            starts_at: '01-05-2018',
-            ends_at: '30-05-2018',
-            status_contributor: 'done',
-          }, {
-            name: 'Factor',
-            department_name: 'Factor',
-            starts_at: '01-05-2018',
-            ends_at: '30-05-2018',
-            status_contributor: 'done',
-          }, {
-            name: 'Global Exposure',
-            department_name: 'RAF',
-            starts_at: '01-04-2918',
-            ends_at: '30-04-2018',
-            status_contributor: 'done',
-          }, {
-            name: 'Lease',
-            department_name: 'Lease',
-            starts_at: '01-04-2018',
-            ends_at: '30-04-2018',
-            status_contributor: 'done',
-          }, {
-            name: 'Factor',
-            department_name: 'Factor',
-            starts_at: '01-04-2018',
-            ends_at: '30-04-2018',
-            status_contributor: 'done',
-          }
-        ]
-      }
+      contributions: []
     }
   },
 
@@ -125,6 +65,19 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
+
+    axios.get('http://localhost:3000/api/contributor/'+ this.$root.$data.userInfo.user_id)
+      .then((response) => {
+        console.log(response.data)
+        // for (var i = 0; i < response.data.contributions.length; i++) {
+        //   response.data.contributions[i].checked = false
+        // }
+        // this.$data.contributions = response.data.contributions
+      })
+
+      .catch((error) => {
+        console.log(error)
+      })
   }
 }
 </script>

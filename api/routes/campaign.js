@@ -1,7 +1,5 @@
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// api/routes/campaign.js
+var knex = require('../utilities/database')
 const uuidv4 = require('uuid/v4');
 
 // Changer les status d'une contribution afin de créer la première version

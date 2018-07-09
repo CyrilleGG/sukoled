@@ -1,3 +1,4 @@
+// api/server.js
 const PORT = process.env.PORT || 3000; // process utilisé par l'application nodeJS.
 
 // Appel des modules utilisés
@@ -13,10 +14,7 @@ const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 const mysql = require('mysql');
 const db = require('./db');
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+var knex = require('../utilities/database')
 
 // Appel de CORS, pour éviter les problèmes côté client lors des appels à la BDD
 var cors = require('cors');
@@ -64,7 +62,7 @@ app.get('/api/versionView/:version_id/user/:user_id', versionView.SendJSONDataCo
 
 // Routes pour refuser ou accepter une version : si refusé alors on crée une nouvelle version, si accepté alors on la patch
 var contribRefused = require('./routes/versionidrefused');
-app.get('/api/versionRefused/:version_id/user/:user_id', contribRefused.sendJSONDataRefuse); // user_id
+app.get('/api/versionRefused/:version_id/', contribRefused.sendJSONDataRefuse); // user_id
 app.post('/api/versionRefused/:version_id/:contribution_id', contribRefused.sendInfoToDBRefuse); // version_id
 app.patch('/api/versionAccept/:version_id', require('./routes/versionidaccept'));
 

@@ -1,5 +1,4 @@
-// TO
-// DELETE
+// api/routes/passport
 
 passport.use(new Strategy(
     function(username, password, cb) {

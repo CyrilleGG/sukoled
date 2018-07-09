@@ -3,7 +3,7 @@
 
     <Header :role="this.$root.$data.userInfo.role" />
 
-    <div class="row py-5 page-content">
+    <div v-if="this.data !== null" class="row py-5 page-content">
       <div class="col-lg-6  my-auto mx-auto">
 
         <div class="row mb-3 rounded py-4 pl-5 content">
@@ -39,7 +39,7 @@
           </table>
 
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's comment</p>
-          <p class="col-lg-12 mb-3 pl-0">The comment of the contributor for this contribution</p>
+          <p class="col-lg-12 mb-3 pl-0">{{ this.data[0].input_value }}</p>
 
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your highlights</p>
           <p class="col-lg-12 mb-3 pl-0">The highlights for this contribution</p>
@@ -47,13 +47,13 @@
           <b-form id="request-modification" class="col-lg-11 mt-4">
 
             <b-form-group id="comment-group" class="row">
-              <b-form-textarea id="comment" class="col-lg-12" v-model="comment" placeholder="Write your request..." :rows="4"></b-form-textarea>
+              <b-form-textarea id="comment" class="col-lg-12" v-model="comment_admin" placeholder="Write your request..." :rows="4"></b-form-textarea>
             </b-form-group>
 
             <div class="row">
               <div class="col-lg-12 px-0 text-right">
                 <b-button class="mx-1 purple" size="md" v-on:click="hideComment ()">Cancel</b-button>
-                <b-button class="mx-1 orange" :to="{ path: './'}" replace size="md">Send Request</b-button>
+                <b-button class="mx-1 orange" v-on:click="sendModificationRequest ()" replace size="md">Send Request</b-button>
               </div>
             </div>
 
@@ -92,7 +92,8 @@ export default {
 
   data () {
     return {
-      comment: ''
+      data: null,
+      comment_admin: ''
     }
   },
 
@@ -107,10 +108,11 @@ export default {
 
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
+    const username = this.$root.$data.userInfo.username
 
-    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
+    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id +'/'+ username)
       .then((response) => {
-        console.log(response)
+        this.$data.data = response.data.inputs
       })
 
       .catch((error) => {
@@ -131,6 +133,19 @@ export default {
       const actions = document.getElementById('actions')
       form.style.display = 'none'
       actions.style.display = 'flex'
+    },
+
+    sendModificationRequest () {
+      axios.post('http://localhost:3000/api/versionRefused/'+ this.$route.query.version_id +'/'+ this.$route.query.contribution_id, {
+        user_id: this.$root.$data.username,
+        comment: this.$data.comment_admin
+      })
+        .then((response) => {
+          this.$router.replace( {name: 'admin'} )
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 }

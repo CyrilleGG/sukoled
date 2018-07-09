@@ -1,3 +1,4 @@
+// modules
 var knex = require('knex')({
     client:'mysql',
     connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
@@ -193,6 +194,34 @@ module.exports.getContribWPolicies = async function(version_id, user_id){
     .select('policies.can_read')
     .then(function(response){
         return response[0].can_read
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
+module.exports.getFile = async function(version_id){
+    return knex('versions')
+    .where({
+        'versions.id':version_id,
+    })
+    .select('file_binary')
+    .then(function(response){
+        return response[0].file_binary
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
+module.exports.dateAndName = async function(version_id) {
+    return knex('versions')
+    .where({
+        'versions.id':version_id
+    })
+    .select('starts_at', 'ends_at', 'name')
+    .then(function(response){
+        return response[0]
     })
     .catch((error)=>{
         console.log(error)

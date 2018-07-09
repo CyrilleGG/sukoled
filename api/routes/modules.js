@@ -1,3 +1,4 @@
+// modules
 var knex = require('knex')({
     client:'mysql',
     connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
@@ -213,42 +214,14 @@ module.exports.getFile = async function(version_id){
     })
 }
 
-module.exports.getStartsAt = async function(version_id) {
+module.exports.dateAndName = async function(version_id) {
     return knex('versions')
     .where({
         'versions.id':version_id
     })
-    .select('starts_at')
+    .select('starts_at', 'ends_at', 'name')
     .then(function(response){
-        return response[0].starts_at
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
-}
-
-module.exports.getEndsAt = async function(version_id) {
-    return knex('versions')
-    .where({
-        'versions.id':version_id
-    })
-    .select('ends_at')
-    .then(function(response){
-        return response[0].ends_at
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
-}
-
-module.exports.getNameVersion = async function(version_id) {
-    return knex('versions')
-    .where({
-        'versions.id':version_id
-    })
-    .select('name')
-    .then(function(response){
-        return response[0].name
+        return response[0]
     })
     .catch((error)=>{
         console.log(error)

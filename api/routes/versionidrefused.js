@@ -11,34 +11,34 @@ module.exports = {
     sendInfoToDBRefuse:async function(req, res, next) {
 
         let new_version_id = await uuidv4();
-        var versionId = await req.params.version_id;
-        const contributionId = await knex('versions')
-            .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
-            .select('contributions.id')
+        var version_id = await req.params.version_id;
+        const contribution_id = await req.params.contribution_id;
         //     .then(function(response){
         //         return response
         // })
-        const file = await knex('versions').select('file_binary').where({'id':versionId});
-        const starts_at = await knex('versions').select('starts_at').where({'id':versionId});
-        console.log(starts_at)
-        const ends_at = await knex('versions').select('ends_at').where({'id':versionId});
+        const modules = await require('./modules')
+        const file = await modules.getFile(version_id);
+        const starts_at = await modules.getStartsAt(version_id);
+        const ends_at = await modules.getEndsAt(version_id);
+        const name = await modules.getNameVersion(version_id);
 
         return knex.insert({
             id: new_version_id,
-            contribution_id: req.params.contribution_id,
-            parent_version_id: versionId,
-            file_binary: file[0],
+            name: name,
+            contribution_id: contribution_id,
+            parent_version_id: version_id,
+            file_binary: file,
             user_id: req.body.user_id,
             comment_admin: req.body.comment,
             status_admin: 'progress',
             status_contributor: 'invalid',
-            starts_at: starts_at[0],
-            ends_at: ends_at[0]
+            starts_at: starts_at,
+            ends_at: ends_at,
+            user_id:'test'
         })
             .into('versions')
             .then(function(response){
-                console.log(response);
-                next();
+                res.json(null)
         })
             .catch(function(err) {
                 console.log(err)

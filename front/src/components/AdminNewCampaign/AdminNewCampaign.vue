@@ -123,24 +123,24 @@ export default {
         { value: 'quarterly', text: 'Quarterly' }
       ],
       months: [
-        { value: '2018-01-01T00:00:01.000Z', text: 'January' },
-        { value: '2018-02-01T00:00:01.000Z', text: 'February' },
-        { value: '2018-03-01T00:00:01.000Z', text: 'March' },
-        { value: '2018-04-01T00:00:01.000Z', text: 'April' },
-        { value: '2018-05-01T00:00:01.000Z', text: 'May' },
-        { value: '2018-06-01T00:00:01.000Z', text: 'June' },
-        { value: '2018-07-01T00:00:01.000Z', text: 'July' },
-        { value: '2018-08-01T00:00:01.000Z', text: 'August' },
-        { value: '2018-09-01T00:00:01.000Z', text: 'September' },
-        { value: '2018-10-01T00:00:01.000Z', text: 'October' },
-        { value: '2018-11-01T00:00:01.000Z', text: 'November' },
-        { value: '2018-12-01T00:00:01.000Z', text: 'December' }
-      ],
+        { value: moment( moment().year() + '-01-01' ).month(0).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'January' },
+        { value: moment( moment().year() + '-01-01' ).month(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'February' },
+        { value: moment( moment().year() + '-01-01' ).month(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'March' },
+        { value: moment( moment().year() + '-01-01' ).month(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'April' },
+        { value: moment( moment().year() + '-01-01' ).month(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'May' },
+        { value: moment( moment().year() + '-01-01' ).month(5).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'June' },
+        { value: moment( moment().year() + '-01-01' ).month(6).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'July' },
+        { value: moment( moment().year() + '-01-01' ).month(7).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'August' },
+        { value: moment( moment().year() + '-01-01' ).month(8).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'September' },
+        { value: moment( moment().year() + '-01-01' ).month(9).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'October' },
+        { value: moment( moment().year() + '-01-01' ).month(10).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'November' },
+        { value: moment( moment().year() + '-01-01' ).month(11).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'December' }
+      ], 
       quarters: [
-        { value: '2018-01-01T00:00:01.000Z', text: 'Q1' },
-        { value: '2018-04-01T00:00:01.000Z', text: 'Q2' },
-        { value: '2018-07-01T00:00:01.000Z', text: 'Q3' },
-        { value: '2018-10-01T00:00:01.000Z', text: 'Q4' }
+        { value: moment( moment().year() + '-01-01' ).quarter(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q1' },
+        { value: moment( moment().year() + '-01-01' ).quarter(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q2' },
+        { value: moment( moment().year() + '-01-01' ).quarter(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q3' },
+        { value: moment( moment().year() + '-01-01' ).quarter(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q4' }
       ],
 
       departments:[
@@ -158,12 +158,12 @@ export default {
         contributions: []
         // message: null
       },
-      message: null,
-      test: moment('2018-10-01T00:00:01.000Z')
+      message: null
     }
   },
 
   created () {
+    console.log(this.test)
     if (!this.$parent.$data.auth) {
       this.$router.replace({ name: 'login' })
     } else if (this.$root.$data.userInfo.role == 'contrib') {
@@ -185,6 +185,14 @@ export default {
       .catch((error) => {
         console.log('No contribs')
       })
+  },
+
+  updated() {
+    if (this.$data.selectedPeriodicity == 'monthly') {
+      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('27', 'days').format('YYYY-MM-DDTHH:mm:ss.000') + 'Z'
+    } else {
+      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('2', 'months').add('27', 'days').format('YYYY-MM-DDTHH:mm:ss.000') + 'Z'
+    }
   },
 
   methods: {

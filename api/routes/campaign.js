@@ -7,7 +7,7 @@ const uuidv4 = require('uuid/v4');
 // Changer les status d'une contribution afin de créer la première version
 
 module.exports = {
-    sendInfoToDBCampaign:async function(req, res, next) {
+    sendInfoToDBCampaign:async function(req, res) {
 
         let versionId = uuidv4();
         var contributionId = req.body.contribution_id;
@@ -15,7 +15,7 @@ module.exports = {
         return knex('versions').insert({
             // Valeur créées par l'utilisateur
             contribution_id:req.body.contribution_id,
-            name:req.body.name,
+            name:req.body.version_name,
             user_id:req.body.user_id,
             starts_at:req.body.starts_at,
             ends_at:req.body.ends_at,
@@ -24,11 +24,11 @@ module.exports = {
             contribution_id:contributionId, // ou req params ?
             // Valeurs entrées par défaut lors de la création d'une contribution
             file_binary:'null',
-            status_admin:'delivered',
+            status_admin:'hold',
             status_contributor:'not delivered',
         })
             .then(function(response){
-                next();
+                res.json(null)
             })
             .catch(function(err) {
                 console.log(err)

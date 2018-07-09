@@ -163,7 +163,6 @@ export default {
   },
 
   created () {
-    console.log(this.test)
     if (!this.$parent.$data.auth) {
       this.$router.replace({ name: 'login' })
     } else if (this.$root.$data.userInfo.role == 'contrib') {
@@ -172,13 +171,13 @@ export default {
       this.$router.replace({ name: 'viewer' })
     }
 
-    axios.get('http://localhost:3000/api/contributions')
+    axios.get('http://localhost:3000/api/campaign/')
       .then((response) => {
-        for (var i = 0; i < response.data.contributions.length; i++) {
-          if (response.data.contributions[i].department_name == 'RAF') {
-            this.$data.contributions.raf.push(response.data.contributions[i])
+        for (var i = 0; i < response.data.length; i++) {
+          if (response.data[i].department_slug == 'raf') {
+            this.$data.contributions.raf.push(response.data[i])
           } else {
-            this.$data.contributions.subsidaries.push(response.data.contributions[i])
+            this.$data.contributions.subsidaries.push(response.data[i])
           }
         }
       })
@@ -227,14 +226,26 @@ export default {
 
     createCampaign () {
       const contributions = this.$data.input.contributions
+      var version_name = 'Report for '
+      if (this.$data.selectedPeriodicity == 'monthly') {
+        version_name = version_name + moment(this.$data.input.starts_at).format('MMMM YYYY')
+      } else {
+        version_name = version_name + 'Q' + moment(this.$data.input.starts_at).quarter() + ' ' + moment().year()
+      }
       for (var i = 0; i < contributions.length; i++) {
-        axios.post('/api/campaign/', {
-          contribution_id: contribution.contribution_id,
-          version_name: 'Report for ' + this.$data.input.starts_at,
+        axios.post('http://localhost:3000/api/campaign/', {
+          contribution_id: contributions[i].contribution_id,
+          version_name: version_name,
           user_id: this.$root.$data.userInfo.user_id,
           starts_at: this.$data.input.starts_at,
           ends_at: this.$data.input.ends_at,
         })
+          .then((response) => {
+            this.$router.replace( {name: 'admin'} )
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       }
     },
 

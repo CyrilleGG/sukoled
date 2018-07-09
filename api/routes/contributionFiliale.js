@@ -10,12 +10,11 @@ module.exports = {
     sendInfoToDBFiliale:async function(req, res, next) {
         let new_version_id = uuidv4();
         // Récupération des données
-        const version_id = req.params.version_id;
-        const starts_at = knex('versions').select('starts_at').where({'id':version_id});
-        const ends_at = knex('versions').select('ends_at').where({'id':version_id});
-        const version_name = knex('versions').select('name').where({'id':version_id});
-        const user_id = req.body.user_id;
-        const contribution_id = 
+        const version_id = await req.params.version_id;
+        const modules = await require('./modules')
+        const dateAndName = await modules.dateAndName(version_id);
+        const user_id = await req.body.user_id;
+        const contribution_id = await
             knex('versions')
             .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
             .select('contributions.id')      
@@ -34,14 +33,14 @@ module.exports = {
             contribution_id:contribution_id,
             parent_version_id:version_id,
             user_id:user_id,
-            name:version_name,
-            starts_at:starts_at,
-            ends_at:ends_at,
+            name:dateAndName.name,
+            starts_at:dateAndName.starts_at,
+            ends_at:dateAndName.ends_at,
             user_id:req.body.user_id
         })
             .then(function(response){
             // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-            next();
+            res.json(null)
         })
         .catch(function(err) {
             console.log(err)

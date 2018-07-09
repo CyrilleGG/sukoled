@@ -8,23 +8,18 @@ const uuidv4 = require('uuid/v4');
 // Créer une nouvelle version avec les mêmes paramètres que la précédente mais en changeant les status.
 
 module.exports = {
-    sendInfoToDBRefuse:async function(req, res, next) {
+    sendInfoToDBRefuse:async function(req, res) {
 
         let new_version_id = await uuidv4();
         var version_id = await req.params.version_id;
         const contribution_id = await req.params.contribution_id;
-        //     .then(function(response){
-        //         return response
-        // })
         const modules = await require('./modules')
         const file = await modules.getFile(version_id);
-        const starts_at = await modules.getStartsAt(version_id);
-        const ends_at = await modules.getEndsAt(version_id);
-        const name = await modules.getNameVersion(version_id);
+        const dateAndName = await modules.dateAndName(version_id);
 
         return knex.insert({
             id: new_version_id,
-            name: name,
+            name: dateAndName.name,
             contribution_id: contribution_id,
             parent_version_id: version_id,
             file_binary: file,
@@ -32,17 +27,17 @@ module.exports = {
             comment_admin: req.body.comment,
             status_admin: 'progress',
             status_contributor: 'invalid',
-            starts_at: starts_at,
-            ends_at: ends_at,
+            starts_at: dateAndName.starts_at,
+            ends_at: dateAndName.ends_at,
             user_id:'test'
-        })
+            })
             .into('versions')
             .then(function(response){
                 res.json(null)
-        })
+            })
             .catch(function(err) {
                 console.log(err)
-        })
+            })
     },
     
 

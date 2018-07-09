@@ -8,12 +8,12 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = {
     sendInfoToDBRaf:async function(req, res) {
-        let new_version_id = await uuidv4();
+        let new_version_id = uuidv4();
         // Récupération des données
-        const version_id = await req.params.version_id;
-        const modules = await require('./modules')
+        const version_id = req.params.version_id;
+        const modules = require('./modules')
         const dateAndName = await modules.dateAndName(version_id);
-        const user_id = await req.body.user_id;
+        const user_id = req.body.user_id;
         const contribution_id = await
             knex('versions')
             .join('contributions', 'versions.contribution_id', '=', 'contributions.id')

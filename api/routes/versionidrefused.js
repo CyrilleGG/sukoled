@@ -10,10 +10,10 @@ const uuidv4 = require('uuid/v4');
 module.exports = {
     sendInfoToDBRefuse:async function(req, res) {
 
-        let new_version_id = await uuidv4();
-        var version_id = await req.params.version_id;
-        const contribution_id = await req.params.contribution_id;
-        const modules = await require('./modules')
+        let new_version_id = uuidv4();
+        var version_id = req.params.version_id;
+        const contribution_id = req.params.contribution_id;
+        const modules = require('./modules')
         const file = await modules.getFile(version_id);
         const dateAndName = await modules.dateAndName(version_id);
 
@@ -43,8 +43,8 @@ module.exports = {
 
     sendJSONDataRefuse:async function(req, res) {
 
-        const version_id = await req.params.version_id;
-        const user_id = await req.params.user_id;
+        const version_id = req.params.version_id;
+        const user_id = req.params.user_id;
         // Appel des modules (routes/modules.js)
         // const modules = require('./modules')
         // const query = await modules.getPoliciesWVersionId(version_id, user_id);

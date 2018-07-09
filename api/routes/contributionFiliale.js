@@ -11,32 +11,35 @@ module.exports = {
     sendInfoToDBFiliale:async function(req, res) {
         let new_version_id = uuidv4();
         // Récupération des données
-        const version_id = await req.params.version_id;
-        const modules = await require('./modules')
+        const version_id = req.body.version_id;
+        const modules =  require('./modules')
         const dateAndName = await modules.dateAndName(version_id);
-        const user_id = await req.body.user_id;
+        const user_id =  req.body.user_id;
         const contribution_id = await
             knex('versions')
             .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
             .select('contributions.id')      
 
+        console.log(req.body.excel)
+        // const contribution_id = '12c0b1f4-7eac-11e8-80a5-0a0a4839146e'
+
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
         .insert({
             // Informations remplies par le contributeur
-            file:req.body.excel,
+            file_binary:req.body.excel,
             comment_contributor:req.body.comments,
             highlight:req.body.hightlights,
             // Informations remplies automatiquement mais nécessaire pour la DB
             id:new_version_id,
             status_admin:'delivered',
             status_contributor:'pending',
-            contribution_id:contribution_id,
+            contribution_id:contribution_id[0].id,
             parent_version_id:version_id,
-            user_id:user_id,
-            name:dateAndName.name,
-            starts_at:dateAndName.starts_at,
-            ends_at:dateAndName.ends_at,
+            user_id:'user_id',
+            name:dateAndName.name[0],
+            starts_at:dateAndName.starts_at[0],
+            ends_at:dateAndName.ends_at[0],
             user_id:req.body.user_id
         })
             .then(function(response){
@@ -53,7 +56,7 @@ module.exports = {
         const version_id = await req.params.version_id;
         const user_id = await req.params.user_id;
         // Appel des modules (routes/modules.js)
-        const modules = await require('./modules')
+        const modules = require('./modules')
         // const query = await modules.getPoliciesWVersionId(version_id, user_id);
         // if (query == 1) {
             const department_slug = await modules.getDepSlugByVersion(version_id);

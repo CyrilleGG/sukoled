@@ -1,8 +1,5 @@
-// modules
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// api/routes/modules.js
+var knex = require('../utilities/database')
 const db = require('../db');
 var users = require('../db/users.js');
 
@@ -151,6 +148,7 @@ module.exports.getVersionFile = async function(version_id){
     });
 }
 
+// Récupération des droits en fonction de la contribution_id et de l'user_id
 module.exports.getPoliciesWContribId = async function(contribution_id, user_id){
     return knex('policies')
     .where({
@@ -166,6 +164,7 @@ module.exports.getPoliciesWContribId = async function(contribution_id, user_id){
     })
 }
 
+// Récupération des droits en fonction de la version_id et de l'user_id
 module.exports.getPoliciesWVersionId = async function(version_id, user_id){
     return knex('policies')
     .join('contributions', 'policies.contribution_id', '=', 'contributions.id')
@@ -183,23 +182,7 @@ module.exports.getPoliciesWVersionId = async function(version_id, user_id){
     })
 }
 
-module.exports.getContribWPolicies = async function(version_id, user_id){
-    return knex('policies')
-    .join('contributions', 'policies.contribution_id', '=', 'contributions.id')
-    .join('versions', 'contributions.id', '=', 'versions.contribution_id')
-    .where({
-        'versions.id':version_id,
-        'policies.user_id':user_id
-    })
-    .select('policies.can_read')
-    .then(function(response){
-        return response[0].can_read
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
-}
-
+// Récupération du file en fonction de l'user_id
 module.exports.getFile = async function(version_id){
     return knex('versions')
     .where({
@@ -214,6 +197,7 @@ module.exports.getFile = async function(version_id){
     })
 }
 
+// Récupération d'infos de la versions : starts_at, ends_at et name
 module.exports.dateAndName =  function(version_id) {
     return knex('versions')
     .where({

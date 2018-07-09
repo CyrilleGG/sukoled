@@ -1,7 +1,7 @@
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// api/routes/createcontrib
+// Appel à la BDD
+var knex = require('../utilities/database')
+// Module permettant de générer un UUID, ici V4.
 const uuidv4 = require('uuid/v4');
 
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.

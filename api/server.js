@@ -51,7 +51,10 @@ app.post('/api/login', require('./routes/login'));
 
 var contributionId = require('./routes/contributionId')
 app.get('/api/contribution/:contribution_id/user/:user_id', contributionId.sendInfoToClient) // user_id
-app.post('/api/campaign/', require ('./routes/campaign.js')) // /:contribution_id ?
+
+var campaign = require('./routes/campaign.js')
+app.post('/api/campaign/', campaign.sendInfoToDBCampaign) // /:contribution_id ?
+app.get('/api/campaign/', campaign.SendJSONDataCampaign)
 
 // Route pour récupérer les données d'une version
 var versionView = require('./routes/versionView');

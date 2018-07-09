@@ -6,8 +6,8 @@ module.exports = {
         const user_id = req.params.user_id;
         // Appel de la route module (routes/modules.js)
         const modules = require('./modules');
-        const query = await modules.getPoliciesWVersionId(version_id, user_id);
-        if (query == 1) {
+        // const query = await modules.getPoliciesWVersionId(version_id, user_id);
+        // if (query == 1) {
             // Appel des modules (routes/modules.js)
             // On récupère les données rentrées par le contributeur et l'administrateur et on les affiches
             // Contributeur : version_file, comment_contributor, hightlight
@@ -30,8 +30,8 @@ module.exports = {
                 highlight,
             };
             res.status(200).json(data);
-        } else {
-            res.json(null);
-        }
+        // } else {
+        //     res.json(null);
+        // }
     },
 }

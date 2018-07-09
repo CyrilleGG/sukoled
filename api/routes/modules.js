@@ -198,3 +198,59 @@ module.exports.getContribWPolicies = async function(version_id, user_id){
         console.log(error)
     })
 }
+
+module.exports.getFile = async function(version_id){
+    return knex('versions')
+    .where({
+        'versions.id':version_id,
+    })
+    .select('file_binary')
+    .then(function(response){
+        return response[0].file_binary
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
+module.exports.getStartsAt = async function(version_id) {
+    return knex('versions')
+    .where({
+        'versions.id':version_id
+    })
+    .select('starts_at')
+    .then(function(response){
+        return response[0].starts_at
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
+module.exports.getEndsAt = async function(version_id) {
+    return knex('versions')
+    .where({
+        'versions.id':version_id
+    })
+    .select('ends_at')
+    .then(function(response){
+        return response[0].ends_at
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
+module.exports.getNameVersion = async function(version_id) {
+    return knex('versions')
+    .where({
+        'versions.id':version_id
+    })
+    .select('name')
+    .then(function(response){
+        return response[0].name
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}

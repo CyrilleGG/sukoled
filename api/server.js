@@ -65,7 +65,7 @@ app.get('/api/versionView/:version_id/user/:user_id', versionView.SendJSONDataCo
 // Routes pour refuser ou accepter une version : si refusé alors on crée une nouvelle version, si accepté alors on la patch
 var contribRefused = require('./routes/versionidrefused');
 app.get('/api/versionRefused/:version_id/user/:user_id', contribRefused.sendJSONDataRefuse); // user_id
-app.post('/api/versionRefused/:version_id/', contribRefused.sendInfoToDBRefuse); // version_id
+app.post('/api/versionRefused/:version_id/:contribution_id', contribRefused.sendInfoToDBRefuse); // version_id
 app.patch('/api/versionAccept/:version_id', require('./routes/versionidaccept'));
 
 // Création d'une contribution : to delete
@@ -87,7 +87,7 @@ var contributor = require('./routes/contributor')
 app.get('/api/contributor/:user_id', contributor.home)
 
 var inputs = require('./routes/inputs')
-app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version) // user_id
+app.get('/api/inputs/:contribution_id/version/:version_id/:user_id', inputs.version) // user_id
 
 var createPolicies = require('./routes/createPolicies')
 app.get('/api/createPolicies', createPolicies.sendJSONDataPolicies)

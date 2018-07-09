@@ -3,7 +3,7 @@ var knex = require('knex')({
     connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
 });
 const uuidv4 = require('uuid/v4');
-const xlsx = require('node-xlsx');
+const xlsx = require('xlsx');
 
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.    
 
@@ -20,22 +20,9 @@ module.exports = {
             .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
             .select('contributions.id')      
 
-        const file = xlsx.parse(req.body.excel);
-        const rows = [];
-        const file_csv = "";
-
-        for(var i = 0; i < file.length; i++) {
-            var sheet = file[i];
-            for(var j = 0; j < sheet['data'].length; j++){
-                rows.push(sheet['data'][j]);
-            }
-        }
-
-        for(var i = 0; i < rows.length; i++) {
-            file_csv += rows[i].join(",") + "\n";
-        }
-
-        console.log(file_csv)
+        const file_csv = xlsx.utils.sheet_to_csv(req.body.excel, {
+            FS: ";"
+        })
 
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment

@@ -13,16 +13,15 @@ module.exports = (req,res,next) => {
     return knex('versions').insert({
         // Valeur créées par l'utilisateur
         contribution_id:req.body.contribution_id,
-        name:req.body.name,
+        name:req.body.version_name,
         user_id:req.body.user_id,
         starts_at:req.body.starts_at,
         ends_at:req.body.ends_at,
         // Valeurs rentrées automatiquement mais nécessaire pour la DB
         id:versionId,
-        contribution_id:contributionId, // ou req params ?
         // Valeurs entrées par défaut lors de la création d'une contribution
         file_binary:'null',
-        status_admin:'delivered',
+        status_admin:'hold',
         status_contributor:'not delivered',
     })
         .then(function(response){

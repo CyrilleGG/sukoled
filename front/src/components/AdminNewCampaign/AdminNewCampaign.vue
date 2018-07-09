@@ -43,13 +43,13 @@
 
               <b-list-group v-if="selectedDepartment == 'raf'" class="col-lg-6">
                 <b-list-group-item v-for="(contribution, index) in contributions.raf" :key="index">
-                  <b-form-checkbox v-model="input.contributions" :value="contribution.value">{{ contribution.contribution_name }}</b-form-checkbox>
+                  <b-form-checkbox v-model="input.contributions" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
                 </b-list-group-item>
               </b-list-group>
 
               <b-list-group v-else class="col-lg-6">
                 <b-list-group-item v-for="(contribution, index) in contributions.subsidaries" :key="index">
-                  <b-form-checkbox v-model="input.contributions" :value="contribution.value">{{ contribution.contribution_name }}</b-form-checkbox>
+                  <b-form-checkbox v-model="input.contributions" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
                 </b-list-group-item>
               </b-list-group>
 
@@ -69,7 +69,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="message" class="col-lg-12" v-model="input.message" placeholder="Write your request..." :rows="4"></b-form-textarea>
+              <b-form-textarea id="message" class="col-lg-12" v-model="message" placeholder="Write your request..." :rows="4"></b-form-textarea>
 
             </div>
           </div>
@@ -78,15 +78,15 @@
 
         <div id="actions" class="row">
           <div class="col-lg-12 px-0 text-right">
-            <b-button class="mx-1 purple" size="md" v-b-modal.confirm>Submit</b-button>
+            <b-button class="mx-1 purple" v-b-modal.confirm size="md">Submit</b-button>
           </div>
         </div>
 
-        <b-modal id="confirm" ref="confirm" hide-footer>
-          <p>You are about to send an email in order to recover <span>{{ displayNumOfcontributions () }} contributions</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
+        <b-modal v-if="input.contributions.length > 0" id="confirm" ref="confirm" hide-footer>
+          <p>You are about to send an email in order to recover <span>{{ displayNumOfcontributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
           <p id="display-message" class="p-3 rounded">{{ input.message }}</p>
           <b-button size="md" v-on:click="closeModal ()">Cancel</b-button>
-          <b-button class="green" :to="{ path: './'}" replace size="md">Confirm</b-button>
+          <b-button class="green" v-on:click="createCampaign ()" replace size="md">Confirm</b-button>
         </b-modal>
 
       </b-form>
@@ -100,6 +100,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
@@ -122,24 +123,24 @@ export default {
         { value: 'quarterly', text: 'Quarterly' }
       ],
       months: [
-        { value: 'jan', text: 'January' },
-        { value: 'feb', text: 'February' },
-        { value: 'mar', text: 'March' },
-        { value: 'apr', text: 'April' },
-        { value: 'may', text: 'May' },
-        { value: 'jun', text: 'June' },
-        { value: 'jul', text: 'July' },
-        { value: 'aug', text: 'August' },
-        { value: 'sep', text: 'September' },
-        { value: 'oct', text: 'October' },
-        { value: 'nov', text: 'November' },
-        { value: 'dec', text: 'December' }
+        { value: '2018-01-01T00:00:01.000Z', text: 'January' },
+        { value: '2018-02-01T00:00:01.000Z', text: 'February' },
+        { value: '2018-03-01T00:00:01.000Z', text: 'March' },
+        { value: '2018-04-01T00:00:01.000Z', text: 'April' },
+        { value: '2018-05-01T00:00:01.000Z', text: 'May' },
+        { value: '2018-06-01T00:00:01.000Z', text: 'June' },
+        { value: '2018-07-01T00:00:01.000Z', text: 'July' },
+        { value: '2018-08-01T00:00:01.000Z', text: 'August' },
+        { value: '2018-09-01T00:00:01.000Z', text: 'September' },
+        { value: '2018-10-01T00:00:01.000Z', text: 'October' },
+        { value: '2018-11-01T00:00:01.000Z', text: 'November' },
+        { value: '2018-12-01T00:00:01.000Z', text: 'December' }
       ],
       quarters: [
-        { value: 'q1', text: 'Q1' },
-        { value: 'q2', text: 'Q2' },
-        { value: 'q3', text: 'Q3' },
-        { value: 'q4', text: 'Q4' }
+        { value: '2018-01-01T00:00:01.000Z', text: 'Q1' },
+        { value: '2018-04-01T00:00:01.000Z', text: 'Q2' },
+        { value: '2018-07-01T00:00:01.000Z', text: 'Q3' },
+        { value: '2018-10-01T00:00:01.000Z', text: 'Q4' }
       ],
 
       departments:[
@@ -154,11 +155,11 @@ export default {
       input: {
         starts_at: '',
         ends_at: '',
-        contributions: [],
-        message: null
+        contributions: []
+        // message: null
       },
-
-      data: null
+      message: null,
+      test: moment('2018-10-01T00:00:01.000Z')
     }
   },
 
@@ -173,8 +174,6 @@ export default {
 
     axios.get('http://localhost:3000/api/contributions')
       .then((response) => {
-        // this.$data.data = response.data.contributions
-        // console.log(response.data.contributions)
         for (var i = 0; i < response.data.contributions.length; i++) {
           if (response.data.contributions[i].department_name == 'RAF') {
             this.$data.contributions.raf.push(response.data.contributions[i])
@@ -190,8 +189,10 @@ export default {
 
   methods: {
     displayNumOfcontributions () {
-      if (this.$data.input.contributions.length > 0) {
-        return this.$data.input.contributions.length
+      if (this.$data.input.contributions.length > 0 && this.$data.input.contributions.length > 1) {
+        return this.$data.input.contributions.length + ' contributions'
+      } else if (this.$data.input.contributions.length = 1) {
+        return '1 contribution'
       }
     },
 
@@ -213,6 +214,19 @@ export default {
             }
           }
         }
+      }
+    },
+
+    createCampaign () {
+      const contributions = this.$data.input.contributions
+      for (var i = 0; i < contributions.length; i++) {
+        axios.post('/api/campaign/', {
+          contribution_id: contribution.contribution_id,
+          version_name: 'Report for ' + this.$data.input.starts_at,
+          user_id: this.$root.$data.userInfo.user_id,
+          starts_at: this.$data.input.starts_at,
+          ends_at: this.$data.input.ends_at,
+        })
       }
     },
 

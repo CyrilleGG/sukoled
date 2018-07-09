@@ -14,7 +14,7 @@ const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 const mysql = require('mysql');
 const db = require('./db');
-var knex = require('../utilities/database')
+var knex = require('./utilities/database')
 
 // Appel de CORS, pour éviter les problèmes côté client lors des appels à la BDD
 var cors = require('cors');

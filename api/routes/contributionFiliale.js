@@ -3,11 +3,12 @@ var knex = require('knex')({
     connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
 });
 const uuidv4 = require('uuid/v4');
+const xlsx = require('node-xlsx').default;
 
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.    
 
 module.exports = {
-    sendInfoToDBFiliale:async function(req, res, next) {
+    sendInfoToDBFiliale:async function(req, res) {
         let new_version_id = uuidv4();
         // Récupération des données
         const version_id = await req.params.version_id;
@@ -49,17 +50,17 @@ module.exports = {
 
     sendJSONDataFiliale:async function(req, res) {
 
-        const version_id = req.params.version_id;
-        const user_id = req.params.user_id;
+        const version_id = await req.params.version_id;
+        const user_id = await req.params.user_id;
         // Appel des modules (routes/modules.js)
-        const modules = require('./modules')
+        const modules = await require('./modules')
         // const query = await modules.getPoliciesWVersionId(version_id, user_id);
         // if (query == 1) {
             const department_slug = await modules.getDepSlugByVersion(version_id);
             const version_name = await modules.getVersionNameByVersion(version_id);
             const comment_admin = await modules.getAdminComment(version_id);
 
-            const data = {
+            const data = await {
                 department_slug,
                 version_name,
                 comment_admin

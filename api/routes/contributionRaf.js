@@ -7,7 +7,7 @@ const uuidv4 = require('uuid/v4');
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.    
 
 module.exports = {
-    sendInfoToDBRaf:async function(req, res, next) {
+    sendInfoToDBRaf:async function(req, res) {
         let new_version_id = await uuidv4();
         // Récupération des données
         const version_id = await req.params.version_id;

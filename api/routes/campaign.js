@@ -38,7 +38,7 @@ module.exports = {
         });
     },
 
-    SendJSONDataCampaign:async function(req, res, next) {
+    SendJSONDataCampaign:async function(req, res) {
         return knex('contributions')
         .select(
             'contributions.id as contribution_id',

@@ -43,8 +43,8 @@ module.exports = {
 
     sendJSONDataRefuse:async function(req, res) {
 
-        const version_id = req.params.version_id;
-        const user_id = req.params.user_id;
+        const version_id = await req.params.version_id;
+        const user_id = await req.params.user_id;
         // Appel des modules (routes/modules.js)
         // const modules = require('./modules')
         // const query = await modules.getPoliciesWVersionId(version_id, user_id);

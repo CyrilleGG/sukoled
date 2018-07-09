@@ -18,17 +18,19 @@ module.exports = {
         const dateAndName = await modules.dateAndName(version_id);
 
         return knex.insert({
-            id: new_version_id,
-            name: dateAndName.name,
-            contribution_id: contribution_id,
-            parent_version_id: version_id,
-            file_binary: file,
-            user_id: req.body.user_id,
+            // Informations remplies par le contributeur
             comment_admin: req.body.comment,
+            // Informations remplies automatiquement mais nécessaire pour la DB
+            file_binary: file,
+            id: new_version_id,
+            name: dateAndName[0].name,
+            contribution_id: contribution_id[0].id,
+            parent_version_id: version_id,
+            user_id: req.body.user_id,
             status_admin: 'progress',
             status_contributor: 'invalid',
-            starts_at: dateAndName.starts_at,
-            ends_at: dateAndName.ends_at,
+            starts_at: dateAndName[0].starts_at,
+            ends_at: dateAndName[0].ends_at,
             user_id:'test'
             })
             .into('versions')

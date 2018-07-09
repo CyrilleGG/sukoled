@@ -31,12 +31,12 @@ module.exports = {
             id:new_version_id,
             status_admin:'delivered',
             status_contributor:'pending',
-            contribution_id:contribution_id,
+            contribution_id:contribution_id[0].id,
             parent_version_id:version_id,
             user_id:user_id,
-            name:dateAndName.name,
-            starts_at:dateAndName.starts_at,
-            ends_at:dateAndName.ends_at,
+            name:dateAndName[0].name,
+            starts_at:dateAndName[0].starts_at,
+            ends_at:dateAndName[0].ends_at,
             user_id:req.body.user_id
         })
             .then(function(response){

@@ -39,17 +39,17 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-radio-group id="departments" class="col-lg-6 my-auto" v-model="selectedDepartment" :options="departments" name="departments"></b-form-radio-group>
+              <b-form-radio-group id="departments" class="col-lg-6 my-2" v-model="selectedDepartment" :options="departments" name="departments"></b-form-radio-group>
 
-              <b-list-group v-if="selectedDepartment == 'raf'" class="col-lg-4">
+              <b-list-group v-if="selectedDepartment == 'raf'" class="col-lg-6">
                 <b-list-group-item v-for="(contribution, index) in contributions.raf" :key="index">
-                  <b-form-checkbox v-model="input.contributions" :value="contribution.value">{{ contribution.text }}</b-form-checkbox>
+                  <b-form-checkbox v-model="input.contributions" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
                 </b-list-group-item>
               </b-list-group>
 
-              <b-list-group v-else class="col-lg-4">
+              <b-list-group v-else class="col-lg-6">
                 <b-list-group-item v-for="(contribution, index) in contributions.subsidaries" :key="index">
-                  <b-form-checkbox v-model="input.contributions" :value="contribution.value">{{ contribution.text }}</b-form-checkbox>
+                  <b-form-checkbox v-model="input.contributions" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
                 </b-list-group-item>
               </b-list-group>
 
@@ -69,7 +69,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="message" class="col-lg-12" v-model="input.message" placeholder="Write your request..." :rows="4"></b-form-textarea>
+              <b-form-textarea id="message" class="col-lg-12" v-model="message" placeholder="Write your request..." :rows="4"></b-form-textarea>
 
             </div>
           </div>
@@ -78,15 +78,15 @@
 
         <div id="actions" class="row">
           <div class="col-lg-12 px-0 text-right">
-            <b-button class="mx-1 purple" size="md" v-b-modal.confirm>Submit</b-button>
+            <b-button class="mx-1 purple" v-b-modal.confirm size="md">Submit</b-button>
           </div>
         </div>
 
-        <b-modal id="confirm" ref="confirm" hide-footer>
-          <p>You are about to send an email in order to recover <span>{{ displayNumOfcontributions () }} contributions</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
+        <b-modal v-if="input.contributions.length > 0" id="confirm" ref="confirm" hide-footer>
+          <p>You are about to send an email in order to recover <span>{{ displayNumOfcontributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
           <p id="display-message" class="p-3 rounded">{{ input.message }}</p>
           <b-button size="md" v-on:click="closeModal ()">Cancel</b-button>
-          <b-button class="green" :to="{ path: './'}" replace size="md">Confirm</b-button>
+          <b-button class="green" v-on:click="createCampaign ()" replace size="md">Confirm</b-button>
         </b-modal>
 
       </b-form>
@@ -98,6 +98,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import moment from 'moment'
+
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 
@@ -114,50 +118,52 @@ export default {
       selectedPeriodicity: 'monthly',
       selectedDepartment: 'raf',
 
-      periodicities: ['monthly', 'quarterly'],
-      months: [
-        { value: 'jan', text: 'January' },
-        { value: 'feb', text: 'February' },
-        { value: 'mar', text: 'March' },
-        { value: 'apr', text: 'April' },
-        { value: 'may', text: 'May' },
-        { value: 'jun', text: 'June' },
-        { value: 'jul', text: 'July' },
-        { value: 'aug', text: 'August' },
-        { value: 'sep', text: 'September' },
-        { value: 'oct', text: 'October' },
-        { value: 'nov', text: 'November' },
-        { value: 'dec', text: 'December' }
+      periodicities: [
+        { value: 'monthly', text: 'Monthly' },
+        { value: 'quarterly', text: 'Quarterly' }
       ],
+      months: [
+        { value: moment( moment().year() + '-01-01' ).month(0).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'January' },
+        { value: moment( moment().year() + '-01-01' ).month(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'February' },
+        { value: moment( moment().year() + '-01-01' ).month(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'March' },
+        { value: moment( moment().year() + '-01-01' ).month(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'April' },
+        { value: moment( moment().year() + '-01-01' ).month(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'May' },
+        { value: moment( moment().year() + '-01-01' ).month(5).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'June' },
+        { value: moment( moment().year() + '-01-01' ).month(6).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'July' },
+        { value: moment( moment().year() + '-01-01' ).month(7).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'August' },
+        { value: moment( moment().year() + '-01-01' ).month(8).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'September' },
+        { value: moment( moment().year() + '-01-01' ).month(9).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'October' },
+        { value: moment( moment().year() + '-01-01' ).month(10).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'November' },
+        { value: moment( moment().year() + '-01-01' ).month(11).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'December' }
+      ], 
       quarters: [
-        { value: 'q1', text: 'Q1' },
-        { value: 'q2', text: 'Q2' },
-        { value: 'q3', text: 'Q3' },
-        { value: 'q4', text: 'Q4' }
+        { value: moment( moment().year() + '-01-01' ).quarter(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q1' },
+        { value: moment( moment().year() + '-01-01' ).quarter(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q2' },
+        { value: moment( moment().year() + '-01-01' ).quarter(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q3' },
+        { value: moment( moment().year() + '-01-01' ).quarter(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q4' }
       ],
 
-      departments:['raf', 'subsidaries'],
+      departments:[
+        { value: 'raf', text: 'RAF' },
+        { value: 'subsidaries', text: 'Subsidaries' }
+      ],
       contributions: {
-        raf: [
-          { value: '1dsffs', text: 'Global VaR' },
-          { value: '2jibdt', text: 'Credit RWA' },
-          { value: '3arllk', text: 'NPL rate' },
-          { value: '4pokmp', text: 'Cost of risk' }
-        ],
-        subsidaries: [
-          { value: '12jsfb', text: 'Lease'}
-        ]
+        raf: [],
+        subsidaries: []
       },
 
       input: {
         starts_at: '',
-        contributions: [],
-        message: null
-      }
+        ends_at: '',
+        contributions: []
+        // message: null
+      },
+      message: null
     }
   },
 
   created () {
+    console.log(this.test)
     if (!this.$parent.$data.auth) {
       this.$router.replace({ name: 'login' })
     } else if (this.$root.$data.userInfo.role == 'contrib') {
@@ -165,12 +171,36 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
+
+    axios.get('http://localhost:3000/api/contributions')
+      .then((response) => {
+        for (var i = 0; i < response.data.contributions.length; i++) {
+          if (response.data.contributions[i].department_name == 'RAF') {
+            this.$data.contributions.raf.push(response.data.contributions[i])
+          } else {
+            this.$data.contributions.subsidaries.push(response.data.contributions[i])
+          }
+        }
+      })
+      .catch((error) => {
+        console.log('No contribs')
+      })
+  },
+
+  updated() {
+    if (this.$data.selectedPeriodicity == 'monthly') {
+      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('27', 'days').format('YYYY-MM-DDTHH:mm:ss.000') + 'Z'
+    } else {
+      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('2', 'months').add('27', 'days').format('YYYY-MM-DDTHH:mm:ss.000') + 'Z'
+    }
   },
 
   methods: {
     displayNumOfcontributions () {
-      if (this.$data.input.contributions.length > 0) {
-        return this.$data.input.contributions.length
+      if (this.$data.input.contributions.length > 0 && this.$data.input.contributions.length > 1) {
+        return this.$data.input.contributions.length + ' contributions'
+      } else if (this.$data.input.contributions.length = 1) {
+        return '1 contribution'
       }
     },
 
@@ -192,6 +222,19 @@ export default {
             }
           }
         }
+      }
+    },
+
+    createCampaign () {
+      const contributions = this.$data.input.contributions
+      for (var i = 0; i < contributions.length; i++) {
+        axios.post('/api/campaign/', {
+          contribution_id: contribution.contribution_id,
+          version_name: 'Report for ' + this.$data.input.starts_at,
+          user_id: this.$root.$data.userInfo.user_id,
+          starts_at: this.$data.input.starts_at,
+          ends_at: this.$data.input.ends_at,
+        })
       }
     },
 

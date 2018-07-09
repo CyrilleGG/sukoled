@@ -136,7 +136,7 @@ export default {
     },
 
     sendModificationRequest () {
-      axios.post('http://localhost:3000/api/versionRefused/'+ this.$route.query.version_id, {
+      axios.post('http://localhost:3000/api/versionRefused/'+ this.$route.query.version_id +'/'+ this.$route.query.contribution_id, {
         user_id: this.$root.$data.username,
         comment: this.$data.comment_admin
       })
@@ -144,7 +144,7 @@ export default {
           this.$router.replace( {name: 'admin'} )
         })
         .catch((error) => {
-          resolve(error)
+          console.log(error)
         })
     }
   }

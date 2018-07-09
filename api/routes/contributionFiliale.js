@@ -37,9 +37,9 @@ module.exports = {
             contribution_id:contribution_id[0].id,
             parent_version_id:version_id,
             user_id:'user_id',
-            name:dateAndName.name[0],
-            starts_at:dateAndName.starts_at[0],
-            ends_at:dateAndName.ends_at[0],
+            name:dateAndName[0].name,
+            starts_at:dateAndName[0].starts_at,
+            ends_at:dateAndName[0].ends_at,
             user_id:req.body.user_id
         })
             .then(function(response){
@@ -53,8 +53,8 @@ module.exports = {
 
     sendJSONDataFiliale:async function(req, res) {
 
-        const version_id = await req.params.version_id;
-        const user_id = await req.params.user_id;
+        const version_id = req.params.version_id;
+        const user_id = req.params.user_id;
         // Appel des modules (routes/modules.js)
         const modules = require('./modules')
         // const query = await modules.getPoliciesWVersionId(version_id, user_id);

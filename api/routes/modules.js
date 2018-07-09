@@ -221,7 +221,7 @@ module.exports.dateAndName =  function(version_id) {
     })
     .select('starts_at', 'ends_at', 'name')
     .then(function(response){
-        return response[0]
+        return response
     })
     .catch((error)=>{
         console.log(error)

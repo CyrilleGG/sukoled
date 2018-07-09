@@ -5,13 +5,13 @@ var knex = require('knex')({
 
 // Changer les status d'une contribution afin de lui donner le status "acceptée"
 
-module.exports = (req,res,next) => {
+module.exports = (req,res) => {
     var versionId = req.params.version_id;
 
     knex('versions')
     .where({'versions.contribution_id':contributionId, 'versions.id':versionId})
     .update({status_admin:'done', status_contributor:'done'})
     .then(() => {
-        next();
+        res.json(null)
     })
 }

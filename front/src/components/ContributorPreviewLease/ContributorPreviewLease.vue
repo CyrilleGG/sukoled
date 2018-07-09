@@ -82,6 +82,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 export default {
   name: 'ContributorPreviewLease',
 
@@ -108,7 +111,7 @@ export default {
     sendToDb () {
       // Envoyer ces infos au back
       if (this.input.excel !== null) {
-        axios.post('http://localhost:3000/api/contributionFiliale/:version_id/user/:user_id', this.input)
+        axios.post('http://localhost:3000/api/contributionFiliale/:version_id/', this.input)
 
           .then((response) => {
             console.log('Success!')

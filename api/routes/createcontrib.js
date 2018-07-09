@@ -7,7 +7,7 @@ const uuidv4 = require('uuid/v4');
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.
 
 module.exports = {
-    sendInfoToDB:async function(req, res, next) {
+    sendInfoToDB:async function(req, res) {
         var dep = req.body.department_id
         var departmentID = knex.from('departments').where({'slug':dep}).select('id')
         let contribution_id = uuidv4();        
@@ -38,7 +38,7 @@ module.exports = {
                     })
                     .then(function(responseB){
                         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-                        next();
+                        res.json(null)
                     })
                     .catch(function(err) {
                         console.log(err)

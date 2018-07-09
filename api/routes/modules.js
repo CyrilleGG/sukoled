@@ -214,7 +214,7 @@ module.exports.getFile = async function(version_id){
     })
 }
 
-module.exports.dateAndName = async function(version_id) {
+module.exports.dateAndName =  function(version_id) {
     return knex('versions')
     .where({
         'versions.id':version_id

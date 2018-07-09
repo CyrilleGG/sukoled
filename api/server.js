@@ -50,11 +50,11 @@ app.get('/api/', function(req, res) { res.json({message: "Express is up!"}); });
 app.post('/api/login', require('./routes/login'));
 
 var contributionId = require('./routes/contributionId')
-app.get('/api/contribution/:contribution_id/user/:user_id', contributionId.sendInfoToClient) // user_id
+app.get('/api/contribution/:contribution_id', contributionId.sendInfoToClient) // user_id
 
 var campaign = require('./routes/campaign.js')
-app.post('/api/campaign/', campaign.sendInfoToDBCampaign) // /:contribution_id ?
-app.get('/api/campaign/', campaign.SendJSONDataCampaign)
+app.post('/api/campaign', campaign.sendInfoToDBCampaign) // /:contribution_id ?
+app.get('/api/campaign', campaign.SendJSONDataCampaign)
 
 // Route pour récupérer les données d'une version
 var versionView = require('./routes/versionView');
@@ -75,7 +75,7 @@ app.post('/api/createcontrib', createcontrib.sendInfoToDB);
 
 // Contributeur : Création d'une version d'une contribution Non-Raf
 var contributionFiliale = require('./routes/contributionFiliale');
-app.get('/api/contributionFiliale/:version_id/user/:user_id', contributionFiliale.sendJSONDataFiliale); // :user_id
+app.get('/api/contributionFiliale/:version_id', contributionFiliale.sendJSONDataFiliale); // :user_id
 app.post('/api/contributionFiliale/:version_id', contributionFiliale.sendInfoToDBFiliale);
 
 // Contributeur : Création d'une version d'une contribution Raf

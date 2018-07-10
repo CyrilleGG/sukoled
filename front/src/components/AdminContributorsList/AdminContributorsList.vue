@@ -4,8 +4,6 @@
     <div class="row mb-3">
       <filter-departments v-on:selected-department="selectedDepartment = $event" />
       <filter-periodicities v-on:selected-periodicity="selectedPeriodicity = $event" />
-      <filter-monthly v-if="selectedPeriodicity == 'monthly'" />
-      <filter-quarterly v-if="selectedPeriodicity == 'quarterly'" />
     </div>
 
     <div class="row">
@@ -28,7 +26,7 @@
         <b-list-group id="contributors-list-items" class="row" flush>
           <admin-contributors-list-item
             v-for="(contribution, index) in contributions"
-            v-if="(contribution.department == selectedDepartment || selectedDepartment == 'all') && (contribution.period == selectedPeriodicity || selectedPeriodicity == 'all')"
+            v-if="(contribution.department_slug == selectedDepartment || selectedDepartment == 'all') && (contribution.contribution_period == selectedPeriodicity || selectedPeriodicity == 'all')"
             v-bind:key="index"
             v-bind:checked="contribution.checked"
             v-bind:department_name="contribution.department_name"

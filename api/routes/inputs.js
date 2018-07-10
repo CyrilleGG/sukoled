@@ -1,16 +1,18 @@
+// api/routes/inputs
 const _ = require('lodash');
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// Appel à la BDD
+var knex = require('../utilities/database')
+
+// Récupération de la liste des inputs liés à une contribution.
 
 module.exports = {
     version: async function(req, res) {
         //Permet de vérifier les droits users avant d'envoyer le json
         const contribution_id = req.params.contribution_id;
-        const user_id = req.params.user_id;
+        const version_id = req.params.version_id;
+        // const user_id = req.params.user_id;
         // const role = req.params.role;
-        const modules = require('./modules');
+        // const modules = require('./modules');
         // const query = await modules.getPoliciesWContribId(contribution_id, user_id);
         // if (query == 1){
             const inputs = await knex.select(

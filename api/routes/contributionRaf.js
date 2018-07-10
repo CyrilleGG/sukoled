@@ -1,19 +1,19 @@
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// api/routes/contributionRaf
+// Appel à la BDD
+var knex = require('../utilities/database')
+// Module permettant de générer un UUID, ici V4.
 const uuidv4 = require('uuid/v4');
 
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.    
 
 module.exports = {
     sendInfoToDBRaf:async function(req, res) {
-        let new_version_id = await uuidv4();
+        let new_version_id = uuidv4();
         // Récupération des données
-        const version_id = await req.params.version_id;
-        const modules = await require('./modules')
+        const version_id = req.params.version_id;
+        const modules = require('./modules')
         const dateAndName = await modules.dateAndName(version_id);
-        const user_id = await req.body.user_id;
+        const user_id = req.body.user_id;
         const contribution_id = await
             knex('versions')
             .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
@@ -31,12 +31,12 @@ module.exports = {
             id:new_version_id,
             status_admin:'delivered',
             status_contributor:'pending',
-            contribution_id:contribution_id,
+            contribution_id:contribution_id[0].id,
             parent_version_id:version_id,
             user_id:user_id,
-            name:dateAndName.name,
-            starts_at:dateAndName.starts_at,
-            ends_at:dateAndName.ends_at,
+            name:dateAndName[0].name,
+            starts_at:dateAndName[0].starts_at,
+            ends_at:dateAndName[0].ends_at,
             user_id:req.body.user_id
         })
             .then(function(response){

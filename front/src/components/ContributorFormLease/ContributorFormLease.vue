@@ -127,7 +127,6 @@ export default {
   methods: {
     uploadExcel () {
       this.$data.input.excel = this.$refs.excel.files[0]
-      console.log(this.$data.input.excel.name)
       document.getElementById('upload-img').style.background = 'linear-gradient(#2ecc71, #29b362)'
       document.getElementById('upload-text').style.background = '#2ecc71'
     },
@@ -137,7 +136,7 @@ export default {
     },
 
     transfer () {
-      this.$root.$data.formInput=this.$data.input
+      this.$root.$data.formInput = this.$data.input
     }
   }
 }

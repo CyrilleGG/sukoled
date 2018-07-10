@@ -1,28 +1,30 @@
 // api\routes\versionidrefused.js
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// Appel à la BDD
+var knex = require('../utilities/database')
+// Module permettant de générer un UUID, ici V4.
 const uuidv4 = require('uuid/v4');
 
-// Créer une nouvelle version avec les mêmes paramètres que la précédente mais en changeant les status.
+// Création des droits pour une utilisateur.
+// Les utilisateurs proviennent du ldap et il n'est pas possible d'en créer depuis l'application.
+// On envoie au front la liste des utilisateurs et des contributions.
+// Il est aussi possible de supprimer des droits.
 
 module.exports = {
-    sendInfoToDBPolicies:async function(req, res, next) {
+    sendInfoToDBPolicies:async function(req, res) {
 
-        let new_version_id = uuidv4();
+        let new_id = uuidv4();
         var contribution_id = req.body.contribution_id;
         let user_id = req.body.user_id;
 
         return knex('policies').insert({
-            id:new_version_id,
+            id:new_id,
             contribution_id:contribution_id,
             can_read:'1',
             can_write:'1',
             user_id:user_id
         })
             .then(function(response){
-                next();
+                res.json(null);
         })
             .catch(function(err) {
                 console.log(err)

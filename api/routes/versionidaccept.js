@@ -1,7 +1,6 @@
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// api/routes/versionidaccept
+// Appel à la BDD
+var knex = require('../utilities/database')
 
 // Changer les status d'une contribution afin de lui donner le status "acceptée"
 

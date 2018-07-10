@@ -1,8 +1,9 @@
+// api/routes/contributions
 const _ = require('lodash');
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// Appel à la BDD
+var knex = require('../utilities/database')
+
+// Récupération des informations liées à une contribution pour l'admin
 
 module.exports = {
     list: async function(req, res) {

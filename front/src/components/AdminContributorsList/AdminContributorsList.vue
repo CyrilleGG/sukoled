@@ -15,8 +15,9 @@
           <div class="col-lg-1 d-flex justify-content-center align-items-center">
             <b-form-checkbox class="mr-0" v-model="checked" v-on:change="all ($event)"></b-form-checkbox>
           </div>
+          <p class="col-lg-1 my-auto text-center text-uppercase">Type</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Order</p>
-          <p class="col-lg-3 my-auto text-uppercase">Contribution</p>
+          <p class="col-lg-2 my-auto text-center text-uppercase">Name</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last request</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last iteration</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Status</p>
@@ -30,6 +31,7 @@
             v-if="(contribution.department == selectedDepartment || selectedDepartment == 'all') && (contribution.period == selectedPeriodicity || selectedPeriodicity == 'all')"
             v-bind:key="index"
             v-bind:checked="contribution.checked"
+            v-bind:department_name="contribution.department_name"
             v-bind:order="contribution.contribution_order"
             v-bind:name="contribution.contribution_name"
             v-bind:starts_at="contribution.version_starts_at"

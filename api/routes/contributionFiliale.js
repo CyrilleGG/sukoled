@@ -3,7 +3,7 @@
 var knex = require('../utilities/database')
 // Module permettant de générer un UUID, ici V4.
 const uuidv4 = require('uuid/v4');
-const xlsx = require('node-xlsx').default;
+// const xlsx = require('node-xlsx').default;
 
 // Creation d'une contribution : on envoie au front le department_slug et le version_name pour l'affichage.
 // Ce fichier sert dans les cas où le contributeur participe pour la première ou énième fois.

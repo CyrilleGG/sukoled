@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000; // process utilisé par l'application nod
 const _ = require('lodash');
 const express = require('express'); // appelle express dans une variable
 const app = express(); // équivaut à une instance de express
-const bodyParser = require("body-parser");
+const busboy = require('express-busboy');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
@@ -20,13 +20,15 @@ var knex = require('./utilities/database')
 var cors = require('cors');
 app.use(cors());
 
+busboy.extend(app, {});
+
 // Module d'authentification
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = '$Tne"é9:§§"__ù';
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-    console.log('payload received', jwt_payload);
+    // console.log('payload received', jwt_payload);
     //database call:
     var user = users[_.findIndex(users, {id: jwt_payload.id})];
     if (user) {
@@ -37,10 +39,6 @@ var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
 });
 passport.use(strategy);
 app.use(passport.initialize());
-app.use(bodyParser.urlencoded({
-    extended:true
-}));
-app.use(bodyParser.json())
 
 
 // Routes
@@ -85,7 +83,7 @@ var contributor = require('./routes/contributor')
 app.get('/api/contributor/:user_id', contributor.home)
 
 var inputs = require('./routes/inputs')
-app.get('/api/inputs/:contribution_id/version/:version_id/:user_id', inputs.version) // user_id
+app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version) // user_id
 
 var createPolicies = require('./routes/createPolicies')
 app.get('/api/createPolicies', createPolicies.sendJSONDataPolicies)

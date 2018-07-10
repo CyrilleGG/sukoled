@@ -11,6 +11,6 @@ module.exports = (req,res) => {
     .where({'versions.contribution_id':contributionId, 'versions.id':versionId})
     .update({status_admin:'done', status_contributor:'done'})
     .then(() => {
-        res.json(null)
+        res.json('ok')
     })
 }

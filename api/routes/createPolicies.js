@@ -10,24 +10,24 @@ const uuidv4 = require('uuid/v4');
 // Il est aussi possible de supprimer des droits.
 
 module.exports = {
-    sendInfoToDBPolicies:async function(req, res, next) {
+    sendInfoToDBPolicies:async function(req, res) {
 
-        let new_version_id = uuidv4();
+        let new_id = uuidv4();
         var contribution_id = req.body.contribution_id;
         let user_id = req.body.user_id;
 
         return knex('policies').insert({
-            id:new_version_id,
+            id:new_id,
             contribution_id:contribution_id,
             can_read:'1',
             can_write:'1',
             user_id:user_id
         })
             .then(function(response){
-                next();
+                res.json('ok');
         })
             .catch(function(err) {
-                console.log(err)
+                res.json(err)
         })
     },
     

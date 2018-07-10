@@ -1,15 +1,15 @@
 <template>
   <div class="col-lg-1 my-auto pl-0 text-right">
 
-    <b-button v-if="status == 'done'" class="py-1 px-3" size="sm" variant="outline-primary">view</b-button>
+    <b-button v-if="status == 'done'" class="py-1 px-3" size="sm" variant="outline-primary">View</b-button>
 
-    <b-button v-else-if="status == 'delivered' || status == 'invalid' || status == 'pending'" class="py-1 px-3" :to="{ path: 'review', query: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary">review</b-button>
+    <b-button v-else-if="status == 'delivered' || status == 'invalid' || status == 'pending'" class="py-1 px-3" :to="{ path: 'review', query: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary">Review</b-button>
 
-    <b-button v-if="status == 'hold'" class="py-1 px-3" size="sm" variant="outline-primary">resend</b-button>
+    <b-button v-if="status == 'hold'" class="py-1 px-3" size="sm" variant="outline-primary">Resend</b-button>
 
-    <b-button v-if="status == 'not delivered'" class="py-1 px-3" :to="{ path: 'send-contribution' }" append size="sm" variant="outline-primary">add</b-button>
+    <b-button v-if="status == 'not delivered'" class="py-1 px-3" :to="{ path: 'send-contribution' }" append size="sm" variant="outline-primary">Add</b-button>
 
-    <b-button v-if="status == 'progress'" class="py-1 px-3" :to="{ path: 'review', params: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary disabled">review</b-button>
+    <b-button v-if="status == 'progress'" class="py-1 px-3" :to="{ path: 'review', params: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary disabled">Review</b-button>
     
   </div>
 </template>

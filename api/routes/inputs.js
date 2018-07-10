@@ -9,9 +9,10 @@ module.exports = {
     version: async function(req, res) {
         //Permet de vérifier les droits users avant d'envoyer le json
         const contribution_id = req.params.contribution_id;
-        const user_id = req.params.user_id;
+        const version_id = req.params.version_id;
+        // const user_id = req.params.user_id;
         // const role = req.params.role;
-        const modules = require('./modules');
+        // const modules = require('./modules');
         // const query = await modules.getPoliciesWContribId(contribution_id, user_id);
         // if (query == 1){
             const inputs = await knex.select(

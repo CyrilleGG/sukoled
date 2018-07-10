@@ -10,7 +10,7 @@
           <h3 class="col-lg-12 mb-5 pl-5">Preview your contribution</h3>
 
           <div class="col-lg-12 pl-5">
-            <div class="row pl-3">
+            <div v-if="this.$data.input.excel !== null" class="row pl-3">
 
               <!-- <table class="col-lg-11 d-block mb-3 rounded">
                 <tr class="row">
@@ -38,7 +38,7 @@
 
                 </tr>
               </table> -->
-              {{input.excel}}
+              {{ this.$data.input.excel }}
 
             </div>
           </div>
@@ -50,7 +50,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your comments</h3>
-          <p class="col-lg-12 mb-3 pl-5">{{input.comments}}</p>
+          <!-- <p class="col-lg-12 mb-3 pl-5">{{input.comments}}</p> -->
           <!-- <b-form-textarea id="comments" class="col-lg-12" v-model="input.comments" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea> -->
         </div>
 
@@ -60,7 +60,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your highlights</h3>
-          <p class="col-lg-12 mb-3 pl-5">{{input.highlights}}</p>
+          <!-- <p class="col-lg-12 mb-3 pl-5">{{input.highlights}}</p> -->
         </div>
 
 
@@ -69,13 +69,13 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">4</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your additional elements</h3>
-          <p class="col-lg-12 mb-3 pl-5">{{additionalFiles}}</p>
+          <!-- <p class="col-lg-12 mb-3 pl-5">{{additionalFiles}}</p> -->
         </div>
 
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" :to="{ path: '../'}" replace size="md" v-on:click.prevent='sendToDb(); cleanFormInput()'>Confirm</b-button>
+          <b-button class="ml-auto green" size="md" v-on:click.prevent='sendContribution()'>Confirm</b-button>
         </div>
 
       </div>
@@ -94,36 +94,67 @@ export default {
 
   data () {
     return {
-        input: {
-        excel: null,
-        comments: '',
-        highlights: '',
-        additionalFiles: []
-      }
+      input: null
     }
   },
 
   created(){
-          this.$data.input=this.$root.$data.formInput
+    this.$data.input = this.$root.$data.formInput
   },
 
   methods: {
-    sendToDb () {
-      // Envoyer ces infos au back
-      if (this.input.excel !== null) {
-        axios.post('http://localhost:3000/api/contributionFiliale/:version_id/', this.input)
+    sendContribution () {
 
-          .then((response) => {
-            console.log('Success!')
-          })
+    console.log(this.$route.query)
+    const version_id = this.$route.query.version_id
+      console.log(version_id)
 
-          .catch((error) => {
-            console.log('NOPE')
-          })
+      // console.log(this.$data)
 
-      } else {
-        console.log('Please, complete every step')
-      }
+      const self = this
+      console.log(self.$data.input.excel)
+
+      var blob = new Blob([self.$data.input.excel], {
+        // type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        type : 'text/plain'
+      });
+
+      const reader = new FileReader();
+
+      // This fires after the blob has been read/loaded.
+      reader.addEventListener('loadend', (e) => {
+        let data = new FormData();
+        data.append('file_binary', e.srcElement.result);
+        data.append('comment_contributor', '');
+        data.append('highlight', '');
+        data.append('user_id', self.$root.$data.userInfo.user_id);
+
+        // Envoyer les valeurs des inputs au back
+        if (self.$data.input.excel !== null) {
+
+          axios.post('http://localhost:3000/api/contributionFiliale/' + version_id, data,
+          {
+            headers: {
+              // 'Content-Type': 'application/x-www-form-urlencoded'
+              // 'Content-Type': 'multipart/form-data'
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+          )
+            .then((response) => {
+              console.log('Success!')
+            })
+            .catch((error) => {
+              console.log('NOPE')
+            })
+
+        } else {
+          console.log('Please, complete every step')
+        }
+      });
+
+      // Start reading the blob as text.
+      reader.readAsText(blob);
     }
   }
 }

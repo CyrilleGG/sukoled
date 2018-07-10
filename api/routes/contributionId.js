@@ -8,10 +8,8 @@ module.exports = {
         //Permet de vérifier les droits users avant d'envoyer le json
         const contribution_id = req.params.contribution_id;
         const user_id = req.params.user_id;
-        const modules = require('./modules');
         // const query = await modules.getPoliciesWContribId(contribution_id, user_id);
         // if (query == 1) {
-            const modules = require('./modules');
             const contributions = await modules.getContributionById(contribution_id);
             const versions = await modules.getVersionWContributionId(contribution_id);
     

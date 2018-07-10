@@ -15,11 +15,13 @@
       <contributor-contributions-list-item
         v-for="(contribution, index) in contributions"
         v-bind:key="index"
-        v-bind:name="contribution.name"
+        v-bind:contribution_id="contribution.contribution_id"
+        v-bind:version_id="contribution.version_id"
+        v-bind:contribution_name="contribution.contribution_name"
+        v-bind:version_name="contribution.version_name"
         v-bind:department_name="contribution.department_name"
-        v-bind:starts_at="contribution.starts_at"
-        v-bind:ends_at="contribution.ends_at"
-        v-bind:status_contributor="contribution.status_contributor" />
+        v-bind:ends_at="contribution.version_ends_at"
+        v-bind:status_contributor="contribution.version_status_contributor" />
 
     </div>
   </div>

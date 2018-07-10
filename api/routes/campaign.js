@@ -26,13 +26,13 @@ module.exports = {
             status_contributor:'not delivered',
         })
             .then(function(response){
-                res.json(null)
+                res.json('ok')
             })
             .catch(function(err) {
-                console.log(err)
+                res.json(err)
             })
         .catch(function(err) {
-            console.log(err)
+            res.json(err)
         });
     },
 
@@ -49,8 +49,8 @@ module.exports = {
         .then((response) => {
             return res.status(200).json(response);
         })
-        .catch((error) =>{
-            console.log(error);
+        .catch((err) =>{
+            res.json(err)
         });
     }
 }

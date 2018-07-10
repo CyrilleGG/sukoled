@@ -62,7 +62,8 @@ module.exports = {
         const inputs = await knex.select(
             'input.input_type AS input_type',
             'input.name AS input_name',
-            'input.description AS input_description'
+            'input.description AS input_description',
+            'input.slug AS input_slug'
         )
             .from('contributions_inputs as input')
             .where({ 'input.contribution_id': req.params.contribution_id })

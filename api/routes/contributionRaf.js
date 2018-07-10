@@ -41,10 +41,10 @@ module.exports = {
         })
             .then(function(response){
             // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-            res.json(null)
+            res.json('ok')
         })
         .catch(function(err) {
-            console.log(err)
+            res.json(err)
         });
     },
 

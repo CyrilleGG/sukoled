@@ -4,24 +4,30 @@
 
       <div class="contribution-name col-lg-2 my-auto">
         <p class="mb-0 ">{{ department_name }}</p>
-        <p v-if="department_name == 'RAF'" class="mb-0 font-italic">{{ name }}</p>
+        <p v-if="department_name == 'RAF'" class="mb-0 font-italic">{{ contribution_name }}</p>
       </div>
 
-      <p class="col-lg-2 my-auto">{{ starts_at }}</p>
+      <p class="col-lg-2 my-auto">{{ version_name }}</p>
 
-      <p class="col-lg-2 my-auto">{{ ends_at }}</p>
+      <p class="col-lg-2 my-auto">{{ moment (ends_at) }}</p>
 
       <p class="col-lg-3 my-auto text-center">0</p>
 
       <status v-bind:status="status_contributor" />
 
-      <action v-bind:status="status_contributor" />
+      <action 
+        v-bind:status="status_contributor"
+        v-bind:contribution_id="contribution_id"
+        v-bind:version_id="version_id"
+       />
 
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 import Status from '@/components/Status/Status'
 import Action from '@/components/Action/Action'
 
@@ -34,15 +40,19 @@ export default {
   },
 
   props: [
-    'name',
+    'contribution_id',
+    'version_id',
+    'contribution_name',
+    'version_name',
     'department_name',
-    'starts_at',
     'ends_at',
     'status_contributor'
   ],
 
   methods: {
-    // c
+    moment (date) {
+      return moment(date).format('MMMM DD, YYYY')
+    }
   }
 }
 </script>

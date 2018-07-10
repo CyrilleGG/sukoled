@@ -12,7 +12,7 @@
         </div>
 
         <div class="row mb-5">
-          <contributor-contributions-list v-bind:contributions="contributions.ongoing" />
+          <contributor-contributions-list v-bind:contributions="contributions.waiting" />
         </div>
 
         <div class="row mb-5">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="row">
-          <contributor-contributions-list v-bind:contributions="contributions.history" />
+          <contributor-contributions-list v-bind:contributions="contributions.done" />
         </div>
 
       </div>
@@ -55,7 +55,10 @@ export default {
   data () {
     return {
       numOfAlerts: 3,
-      contributions: []
+      contributions: {
+        waiting: [],
+        done: []
+      }
     }
   },
 
@@ -66,13 +69,14 @@ export default {
       this.$router.replace({ name: 'viewer' })
     }
 
-    axios.get('http://localhost:3000/api/contributor/'+ this.$root.$data.userInfo.user_id)
+    axios.get('http://localhost:3000/api/contributor/'+ this.$root.$data.userInfo.username)
       .then((response) => {
-        console.log(response.data)
-        // for (var i = 0; i < response.data.contributions.length; i++) {
-        //   response.data.contributions[i].checked = false
-        // }
-        // this.$data.contributions = response.data.contributions
+        for (var i = 0; i < response.data.waiting.length; i++) {
+          this.$data.contributions.waiting = response.data.waiting
+        }
+        for (var i = 0; i < response.data.done.length; i++) {
+          this.$data.contributions.done = response.data.done
+        }
       })
 
       .catch((error) => {

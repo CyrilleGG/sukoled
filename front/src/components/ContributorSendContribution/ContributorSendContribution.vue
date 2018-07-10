@@ -3,9 +3,9 @@
 
     <Header :role="this.$root.$data.userInfo.role" />
 
-    <div class="row py-5 page-content">
-      <contributor-form-lease v-if="this.department == 'lease'" />
-      <contributor-form-raf v-if="this.department == 'raf'" />
+    <div v-if="data !== null" class="row py-5 page-content">
+      <contributor-form-lease v-if="data.department_slug == 'lease'" v-bind:data="data" />
+      <contributor-form-raf v-if="data.department_slug == 'raf'" v-bind:data="data" />
     </div>
 
     <Footer />
@@ -14,6 +14,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import ContributorFormLease from '@/components/ContributorFormLease/ContributorFormLease'
@@ -31,7 +34,7 @@ export default {
 
   data () {
     return {
-      department: 'lease'
+      data: null
     }
   },
 
@@ -41,23 +44,19 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
+
+    axios.get('http://localhost:3000/api/contributionRaf/'+ this.$route.query.contribution_id +'/version/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
+      .then((response) => {
+        this.$data.data = response.data
+      })
+
+      .catch((error) => {
+        console.log(error)
+      })
   },
 
   methods: {
-    uploadExcel () {
-      this.$data.input.excel = this.$refs.excel.files[0]
-      console.log(this.$data.input.excel.name)
-      document.getElementById('upload-img').style.background = 'linear-gradient(#2ecc71, #29b362)'
-      document.getElementById('upload-text').style.background = '#2ecc71'
-    },
-
-    uploadFile () {
-      this.$data.input.additionalFiles.push(this.$refs.additionalFiles.files[0])
-    },
-
-    closeModal () {
-      this.$refs.confirm.hide()
-    }
+    //c
   }
 }
 </script>

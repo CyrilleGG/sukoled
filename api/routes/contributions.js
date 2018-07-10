@@ -14,6 +14,7 @@ module.exports = {
             'version.created_at AS version_created_at',
             'version.status_admin AS version_status_admin',
             'department.name AS department_name',
+            'department.slug AS department_slug',
             'contribution.id AS contribution_id',
             'contribution.name AS contribution_name',
             'contribution.period AS contribution_period',

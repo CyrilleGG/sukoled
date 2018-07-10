@@ -63,6 +63,10 @@ export default {
     // c
   },
 
+  props: [
+    'data'
+  ],
+
   data () {
     return {
       input: {

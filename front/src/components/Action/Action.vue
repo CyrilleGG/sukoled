@@ -7,9 +7,9 @@
 
     <b-button v-if="status == 'hold'" class="py-1 px-3" size="sm" variant="outline-primary">resend</b-button>
 
-    <b-button v-if="status == 'not delivered'" class="py-1 px-3" :to="{ path: 'send-contribution' }" append size="sm" variant="outline-primary">add</b-button>
+    <b-button v-if="status == 'not delivered'" class="py-1 px-3" :to="{ path: 'send-contribution', query: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary">add</b-button>
 
-    <b-button v-if="status == 'progress'" class="py-1 px-3" :to="{ path: 'review', params: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary disabled">review</b-button>
+    <b-button v-if="status == 'progress'" class="py-1 px-3" :to="{ path: 'review', query: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary disabled">review</b-button>
     
   </div>
 </template>

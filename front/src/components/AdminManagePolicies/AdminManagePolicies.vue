@@ -21,7 +21,7 @@
 
               <h3 class="col-lg-12 mb-5 pl-5">Select the contribution you would like to manage</h3>
 
-              <b-form-select id="filter-contributions" class="col-lg-5 mb-3 ml-5" :options="this.contributions"></b-form-select>
+              <b-form-select id="filter-contributions" class="col-lg-5 mb-3 ml-5" v-model="selectedContribution" :options="this.contributions"></b-form-select>
 
             </div>
 
@@ -34,10 +34,17 @@
               <h3 class="col-lg-12 mb-5 pl-5">Manage the users that can contribute to this contribution</h3>
 
               <b-form class="col-lg-12 mb-5 pl-5">
-                <b-form-group class="row pl-3">
-                  <b-form-input id="add-user" class="d-inline-block col-lg-4" type="text" placeholder="Write the username" name="add-user"></b-form-input>
-                  <b-button class="purple ml-3" size="sm">Add</b-button>
+                <b-form-group class="row mb-0 pl-3">
+                  <b-form-input id="add-user" class="d-inline-block col-lg-4" v-model="search" type="text" placeholder="Write the username" name="add-user" autocomplete="off"></b-form-input>
+                  <b-button class="purple ml-3" v-on:click="addUser (search)" size="sm">Add</b-button>
                 </b-form-group>
+                <div v-if="search !== ''" class="row pl-3">
+                  <ul id="search-results" class="col-lg-4 position-absolute mb-0 px-0">
+                    <li v-for="(user,index) in filteredUsers" v-bind:key="index">
+                      <span class="d-inline-block pl-3 w-100" v-on:click="search = user">{{ user }}</span>
+                    </li>
+                  </ul>
+                </div>
               </b-form>
 
               <div class="col-lg-12 mb-3 pl-5">
@@ -62,6 +69,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 
@@ -75,7 +85,10 @@ export default {
 
   data () {
     return {
-      contributions: ['contrib1', 'contrib2']
+      search: '',
+      contributions: [],
+      selectedContribution: null,
+      users: []
     }
   },
 
@@ -87,10 +100,55 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
+
+    axios.get('http://localhost:3000/api/campaign')
+      .then((response) => {
+        for (var i = 0; i < response.data.length; i++) {
+          this.$data.contributions.push({
+            value: response.data[i].contribution_id,
+            text: response.data[i].contribution_name
+          })
+        }
+      })
+      .catch((error) => {
+        console.log('No contribs')
+      })
+
+      axios.get('http://localhost:3000/api/createPolicies')
+      .then((response) => {
+        console.log(response.data)
+        for (var i = 0; i < response.data.users.length; i++) {
+          this.$data.users.push(response.data.users[i])
+        }
+      })
+      .catch((error) => {
+        console.log('No contribs')
+      })
+  },
+
+  computed: {
+    filteredUsers () {
+      var search = this.$data.search
+      if (search !== '') {
+        return this.$data.users.filter(user => {
+          return user.toLowerCase().includes(search.toLowerCase())
+        })
+      }
+    }
   },
 
   methods: {
-    // c
+    addUser (username) {
+      axios.post('http://localhost:3000/api/createPolicies', {
+        contribution_id: this.$data.selectedContribution,
+        user_id: username
+      })
+        .then((response) => {
+          console.log('success')
+        }).catch((error) => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>
@@ -113,7 +171,7 @@ export default {
 
 #AdminManagePolicies #manage-policies .content {
   background-color: #ffffff;
-  box-shadow: 5px 5px 30px rgba(0,0,0,0.1)
+  box-shadow: 5px 5px 30px rgba(0,0,0,0.1);
 }
 
 #AdminManagePolicies #manage-policies .step {
@@ -140,12 +198,34 @@ export default {
   background-color: #793a93;
 }
 
+#AdminManagePolicies #manage-policies #search-results {
+  z-index: 1;
+  background-color: #ffffff;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+  list-style: none;
+}
+
+#AdminManagePolicies #manage-policies #search-results span {
+  transition: 0.3s ease;
+}
+
+#AdminManagePolicies #manage-policies #search-results span:hover {
+  background-color: #eeeeee;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 #AdminManagePolicies #manage-policies .user {
+  position: relative;
   color: #914eb7;
   border: 1px solid #914eb7;
   border-radius: 20px;
   font-size: 0.8rem;
   transition: 0.3s ease;
+}
+
+#AdminManagePolicies #manage-policies #search-results li {
+  line-height: 30px;
 }
 
 #AdminManagePolicies #manage-policies .user:hover {

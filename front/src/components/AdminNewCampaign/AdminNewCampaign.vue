@@ -84,7 +84,7 @@
 
         <b-modal v-if="input.contributions.length > 0" id="confirm" ref="confirm" hide-footer>
           <p>You are about to send an email in order to recover <span>{{ displayNumOfcontributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
-          <p id="display-message" class="p-3 rounded">{{ input.message }}</p>
+          <p id="display-message" class="p-3 rounded">{{ message }}</p>
           <b-button size="md" v-on:click="closeModal ()">Cancel</b-button>
           <b-button class="green" v-on:click="createCampaign ()" replace size="md">Confirm</b-button>
         </b-modal>

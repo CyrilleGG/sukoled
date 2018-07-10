@@ -24,10 +24,10 @@ module.exports = {
             user_id:user_id
         })
             .then(function(response){
-                res.json(null);
+                res.json('ok');
         })
             .catch(function(err) {
-                console.log(err)
+                res.json(err)
         })
     },
     

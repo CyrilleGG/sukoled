@@ -28,7 +28,7 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = '$Tne"é9:§§"__ù';
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-    console.log('payload received', jwt_payload);
+    // console.log('payload received', jwt_payload);
     //database call:
     var user = users[_.findIndex(users, {id: jwt_payload.id})];
     if (user) {

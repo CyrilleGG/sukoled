@@ -22,8 +22,7 @@ module.exports = (req, res) => {
     .then((contributions) => {
         res.json(contributions);
     })
-    .catch((error) => {
-        res.status(500).json({ error });
-        console.log('false');
+    .catch((err) => {
+        res.status(500).json({ err });
     });
 }

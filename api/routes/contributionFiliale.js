@@ -1,20 +1,26 @@
-var knex = require('knex')({
-    client:'mysql',
-    connection: 'mysql://DpNxguDvZwPWcm4u:JQ9hUBgXhAcsnknYBUadaxmscd6R4fVn@wsf-sukoled.czjrbeoyz2de.eu-west-3.rds.amazonaws.com:3306/natixis?ssl=true'
-});
+// api/routes/contributionFiliale.js
+// Appel à la BDD
+var knex = require('../utilities/database')
+// Module permettant de générer un UUID, ici V4.
 const uuidv4 = require('uuid/v4');
+<<<<<<< HEAD
 const xlsx = require('xlsx');
+=======
+const xlsx = require('node-xlsx').default;
+>>>>>>> 5d6670b8c76e0c5df19bb9f5f50a57adb1aa46d9
 
-// Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.    
+// Creation d'une contribution : on envoie au front le department_slug et le version_name pour l'affichage.
+// Ce fichier sert dans les cas où le contributeur participe pour la première ou énième fois.
+// Ainsi, même si à la première étape il n'y a pas de commentaire admin, on en envoie quand même un.
 
 module.exports = {
-    sendInfoToDBFiliale:async function(req, res, next) {
+    sendInfoToDBFiliale:async function(req, res) {
         let new_version_id = uuidv4();
         // Récupération des données
-        const version_id = await req.params.version_id;
-        const modules = await require('./modules')
+        const version_id = req.body.version_id;
+        const modules =  require('./modules')
         const dateAndName = await modules.dateAndName(version_id);
-        const user_id = await req.body.user_id;
+        const user_id =  req.body.user_id;
         const contribution_id = await
             knex('versions')
             .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
@@ -24,11 +30,17 @@ module.exports = {
             FS: ";"
         })
 
+        console.log(req.body.excel)
+        // const contribution_id = '12c0b1f4-7eac-11e8-80a5-0a0a4839146e'
+
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
         .insert({
             // Informations remplies par le contributeur
+<<<<<<< HEAD
             file_csv: file_csv,
+=======
+>>>>>>> 5d6670b8c76e0c5df19bb9f5f50a57adb1aa46d9
             file_binary:req.body.excel,
             comment_contributor:req.body.comments,
             highlight:req.body.hightlights,
@@ -36,12 +48,12 @@ module.exports = {
             id:new_version_id,
             status_admin:'delivered',
             status_contributor:'pending',
-            contribution_id:contribution_id,
+            contribution_id:contribution_id[0].id,
             parent_version_id:version_id,
-            user_id:user_id,
-            name:dateAndName.name,
-            starts_at:dateAndName.starts_at,
-            ends_at:dateAndName.ends_at,
+            user_id:'user_id',
+            name:dateAndName[0].name,
+            starts_at:dateAndName[0].starts_at,
+            ends_at:dateAndName[0].ends_at,
             user_id:req.body.user_id
         })
             .then(function(response){
@@ -65,7 +77,7 @@ module.exports = {
             const version_name = await modules.getVersionNameByVersion(version_id);
             const comment_admin = await modules.getAdminComment(version_id);
 
-            const data = {
+            const data = await {
                 department_slug,
                 version_name,
                 comment_admin

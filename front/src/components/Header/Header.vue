@@ -15,9 +15,6 @@
         </b-navbar-nav>
 
         <b-navbar-nav id="second-nav" class="ml-auto">
-          <b-nav-item v-if="role == 'mod'" id="notifications" class="border-left">
-            <img src="@/assets/icons/bell.png" alt="Notifications">
-          </b-nav-item>
           <b-nav-item-dropdown id="burger-menu" class="border-left" size="lg" text="cc" right no-caret>
             <template slot="button-content">
               <img src="@/assets/icons/burger.png" alt="Menu">

@@ -19,8 +19,8 @@
             <template slot="button-content">
               <img src="@/assets/icons/burger.png" alt="Menu">
             </template>
-            <b-dropdown-item href="#" v-on:click="logout()">Disconnect</b-dropdown-item>
             <b-dropdown-item v-if="role == 'mod'" :to="{ path: 'admin/manage-policies' }" replace>Management</b-dropdown-item>
+            <b-dropdown-item href="#" v-on:click="logout()">Disconnect</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 

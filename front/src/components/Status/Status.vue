@@ -19,6 +19,8 @@ export default {
     displayClass () {
       if (this.$props.status == 'not delivered') {
         return 'not-delivered'
+      } else if (this.$props.status == 'on hold') {
+        return 'on-hold'
       } else {
         return this.$props.status
       }

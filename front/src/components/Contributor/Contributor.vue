@@ -7,8 +7,9 @@
       <div class="col-lg-9 mx-auto">
 
         <div class="row mb-5">
-          <h2 class="col-lg-12 text-center">Hi! Welcome back to the Dashboard</h2>
-          <p id="sub-title" class="col-lg-12 text-center">{{ numOfAlerts }} elements require your attention. Please, check the details.</p>
+          <h2 class="col-lg-12 text-center">Hi! Welcome back to the Hestia</h2>
+          <p v-if="numOfAlerts > 1" id="sub-title" class="col-lg-12 text-center">{{ numOfAlerts }} elements require your attention. Please, check the details.</p>
+          <p v-else id="sub-title" class="col-lg-12 text-center">{{ numOfAlerts }} element requires your attention. Please, check the details.</p>
         </div>
 
         <div class="row mb-5">
@@ -54,7 +55,7 @@ export default {
 
   data () {
     return {
-      numOfAlerts: 3,
+      numOfAlerts: null,
       contributions: {
         waiting: [],
         done: []
@@ -82,6 +83,8 @@ export default {
       .catch((error) => {
         console.log(error)
       })
+    
+    this.$data.numOfAlerts = this.$data.contributions.waiting.length + 1
   }
 }
 </script>

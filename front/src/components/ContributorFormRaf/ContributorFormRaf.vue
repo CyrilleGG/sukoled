@@ -7,17 +7,16 @@
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">1</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Share contribution</h3>
-          <p class="col-lg-12 mb-5 pl-5">Upload Excel file here and wait until it is uploaded. The file must be in the required format.</p>
+          <h3 class="col-lg-12 mb-5 pl-5">Share your contribution</h3>
 
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
 
-              <!-- <div v-for="(input, index) in data.inputs" v-bind:key="index" class="col-lg-12 pl-0">
-                <label for="{{ input.input_slug }}">{{ input.input_name }}</label>
-                <b-form-input id="input-one" class="d-inline-block w-25 ml-2" v-model="input.inputOne" type="text" name="input one"></b-form-input>
-                <p class="d-inline-block ml-3">units</p>
-              </div> -->
+              <div v-for="(input, index) in data.inputs" v-bind:key="index" v-if="input.input_type !== 'textarea'" class="col-lg-12 pl-0">
+                <label :for="input.input_slug">{{ input.input_name }}</label>
+                <b-form-input :id="input.input_slug" class="d-inline-block w-25 ml-2" v-model="inputs.contribution_values[input.input_id]" :type="input.input_type" :name="input.input_slug"></b-form-input>
+                <p class="d-inline-block ml-3">in million</p>
+              </div>
 
             </div>
           </div>
@@ -35,7 +34,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="comments" class="col-lg-12" v-model="input.comments" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea>
+              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea>
 
             </div>
           </div>
@@ -44,13 +43,16 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" :to="{ path: 'preview'}" append size="md">Submit</b-button>
+          <b-button class="ml-auto green" v-on:click="sendContribution ()" size="md">Submit</b-button>
         </div>
 
       </b-form>
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 export default {
   name: 'ContributorFormRaf',
 
@@ -64,28 +66,25 @@ export default {
 
   data () {
     return {
-      input: {
-        inputOne: '',
-        inputTwo: '',
-        comments: '',
+      inputs: {
+        contribution_values: {},
+        comment_contributor: '',
+        version_id: this.$route.query.version_id,
+        user_id: this.$root.$data.userInfo.user_id
       }
     }
   },
 
   methods: {
-    uploadExcel () {
-      this.$data.input.excel = this.$refs.excel.files[0]
-      console.log(this.$data.input.excel.name)
-      document.getElementById('upload-img').style.background = 'linear-gradient(#2ecc71, #29b362)'
-      document.getElementById('upload-text').style.background = '#2ecc71'
-    },
-
-    uploadFile () {
-      this.$data.input.additionalFiles.push(this.$refs.additionalFiles.files[0])
-    },
-
-    transfer () {
-      this.$root.$data.formInput=this.$data.input
+    sendContribution () {
+      const inputs = this.$data.inputs
+      axios.post('http://localhost:3000/api/contributionRaf/'+ inputs.version_id, inputs)
+        .then((response) => {
+          this.$router.replace( {name: 'contributor'} )
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 }

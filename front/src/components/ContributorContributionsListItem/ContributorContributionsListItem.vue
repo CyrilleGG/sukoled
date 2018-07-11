@@ -4,14 +4,14 @@
 
       <div class="contribution-name col-lg-2 my-auto">
         <p class="mb-0 ">{{ department_name }}</p>
-        <p v-if="department_name == 'RAF'" class="mb-0 font-italic">{{ contribution_name }}</p>
+        <p class="mb-0 font-italic">{{ contribution_name }}</p>
       </div>
 
-      <p class="col-lg-2 my-auto">{{ version_name }}</p>
+      <p class="col-lg-3 my-auto">{{ version_name }}</p>
 
       <p class="col-lg-2 my-auto">{{ moment (ends_at) }}</p>
 
-      <p class="col-lg-3 my-auto text-center">0</p>
+      <p class="col-lg-2 my-auto text-center">0</p>
 
       <status v-bind:status="status_contributor" />
 

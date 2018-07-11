@@ -15,27 +15,30 @@ module.exports = {
             'version.ends_at AS version_ends_at',
             'version.created_at AS version_created_at',
             'version.status_contributor AS version_status_contributor',
+            'version.parent_version_id',
             'department.name AS department_name',
             'contribution.id AS contribution_id',
             'contribution.name AS contribution_name'
-        )
+            )
             .from('versions as version')
             .innerJoin('contributions as contribution', 'version.contribution_id', 'contribution.id')
             .innerJoin('departments as department', 'contribution.department_id', 'department.id')
-            .innerJoin('policies', 'contribution.id', 'policies.contribution_id')
+            .innerJoin('policies', 'version.contribution_id', 'policies.contribution_id')
             .where({
-                'policies.user_id': req.params.user_id
+                'policies.user_id': req.params.user_id,
             })
-            .groupBy('ends_at')
-            .orderBy('ends_at', 'desc');
+            .groupBy('contribution_id')
+            .orderBy('version_created_at', 'desc')
 
         let waiting = [];
         let done = [];
 
         contributions.forEach(function (contribution) {
             if (contribution.version_status_contributor !== 'done') {
+                // console.log(contribution)
                 waiting.push(contribution);
             } else {
+                // console.log(contribution)
                 done.push(contribution);
             }
         });

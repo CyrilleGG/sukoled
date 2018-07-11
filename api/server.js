@@ -76,7 +76,7 @@ app.post('/api/contributionFiliale/:version_id', contributionFiliale.sendInfoToD
 
 // Contributeur : Création d'une version d'une contribution Raf
 var contributionRaf = require('./routes/contributionRaf');
-app.get('/api/contributionRaf/:version_id/user/:user_id', contributionRaf.sendJSONDataRaf); // user_id
+app.get('/api/contributionRaf/:contribution_id/version/:version_id/user/:user_id', contributionRaf.sendJSONDataRaf); // user_id
 app.post('/api/contributionRaf/:version_id', contributionRaf.sendInfoToDBRaf);
 
 var contributor = require('./routes/contributor')

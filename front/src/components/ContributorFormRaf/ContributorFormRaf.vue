@@ -13,16 +13,11 @@
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
 
-              <div class="col-lg-12 pl-0">
-                <label for="input-one">Input one</label>
-                <b-form-input id="input-one" class="d-inline-block w-25 ml-2" v-model="input.inputOne" type="text" name="input-one"></b-form-input>
+              <!-- <div v-for="(input, index) in data.inputs" v-bind:key="index" class="col-lg-12 pl-0">
+                <label for="{{ input.input_slug }}">{{ input.input_name }}</label>
+                <b-form-input id="input-one" class="d-inline-block w-25 ml-2" v-model="input.inputOne" type="text" name="input one"></b-form-input>
                 <p class="d-inline-block ml-3">units</p>
-              </div>
-              <div class="col-lg-12 pl-0">
-                <label for="input-two">Input two</label>
-                <b-form-input id="input-two" class="d-inline-block w-25 ml-2" v-model="input.inputTwo" type="text" name="input-two"></b-form-input>
-                <p class="d-inline-block ml-3">units</p>
-              </div>
+              </div> -->
 
             </div>
           </div>
@@ -62,6 +57,10 @@ export default {
   components: {
     // c
   },
+
+  props: [
+    'data'
+  ],
 
   data () {
     return {

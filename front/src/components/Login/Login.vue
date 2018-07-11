@@ -2,7 +2,7 @@
   <div class="form-container">
     <form id="login-form">
 
-      <input id="username" v-model="input.username" type="text" placeholder="Username" name="username">
+      <input id="username" v-model="input.username" type="text" placeholder="Username" name="username" autocomplete="off">
 
       <input id="password" v-model="input.password" type="password" placeholder="Password" name="password">
 

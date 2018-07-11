@@ -7,7 +7,7 @@ const uuidv4 = require('uuid/v4');
 // Creation d'une contribution : on envoie au front le slug (ou le nom) pour l'affichage.    
 
 module.exports = {
-    sendInfoToDBRaf:async function(req, res) {
+    sendInfoToDBRaf: async function (req, res) {
         let new_version_id = uuidv4();
         // Récupération des données
         const version_id = req.params.version_id;
@@ -16,11 +16,11 @@ module.exports = {
         const user_id = req.body.user_id;
         const contribution_id = await
             knex('versions')
-            .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
-            .select('contributions.id')
-            .then(function(response){
-                return response
-            })
+                .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
+                .select('contributions.id')
+                .then(function (response) {
+                    return response
+                })
 
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
@@ -48,24 +48,33 @@ module.exports = {
         });
     },
 
-    sendJSONDataRaf:async function(req, res) {
-        
+    sendJSONDataRaf: async function (req, res) {
+
         const version_id = req.params.version_id;
         const user_id = req.params.user_id;
         // Appel des modules (routes/modules.js)
         const modules = require('./modules')
         // const query = await modules.getPoliciesWVersionId(version_id, user_id);
         // if (query == 1) {
-            const department_slug = await modules.getDepSlugByVersion(version_id);
-            const version_name = await modules.getVersionNameByVersion(version_id);
-            const comment_admin = await modules.getAdminComment(version_id);
+        const department_slug = await modules.getDepSlugByVersion(version_id);
+        const version_name = await modules.getVersionNameByVersion(version_id);
+        const comment_admin = await modules.getAdminComment(version_id);
+        const inputs = await knex.select(
+            'input.input_type AS input_type',
+            'input.name AS input_name',
+            'input.description AS input_description',
+            'input.slug AS input_slug'
+        )
+            .from('contributions_inputs as input')
+            .where({ 'input.contribution_id': req.params.contribution_id })
 
-            const data = {
-                department_slug,
-                version_name,
-                comment_admin
-            }
-            res.status(200).json(data);
+        const data = {
+            department_slug,
+            version_name,
+            comment_admin,
+            inputs
+        }
+        res.status(200).json(data);
         // } else {
         //     res.json(null);
         // }

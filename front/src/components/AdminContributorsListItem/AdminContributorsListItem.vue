@@ -72,7 +72,7 @@ export default {
     },
 
     moment (date) {
-      return moment(date).format('MMMM Do, YYYY')
+      return moment(date).format('MMMM DD, YYYY')
     }
   }
 }

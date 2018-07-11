@@ -7,13 +7,13 @@ module.exports = [ // Liste fictive d'utilisateur
     },
     {
         id: 2,
-        username: 'cyrille',
+        username: 'fabrice.c',
         password:'test',
         role:'mod'
     },
     {
         id: 3,
-        username: 'dona',
+        username: 'antoine.p',
         password: 'test',
         role:'contrib'
     }

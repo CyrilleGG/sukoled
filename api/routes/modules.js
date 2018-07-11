@@ -23,7 +23,7 @@ module.exports.getDepartments = async function(dep) {
         // res.status(200).json(dep);
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -35,6 +35,9 @@ module.exports.getContributionById = async function(contributionId){
     .then((result) => {
         return result
     })
+    .catch((err) => {
+        return []
+    });
 }
 
 // Envoie des versions liés à la contribution
@@ -58,7 +61,7 @@ module.exports.getDepSlugByVersion = async function(version_id){
         return response[0].slug;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -73,7 +76,7 @@ module.exports.getContribNameByVersion = async function(version_id){
         return response[0].name;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -87,7 +90,7 @@ module.exports.getVersionNameByVersion = async function(version_id){
         return response[0].name;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -101,7 +104,7 @@ module.exports.getAdminComment = async function(version_id){
         return response[0].comment_admin;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -115,7 +118,7 @@ module.exports.getContributorComment = async function(version_id){
         return response[0].comment_contributor;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -129,7 +132,7 @@ module.exports.getHighlight = async function(version_id){
         return response[0].highlight;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -143,7 +146,7 @@ module.exports.getVersionFile = async function(version_id){
         return response[0].file_binary;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -159,7 +162,7 @@ module.exports.getPoliciesWContribId = async function(contribution_id, user_id){
         return response[0].can_read
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -177,7 +180,7 @@ module.exports.getPoliciesWVersionId = async function(version_id, user_id){
         return response[0].can_read
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -192,7 +195,7 @@ module.exports.getFile = async function(version_id){
         return response[0].file_binary
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -200,13 +203,13 @@ module.exports.getFile = async function(version_id){
 module.exports.dateAndName =  function(version_id) {
     return knex('versions')
     .where({
-        'versions.id':version_id
+        'id':version_id
     })
     .select('starts_at', 'ends_at', 'name')
     .then(function(response){
         return response
     })
     .catch((err) => {
-        res.json(err);
+       return []
     });
 }

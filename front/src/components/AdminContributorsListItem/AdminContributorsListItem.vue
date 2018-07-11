@@ -7,10 +7,14 @@
       </div>
 
       <p class="col-lg-1 my-auto text-center">
+        {{ department_name }}
+      </p>
+
+      <p class="col-lg-1 my-auto text-center">
         {{ order }}
       </p>
 
-      <p class="col-lg-3 my-auto">
+      <p class="col-lg-2 my-auto">
         {{ name }}
       </p>
 
@@ -56,7 +60,8 @@ export default {
     'modified_at',
     'status_admin',
     'contribution_id',
-    'version_id'
+    'version_id',
+    'department_name'
   ],
 
   data () {

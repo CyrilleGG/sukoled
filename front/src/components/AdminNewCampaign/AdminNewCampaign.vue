@@ -284,6 +284,7 @@ export default {
 #AdminNewCampaign .list-group {
   max-height: 160px;
   overflow: scroll;
+  overflow-x:hidden;
 }
 
 #AdminNewCampaign #message {

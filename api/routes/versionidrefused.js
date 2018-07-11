@@ -34,11 +34,11 @@ module.exports = {
             })
             .into('versions')
             .then(function(response){
-                res.json(null)
+                res.json('ok')
             })
-            .catch(function(err) {
-                console.log(err)
-            })
+            .catch((err) => {
+                res.json(err);
+            });
     },
     
 
@@ -61,8 +61,8 @@ module.exports = {
             .then((response) => {
                 return res.status(200).json(response);
             })
-            .catch((error) => {
-                console.log(error);
+            .catch((err) => {
+                res.json(err);
             });
         // } else {
         //     res.json(null);

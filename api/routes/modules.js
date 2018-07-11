@@ -22,8 +22,8 @@ module.exports.getDepartments = async function(dep) {
         return dep;
         // res.status(200).json(dep);
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        res.json(err);
     });
 }
 
@@ -57,8 +57,8 @@ module.exports.getDepSlugByVersion = async function(version_id){
     .then(function(response){
         return response[0].slug;
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        res.json(err);
     });
 }
 
@@ -72,8 +72,8 @@ module.exports.getContribNameByVersion = async function(version_id){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
         return response[0].name;
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        res.json(err);
     });
 }
 
@@ -86,8 +86,8 @@ module.exports.getVersionNameByVersion = async function(version_id){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
         return response[0].name;
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        res.json(err);
     });
 }
 
@@ -100,8 +100,8 @@ module.exports.getAdminComment = async function(version_id){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
         return response[0].comment_admin;
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        res.json(err);
     });
 }
 
@@ -114,8 +114,8 @@ module.exports.getContributorComment = async function(version_id){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
         return response[0].comment_contributor;
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        res.json(err);
     });
 }
 
@@ -126,11 +126,10 @@ module.exports.getHighlight = async function(version_id){
     .select('highlight')
     .then(function(response){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-        // console.log(response[0].highlight)
         return response[0].highlight;
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        res.json(err);
     });
 }
 
@@ -143,8 +142,8 @@ module.exports.getVersionFile = async function(version_id){
         // Ici, on sort de la fonction pour éviter qu'elle reboucle.
         return response[0].file_binary;
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        res.json(err);
     });
 }
 
@@ -159,9 +158,9 @@ module.exports.getPoliciesWContribId = async function(contribution_id, user_id){
     .then(function(response){
         return response[0].can_read
     })
-    .catch((error)=>{
-        console.log(error)
-    })
+    .catch((err) => {
+        res.json(err);
+    });
 }
 
 // Récupération des droits en fonction de la version_id et de l'user_id
@@ -177,9 +176,9 @@ module.exports.getPoliciesWVersionId = async function(version_id, user_id){
     .then(function(response){
         return response[0].can_read
     })
-    .catch((error)=>{
-        console.log(error)
-    })
+    .catch((err) => {
+        res.json(err);
+    });
 }
 
 // Récupération du file en fonction de l'user_id
@@ -192,9 +191,9 @@ module.exports.getFile = async function(version_id){
     .then(function(response){
         return response[0].file_binary
     })
-    .catch((error)=>{
-        console.log(error)
-    })
+    .catch((err) => {
+        res.json(err);
+    });
 }
 
 // Récupération d'infos de la versions : starts_at, ends_at et name
@@ -207,7 +206,7 @@ module.exports.dateAndName =  function(version_id) {
     .then(function(response){
         return response
     })
-    .catch((error)=>{
-        console.log(error)
-    })
+    .catch((err) => {
+        res.json(err);
+    });
 }

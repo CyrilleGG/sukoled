@@ -23,29 +23,29 @@ module.exports = {
                 })
 
         return knex('versions')
-            // Insertion des données dans la table 'contributions' - id est généré précédemment
-            .insert({
-                // Informations remplies par le contributeur
-                file: req.body.excel,
-                // Informations remplies automatiquement mais nécessaire pour la DB
-                id: new_version_id,
-                status_admin: 'delivered',
-                status_contributor: 'pending',
-                contribution_id: contribution_id[0].id,
-                parent_version_id: version_id,
-                user_id: user_id,
-                name: dateAndName[0].name,
-                starts_at: dateAndName[0].starts_at,
-                ends_at: dateAndName[0].ends_at,
-                user_id: req.body.user_id
-            })
-            .then(function (response) {
-                // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-                res.json('ok')
-            })
-            .catch(function (err) {
-                res.json(err)
-            });
+        // Insertion des données dans la table 'contributions' - id est généré précédemment
+        .insert({
+            // Informations remplies par le contributeur
+            file:req.body.excel,
+            // Informations remplies automatiquement mais nécessaire pour la DB
+            id:new_version_id,
+            status_admin:'delivered',
+            status_contributor:'pending',
+            contribution_id:contribution_id[0].id,
+            parent_version_id:version_id,
+            user_id:user_id,
+            name:dateAndName[0].name,
+            starts_at:dateAndName[0].starts_at,
+            ends_at:dateAndName[0].ends_at,
+            user_id:req.body.user_id
+        })
+            .then(function(response){
+            // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+            res.json('ok')
+        })
+        .catch(function(err) {
+            res.json(err)
+        });
     },
 
     sendJSONDataRaf: async function (req, res) {

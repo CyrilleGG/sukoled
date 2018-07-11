@@ -4,8 +4,6 @@
     <div class="row mb-3">
       <filter-departments v-on:selected-department="selectedDepartment = $event" />
       <filter-periodicities v-on:selected-periodicity="selectedPeriodicity = $event" />
-      <filter-monthly v-if="selectedPeriodicity == 'monthly'" />
-      <filter-quarterly v-if="selectedPeriodicity == 'quarterly'" />
     </div>
 
     <div class="row">
@@ -15,8 +13,9 @@
           <div class="col-lg-1 d-flex justify-content-center align-items-center">
             <b-form-checkbox class="mr-0" v-model="checked" v-on:change="all ($event)"></b-form-checkbox>
           </div>
+          <p class="col-lg-1 my-auto text-center text-uppercase">Type</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Order</p>
-          <p class="col-lg-3 my-auto text-uppercase">Contribution</p>
+          <p class="col-lg-2 my-auto text-center text-uppercase">Name</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last request</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last iteration</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Status</p>
@@ -27,9 +26,10 @@
         <b-list-group id="contributors-list-items" class="row" flush>
           <admin-contributors-list-item
             v-for="(contribution, index) in contributions"
-            v-if="(contribution.department == selectedDepartment || selectedDepartment == 'all') && (contribution.period == selectedPeriodicity || selectedPeriodicity == 'all')"
+            v-if="(contribution.department_slug == selectedDepartment || selectedDepartment == 'all') && (contribution.contribution_period == selectedPeriodicity || selectedPeriodicity == 'all')"
             v-bind:key="index"
             v-bind:checked="contribution.checked"
+            v-bind:department_name="contribution.department_name"
             v-bind:order="contribution.contribution_order"
             v-bind:name="contribution.contribution_name"
             v-bind:starts_at="contribution.version_starts_at"

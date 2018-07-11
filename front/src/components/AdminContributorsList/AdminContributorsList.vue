@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <p>{{ selectedContributions }}</p>
+    <!-- <p>{{ selectedContributions }}</p> -->
 
   </div> 
 </template>

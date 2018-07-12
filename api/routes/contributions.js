@@ -9,6 +9,7 @@ module.exports = {
     list: async function(req, res) {
         const contributions = await knex.select(
             'version.id AS version_id',
+            'version.parent_version_id',
             'version.starts_at AS version_starts_at',
             'version.ends_at AS version_ends_at',
             'version.created_at AS version_created_at',

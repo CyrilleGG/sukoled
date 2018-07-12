@@ -4,50 +4,45 @@
     <Header :role="this.$root.$data.userInfo.role" />
 
     <div v-if="this.data !== null" class="row py-5 page-content">
-      <div class="col-lg-6  my-auto mx-auto">
+      <div class="col-lg-8  my-auto mx-auto">
 
         <div class="row mb-3 rounded py-4 pl-5 content">
 
           <h3 class="col-lg-12 pl-0">Review the contribution</h3>
-          <p class="col-lg-12 mb-4 pl-0 font-italic">Watchlist exposures</p>
+          <p class="col-lg-12 mb-4 pl-0 font-italic">{{ data.contribution.contribution_name }}</p>
 
-          <table class="col-lg-11 d-block mb-4 rounded">
+          <table v-if="department_slug == 'raf'" class="col-lg-11 d-block mb-4 rounded">
             <tr class="row">
 
-              <th class="col-lg-6 py-3 pl-5">Name</th>
-              <th class="col-lg-2 py-3 text-center">January</th>
-              <th class="col-lg-2 py-3 text-center">February</th>
-              <th class="col-lg-2 py-3 text-center">March</th>
+              <th class="col-lg-4 py-3 pl-5">Name</th>
+              <th class="col-lg-2 py-3 text-center">n-1</th>
+              <th class="col-lg-2 py-3 text-center">n</th>
+              <th class="col-lg-2 py-3 text-center">Limit</th>
+              <th class="col-lg-2 py-3 text-center">Threshold</th>
 
             </tr>
             <tr class="row">
 
-              <td class="col-lg-6 py-3 pl-5">Q1Gross EAD*</td>
-              <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
-              <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
-              <td class="col-lg-2 py-3 text-center last">€ 7,2 m</td>
-
-            </tr>
-            <tr class="row">
-
-              <td class="col-lg-6 py-3 pl-5">Net EAD*</td>
-              <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
-              <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
-              <td class="col-lg-2 py-3 text-center last">€ 80 bm</td>
+              <td class="col-lg-4 py-3 pl-5">{{ data.input.input_name }}</td>
+              <td class="col-lg-2 py-3 text-center">xx-1</td>
+              <td class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
+              <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_limit }}</td>
+              <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_threshold }}</td>
 
             </tr>
           </table>
 
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's comment</p>
-          <p class="col-lg-12 mb-3 pl-0">{{ this.data[0].input_value }}</p>
+          <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
+          <p v-else class="col-lg-12 mb-0 pl-0">The contributor didn't write any comment for this contribution</p>
 
-          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your highlights</p>
-          <p class="col-lg-12 mb-3 pl-0">The highlights for this contribution</p>
+          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's highlights</p>
+          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">higlights du contributeur</p>
 
           <b-form id="request-modification" class="col-lg-11 mt-4">
 
             <b-form-group id="comment-group" class="row">
-              <b-form-textarea id="comment" class="col-lg-12" v-model="comment_admin" placeholder="Write your request..." :rows="4"></b-form-textarea>
+              <b-form-textarea id="admin-comment" class="col-lg-12" v-model="comment_admin" placeholder="Write your request..." :rows="4"></b-form-textarea>
             </b-form-group>
 
             <div class="row">
@@ -93,7 +88,8 @@ export default {
   data () {
     return {
       data: null,
-      comment_admin: ''
+      comment_admin: '',
+      department_slug: this.$route.query.department_slug
     }
   },
 
@@ -108,15 +104,16 @@ export default {
 
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
-    const username = this.$root.$data.userInfo.username
+    const parent_version_id = this.$route.query.parent_version_id
 
-    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id +'/'+ username)
+    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
       .then((response) => {
-        this.$data.data = response.data.inputs
+        this.$data.data = response.data
+        // this.$data.data = response.data.inputs
       })
 
       .catch((error) => {
-        console.log('error')
+        console.log(error)
       })
   },
 
@@ -190,11 +187,15 @@ export default {
   background-color: rgba(126,68,170, 0.2);
 }
 
+#AdminReviewContribution .light {
+  color: #999999;
+}
+
 #AdminReviewContribution #request-modification {
   display: none;
 }
 
-#AdminReviewContribution #comment {
+#AdminReviewContribution #admin-comment {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
 }

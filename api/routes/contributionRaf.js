@@ -47,7 +47,7 @@ module.exports = {
                         id: value_id,
                         value: req.body.contribution_values.input_value,
                         contribution_id: contribution_id[0].id,
-                        version_id: version_id,
+                        version_id: new_version_id,
                         input_id: req.body.contribution_values.input_id,
                     })
                         .then(function (responseB) {

@@ -30,6 +30,7 @@
             v-bind:key="index"
             v-bind:checked="contribution.checked"
             v-bind:department_name="contribution.department_name"
+            v-bind:department_slug="contribution.department_slug"
             v-bind:order="contribution.contribution_order"
             v-bind:name="contribution.contribution_name"
             v-bind:starts_at="contribution.version_starts_at"
@@ -37,6 +38,7 @@
             v-bind:status_admin="contribution.version_status_admin"
             v-bind:contribution_id="contribution.contribution_id"
             v-bind:version_id="contribution.version_id"
+            v-bind:parent_version_id="contribution.parent_version_id"
             v-on:check-state="updateCheckedItems ($event)"
           />
         </b-list-group>

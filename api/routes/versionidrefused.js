@@ -23,14 +23,13 @@ module.exports = {
             file_binary: file,
             id: new_version_id,
             name: dateAndName[0].name,
-            contribution_id: contribution_id[0].id,
+            contribution_id: contribution_id,
             parent_version_id: version_id,
             user_id: req.body.user_id,
             status_admin: 'progress',
             status_contributor: 'invalid',
             starts_at: dateAndName[0].starts_at,
             ends_at: dateAndName[0].ends_at,
-            user_id:'test'
             })
             .into('versions')
             .then(function(response){

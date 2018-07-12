@@ -25,7 +25,8 @@
 
               <td class="col-lg-4 py-3 pl-5">{{ data.input.input_name }}</td>
               <td class="col-lg-2 py-3 text-center">xx-1</td>
-              <td class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
+              <td id="value" class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
+              <td id="input" class="col-lg-2 py-3 text-center last"><b-form-input :id="data.input.input_slug" class="text-center" v-model="data.input.input_value" type="text" :name="data.input.input_slug"></b-form-input></td>
               <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_limit }}</td>
               <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_threshold }}</td>
 
@@ -57,9 +58,11 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="mx-1 ml-auto purple" :to="{ path: './'}" replace size="md">Edit</b-button>
-          <b-button class="mx-1 orange" size="md" v-on:click="displayComment ()">Request a modification</b-button>
-          <b-button class="mx-1 green" :to="{ path: './'}" replace size="md">Validate</b-button>
+          <b-button id="cancel" class="mx-1 ml-auto purple" v-on:click="hideEdit ()" size="md">Cancel</b-button>
+          <b-button v-if="department_slug == 'raf'" id="edit" class="mx-1 ml-auto purple" v-on:click="displayEdit ()" size="md">Edit</b-button>
+          <b-button id="request-button" class="mx-1 orange" size="md" v-on:click="displayComment ()">Request a modification</b-button>
+          <b-button id="validate" class="mx-1 green" v-on:click="acceptContribution ()" size="md">Validate</b-button>
+          <b-button id="submit" class="mx-1 green" v-on:click="submitContribution ()" size="md">Submit</b-button>
         </div>
 
       </div>
@@ -121,8 +124,8 @@ export default {
     displayComment () {
       const form = document.getElementById('request-modification')
       const actions = document.getElementById('actions')
-      form.style.display = 'block'
       actions.style.display = 'none'
+      form.style.display = 'block'
     },
 
     hideComment () {
@@ -132,6 +135,40 @@ export default {
       actions.style.display = 'flex'
     },
 
+    displayEdit () {
+      const input = document.getElementById('input')
+      const cancel = document.getElementById('cancel')
+      const edit = document.getElementById('edit')
+      const value = document.getElementById('value')
+      const request = document.getElementById('request-button')
+      const validate = document.getElementById('validate')
+      const vsubmit= document.getElementById('submit')
+      edit.style.display = 'none'
+      value.style.display = 'none'
+      request.style.display = 'none'
+      validate.style.display = 'none'
+      input.style.display = 'table-cell'
+      cancel.style.display = 'inline-block'
+      submit.style.display = 'inline-block'
+    },
+
+    hideEdit () {
+      const input = document.getElementById('input')
+      const cancel = document.getElementById('cancel')
+      const edit = document.getElementById('edit')
+      const value = document.getElementById('value')
+      const request = document.getElementById('request-button')
+      const validate = document.getElementById('validate')
+      const vsubmit= document.getElementById('submit')
+      input.style.display = 'none'
+      cancel.style.display = 'none'
+      submit.style.display = 'none'
+      value.style.display = 'table-cell'
+      edit.style.display = 'inline-block'
+      request.style.display = 'inline-block'
+      validate.style.display = 'inline-block'
+    },
+
     sendModificationRequest () {
       axios.post('http://localhost:3000/api/versionRefused/'+ this.$route.query.version_id +'/'+ this.$route.query.contribution_id, {
         user_id: this.$root.$data.username,
@@ -139,6 +176,28 @@ export default {
       })
         .then((response) => {
           this.$router.replace( {name: 'admin'} )
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+
+    acceptContribution () {
+      axios.patch('http://localhost:3000/api/versionValidate/'+ this.$route.query.version_id)
+        .then((response) => {
+          this.$router.replace({ name: 'admin' })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+
+    submitContribution () {
+      const input = this.$data.data.input
+      
+      axios.patch('http://localhost:3000/api/versionSubmit/'+ this.$route.query.version_id, input)
+        .then((response) => {
+          this.$router.replace({ name: 'admin' })
         })
         .catch((error) => {
           console.log(error)
@@ -187,6 +246,10 @@ export default {
   background-color: rgba(126,68,170, 0.2);
 }
 
+#AdminReviewContribution table #input {
+  display: none;
+}
+
 #AdminReviewContribution .light {
   color: #999999;
 }
@@ -198,6 +261,14 @@ export default {
 #AdminReviewContribution #admin-comment {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+}
+
+#AdminReviewContribution #cancel {
+  display: none;
+}
+
+#AdminReviewContribution #submit {
+  display: none;
 }
 
 #AdminReviewContribution .purple {

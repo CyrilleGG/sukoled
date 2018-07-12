@@ -20,7 +20,8 @@ module.exports = {
                 'input.input_type AS input_type',
                 'input.name AS input_name',
                 'input.description AS input_description',
-                'input.priority AS input_priority',
+                'input.slug AS input_slug',
+                'value.id AS input_value_id',
                 'value.value AS input_value',
                 'version.comment_contributor AS comment_contributor',
                 'version.highlight AS highlight'

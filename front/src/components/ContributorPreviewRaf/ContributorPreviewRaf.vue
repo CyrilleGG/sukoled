@@ -49,7 +49,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './', query: { contribution_id: inputs.contribution_id, version_id: inputs.version_id } }" size="md">Back</b-button>
-          <b-button class="ml-auto green" :to="{ path: '../' }" replace size="md">Confirm</b-button>
+          <b-button class="ml-auto green"  v-on:click="sendContribution ()" size="md">Confirm</b-button>
         </div>
 
       </div>
@@ -78,6 +78,17 @@ export default {
 
     lastMonth () {
       return moment().subtract(2, 'months').format('MMMM')
+    },
+
+    sendContribution () {
+      const inputs = this.$props.inputs
+      axios.post('http://localhost:3000/api/contributionRaf/'+ inputs.version_id, inputs)
+        .then((response) => {
+          this.$router.replace( {name: 'contributor'} )
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 }

@@ -95,7 +95,7 @@ export default {
     submit () {
       this.$root.$data.formInput = this.$data.inputs
       this.$router.replace( {name: 'contributor-preview-contribution'} )
-      // axios.post('http://localhost:3000/api/contributionRaf/'+ inputs.version_id, inputs)
+      // axios.post('http://localhost:3000/api/contributionRaf/'+ inputs.version_id, this.$data.inputs)
       //   .then((response) => {
       //     this.$router.replace( {name: 'contributor'} )
       //   })

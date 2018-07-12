@@ -40,12 +40,27 @@ module.exports = {
             user_id:user_id
         })
             .then(function(response){
-            // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-            res.json('ok')
-        })
-        .catch(function(err) {
-            res.json(err)
-        });
+                let value_id = uuidv4();
+                return knex('contributions_values')
+                    // Insertion des données dans la table 'contributions_values'
+                    .insert({
+                        id: value_id,
+                        value: req.body.contribution_values.input_value,
+                        contribution_id: contribution_id[0].id,
+                        version_id: version_id,
+                        input_id: req.body.contribution_values.input_id,
+                    })
+                        .then(function (responseB) {
+                            // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+                            res.json('ok')
+                        })
+                        .catch(function (err) {
+                            res.json(err)
+                        });
+            })
+            .catch(function(err) {
+                res.json(err)
+            });
     },
 
     sendJSONDataRaf: async function (req, res) {

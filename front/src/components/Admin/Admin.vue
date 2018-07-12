@@ -10,7 +10,7 @@
           <h2 class="col-lg-12 pl-0 text-uppercase">Contributions</h2>
           <h4 class="col-lg-7 pl-0">Watch the progress of the different contributions</h4>
 
-          <div class="col-lg-2 ml-auto mr-3">
+          <div class="col-lg-2 ml-auto mr-0 pr-0 text-right">
             <b-button id="new-campaign" class="align-middle" :to="{ path: 'new-campaign'}" append  size="small">New campaign <img class="ml-1" src="@/assets/icons/plus-symbol.png" alt=""></b-button>
           </div>
 

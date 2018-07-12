@@ -13,7 +13,7 @@
           <div class="col-lg-1 d-flex justify-content-center align-items-center">
             <b-form-checkbox class="mr-0" v-model="checked" v-on:change="all ($event)"></b-form-checkbox>
           </div>
-          <p class="col-lg-1 my-auto text-center text-uppercase">Type</p>
+          <p class="col-lg-1 my-auto text-uppercase">Type</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Order</p>
           <p class="col-lg-2 my-auto text-uppercase">Name</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last request</p>

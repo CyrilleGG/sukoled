@@ -6,7 +6,7 @@
         <b-form-checkbox class="mr-0" v-bind:checked="checked" v-on:change="updateCheck ($event)"></b-form-checkbox>
       </div>
 
-      <p class="col-lg-1 my-auto text-center">
+      <p class="col-lg-1 my-auto">
         {{ department_name }}
       </p>
 

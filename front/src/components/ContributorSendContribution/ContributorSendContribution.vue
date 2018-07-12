@@ -60,7 +60,6 @@ export default {
           axios.get('http://localhost:3000/api/contributionFiliale/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
             .then((response) => {
               this.$data.data = response.data
-              console.log(this.$data.data)
             })
 
             .catch((error) => {

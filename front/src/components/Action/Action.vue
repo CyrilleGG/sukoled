@@ -3,13 +3,13 @@
 
     <b-button v-if="status == 'done'" class="py-1 px-3" size="sm" variant="outline-primary">View</b-button>
 
-    <b-button v-else-if="status == 'delivered' || status == 'invalid' || status == 'pending'" class="py-1 px-3" :to="{ path: 'review', query: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary">Review</b-button>
+    <b-button v-else-if="status == 'delivered' || status == 'invalid' || status == 'pending'" class="py-1 px-3" :to="{ path: 'review', query: { contribution_id: contribution_id, version_id: version_id, department_slug: department_slug } }" append size="sm" variant="outline-primary">Review</b-button>
 
     <b-button v-if="status == 'hold'" class="py-1 px-3" size="sm" variant="outline-primary">Resend</b-button>
 
     <b-button v-if="status == 'not delivered'" class="py-1 px-3" :to="{ path: 'send-contribution', query: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary">Add</b-button>
 
-    <b-button v-if="status == 'progress'" class="py-1 px-3" :to="{ path: 'review', query: { contribution_id: contribution_id, version_id: version_id } }" append size="sm" variant="outline-primary disabled">Review</b-button>
+    <b-button v-if="status == 'progress'" class="py-1 px-3" :to="{ path: 'review', query: { contribution_id: contribution_id, version_id: version_id, department_slug: department_slug } }" append size="sm" variant="outline-primary">Review</b-button>
     
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
   props: [
     'status',
     'contribution_id',
-    'version_id'
+    'version_id',
+    'department_slug'
   ]
 }
 </script>

@@ -11,7 +11,7 @@
 
       <p class="col-lg-2 my-auto">{{ moment (ends_at) }}</p>
 
-      <p class="col-lg-2 my-auto text-center">0</p>
+      <p class="col-lg-2 my-auto text-center">{{ moment (version_created_at) }}</p>
 
       <status v-bind:status="status_contributor" />
 
@@ -44,6 +44,7 @@ export default {
     'version_id',
     'contribution_name',
     'version_name',
+    'version_created_at',
     'department_name',
     'ends_at',
     'status_contributor'

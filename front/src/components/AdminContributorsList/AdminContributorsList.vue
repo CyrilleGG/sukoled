@@ -15,7 +15,7 @@
           </div>
           <p class="col-lg-1 my-auto text-center text-uppercase">Type</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Order</p>
-          <p class="col-lg-2 my-auto text-center text-uppercase">Name</p>
+          <p class="col-lg-2 my-auto text-uppercase">Name</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last request</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last iteration</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Status</p>

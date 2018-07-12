@@ -16,9 +16,10 @@
         v-for="(contribution, index) in contributions"
         v-bind:key="index"
         v-bind:contribution_id="contribution.contribution_id"
-        v-bind:version_id="contribution.version_id"
         v-bind:contribution_name="contribution.contribution_name"
+        v-bind:version_id="contribution.version_id"
         v-bind:version_name="contribution.version_name"
+        v-bind:version_created_at="contribution.version_created_at"
         v-bind:department_name="contribution.department_name"
         v-bind:ends_at="contribution.version_ends_at"
         v-bind:status_contributor="contribution.version_status_contributor" />

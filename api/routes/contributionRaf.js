@@ -40,17 +40,33 @@ module.exports = {
             user_id:user_id
         })
             .then(function(response){
-            // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-            res.json('ok')
-        })
-        .catch(function(err) {
-            res.json(err)
-        });
+                let value_id = uuidv4();
+                return knex('contributions_values')
+                    // Insertion des données dans la table 'contributions_values'
+                    .insert({
+                        id: value_id,
+                        value: req.body.contribution_values.input_value,
+                        contribution_id: contribution_id[0].id,
+                        version_id: version_id,
+                        input_id: req.body.contribution_values.input_id,
+                    })
+                        .then(function (responseB) {
+                            // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+                            res.json('ok')
+                        })
+                        .catch(function (err) {
+                            res.json(err)
+                        });
+            })
+            .catch(function(err) {
+                res.json(err)
+            });
     },
 
     sendJSONDataRaf: async function (req, res) {
 
         const version_id = req.params.version_id;
+        const contribution_id = req.params.contribution_id
         const user_id = req.params.user_id;
         // Appel des modules (routes/modules.js)
         const modules = require('./modules')
@@ -58,6 +74,7 @@ module.exports = {
         // if (query == 1) {
         const department_slug = await modules.getDepSlugByVersion(version_id);
         const version_name = await modules.getVersionNameByVersion(version_id);
+        const contribution = await modules.getContributionById(contribution_id);
         const comment_admin = await modules.getAdminComment(version_id);
         const inputs = await knex.select(
             'input.id AS input_id',
@@ -72,6 +89,7 @@ module.exports = {
         const data = {
             department_slug,
             version_name,
+            contribution,
             comment_admin,
             inputs
         }

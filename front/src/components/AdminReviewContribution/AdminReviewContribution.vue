@@ -107,12 +107,10 @@ export default {
 
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
-    const parent_version_id = this.$route.query.parent_version_id
 
     axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
       .then((response) => {
         this.$data.data = response.data
-        // this.$data.data = response.data.inputs
       })
 
       .catch((error) => {
@@ -172,7 +170,8 @@ export default {
     sendModificationRequest () {
       axios.post('http://localhost:3000/api/versionRefused/'+ this.$route.query.version_id +'/'+ this.$route.query.contribution_id, {
         user_id: this.$root.$data.username,
-        comment: this.$data.comment_admin
+        comment: this.$data.comment_admin,
+        input_value_id: this.$data.data.input.input_value_id
       })
         .then((response) => {
           this.$router.replace( {name: 'admin'} )

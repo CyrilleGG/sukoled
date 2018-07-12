@@ -17,6 +17,7 @@ module.exports = {
             'version.status_contributor AS version_status_contributor',
             'version.parent_version_id',
             'department.name AS department_name',
+            'department.slug AS department_slug',
             'contribution.id AS contribution_id',
             'contribution.name AS contribution_name'
             )

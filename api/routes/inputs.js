@@ -24,6 +24,7 @@ module.exports = {
                 'value.id AS input_value_id',
                 'value.value AS input_value',
                 'version.comment_contributor AS comment_contributor',
+                'version.comment_admin AS comment_admin',
                 'version.highlight AS highlight'
             )
             .from('contributions_values as value')

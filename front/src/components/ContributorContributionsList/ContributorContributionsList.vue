@@ -21,6 +21,7 @@
         v-bind:version_name="contribution.version_name"
         v-bind:version_created_at="contribution.version_created_at"
         v-bind:department_name="contribution.department_name"
+        v-bind:department_slug="contribution.department_slug"
         v-bind:ends_at="contribution.version_ends_at"
         v-bind:status_contributor="contribution.version_status_contributor" />
 

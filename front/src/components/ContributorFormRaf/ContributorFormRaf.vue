@@ -14,7 +14,7 @@
 
               <div v-for="(input, index) in data.inputs" v-bind:key="index" v-if="input.input_type !== 'textarea'" class="col-lg-12 pl-0">
                 <label :for="input.input_slug">{{ input.input_name }}</label>
-                <b-form-input :id="input.input_slug" class="d-inline-block w-25 ml-2" v-model="inputs.contribution_values[input.input_id]" :type="input.input_type" :name="input.input_slug"></b-form-input>
+                <b-form-input :id="input.input_slug" class="d-inline-block w-25 ml-2" v-model="inputs.contribution_values.input_value" :type="input.input_type" :name="input.input_slug" autocomplete="off"></b-form-input>
                 <p class="d-inline-block ml-3">in million</p>
               </div>
 
@@ -43,7 +43,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" v-on:click="sendContribution ()" size="md">Submit</b-button>
+          <b-button class="ml-auto green" v-on:click="submit ()" size="md">Submit</b-button>
         </div>
 
       </b-form>
@@ -67,24 +67,41 @@ export default {
   data () {
     return {
       inputs: {
-        contribution_values: {},
+        contribution_values: {
+          input_id: this.$props.data.inputs[0].input_id,
+          input_name: this.$props.data.inputs[0].input_name,
+          input_value: ''
+        },
         comment_contributor: '',
         version_id: this.$route.query.version_id,
-        user_id: this.$root.$data.userInfo.user_id
+        user_id: this.$root.$data.userInfo.user_id,
+        contribution_id: this.$route.query.contribution_id,
+        contribution_limit: this.$props.data.contribution[0].limit,
+        contribution_threshold: this.$props.data.contribution[0].threshold,
+        department_slug: this.$props.data.department_slug
       }
     }
   },
 
+  created() {
+    const formInput = this.$root.$data.formInput
+    if (formInput !== null) {
+      this.$data.inputs.contribution_values.input_value = formInput.contribution_values.input_value
+      this.$data.inputs.comment_contributor = formInput.comment_contributor
+    }
+  },
+
   methods: {
-    sendContribution () {
-      const inputs = this.$data.inputs
-      axios.post('http://localhost:3000/api/contributionRaf/'+ inputs.version_id, inputs)
-        .then((response) => {
-          this.$router.replace( {name: 'contributor'} )
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    submit () {
+      this.$root.$data.formInput = this.$data.inputs
+      this.$router.replace( {name: 'contributor-preview-contribution'} )
+      // axios.post('http://localhost:3000/api/contributionRaf/'+ inputs.version_id, inputs)
+      //   .then((response) => {
+      //     this.$router.replace( {name: 'contributor'} )
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
     }
   }
 }

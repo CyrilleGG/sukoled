@@ -4,7 +4,7 @@
     <Header :role="this.$root.$data.userInfo.role" />
 
     <div v-if="data !== null" class="row py-5 page-content">
-      <contributor-form-lease v-if="data.department_slug == 'lease'" v-bind:data="data" />
+      <contributor-form-lease v-if="data.department_slug == 'subsidaries'" v-bind:data="data" />
       <contributor-form-raf v-if="data.department_slug == 'raf'" v-bind:data="data" />
     </div>
 
@@ -45,9 +45,28 @@ export default {
       this.$router.replace({ name: 'viewer' })
     }
 
-    axios.get('http://localhost:3000/api/contributionRaf/'+ this.$route.query.contribution_id +'/version/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
+    axios.get('http://localhost:3000/api/contribution/'+ this.$route.query.contribution_id)
       .then((response) => {
-        this.$data.data = response.data
+        if (response.data.department == 'raf') {
+          axios.get('http://localhost:3000/api/contributionRaf/'+ this.$route.query.contribution_id +'/version/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
+            .then((response) => {
+              this.$data.data = response.data
+            })
+
+            .catch((error) => {
+              console.log(error)
+            })
+        } else {
+          axios.get('http://localhost:3000/api/contributionFiliale/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
+            .then((response) => {
+              this.$data.data = response.data
+              console.log(this.$data.data)
+            })
+
+            .catch((error) => {
+              console.log(error)
+            })
+        }
       })
 
       .catch((error) => {

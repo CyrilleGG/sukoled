@@ -51,6 +51,7 @@ module.exports = {
     sendJSONDataRaf: async function (req, res) {
 
         const version_id = req.params.version_id;
+        const contribution_id = req.params.contribution_id
         const user_id = req.params.user_id;
         // Appel des modules (routes/modules.js)
         const modules = require('./modules')
@@ -58,6 +59,7 @@ module.exports = {
         // if (query == 1) {
         const department_slug = await modules.getDepSlugByVersion(version_id);
         const version_name = await modules.getVersionNameByVersion(version_id);
+        const contribution = await modules.getContributionById(contribution_id);
         const comment_admin = await modules.getAdminComment(version_id);
         const inputs = await knex.select(
             'input.id AS input_id',
@@ -72,6 +74,7 @@ module.exports = {
         const data = {
             department_slug,
             version_name,
+            contribution,
             comment_admin,
             inputs
         }

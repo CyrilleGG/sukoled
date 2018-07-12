@@ -30,7 +30,7 @@ module.exports.getDepartments = async function(dep) {
 // Envoie des données de la contribution
 module.exports.getContributionById = async function(contributionId){
     return knex('contributions')
-    .select('id as contribution_id', 'name', 'period')
+    .select('id as contribution_id', 'name', 'period', 'limit', 'threshold')
     .where({'id':contributionId})
     .then((result) => {
         return result
@@ -63,6 +63,20 @@ module.exports.getDepSlugByVersion = async function(version_id){
     .catch((err) => {
         return []
     });
+}
+
+// Envoie du department lié à la version
+module.exports.getDepSlugByContribution = async function (contribution_id) {
+    return knex('contributions')
+        .join('departments', 'contributions.department_id', '=', 'departments.id')
+        .where({ 'contributions.id': contribution_id })
+        .select('departments.slug')
+        .then(function (response) {
+            return response[0].slug;
+        })
+        .catch((err) => {
+            return []
+        });
 }
 
 // Envoie du nom de la contribution lié à la version

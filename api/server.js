@@ -71,7 +71,7 @@ app.post('/api/createcontrib', createcontrib.sendInfoToDB);
 
 // Contributeur : Création d'une version d'une contribution Non-Raf
 var contributionFiliale = require('./routes/contributionFiliale');
-app.get('/api/contributionFiliale/:version_id', contributionFiliale.sendJSONDataFiliale); // :user_id
+app.get('/api/contributionFiliale/:version_id/user/:user_id', contributionFiliale.sendJSONDataFiliale); // :user_id
 app.post('/api/contributionFiliale/:version_id', contributionFiliale.sendInfoToDBFiliale);
 
 // Contributeur : Création d'une version d'une contribution Raf

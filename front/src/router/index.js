@@ -11,10 +11,12 @@ import Viewer from '@/components/Viewer/Viewer'
 import Contributor from '@/components/Contributor/Contributor'
 import ContributorSendContribution from '@/components/ContributorSendContribution/ContributorSendContribution'
 import ContributorReviewContribution from '@/components/ContributorReviewContribution/ContributorReviewContribution'
+import ContributorViewContribution from '@/components/ContributorViewContribution/ContributorViewContribution'
 import ContributorPreviewContribution from '@/components/ContributorPreviewContribution/ContributorPreviewContribution'
 
 import Admin from '@/components/Admin/Admin'
 import AdminReviewContribution from '@/components/AdminReviewContribution/AdminReviewContribution'
+import AdminViewContribution from '@/components/AdminViewContribution/AdminViewContribution'
 import AdminNewCampaign from '@/components/AdminNewCampaign/AdminNewCampaign'
 import AdminManagePolicies from '@/components/AdminManagePolicies/AdminManagePolicies'
 
@@ -44,6 +46,10 @@ export default new Router({
       path: '/contributor/review',
       component: ContributorReviewContribution
     }, {
+      name: 'contributor-view-contribution',
+      path: '/contributor/view',
+      component: ContributorViewContribution
+    }, {
       name: 'contributor-preview-contribution',
       path: '/contributor/send-contribution/preview',
       component: ContributorPreviewContribution
@@ -55,6 +61,10 @@ export default new Router({
       name: 'admin-review-contribution',
       path: '/admin/review',
       component: AdminReviewContribution
+    }, {
+      name: 'admin-view-contribution',
+      path: '/admin/view',
+      component: AdminViewContribution
     }, {
       name: 'admin-new-campaign',
       path: '/admin/new-campaign',

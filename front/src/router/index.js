@@ -15,6 +15,7 @@ import ContributorPreviewContribution from '@/components/ContributorPreviewContr
 
 import Admin from '@/components/Admin/Admin'
 import AdminReviewContribution from '@/components/AdminReviewContribution/AdminReviewContribution'
+import AdminViewContribution from '@/components/AdminViewContribution/AdminViewContribution'
 import AdminNewCampaign from '@/components/AdminNewCampaign/AdminNewCampaign'
 import AdminManagePolicies from '@/components/AdminManagePolicies/AdminManagePolicies'
 
@@ -55,6 +56,10 @@ export default new Router({
       name: 'admin-review-contribution',
       path: '/admin/review',
       component: AdminReviewContribution
+    }, {
+      name: 'admin-view-contribution',
+      path: '/admin/view',
+      component: AdminViewContribution
     }, {
       name: 'admin-new-campaign',
       path: '/admin/new-campaign',

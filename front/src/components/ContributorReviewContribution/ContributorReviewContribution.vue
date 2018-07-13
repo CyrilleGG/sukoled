@@ -48,7 +48,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="mx-1 ml-auto purple" :to="{ path: 'send-contribution'}" size="md">Modify the contribution</b-button>
+          <b-button class="mx-1 ml-auto purple" v-on:click="goToModify ()" size="md">Modify the contribution</b-button>
         </div>
 
       </div>
@@ -114,6 +114,26 @@ export default {
       const actions = document.getElementById('actions')
       form.style.display = 'none'
       actions.style.display = 'flex'
+    },
+
+    goToModify () {
+      const data = this.$data.data
+      this.$root.$data.formInput = {
+        comment_contributor: data.input.comment_contributor,
+        contribution_id: data.contribution.contribution_id,
+        contribution_limit: data.contribution.contribution_limit,
+        contribution_threshold: data.contribution.contribution_threshold,
+        contribution_values: {
+          input_id: data.input.input_id,
+          input_name: data.input.input_name,
+          input_value: data.input.input_value,
+        },
+        department_slug: this.$data.department_slug,
+        user_id: this.$root.$data.userInfo.user_id,
+        version_id: this.$route.query.version_id
+      }
+
+      this.$router.replace({ name: 'contributor-send-contribution', query: { contribution_id: this.$route.query.contribution_id, version_id: this.$route.query.version_id, department_slug: this.$route.query.department_slug } })
     }
   }
 }

@@ -12,7 +12,7 @@ module.exports = {
         // Récupération des données
         const version_id = req.params.version_id;
         const modules = require('./modules')
-        const dateAndName = await modules.dateAndName(version_id);
+        const version = await modules.getVersionById(version_id);
         const user_id = req.body.user_id;
         const comment_contributor = req.body.comment_contributor
         const contribution_id = await
@@ -30,11 +30,11 @@ module.exports = {
             comment_contributor:comment_contributor,
             // Informations remplies automatiquement mais nécessaire pour la DB
             id:new_version_id,
-            name: dateAndName[0].name,
+            name: version[0].name,
             status_admin:'delivered',
             status_contributor:'pending',
-            starts_at: dateAndName[0].starts_at,
-            ends_at: dateAndName[0].ends_at,
+            starts_at: version[0].starts_at,
+            ends_at: version[0].ends_at,
             contribution_id:contribution_id[0].id,
             parent_version_id:version_id,
             user_id:user_id

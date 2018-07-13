@@ -20,26 +20,34 @@ module.exports = {
                 'input.input_type AS input_type',
                 'input.name AS input_name',
                 'input.description AS input_description',
-                'input.priority AS input_priority',
+                'input.slug AS input_slug',
+                'value.id AS input_value_id',
                 'value.value AS input_value',
-                'contribution.id AS contribution_id',
-                'contribution.name AS contribution_name',
-                'version.id AS contribution_version_id',
-                'version.name AS contribution_version_name',
-                'department.name AS department_name'
+                'version.comment_contributor AS comment_contributor',
+                'version.comment_admin AS comment_admin',
+                'version.highlight AS highlight'
             )
             .from('contributions_values as value')
             .innerJoin('contributions_inputs as input', 'value.input_id', 'input.id')
-            .innerJoin('contributions as contribution', 'input.contribution_id', 'contribution.id')
             .innerJoin('versions as version', 'value.version_id', 'version.id')
-            .innerJoin('departments as department', 'contribution.department_id', 'department.id')
             .where({
-                'contribution.id': req.params.contribution_id,
-                'version.id': req.params.version_id
+                'version.id': version_id
             });
 
-            res.json({ inputs })
-        // } else {
+            const contribution = await knex.select(
+                'contribution.id AS contribution_id',
+                'contribution.name AS contribution_name',
+                'contribution.limit AS contribution_limit',
+                'contribution.threshold AS contribution_threshold'
+            )
+            .from('contributions as contribution')
+            .where({ 'contribution.id': contribution_id })
+
+            res.json({
+                input: inputs[0],
+                contribution: contribution[0]
+            })
+        // } else 
         //     res.json(null)
         // }
     }

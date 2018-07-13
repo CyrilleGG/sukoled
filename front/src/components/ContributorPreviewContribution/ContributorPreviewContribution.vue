@@ -4,8 +4,8 @@
     <Header :role="this.$root.$data.userInfo.role" />
 
     <div class="row py-5 page-content">
-      <contributor-preview-raf v-if="this.department == 'raf'" />
-      <contributor-preview-lease v-if="this.department == 'lease'" />
+      <contributor-preview-raf v-if="inputs.department_slug == 'raf'" v-bind:inputs="inputs" />
+      <contributor-preview-lease v-if="inputs.department_slug == 'lease'" v-bind:inputs="inputs" />
     </div>
 
     <Footer />
@@ -31,7 +31,7 @@ export default {
 
   data () {
     return {
-      department: 'lease'
+      inputs: null
     }
   },
 
@@ -41,6 +41,8 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
+
+    this.$data.inputs = this.$root.$data.formInput
   },
 
   methods: {

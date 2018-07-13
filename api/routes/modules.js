@@ -23,18 +23,33 @@ module.exports.getDepartments = async function(dep) {
         // res.status(200).json(dep);
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
 // Envoie des données de la contribution
 module.exports.getContributionById = async function(contributionId){
     return knex('contributions')
-    .select('id as contribution_id', 'name', 'period')
+    .select('id as contribution_id', 'name', 'period', 'limit', 'threshold')
     .where({'id':contributionId})
     .then((result) => {
         return result
     })
+    .catch((err) => {
+        return []
+    });
+}
+
+module.exports.getContributionValuesById = async function (valueId) {
+    return knex('contributions_values')
+        .select('id as input_value_id', 'value', 'contribution_id', 'version_id', 'input_id')
+        .where({ 'id': valueId })
+        .then((result) => {
+            return result
+        })
+        .catch((err) => {
+            return []
+        });
 }
 
 // Envoie des versions liés à la contribution
@@ -58,8 +73,22 @@ module.exports.getDepSlugByVersion = async function(version_id){
         return response[0].slug;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
+}
+
+// Envoie du department lié à la version
+module.exports.getDepSlugByContribution = async function (contribution_id) {
+    return knex('contributions')
+        .join('departments', 'contributions.department_id', '=', 'departments.id')
+        .where({ 'contributions.id': contribution_id })
+        .select('departments.slug')
+        .then(function (response) {
+            return response[0].slug;
+        })
+        .catch((err) => {
+            return []
+        });
 }
 
 // Envoie du nom de la contribution lié à la version
@@ -73,7 +102,7 @@ module.exports.getContribNameByVersion = async function(version_id){
         return response[0].name;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -87,7 +116,7 @@ module.exports.getVersionNameByVersion = async function(version_id){
         return response[0].name;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -101,7 +130,7 @@ module.exports.getAdminComment = async function(version_id){
         return response[0].comment_admin;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -115,7 +144,7 @@ module.exports.getContributorComment = async function(version_id){
         return response[0].comment_contributor;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -129,7 +158,7 @@ module.exports.getHighlight = async function(version_id){
         return response[0].highlight;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -143,7 +172,7 @@ module.exports.getVersionFile = async function(version_id){
         return response[0].file_binary;
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -159,7 +188,7 @@ module.exports.getPoliciesWContribId = async function(contribution_id, user_id){
         return response[0].can_read
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -177,7 +206,7 @@ module.exports.getPoliciesWVersionId = async function(version_id, user_id){
         return response[0].can_read
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
@@ -192,17 +221,17 @@ module.exports.getFile = async function(version_id){
         return response[0].file_binary
     })
     .catch((err) => {
-        res.json(err);
+        return []
     });
 }
 
 // Récupération d'infos de la versions : starts_at, ends_at et name
-module.exports.dateAndName =  function(version_id) {
+module.exports.getVersionById =  function(version_id) {
     return knex('versions')
     .where({
         'id':version_id
     })
-    .select('starts_at', 'ends_at', 'name')
+    .select('*')
     .then(function(response){
         return response
     })

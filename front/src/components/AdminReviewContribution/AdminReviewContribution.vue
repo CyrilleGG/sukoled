@@ -4,50 +4,46 @@
     <Header :role="this.$root.$data.userInfo.role" />
 
     <div v-if="this.data !== null" class="row py-5 page-content">
-      <div class="col-lg-6  my-auto mx-auto">
+      <div class="col-lg-8  my-auto mx-auto">
 
         <div class="row mb-3 rounded py-4 pl-5 content">
 
           <h3 class="col-lg-12 pl-0">Review the contribution</h3>
-          <p class="col-lg-12 mb-4 pl-0 font-italic">Watchlist exposures</p>
+          <p class="col-lg-12 mb-4 pl-0 font-italic">{{ data.contribution.contribution_name }}</p>
 
-          <table class="col-lg-11 d-block mb-4 rounded">
+          <table v-if="department_slug == 'raf'" class="col-lg-11 d-block mb-4 rounded">
             <tr class="row">
 
-              <th class="col-lg-6 py-3 pl-5">Name</th>
-              <th class="col-lg-2 py-3 text-center">January</th>
-              <th class="col-lg-2 py-3 text-center">February</th>
-              <th class="col-lg-2 py-3 text-center">March</th>
+              <th class="col-lg-4 py-3 pl-5">Name</th>
+              <th class="col-lg-2 py-3 text-center">{{ lastMonth () }}</th>
+              <th class="col-lg-2 py-3 text-center">{{ month () }}</th>
+              <th class="col-lg-2 py-3 text-center">Limit</th>
+              <th class="col-lg-2 py-3 text-center">Threshold</th>
 
             </tr>
             <tr class="row">
 
-              <td class="col-lg-6 py-3 pl-5">Q1Gross EAD*</td>
-              <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
-              <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
-              <td class="col-lg-2 py-3 text-center last">€ 7,2 m</td>
-
-            </tr>
-            <tr class="row">
-
-              <td class="col-lg-6 py-3 pl-5">Net EAD*</td>
-              <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
-              <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
-              <td class="col-lg-2 py-3 text-center last">€ 80 bm</td>
+              <td class="col-lg-4 py-3 pl-5">{{ data.input.input_name }}</td>
+              <td class="col-lg-2 py-3 text-center">xx-1</td>
+              <td id="value" class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
+              <td id="input" class="col-lg-2 py-3 text-center last"><b-form-input :id="data.input.input_slug" class="text-center" v-model="data.input.input_value" type="text" :name="data.input.input_slug"></b-form-input></td>
+              <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_limit }}</td>
+              <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_threshold }}</td>
 
             </tr>
           </table>
 
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's comment</p>
-          <p class="col-lg-12 mb-3 pl-0">{{ this.data[0].input_value }}</p>
+          <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
+          <p v-else class="col-lg-12 mb-0 pl-0">The contributor didn't write any comment for this contribution</p>
 
-          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your highlights</p>
-          <p class="col-lg-12 mb-3 pl-0">The highlights for this contribution</p>
+          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's highlights</p>
+          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">higlights du contributeur</p>
 
           <b-form id="request-modification" class="col-lg-11 mt-4">
 
             <b-form-group id="comment-group" class="row">
-              <b-form-textarea id="comment" class="col-lg-12" v-model="comment_admin" placeholder="Write your request..." :rows="4"></b-form-textarea>
+              <b-form-textarea id="admin-comment" class="col-lg-12" v-model="comment_admin" placeholder="Write your request..." :rows="4"></b-form-textarea>
             </b-form-group>
 
             <div class="row">
@@ -62,9 +58,11 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="mx-1 ml-auto purple" :to="{ path: './'}" replace size="md">Edit</b-button>
-          <b-button class="mx-1 orange" size="md" v-on:click="displayComment ()">Request a modification</b-button>
-          <b-button class="mx-1 green" :to="{ path: './'}" replace size="md">Validate</b-button>
+          <b-button id="cancel" class="mx-1 ml-auto purple" v-on:click="hideEdit ()" size="md">Cancel</b-button>
+          <b-button v-if="department_slug == 'raf'" id="edit" class="mx-1 ml-auto purple" v-on:click="displayEdit ()" size="md">Edit</b-button>
+          <b-button id="request-button" class="mx-1 orange" size="md" v-on:click="displayComment ()">Request a modification</b-button>
+          <b-button id="validate" class="mx-1 green" v-on:click="acceptContribution ()" size="md">Validate</b-button>
+          <b-button id="submit" class="mx-1 green" v-on:click="submitContribution ()" size="md">Submit</b-button>
         </div>
 
       </div>
@@ -78,6 +76,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
@@ -93,7 +92,8 @@ export default {
   data () {
     return {
       data: null,
-      comment_admin: ''
+      comment_admin: '',
+      department_slug: this.$route.query.department_slug
     }
   },
 
@@ -108,24 +108,31 @@ export default {
 
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
-    const username = this.$root.$data.userInfo.username
 
-    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id +'/'+ username)
+    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
       .then((response) => {
-        this.$data.data = response.data.inputs
+        this.$data.data = response.data
       })
 
       .catch((error) => {
-        console.log('error')
+        console.log(error)
       })
   },
 
   methods: {
+    month () {
+      return moment().subtract(1, 'months').format('MMMM')
+    },
+
+    lastMonth () {
+      return moment().subtract(2, 'months').format('MMMM')
+    },
+
     displayComment () {
       const form = document.getElementById('request-modification')
       const actions = document.getElementById('actions')
-      form.style.display = 'block'
       actions.style.display = 'none'
+      form.style.display = 'block'
     },
 
     hideComment () {
@@ -135,13 +142,70 @@ export default {
       actions.style.display = 'flex'
     },
 
+    displayEdit () {
+      const input = document.getElementById('input')
+      const cancel = document.getElementById('cancel')
+      const edit = document.getElementById('edit')
+      const value = document.getElementById('value')
+      const request = document.getElementById('request-button')
+      const validate = document.getElementById('validate')
+      const vsubmit= document.getElementById('submit')
+      edit.style.display = 'none'
+      value.style.display = 'none'
+      request.style.display = 'none'
+      validate.style.display = 'none'
+      input.style.display = 'table-cell'
+      cancel.style.display = 'inline-block'
+      submit.style.display = 'inline-block'
+    },
+
+    hideEdit () {
+      const input = document.getElementById('input')
+      const cancel = document.getElementById('cancel')
+      const edit = document.getElementById('edit')
+      const value = document.getElementById('value')
+      const request = document.getElementById('request-button')
+      const validate = document.getElementById('validate')
+      const vsubmit= document.getElementById('submit')
+      input.style.display = 'none'
+      cancel.style.display = 'none'
+      submit.style.display = 'none'
+      value.style.display = 'table-cell'
+      edit.style.display = 'inline-block'
+      request.style.display = 'inline-block'
+      validate.style.display = 'inline-block'
+    },
+
     sendModificationRequest () {
       axios.post('http://localhost:3000/api/versionRefused/'+ this.$route.query.version_id +'/'+ this.$route.query.contribution_id, {
         user_id: this.$root.$data.username,
-        comment: this.$data.comment_admin
+        comment: this.$data.comment_admin,
+        input_value_id: this.$data.data.input.input_value_id
       })
         .then((response) => {
           this.$router.replace( {name: 'admin'} )
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+
+    acceptContribution () {
+      axios.patch('http://localhost:3000/api/versionValidate/'+ this.$route.query.version_id)
+        .then((response) => {
+          this.$router.replace({ name: 'admin' })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+
+    submitContribution () {
+      const input = this.$data.data.input
+      
+      axios.patch('http://localhost:3000/api/versionSubmit/'+ this.$route.query.version_id, input)
+        .then((response) => {
+          this.$router.replace({ name: 'admin' })
         })
         .catch((error) => {
           console.log(error)
@@ -190,13 +254,29 @@ export default {
   background-color: rgba(126,68,170, 0.2);
 }
 
+#AdminReviewContribution table #input {
+  display: none;
+}
+
+#AdminReviewContribution .light {
+  color: #999999;
+}
+
 #AdminReviewContribution #request-modification {
   display: none;
 }
 
-#AdminReviewContribution #comment {
+#AdminReviewContribution #admin-comment {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+}
+
+#AdminReviewContribution #cancel {
+  display: none;
+}
+
+#AdminReviewContribution #submit {
+  display: none;
 }
 
 #AdminReviewContribution .purple {

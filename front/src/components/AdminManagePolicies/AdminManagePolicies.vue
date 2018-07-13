@@ -9,31 +9,30 @@
         <div class="row mb-5">
           <h2 class="col-lg-12 pl-0 text-uppercase">Manage policies</h2>
           <h4 class="col-lg-7 pl-0">Manage from here the users policies</h4>
+
+          <div class="w-100"></div>
+          <div class="col-lg-12 mt-3 pt-1 divider"></div>
         </div>
 
         <div class="row">
           <div id="manage-policies" class="col-lg-12  my-auto mx-auto">
 
 
-            <div class="row mb-5 rounded py-4 pl-5 pr-5 content">
+            <div class="row mb-5 rounded py-4 pl-3 pr-5 content">
 
-              <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">1</span>
+              <h3 class="col-lg-12 mb-5 pl-3">Select the contribution you would like to manage</h3>
 
-              <h3 class="col-lg-12 mb-5 pl-5">Select the contribution you would like to manage</h3>
-
-              <b-form-select id="filter-contributions" class="col-lg-5 mb-3 ml-5" v-model="selectedContribution" :options="this.contributions"></b-form-select>
+              <b-form-select id="filter-contributions" class="col-lg-5 mb-3 ml-3" v-model="selectedContribution" :options="this.contributions"></b-form-select>
 
             </div>
 
 
 
-            <div class="row mb-5 rounded py-4 pl-5 pr-5 content">
+            <div class="row mb-5 rounded py-4 pl-3 pr-5 content">
 
-              <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
+              <h3 class="col-lg-12 mb-5 pl-3">Manage the users that can contribute to this contribution</h3>
 
-              <h3 class="col-lg-12 mb-5 pl-5">Manage the users that can contribute to this contribution</h3>
-
-              <b-form class="col-lg-12 mb-5 pl-5">
+              <b-form class="col-lg-12 mb-5 pl-3">
                 <b-form-group class="row mb-0 pl-3">
                   <b-form-input id="add-user" class="d-inline-block col-lg-4" v-model="search" type="text" placeholder="Write the username" name="add-user" autocomplete="off"></b-form-input>
                   <b-button class="purple ml-3" v-on:click="addUser (search)" size="sm">Add</b-button>
@@ -47,12 +46,12 @@
                 </div>
               </b-form>
 
-              <div class="col-lg-12 mb-3 pl-5">
+              <!-- <div class="col-lg-12 mb-3 pl-5">
                 <div class="d-inline-block mr-2 user">
                   <p class="d-inline-block mb-0 px-2">username</p>
                   <div class="d-inline-block pr-3 pl-2">X</div>
                 </div>
-              </div>
+              </div> -->
 
             </div>
 
@@ -116,7 +115,6 @@ export default {
 
       axios.get('http://localhost:3000/api/createPolicies')
       .then((response) => {
-        console.log(response.data)
         for (var i = 0; i < response.data.users.length; i++) {
           this.$data.users.push(response.data.users[i])
         }
@@ -167,6 +165,10 @@ export default {
 #AdminManagePolicies .page-content h4 {
   font-size: 1.2rem;
   color: #bbbbbb;
+}
+
+#AdminManagePolicies .page-content .divider {
+  background-color: #e7e7e7;
 }
 
 #AdminManagePolicies #manage-policies .content {

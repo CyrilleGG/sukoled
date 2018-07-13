@@ -7,21 +7,15 @@
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">1</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Share contribution</h3>
-          <p class="col-lg-12 mb-5 pl-5">Upload Excel file here and wait until it is uploaded. The file must be in the required format.</p>
+          <h3 class="col-lg-12 mb-5 pl-5">Share your contribution</h3>
 
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
 
-              <div class="col-lg-12 pl-0">
-                <label for="input-one">Input one</label>
-                <b-form-input id="input-one" class="d-inline-block w-25 ml-2" v-model="input.inputOne" type="text" name="input-one"></b-form-input>
-                <p class="d-inline-block ml-3">units</p>
-              </div>
-              <div class="col-lg-12 pl-0">
-                <label for="input-two">Input two</label>
-                <b-form-input id="input-two" class="d-inline-block w-25 ml-2" v-model="input.inputTwo" type="text" name="input-two"></b-form-input>
-                <p class="d-inline-block ml-3">units</p>
+              <div v-for="(input, index) in data.inputs" v-bind:key="index" v-if="input.input_type !== 'textarea'" class="col-lg-12 pl-0">
+                <label :for="input.input_slug">{{ input.input_name }}</label>
+                <b-form-input :id="input.input_slug" class="d-inline-block w-25 ml-2" v-model="inputs.contribution_values.input_value" :type="input.input_type" :name="input.input_slug" autocomplete="off"></b-form-input>
+                <p class="d-inline-block ml-3">in million</p>
               </div>
 
             </div>
@@ -40,7 +34,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="comments" class="col-lg-12" v-model="input.comments" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea>
+              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea>
 
             </div>
           </div>
@@ -49,13 +43,16 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" :to="{ path: 'preview'}" append size="md">Submit</b-button>
+          <b-button class="ml-auto green" v-on:click="submit ()" size="md">Submit</b-button>
         </div>
 
       </b-form>
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 export default {
   name: 'ContributorFormRaf',
 
@@ -63,30 +60,41 @@ export default {
     // c
   },
 
+  props: [
+    'data'
+  ],
+
   data () {
     return {
-      input: {
-        inputOne: '',
-        inputTwo: '',
-        comments: '',
+      inputs: {
+        contribution_values: {
+          input_id: this.$props.data.inputs[0].input_id,
+          input_name: this.$props.data.inputs[0].input_name,
+          input_value: ''
+        },
+        comment_contributor: '',
+        version_id: this.$route.query.version_id,
+        user_id: this.$root.$data.userInfo.user_id,
+        contribution_id: this.$route.query.contribution_id,
+        contribution_limit: this.$props.data.contribution[0].limit,
+        contribution_threshold: this.$props.data.contribution[0].threshold,
+        department_slug: this.$props.data.department_slug
       }
     }
   },
 
+  created() {
+    const formInput = this.$root.$data.formInput
+    if (formInput !== null) {
+      this.$data.inputs.contribution_values.input_value = formInput.contribution_values.input_value
+      this.$data.inputs.comment_contributor = formInput.comment_contributor
+    }
+  },
+
   methods: {
-    uploadExcel () {
-      this.$data.input.excel = this.$refs.excel.files[0]
-      console.log(this.$data.input.excel.name)
-      document.getElementById('upload-img').style.background = 'linear-gradient(#2ecc71, #29b362)'
-      document.getElementById('upload-text').style.background = '#2ecc71'
-    },
-
-    uploadFile () {
-      this.$data.input.additionalFiles.push(this.$refs.additionalFiles.files[0])
-    },
-
-    transfer () {
-      this.$root.$data.formInput=this.$data.input
+    submit () {
+      this.$root.$data.formInput = this.$data.inputs
+      this.$router.replace( {name: 'contributor-preview-contribution'} )
     }
   }
 }

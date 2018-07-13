@@ -1,22 +1,16 @@
 <template>
-  <div id="ContributorReviewContribution" class="container-fluid">
+  <div id="AdminViewContribution" class="container-fluid">
 
     <Header :role="this.$root.$data.userInfo.role" />
 
-    <div v-if="data !== null" class="row py-5 page-content">
-      <div class="col-lg-7  my-auto mx-auto">
+    <div v-if="this.data !== null" class="row py-5 page-content">
+      <div class="col-lg-8  my-auto mx-auto">
 
-        <div class="row mb-3 rounded py-4 px-5 content">
+        <div class="row mb-3 rounded py-4 pl-5 content">
 
-          <h3 class="col-lg-12 pl-0">Review the contribution</h3>
-          <p class="col-lg-12 mb-4 pl-0 font-italic">{{ data.contribution.contribution_name }}</p>
+          <h3 class="col-lg-12 mb-5 pl-0">{{ data.contribution.contribution_name }}</h3>
 
-          <div v-if="data.input.comment_admin !== null" id="admin-comment" class="col-lg-12 mb-4 rounded p-3">
-            <img src="@/assets/icons/warning.png" width="40px" alt="Warning">
-            <p class="d-inline-block mb-0 ml-3">{{ data.input.comment_admin }}</p>
-          </div>
-
-          <table v-if="department_slug == 'raf'" class="col-lg-12 d-block mb-4 rounded">
+          <table v-if="department_slug == 'raf'" class="col-lg-11 d-block mb-4 rounded">
             <tr class="row">
 
               <th class="col-lg-4 py-3 pl-5">Name</th>
@@ -30,7 +24,8 @@
 
               <td class="col-lg-4 py-3 pl-5">{{ data.input.input_name }}</td>
               <td class="col-lg-2 py-3 text-center">xx-1</td>
-              <td class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
+              <td id="value" class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
+              <td id="input" class="col-lg-2 py-3 text-center last"><b-form-input :id="data.input.input_slug" class="text-center" v-model="data.input.input_value" type="text" :name="data.input.input_slug"></b-form-input></td>
               <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_limit }}</td>
               <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_threshold }}</td>
 
@@ -43,12 +38,10 @@
 
           <p v-if="data.input.highlight !== null" class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's highlights</p>
           <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">higlights du contributeur</p>
-
         </div>
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="mx-1 ml-auto purple" v-on:click="goToModify ()" size="md">Modify the contribution</b-button>
         </div>
 
       </div>
@@ -64,11 +57,11 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import moment from 'moment'
 
-import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
+import Footer from '@/components/Footer/Footer'
 
 export default {
-  name: 'ContributorReviewContribution',
+  name: 'AdminViewContribution',
 
   components: {
     Header,
@@ -77,8 +70,8 @@ export default {
 
   data () {
     return {
-      department_slug: this.$route.query.department_slug,
-      data: null
+      data: null,
+      department_slug: this.$route.query.department_slug
     }
   },
 
@@ -109,40 +102,6 @@ export default {
 
     lastMonth () {
       return moment().subtract(2, 'months').format('MMMM')
-    },
-
-    displayComment () {
-      const form = document.getElementById('request-modification')
-      const actions = document.getElementById('actions')
-      form.style.display = 'block'
-      actions.style.display = 'none'
-    },
-
-    hideComment () {
-      const form = document.getElementById('request-modification')
-      const actions = document.getElementById('actions')
-      form.style.display = 'none'
-      actions.style.display = 'flex'
-    },
-
-    goToModify () {
-      const data = this.$data.data
-      this.$root.$data.formInput = {
-        comment_contributor: data.input.comment_contributor,
-        contribution_id: data.contribution.contribution_id,
-        contribution_limit: data.contribution.contribution_limit,
-        contribution_threshold: data.contribution.contribution_threshold,
-        contribution_values: {
-          input_id: data.input.input_id,
-          input_name: data.input.input_name,
-          input_value: data.input.input_value,
-        },
-        department_slug: this.$data.department_slug,
-        user_id: this.$root.$data.userInfo.user_id,
-        version_id: this.$route.query.version_id
-      }
-
-      this.$router.replace({ name: 'contributor-send-contribution', query: { contribution_id: this.$route.query.contribution_id, version_id: this.$route.query.version_id, department_slug: this.$route.query.department_slug } })
     }
   }
 }
@@ -150,17 +109,17 @@ export default {
 
 <style scoped>
 
-#ContributorReviewContribution .page-content {
+#AdminViewContribution .page-content {
   margin-top: 70px;
   min-height: 85vh;
 }
 
-#ContributorReviewContribution .content {
+#AdminViewContribution .content {
   background-color: #ffffff;
   box-shadow: 5px 5px 30px rgba(0,0,0,0.1)
 }
 
-#ContributorReviewContribution .step {
+#AdminViewContribution .step {
   left: -25px;
   top: 30px;
   width: 50px;
@@ -170,68 +129,76 @@ export default {
   background-color: #8e44ad;
 }
 
-#ContributorReviewContribution h3 {
+#AdminViewContribution h3 {
   font-size: 1.2rem;
 }
 
-#ContributorReviewContribution #admin-comment {
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
-
-#ContributorReviewContribution #admin-comment p {
-  line-height: 40px;
-}
-
-#ContributorReviewContribution table {
+#AdminViewContribution table {
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   overflow: hidden;
 }
 
-#ContributorReviewContribution table tr:first-child {
+#AdminViewContribution table tr:first-child {
   box-shadow: 0px 7px 7px rgba(0,0,0,0.05);
 }
 
-#ContributorReviewContribution table .last {
+#AdminViewContribution table .last {
   background-color: rgba(126,68,170, 0.2);
 }
 
-#ContributorReviewContribution #request-modification {
+#AdminViewContribution table #input {
   display: none;
 }
 
-#ContributorReviewContribution #comment {
+#AdminViewContribution .light {
+  color: #999999;
+}
+
+#AdminViewContribution #request-modification {
+  display: none;
+}
+
+#AdminViewContribution #admin-comment {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
 }
 
-#ContributorReviewContribution .purple {
+#AdminViewContribution #cancel {
+  display: none;
+}
+
+#AdminViewContribution #submit {
+  display: none;
+}
+
+#AdminViewContribution .purple {
   border-color: #8e44ad;
   color: #ffffff;
   background-color: #8e44ad;
 }
 
-#ContributorReviewContribution .purple:hover {
+#AdminViewContribution .purple:hover {
   border-color: #793a93;
   background-color: #793a93;
 }
 
-#ContributorReviewContribution .orange {
+#AdminViewContribution .orange {
   border-color: #fdad2a;
   background-color: #fdad2a;
 }
 
-#ContributorReviewContribution .orange:hover {
+#AdminViewContribution .orange:hover {
   border-color: #e59d00;
   background-color: #e59d00;
 }
 
-#ContributorReviewContribution .green {
+#AdminViewContribution .green {
   border-color: #2ecc71;
   color: #ffffff;
   background-color: #2ecc71;
 }
 
-#ContributorReviewContribution .green:hover {
+#AdminViewContribution .green:hover {
   border-color: #29b362;
   background-color: #29b362;
 }

@@ -10,11 +10,14 @@ module.exports = {
     sendInfoToDBRefuse:async function(req, res) {
 
         let new_version_id = uuidv4();
-        var version_id = req.params.version_id;
+        let new_value_id = uuidv4();
+        const version_id = req.params.version_id;
         const contribution_id = req.params.contribution_id;
+        const input_value_id = req.body.input_value_id
         const modules = require('./modules')
         const file = await modules.getFile(version_id);
-        const dateAndName = await modules.dateAndName(version_id);
+        const version = await modules.getVersionById(version_id);
+        const contributionValues = await modules.getContributionValuesById(input_value_id)
 
         return knex.insert({
             // Informations remplies par le contributeur
@@ -22,23 +25,38 @@ module.exports = {
             // Informations remplies automatiquement mais nécessaire pour la DB
             file_binary: file,
             id: new_version_id,
-            name: dateAndName[0].name,
-            contribution_id: contribution_id[0].id,
+            name: version[0].name,
+            contribution_id: contribution_id,
             parent_version_id: version_id,
             user_id: req.body.user_id,
             status_admin: 'progress',
             status_contributor: 'invalid',
-            starts_at: dateAndName[0].starts_at,
-            ends_at: dateAndName[0].ends_at,
-            user_id:'test'
+            starts_at: version[0].starts_at,
+            ends_at: version[0].ends_at,
+            comment_contributor: version[0].comment_contributor,
+            highlight: version[0].highlight
             })
             .into('versions')
-            .then(function(response){
-                res.json('ok')
-            })
-            .catch((err) => {
-                res.json(err);
-            });
+                .then(function(response){
+                    return knex.insert( {
+                        id: new_value_id,
+                        value: contributionValues[0].value,
+                        contribution_id: contributionValues[0].contribution_id,
+                        version_id: new_version_id,
+                        input_id: contributionValues[0].input_id
+                    })
+                    .into('contributions_values')
+                        .then((res) => {
+                            res.json('ok')
+                        })
+                        .catch((err) => {
+                            res.json(err)
+                        })
+
+                })
+                .catch((err) => {
+                    res.json(err);
+                });
     },
     
 

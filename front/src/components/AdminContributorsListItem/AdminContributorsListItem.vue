@@ -6,7 +6,7 @@
         <b-form-checkbox class="mr-0" v-bind:checked="checked" v-on:change="updateCheck ($event)"></b-form-checkbox>
       </div>
 
-      <p class="col-lg-1 my-auto text-center">
+      <p class="col-lg-1 my-auto">
         {{ department_name }}
       </p>
 
@@ -32,6 +32,8 @@
         v-bind:status="status_admin" 
         v-bind:contribution_id="contribution_id"
         v-bind:version_id="version_id"
+        v-bind:parent_version_id="parent_version_id"
+        v-bind:department_slug="department_slug"
       />
             
     </div>
@@ -61,7 +63,9 @@ export default {
     'status_admin',
     'contribution_id',
     'version_id',
-    'department_name'
+    'parent_version_id',
+    'department_name',
+    'department_slug'
   ],
 
   data () {
@@ -77,7 +81,7 @@ export default {
     },
 
     moment (date) {
-      return moment(date).format('MMMM Do, YYYY')
+      return moment(date).format('MMMM DD, YYYY')
     }
   }
 }

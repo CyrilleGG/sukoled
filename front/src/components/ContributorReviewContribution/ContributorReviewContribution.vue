@@ -11,17 +11,17 @@
           <h3 class="col-lg-12 pl-0">Review the contribution</h3>
           <p class="col-lg-12 mb-4 pl-0 font-italic">{{ data.contribution.contribution_name }}</p>
 
-          <div id="admin-comment" class="col-lg-12 mb-4 rounded p-3">
+          <div v-if="data.input.comment_admin !== null" id="admin-comment" class="col-lg-12 mb-4 rounded p-3">
             <img src="@/assets/icons/warning.png" width="40px" alt="Warning">
             <p class="d-inline-block mb-0 ml-3">{{ data.input.comment_admin }}</p>
           </div>
 
-          <table v-if="department_slug == 'raf'" class="col-lg-11 d-block mb-4 rounded">
+          <table v-if="department_slug == 'raf'" class="col-lg-12 d-block mb-4 rounded">
             <tr class="row">
 
               <th class="col-lg-4 py-3 pl-5">Name</th>
-              <th class="col-lg-2 py-3 text-center">n-1</th>
-              <th class="col-lg-2 py-3 text-center">n</th>
+              <th class="col-lg-2 py-3 text-center">{{ lastMonth () }}</th>
+              <th class="col-lg-2 py-3 text-center">{{ month () }}</th>
               <th class="col-lg-2 py-3 text-center">Limit</th>
               <th class="col-lg-2 py-3 text-center">Threshold</th>
 
@@ -62,6 +62,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
@@ -102,6 +103,14 @@ export default {
   },
 
   methods: {
+    month () {
+      return moment().subtract(1, 'months').format('MMMM')
+    },
+
+    lastMonth () {
+      return moment().subtract(2, 'months').format('MMMM')
+    },
+
     displayComment () {
       const form = document.getElementById('request-modification')
       const actions = document.getElementById('actions')

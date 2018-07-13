@@ -115,7 +115,6 @@ export default {
 
       axios.get('http://localhost:3000/api/createPolicies')
       .then((response) => {
-        console.log(response.data)
         for (var i = 0; i < response.data.users.length; i++) {
           this.$data.users.push(response.data.users[i])
         }

@@ -15,8 +15,8 @@
             <tr class="row">
 
               <th class="col-lg-4 py-3 pl-5">Name</th>
-              <th class="col-lg-2 py-3 text-center">n-1</th>
-              <th class="col-lg-2 py-3 text-center">n</th>
+              <th class="col-lg-2 py-3 text-center">{{ lastMonth () }}</th>
+              <th class="col-lg-2 py-3 text-center">{{ month () }}</th>
               <th class="col-lg-2 py-3 text-center">Limit</th>
               <th class="col-lg-2 py-3 text-center">Threshold</th>
 
@@ -76,6 +76,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
@@ -119,6 +120,14 @@ export default {
   },
 
   methods: {
+    month () {
+      return moment().subtract(1, 'months').format('MMMM')
+    },
+
+    lastMonth () {
+      return moment().subtract(2, 'months').format('MMMM')
+    },
+
     displayComment () {
       const form = document.getElementById('request-modification')
       const actions = document.getElementById('actions')

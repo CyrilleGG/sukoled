@@ -10,20 +10,23 @@ var knex = require('../utilities/database')
 module.exports = {
     home: async function (req, res) {
         const contributions = await knex.select(
-            'version.id AS version_id',
-            'version.name AS version_name',
-            'version.ends_at AS version_ends_at',
-            'version.created_at AS version_created_at',
-            'version.status_contributor AS version_status_contributor',
-            'version.parent_version_id',
+            'version1.id AS version_id',
+            'version1.name AS version_name',
+            'version1.ends_at AS version_ends_at',
+            'version1.created_at AS version_created_at',
+            'version1.status_contributor AS version_status_contributor',
+            'version1.parent_version_id',
             'department.name AS department_name',
             'contribution.id AS contribution_id',
             'contribution.name AS contribution_name'
-            )
-            .from('versions as version')
-            .innerJoin('contributions as contribution', 'version.contribution_id', 'contribution.id')
+        )
+            .from('versions as version1')
+            .leftOuterJoin('versions as version2', function () {
+                this.on('version1.contribution_id', '=', 'version1.contribution_id').andOn('version1.created_at', '>', 'version2.created_at')
+            })
+            .innerJoin('contributions as contribution', 'version1.contribution_id', 'contribution.id')
             .innerJoin('departments as department', 'contribution.department_id', 'department.id')
-            .innerJoin('policies', 'version.contribution_id', 'policies.contribution_id')
+            .innerJoin('policies', 'version1.contribution_id', 'policies.contribution_id')
             .where({
                 'policies.user_id': req.params.user_id,
             })

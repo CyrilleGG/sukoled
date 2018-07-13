@@ -21,11 +21,14 @@ module.exports = {
             'contribution.period AS contribution_period',
             'contribution.order AS contribution_order'
         )
-        .from('versions as version')
-        .innerJoin('contributions as contribution', 'version.contribution_id', 'contribution.id')
-        .innerJoin('departments as department', 'contribution.department_id', 'department.id')
-        .groupBy('contribution_id')
-        .orderBy('version_created_at', 'desc');
+            .from('versions as version')
+            .leftOuterJoin('versions as version2', function () {
+                this.on('version.contribution_id', '=', 'version.contribution_id').andOn('version.created_at', '>', 'version2.created_at')
+            })
+            .innerJoin('contributions as contribution', 'version.contribution_id', 'contribution.id')
+            .innerJoin('departments as department', 'contribution.department_id', 'department.id')
+            .groupBy('contribution_id')
+            .orderBy('version_created_at', 'desc')
 
         res.json({ contributions })
     }

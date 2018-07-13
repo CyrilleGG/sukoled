@@ -40,6 +40,18 @@ module.exports.getContributionById = async function(contributionId){
     });
 }
 
+module.exports.getContributionValuesById = async function (valueId) {
+    return knex('contributions_values')
+        .select('id as input_value_id', 'value', 'contribution_id', 'version_id', 'input_id')
+        .where({ 'id': valueId })
+        .then((result) => {
+            return result
+        })
+        .catch((err) => {
+            return []
+        });
+}
+
 // Envoie des versions liés à la contribution
 module.exports.getVersionWContributionId = async function(contributionId){
     return knex('versions')
@@ -214,12 +226,12 @@ module.exports.getFile = async function(version_id){
 }
 
 // Récupération d'infos de la versions : starts_at, ends_at et name
-module.exports.dateAndName =  function(version_id) {
+module.exports.getVersionById =  function(version_id) {
     return knex('versions')
     .where({
         'id':version_id
     })
-    .select('starts_at', 'ends_at', 'name')
+    .select('*')
     .then(function(response){
         return response
     })

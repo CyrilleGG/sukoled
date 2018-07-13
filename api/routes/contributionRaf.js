@@ -12,16 +12,10 @@ module.exports = {
         // Récupération des données
         const version_id = req.params.version_id;
         const modules = require('./modules')
-        const dateAndName = await modules.dateAndName(version_id);
+        const version = await modules.getVersionById(version_id);
         const user_id = req.body.user_id;
         const comment_contributor = req.body.comment_contributor
-        const contribution_id = await
-            knex('versions')
-                .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
-                .select('contributions.id')
-                .then(function (response) {
-                    return response
-                })
+        const contribution_id = req.body.contribution_id
 
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
@@ -30,12 +24,12 @@ module.exports = {
             comment_contributor:comment_contributor,
             // Informations remplies automatiquement mais nécessaire pour la DB
             id:new_version_id,
-            name: dateAndName[0].name,
+            name: version[0].name,
             status_admin:'delivered',
             status_contributor:'pending',
-            starts_at: dateAndName[0].starts_at,
-            ends_at: dateAndName[0].ends_at,
-            contribution_id:contribution_id[0].id,
+            starts_at: version[0].starts_at,
+            ends_at: version[0].ends_at,
+            contribution_id:contribution_id,
             parent_version_id:version_id,
             user_id:user_id
         })
@@ -46,7 +40,7 @@ module.exports = {
                     .insert({
                         id: value_id,
                         value: req.body.contribution_values.input_value,
-                        contribution_id: contribution_id[0].id,
+                        contribution_id: contribution_id,
                         version_id: new_version_id,
                         input_id: req.body.contribution_values.input_id,
                     })

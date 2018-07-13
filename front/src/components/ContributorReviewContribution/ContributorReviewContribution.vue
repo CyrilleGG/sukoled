@@ -3,57 +3,52 @@
 
     <Header :role="this.$root.$data.userInfo.role" />
 
-    <div class="row py-5 page-content">
+    <div v-if="data !== null" class="row py-5 page-content">
       <div class="col-lg-7  my-auto mx-auto">
 
         <div class="row mb-3 rounded py-4 px-5 content">
 
-          <h3 class="col-lg-12 pl-0">Review your contribution</h3>
-          <p class="col-lg-12 pl-0 font-italic">Watchlist exposures</p>
+          <h3 class="col-lg-12 pl-0">Review the contribution</h3>
+          <p class="col-lg-12 mb-4 pl-0 font-italic">{{ data.contribution.contribution_name }}</p>
 
           <div id="admin-comment" class="col-lg-12 mb-4 rounded p-3">
             <img src="@/assets/icons/warning.png" width="40px" alt="Warning">
-            <p class="d-inline-block mb-0 ml-3">Admin's comment</p>
+            <p class="d-inline-block mb-0 ml-3">{{ data.input.comment_admin }}</p>
           </div>
 
-          <table class="col-lg-12 d-block mb-4 rounded">
+          <table v-if="department_slug == 'raf'" class="col-lg-11 d-block mb-4 rounded">
             <tr class="row">
 
-              <th class="col-lg-6 py-3 pl-5">Name</th>
-              <th class="col-lg-2 py-3 text-center">January</th>
-              <th class="col-lg-2 py-3 text-center">February</th>
-              <th class="col-lg-2 py-3 text-center">March</th>
+              <th class="col-lg-4 py-3 pl-5">Name</th>
+              <th class="col-lg-2 py-3 text-center">n-1</th>
+              <th class="col-lg-2 py-3 text-center">n</th>
+              <th class="col-lg-2 py-3 text-center">Limit</th>
+              <th class="col-lg-2 py-3 text-center">Threshold</th>
 
             </tr>
             <tr class="row">
 
-              <td class="col-lg-6 py-3 pl-5">Q1Gross EAD*</td>
-              <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
-              <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
-              <td class="col-lg-2 py-3 text-center last">€ 7,2 m</td>
-
-            </tr>
-            <tr class="row">
-
-              <td class="col-lg-6 py-3 pl-5">Net EAD*</td>
-              <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
-              <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
-              <td class="col-lg-2 py-3 text-center last">€ 80 bm</td>
+              <td class="col-lg-4 py-3 pl-5">{{ data.input.input_name }}</td>
+              <td class="col-lg-2 py-3 text-center">xx-1</td>
+              <td class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
+              <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_limit }}</td>
+              <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_threshold }}</td>
 
             </tr>
           </table>
 
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your comment</p>
-          <p class="col-lg-12 mb-4 pl-0">The comment of the contributor for this contribution</p>
+          <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
+          <p v-else class="col-lg-12 mb-0 pl-0">The contributor didn't write any comment for this contribution</p>
 
-          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your highlights</p>
-          <p class="col-lg-12 mb-3 pl-0">The highlights for this contribution</p>
+          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's highlights</p>
+          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">higlights du contributeur</p>
 
         </div>
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="mx-1 ml-auto purple" :to="{ path: 'send-contribution'}" size="md">Modify the contribution</b-button>
+          <b-button class="mx-1 ml-auto purple" v-on:click="goToModify ()" size="md">Modify the contribution</b-button>
         </div>
 
       </div>
@@ -65,6 +60,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 
@@ -78,7 +76,8 @@ export default {
 
   data () {
     return {
-      comment: ''
+      department_slug: this.$route.query.department_slug,
+      data: null
     }
   },
 
@@ -88,6 +87,18 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'user') {
       this.$router.replace({ name: 'viewer' })
     }
+
+    const contribution_id = this.$route.query.contribution_id
+    const version_id = this.$route.query.version_id
+
+    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
+      .then((response) => {
+        this.$data.data = response.data
+      })
+
+      .catch((error) => {
+        console.log(error)
+      })
   },
 
   methods: {
@@ -103,6 +114,26 @@ export default {
       const actions = document.getElementById('actions')
       form.style.display = 'none'
       actions.style.display = 'flex'
+    },
+
+    goToModify () {
+      const data = this.$data.data
+      this.$root.$data.formInput = {
+        comment_contributor: data.input.comment_contributor,
+        contribution_id: data.contribution.contribution_id,
+        contribution_limit: data.contribution.contribution_limit,
+        contribution_threshold: data.contribution.contribution_threshold,
+        contribution_values: {
+          input_id: data.input.input_id,
+          input_name: data.input.input_name,
+          input_value: data.input.input_value,
+        },
+        department_slug: this.$data.department_slug,
+        user_id: this.$root.$data.userInfo.user_id,
+        version_id: this.$route.query.version_id
+      }
+
+      this.$router.replace({ name: 'contributor-send-contribution', query: { contribution_id: this.$route.query.contribution_id, version_id: this.$route.query.version_id, department_slug: this.$route.query.department_slug } })
     }
   }
 }

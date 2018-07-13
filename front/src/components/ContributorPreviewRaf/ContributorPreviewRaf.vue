@@ -89,6 +89,8 @@ export default {
         .catch((error) => {
           console.log(error)
         })
+      
+      this.$root.$data.formInput = null
     }
   }
 }

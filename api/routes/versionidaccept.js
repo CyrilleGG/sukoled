@@ -23,8 +23,6 @@ module.exports = {
         var versionId = req.params.version_id
         var input = req.body
 
-        console.log(input)
-
         knex('contributions_values')
             .where({ 'contributions_values.id': input.input_value_id })
             .update({ value: input.input_value })

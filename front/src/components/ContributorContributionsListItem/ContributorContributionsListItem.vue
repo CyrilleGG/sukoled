@@ -19,6 +19,7 @@
         v-bind:status="status_contributor"
         v-bind:contribution_id="contribution_id"
         v-bind:version_id="version_id"
+        v-bind:department_slug="department_slug"
        />
 
     </div>
@@ -46,6 +47,7 @@ export default {
     'version_name',
     'version_created_at',
     'department_name',
+    'department_slug',
     'ends_at',
     'status_contributor'
   ],

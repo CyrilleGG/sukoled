@@ -11,6 +11,7 @@ import Viewer from '@/components/Viewer/Viewer'
 import Contributor from '@/components/Contributor/Contributor'
 import ContributorSendContribution from '@/components/ContributorSendContribution/ContributorSendContribution'
 import ContributorReviewContribution from '@/components/ContributorReviewContribution/ContributorReviewContribution'
+import ContributorViewContribution from '@/components/ContributorViewContribution/ContributorViewContribution'
 import ContributorPreviewContribution from '@/components/ContributorPreviewContribution/ContributorPreviewContribution'
 
 import Admin from '@/components/Admin/Admin'
@@ -44,6 +45,10 @@ export default new Router({
       name: 'contributor-review-contribution',
       path: '/contributor/review',
       component: ContributorReviewContribution
+    }, {
+      name: 'contributor-view-contribution',
+      path: '/contributor/view',
+      component: ContributorViewContribution
     }, {
       name: 'contributor-preview-contribution',
       path: '/contributor/send-contribution/preview',

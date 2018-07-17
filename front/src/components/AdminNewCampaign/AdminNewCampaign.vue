@@ -125,24 +125,24 @@ export default {
         { value: 'quarterly', text: 'Quarterly' }
       ],
       months: [
-        { value: moment( moment().year() + '-01-01' ).month(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'January' },
-        { value: moment( moment().year() + '-01-01' ).month(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'February' },
-        { value: moment( moment().year() + '-01-01' ).month(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'March' },
-        { value: moment( moment().year() + '-01-01' ).month(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'April' },
-        { value: moment( moment().year() + '-01-01' ).month(5).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'May' },
-        { value: moment( moment().year() + '-01-01' ).month(6).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'June' },
-        { value: moment( moment().year() + '-01-01' ).month(7).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'July' },
-        { value: moment( moment().year() + '-01-01' ).month(8).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'August' },
-        { value: moment( moment().year() + '-01-01' ).month(9).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'September' },
-        { value: moment( moment().year() + '-01-01' ).month(10).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'October' },
-        { value: moment( moment().year() + '-01-01' ).month(11).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'November' },
-        { value: moment( moment().add(1, 'years').year() + '-01-01' ).month(0).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'December' }
+        { value: moment( moment().year() + '-01-01' ).month(1).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'January' },
+        { value: moment( moment().year() + '-01-01' ).month(2).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'February' },
+        { value: moment( moment().year() + '-01-01' ).month(3).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'March' },
+        { value: moment( moment().year() + '-01-01' ).month(4).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'April' },
+        { value: moment( moment().year() + '-01-01' ).month(5).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'May' },
+        { value: moment( moment().year() + '-01-01' ).month(6).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'June' },
+        { value: moment( moment().year() + '-01-01' ).month(7).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'July' },
+        { value: moment( moment().year() + '-01-01' ).month(8).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'August' },
+        { value: moment( moment().year() + '-01-01' ).month(9).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'September' },
+        { value: moment( moment().year() + '-01-01' ).month(10).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'October' },
+        { value: moment( moment().year() + '-01-01' ).month(11).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'November' },
+        { value: moment( moment().add(1, 'years').year() + '-01-01' ).month(0).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'December' }
       ], 
       quarters: [
-        { value: moment( moment().year() + '-01-01' ).quarter(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q1' },
-        { value: moment( moment().year() + '-01-01' ).quarter(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q2' },
-        { value: moment( moment().year() + '-01-01' ).quarter(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q3' },
-        { value: moment( moment().add(1, 'years').year() + '-01-01' ).quarter(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q4' }
+        { value: moment( moment().year() + '-01-01' ).quarter(2).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'Q1' },
+        { value: moment( moment().year() + '-01-01' ).quarter(3).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'Q2' },
+        { value: moment( moment().year() + '-01-01' ).quarter(4).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'Q3' },
+        { value: moment( moment().add(1, 'years').year() + '-01-01' ).quarter(1).format('YYYY-MM-DDT00:00:00.000') + 'Z', text: 'Q4' }
       ],
 
       departments:[
@@ -190,9 +190,9 @@ export default {
 
   updated() {
     if (this.$data.selectedPeriodicity == 'monthly') {
-      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('27', 'days').format('YYYY-MM-DDTHH:mm:ss.000') + 'Z'
+      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('27', 'days').format('YYYY-MM-DDT00:00:00.000') + 'Z'
     } else {
-      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('2', 'months').add('27', 'days').format('YYYY-MM-DDTHH:mm:ss.000') + 'Z'
+      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('2', 'months').add('27', 'days').format('YYYY-MM-DDT00:00:00.000') + 'Z'
     }
   },
 
@@ -288,10 +288,6 @@ export default {
             console.log(error)
           })
       }
-    },
-
-    closeModal () {
-      this.$refs.confirm.hide()
     }
   }
 }

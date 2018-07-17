@@ -8,7 +8,6 @@ module.exports = {
     sendInfoToDBCampaign:async function(req, res) {
 
         let versionId = uuidv4();
-        var contributionId = req.body.contribution_id;
 
         return knex('versions').insert({
             // Valeur créées par l'utilisateur
@@ -19,7 +18,6 @@ module.exports = {
             ends_at:req.body.ends_at,
             // Valeurs rentrées automatiquement mais nécessaire pour la DB
             id:versionId,
-            contribution_id:contributionId, // ou req params ?
             // Valeurs entrées par défaut lors de la création d'une contribution
             file_binary:'null',
             status_admin:'hold',

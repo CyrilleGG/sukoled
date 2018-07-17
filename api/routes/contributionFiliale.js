@@ -3,8 +3,7 @@
 var knex = require('../utilities/database')
 // Module permettant de générer un UUID, ici V4.
 const uuidv4 = require('uuid/v4');
-
-// const xlsx = require('node-xlsx').default;
+const xlsx = require('xlsx');
 
 // Creation d'une contribution : on envoie au front le department_slug et le version_name pour l'affichage.
 // Ce fichier sert dans les cas où le contributeur participe pour la première ou énième fois.
@@ -19,33 +18,31 @@ module.exports = {
         const modules = require('./modules')
         const version = await modules.getVersionById(version_id);
         const user_id = req.body.user_id;
-        const contribution_id = await
-            knex('versions')
-                .join('contributions', 'versions.contribution_id', '=', 'contributions.id')
-                .select('contributions.id')
-
-        console.log(req.body)
-        console.log(req.files)
-        // const contribution_id = '12c0b1f4-7eac-11e8-80a5-0a0a4839146e'
+        const comment_contributor = req.body.comment_contributor
+        const contribution_id = req.body.contribution_id
+        const highlight = req.body.highlight
+        const file_csv = xlsx.utils.sheet_to_csv(req.body.file_binary, {
+            FS: ";"
+        })
 
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
         .insert({
             // Informations remplies par le contributeur
+            file_csv: file_csv,
             file_binary:req.body.file_binary,
-            comment_contributor:req.body.comments,
-            highlight:req.body.hightlights,
+            comment_contributor: comment_contributor,
+            highlight:highlight,
             // Informations remplies automatiquement mais nécessaire pour la DB
-            id:new_version_id,
-            status_admin:'delivered',
-            status_contributor:'pending',
-            contribution_id:contribution_id[0].id,
-            parent_version_id:version_id,
-            user_id:'user_id',
-            name:version[0].name,
-            starts_at:version[0].starts_at,
-            ends_at:version[0].ends_at,
-            user_id:req.body.user_id
+            id: new_version_id,
+            name: version[0].name,
+            status_admin: 'delivered',
+            status_contributor: 'pending',
+            starts_at: version[0].starts_at,
+            ends_at: version[0].ends_at,
+            contribution_id: contribution_id,
+            parent_version_id: version_id,
+            user_id: user_id
         })
             .then(function(response){
             // Ici, on sort de la fonction pour éviter qu'elle reboucle.
@@ -59,6 +56,7 @@ module.exports = {
     sendJSONDataFiliale: async function (req, res) {
 
         const version_id = req.params.version_id;
+        const contribution_id = req.params.contribution_id
         const user_id = req.params.user_id;
         // Appel des modules (routes/modules.js)
         const modules = require('./modules')
@@ -66,16 +64,28 @@ module.exports = {
         // if (query == 1) {
         const department_slug = await modules.getDepSlugByVersion(version_id);
         const version_name = await modules.getVersionNameByVersion(version_id);
+        const contribution = await modules.getContributionById(contribution_id);
         const comment_admin = await modules.getAdminComment(version_id);
+        // const inputs = await knex.select(
+        //     'input.id AS input_id',
+        //     'input.input_type AS input_type',
+        //     'input.name AS input_name',
+        //     'input.description AS input_description',
+        //     'input.slug AS input_slug'
+        // )
+        //     .from('contributions_inputs as input')
+        //     .where({ 'input.contribution_id': req.params.contribution_id })
 
-        const data = await {
+        const data = {
             department_slug,
             version_name,
-            comment_admin
+            contribution,
+            comment_admin,
+            // inputs
         }
         res.status(200).json(data);
         // } else {
-        //     res.json(null)
+        //     res.json(null);
         // }
     },
 }

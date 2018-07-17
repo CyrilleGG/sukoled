@@ -5,7 +5,7 @@
 
     <div class="row py-5 page-content">
       <contributor-preview-raf v-if="inputs.department_slug == 'raf'" v-bind:inputs="inputs" />
-      <contributor-preview-lease v-if="inputs.department_slug == 'lease'" v-bind:inputs="inputs" />
+      <contributor-preview-lease v-if="inputs.department_slug == 'subsidaries'" v-bind:inputs="inputs" />
     </div>
 
     <Footer />

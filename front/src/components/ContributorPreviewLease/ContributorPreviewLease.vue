@@ -10,7 +10,7 @@
           <h3 class="col-lg-12 mb-5 pl-5">Preview your contribution</h3>
 
           <div class="col-lg-12 pl-5">
-            <div v-if="this.$data.input.excel !== null" class="row pl-3">
+            <div v-if="inputs.excel !== null" class="row pl-3">
 
               <!-- <table class="col-lg-11 d-block mb-3 rounded">
                 <tr class="row">
@@ -38,7 +38,7 @@
 
                 </tr>
               </table> -->
-              {{ this.$data.input.excel }}
+              {{ inputs.excel }}
 
             </div>
           </div>
@@ -50,8 +50,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your comments</h3>
-          <!-- <p class="col-lg-12 mb-3 pl-5">{{input.comments}}</p> -->
-          <!-- <b-form-textarea id="comments" class="col-lg-12" v-model="input.comments" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea> -->
+          <p class="col-lg-12 mb-3 pl-5">{{ inputs.comment_contributor }}</p>
         </div>
 
 
@@ -60,7 +59,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your highlights</h3>
-          <!-- <p class="col-lg-12 mb-3 pl-5">{{input.highlights}}</p> -->
+          <p class="col-lg-12 mb-3 pl-5">{{ inputs.highlight }}</p>
         </div>
 
 
@@ -92,25 +91,22 @@ export default {
     // c
   },
 
-  data () {
-    return {
-      input: null
-    }
-  },
-
-  created(){
-    this.$data.input = this.$root.$data.formInput
-  },
+  props: [
+    'inputs'
+  ],
 
   methods: {
     sendContribution () {
 
+    // console.log(this.$route.query)
+    const version_id = this.$props.inputs.version_id
+
       // console.log(this.$data)
 
       const self = this
-      console.log(self.$data.input.excel)
+      // console.log(self.$props.inputs.excel)
 
-      var blob = new Blob([self.$data.input.excel], {
+      var blob = new Blob([self.$props.inputs.excel], {
         // type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         type : 'text/plain'
       });
@@ -121,14 +117,15 @@ export default {
       reader.addEventListener('loadend', (e) => {
         let data = new FormData();
         data.append('file_binary', e.srcElement.result);
-        data.append('comment_contributor', '');
-        data.append('highlight', '');
+        data.append('comment_contributor', self.$props.inputs.comment_contributor);
+        data.append('highlight', self.$props.inputs.highlight);
+        data.append('contribution_id', self.$props.inputs.contribution_id);
         data.append('user_id', self.$root.$data.userInfo.user_id);
 
         // Envoyer les valeurs des inputs au back
-        if (self.$data.input.excel !== null) {
+        if (self.$props.inputs.excel !== null) {
 
-          axios.post('http://localhost:3000/api/contributionFiliale/08afc17f-cdfc-403c-be2f-67146bc1c279', data,
+          axios.post('http://localhost:3000/api/contributionFiliale/' + version_id, data,
           {
             headers: {
               // 'Content-Type': 'application/x-www-form-urlencoded'
@@ -138,10 +135,10 @@ export default {
           }
           )
             .then((response) => {
-              console.log('Success!')
+              this.$router.replace( {name: 'contributor'} )
             })
             .catch((error) => {
-              console.log('NOPE')
+              console.log(error)
             })
 
         } else {

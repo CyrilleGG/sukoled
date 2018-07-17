@@ -225,7 +225,7 @@ module.exports.getFile = async function(version_id){
     });
 }
 
-// Récupération d'infos de la versions : starts_at, ends_at et name
+// Récupération d'infos de la versions
 module.exports.getVersionById =  function(version_id) {
     return knex('versions')
     .where({

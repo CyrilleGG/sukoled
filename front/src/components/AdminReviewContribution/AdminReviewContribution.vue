@@ -33,12 +33,14 @@
             </tr>
           </table>
 
+          <div v-if="department_slug == 'subsidaries'" class="col-lg-11 mb-4">hello</div>
+
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's comment</p>
           <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
           <p v-else class="col-lg-12 mb-0 pl-0">The contributor didn't write any comment for this contribution</p>
 
           <p v-if="data.input.highlight !== null" class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's highlights</p>
-          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">higlights du contributeur</p>
+          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">{{ data.input.highlight }}</p>
 
           <b-form id="request-modification" class="col-lg-11 mt-4">
 
@@ -56,11 +58,19 @@
           </b-form>
         </div>
 
-        <div id="actions" class="row">
+        <div v-if="department_slug == 'raf'" id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
           <b-button id="cancel" class="mx-1 ml-auto purple" v-on:click="hideEdit ()" size="md">Cancel</b-button>
-          <b-button v-if="department_slug == 'raf'" id="edit" class="mx-1 ml-auto purple" v-on:click="displayEdit ()" size="md">Edit</b-button>
+          <b-button id="edit" class="mx-1 ml-auto purple" v-on:click="displayEdit ()" size="md">Edit</b-button>
           <b-button id="request-button" class="mx-1 orange" size="md" v-on:click="displayComment ()">Request a modification</b-button>
+          <b-button id="validate" class="mx-1 green" v-on:click="acceptContribution ()" size="md">Validate</b-button>
+          <b-button id="submit" class="mx-1 green" v-on:click="submitContribution ()" size="md">Submit</b-button>
+        </div>
+
+        <div v-else-if="department_slug == 'subsidaries'" id="actions" class="row">
+          <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
+          <b-button id="cancel" class="mx-1 ml-auto purple" v-on:click="hideEdit ()" size="md">Cancel</b-button>
+          <b-button id="request-button" class="mx-1 ml-auto orange" size="md" v-on:click="displayComment ()">Request a modification</b-button>
           <b-button id="validate" class="mx-1 green" v-on:click="acceptContribution ()" size="md">Validate</b-button>
           <b-button id="submit" class="mx-1 green" v-on:click="submitContribution ()" size="md">Submit</b-button>
         </div>
@@ -108,15 +118,27 @@ export default {
 
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
+    const department_slug = this.$route.query.department_slug
 
-    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
-      .then((response) => {
-        this.$data.data = response.data
-      })
+    if (department_slug == 'raf') {
+      axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
+        .then((response) => {
+          this.$data.data = response.data
+        })
 
-      .catch((error) => {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log(error)
+        })
+    } else if (department_slug == 'subsidaries') {
+      axios.get('http://localhost:3000/api/versionView/'+ contribution_id +'/version/'+ version_id)
+        .then((response) => {
+          this.$data.data = response.data
+        })
+
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   },
 
   methods: {
@@ -179,7 +201,7 @@ export default {
     sendModificationRequest () {
       axios.post('http://localhost:3000/api/versionRefused/'+ this.$route.query.version_id +'/'+ this.$route.query.contribution_id, {
         user_id: this.$root.$data.username,
-        comment: this.$data.comment_admin,
+        comment_admin: this.$data.comment_admin,
         input_value_id: this.$data.data.input.input_value_id
       })
         .then((response) => {

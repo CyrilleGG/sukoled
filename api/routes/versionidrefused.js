@@ -13,15 +13,15 @@ module.exports = {
         let new_value_id = uuidv4();
         const version_id = req.params.version_id;
         const contribution_id = req.params.contribution_id;
-        const input_value_id = req.body.input_value_id
-        const modules = require('./modules')
+        const input_value_id = req.body.input_value_id;
+        const modules = require('./modules');
         const file = await modules.getFile(version_id);
         const version = await modules.getVersionById(version_id);
-        const contributionValues = await modules.getContributionValuesById(input_value_id)
+        const contributionValues = await modules.getContributionValuesById(input_value_id);
 
         return knex.insert({
             // Informations remplies par le contributeur
-            comment_admin: req.body.comment,
+            comment_admin: req.body.comment_admin,
             // Informations remplies automatiquement mais nécessaire pour la DB
             file_binary: file,
             id: new_version_id,

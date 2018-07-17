@@ -54,7 +54,7 @@ app.get('/api/campaign', campaign.SendJSONDataCampaign)
 
 // Route pour récupérer les données d'une version
 var versionView = require('./routes/versionView');
-app.get('/api/versionView/:version_id/user/:user_id', versionView.SendJSONDataContribView) // version_id
+app.get('/api/versionView/:contribution_id/version/:version_id', versionView.SendJSONDataContribView) // version_id
 // app.post('/api/contributionView/:version_id', contributionView.SendInfoToClientContribView)
 // app.get('/api/contributionView/:version_id', require('./routes/versionid'))
 

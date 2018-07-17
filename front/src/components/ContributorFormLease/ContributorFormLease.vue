@@ -16,15 +16,15 @@
               <div id="excel-input" class="d-flex align-items-center mb-3">
                 <label id="excel-label" class="d-flex align-items-center mb-0 rounded" for="excel">
                   <div id="upload-img" class="d-flex justify-content-center align-items-center">
-                    <img v-if="this.input.excel == null" src="@/assets/icons/upload.png" width="30px" alt="Upload">
-                    <img v-if="this.input.excel !== null" src="@/assets/icons/checked.png" width="30px" alt="Upload">
+                    <img v-if="inputs.excel == null" src="@/assets/icons/upload.png" width="30px" alt="Upload">
+                    <img v-if="inputs.excel !== null" src="@/assets/icons/checked.png" width="30px" alt="Upload">
                   </div>
 
-                  <span v-if="this.input.excel == null" id="upload-text" class="text-center text-uppercase">Upload</span>
-                  <span v-if="this.input.excel !== null" id="upload-text" class="text-center text-uppercase text-white">Uploaded</span>
+                  <span v-if="inputs.excel == null" id="upload-text" class="text-center text-uppercase">Upload</span>
+                  <span v-if="inputs.excel !== null" id="upload-text" class="text-center text-uppercase text-white">Uploaded</span>
                 </label>
 
-                <p v-if="this.input.excel !== null" id="file-name" class="mb-0 ml-3">{{ this.input.excel.name }}</p>
+                <p v-if="inputs.excel !== null" id="file-name" class="mb-0 ml-3">{{ inputs.excel.name }}</p>
 
                 <input id="excel" ref="excel" class="d-none" v-on:change="uploadExcel ()" type="file" name="excel">
 
@@ -42,13 +42,13 @@
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Modify your comments</h3>
+          <h3 class="col-lg-12 mb-2 pl-5">Write your comment</h3>
           <p class="col-lg-12 mb-5 pl-5">Write down your comments and annotations, regarding your contribution</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="comments" class="col-lg-12" v-model="input.comments" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea>
+              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea>
 
             </div>
           </div>
@@ -60,13 +60,13 @@
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Modify your highlights</h3>
+          <h3 class="col-lg-12 mb-2 pl-5">Write your highlights</h3>
           <p class="col-lg-12 mb-5 pl-5">Write down your highlights regarding your contribution</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="highlights" class="col-lg-12" v-model="input.highlights" placeholder="Write your highlights..." :rows="4" name="highlights"></b-form-textarea>
+              <b-form-textarea id="highlights" class="col-lg-12" v-model="inputs.highlight" placeholder="Write your highlights..." :rows="4" name="highlights"></b-form-textarea>
 
             </div>
           </div>
@@ -89,7 +89,7 @@
                   <span class="d-inline-block mr-3 rounded-circle text-center align-middle font-weight-light">+</span> Add elements
                 </label>
                 <input id="additional-files" ref="additionalFiles" class="d-none" v-on:change="uploadFile ()" type="file" name="additional-files">
-                <!-- <p id="highlights" class="col-lg-12" v-model="input.additionalFiles" placeholder="Write your highlights..." :rows="4" name="highlights"></p> -->
+                <!-- <p id="highlights" class="col-lg-12" v-model="inputs.additionalFiles" placeholder="Write your highlights..." :rows="4" name="highlights"></p> -->
               </div>
 
             </div>
@@ -99,7 +99,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" v-on:click="transfer ()" :to="{ path: 'preview'}" append size="md">Submit</b-button>
+          <b-button class="ml-auto green" v-on:click="submit ()" size="md">Submit</b-button>
         </div>
 
       </b-form>
@@ -113,30 +113,47 @@ export default {
     // c
   },
 
+  props: [
+    'data'
+  ],
+
   data () {
     return {
-      input: {
+      inputs: {
         excel: null,
-        comments: '',
-        highlights: '',
-        additionalFiles: []
+        comment_contributor: '',
+        highlight: '',
+        version_id: this.$route.query.version_id,
+        user_id: this.$root.$data.userInfo.user_id,
+        contribution_id: this.$route.query.contribution_id,
+        department_slug: this.$props.data.department_slug
       }
     }
   },
 
+  created() {
+    const formInput = this.$root.$data.formInput
+    if (formInput !== null) {
+      this.$data.inputs.comment_contributor = formInput.comment_contributor
+      this.$data.inputs.highlight = formInput.highlight
+    }
+  },
+
+
   methods: {
     uploadExcel () {
-      this.$data.input.excel = this.$refs.excel.files[0]
+      this.$data.inputs.excel = this.$refs.excel.files[0]
       document.getElementById('upload-img').style.background = 'linear-gradient(#2ecc71, #29b362)'
       document.getElementById('upload-text').style.background = '#2ecc71'
     },
 
     uploadFile () {
-      this.$data.input.additionalFiles.push(this.$refs.additionalFiles.files[0])
+      this.$data.inputs.additionalFiles.push(this.$refs.additionalFiles.files[0])
     },
 
-    transfer () {
-      this.$root.$data.formInput = this.$data.input
+    submit () {
+      this.$root.$data.formInput = this.$data.inputs
+      this.$router.replace( {name: 'contributor-preview-contribution'} )
     }
   }
 }

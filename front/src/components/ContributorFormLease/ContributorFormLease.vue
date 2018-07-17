@@ -48,7 +48,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write your comments..." :rows="4" name="comments"></b-form-textarea>
+              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write your comments..." :rows="8" :no-resize="true" name="comments"></b-form-textarea>
 
             </div>
           </div>
@@ -66,7 +66,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="highlights" class="col-lg-12" v-model="inputs.highlight" placeholder="Write your highlights..." :rows="4" name="highlights"></b-form-textarea>
+              <b-form-textarea id="highlights" class="col-lg-12" v-model="inputs.highlight" placeholder="Write your highlights..." :rows="8" :no-resize="true" name="highlights"></b-form-textarea>
 
             </div>
           </div>

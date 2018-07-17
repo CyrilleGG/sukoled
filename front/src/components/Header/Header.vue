@@ -9,9 +9,9 @@
       <b-collapse is-nav id="nav-collapse">
 
         <b-navbar-nav v-if="role == 'mod'" id="main-nav">
-          <b-nav-item class="mx-3" href="#">Dashboard</b-nav-item>
-          <b-nav-item class="mx-3" href="#">Admin</b-nav-item>
-          <b-nav-item class="mx-3" href="#">Contribute</b-nav-item>
+          <b-nav-item id="viewer" class="mx-3" :to="{ name: 'viewer' }">Dashboard</b-nav-item>
+          <b-nav-item id="admin" class="mx-3" :to="{ name: 'admin' }">Admin</b-nav-item>
+          <b-nav-item id="contributor" class="mx-3" :to="{ name: 'contributor' }">Contribute</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav id="second-nav" class="ml-auto">
@@ -37,6 +37,18 @@ export default {
   props: [
     'role'
   ],
+
+  mounted () {
+    const letter = this.$route.path[1]
+    if (letter == 'a') {
+      document.getElementById('admin').classList.add('active')
+    } else if (letter == 'c') {
+      document.getElementById('contributor').classList.add('active')
+    } else {
+      document.getElementById('viewer').classList.add('active')
+    }
+  },
+
   methods: {
     logout () {
       this.$bus.$emit('auth', false)
@@ -48,23 +60,28 @@ export default {
 </script>
 
 <style scoped>
+
 #header {
   max-width: 101%;
   height: 70px;
   font-family: 'Poppins', sans-serif;
   background-color: #ffffff;
 }
+
 #header img {
   max-height: 20px;
 }
+
 #header .navbar .nav-item a {
   color: #999999;
   text-transform: uppercase;
   transition: 0.3s ease;
 }
-#header .navbar-nav .nav-item:hover, #header .navbar-nav .nav-item:hover a {
+
+#header .navbar-nav .nav-item:hover, #header .navbar-nav .nav-item:hover a, #header .navbar-nav .nav-item:hover, #header .navbar-nav .active a  {
   color: #8e44ad;
 }
+
 #header #second-nav .nav-item .nav-link, #header #second-nav #burger-menu {
   display: flex;
   justify-content: center;
@@ -72,4 +89,5 @@ export default {
   width: 70px;
   height: 70px;
 }
+
 </style>

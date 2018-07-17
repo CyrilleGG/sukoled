@@ -3,7 +3,9 @@
 
     <div class="row mb-3">
       <filter-departments v-on:selected-department="selectedDepartment = $event" />
-      <filter-periodicities v-on:selected-periodicity="selectedPeriodicity = $event" />
+      <filter-periodicities v-on:selected-periodicity="selectedPeriodicity = $event; selectedPeriod = 'all'" />
+      <filter-monthly v-if="selectedPeriodicity == 'monthly'" v-on:selected-period="selectedPeriod = $event" />
+      <filter-quarterly v-if="selectedPeriodicity == 'quarterly'" v-on:selected-period="selectedPeriod = $event" />
     </div>
 
     <div class="row">
@@ -26,7 +28,7 @@
         <b-list-group id="contributors-list-items" class="row" flush>
           <admin-contributors-list-item
             v-for="(contribution, index) in contributions"
-            v-if="(contribution.department_slug == selectedDepartment || selectedDepartment == 'all') && (contribution.contribution_period == selectedPeriodicity || selectedPeriodicity == 'all')"
+            v-if="(contribution.department_slug == selectedDepartment || selectedDepartment == 'all') && (contribution.contribution_period == selectedPeriodicity || selectedPeriodicity == 'all') && (contribution.version_starts_at == selectedPeriod || selectedPeriod == 'all')"
             v-bind:key="index"
             v-bind:checked="contribution.checked"
             v-bind:department_name="contribution.department_name"
@@ -46,6 +48,12 @@
       </div>
     </div>
 
+    <b-modal id="confirm" ref="confirm" hide-footer>
+      <p>Are you sure to resend a contribution request ?</p>
+      <b-button class="purple" v-on:click="closeModal ()" size="md">Cancel</b-button>
+      <b-button class="green" v-on:click="closeModal ()" replace size="md">Confirm</b-button>
+    </b-modal>
+
     <!-- <p>{{ selectedContributions }}</p> -->
 
   </div> 
@@ -54,6 +62,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import AdminContributorsListItem from '@/components/AdminContributorsListItem/AdminContributorsListItem'
 import FilterDepartments from '@/components/FilterDepartments/FilterDepartments'
@@ -75,8 +84,9 @@ export default {
   data () {
     return {
       checked: false,
-      selectedPeriodicity: 'all',
       selectedDepartment: 'all',
+      selectedPeriodicity: 'all',
+      selectedPeriod : 'all',
       contributions: [],
       
       selectedContributions: []
@@ -88,6 +98,8 @@ export default {
       .then((response) => {
         for (var i = 0; i < response.data.contributions.length; i++) {
           response.data.contributions[i].checked = false
+          response.data.contributions[i].version_starts_at = moment(response.data.contributions[i].version_starts_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
+          response.data.contributions[i].version_ends_at = moment(response.data.contributions[i].version_ends_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
         }
         this.$data.contributions = response.data.contributions
       })
@@ -141,6 +153,10 @@ export default {
           this.$data.selectedContributions.splice(i)
         }
       }
+    },
+
+    closeModal () {
+      this.$refs.confirm.hide()
     }
   }
 }
@@ -157,6 +173,28 @@ export default {
   height: 60px;
   color: #999999;
   box-shadow: 0px 7px 7px rgba(0,0,0,0.05);
+}
+
+#confirm .purple {
+  border-color: #8e44ad;
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+
+#confirm .purple:hover {
+  border-color: #793a93;
+  background-color: #793a93;
+}
+
+#confirm .green {
+  border-color: #2ecc71;
+  color: #ffffff;
+  background-color: #2ecc71;
+}
+
+#confirm .green:hover {
+  border-color: #29b362;
+  background-color: #29b362;
 }
 
 </style>

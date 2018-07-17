@@ -45,7 +45,7 @@
           <b-form id="request-modification" class="col-lg-11 mt-4">
 
             <b-form-group id="comment-group" class="row">
-              <b-form-textarea id="admin-comment" class="col-lg-12" v-model="comment_admin" placeholder="Write your request..." :rows="4"></b-form-textarea>
+              <b-form-textarea id="admin-comment" class="col-lg-12" v-model="comment_admin" placeholder="Write your request..." :rows="8" :no-resize="true"></b-form-textarea>
             </b-form-group>
 
             <div class="row">

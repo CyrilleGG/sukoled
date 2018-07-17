@@ -3,7 +3,9 @@
 
     <div class="row mb-3">
       <filter-departments v-on:selected-department="selectedDepartment = $event" />
-      <filter-periodicities v-on:selected-periodicity="selectedPeriodicity = $event" />
+      <filter-periodicities v-on:selected-periodicity="selectedPeriodicity = $event; selectedPeriod = 'all'" />
+      <filter-monthly v-if="selectedPeriodicity == 'monthly'" v-on:selected-period="selectedPeriod = $event" />
+      <filter-quarterly v-if="selectedPeriodicity == 'quarterly'" v-on:selected-period="selectedPeriod = $event" />
     </div>
 
     <div class="row">
@@ -26,7 +28,7 @@
         <b-list-group id="contributors-list-items" class="row" flush>
           <admin-contributors-list-item
             v-for="(contribution, index) in contributions"
-            v-if="(contribution.department_slug == selectedDepartment || selectedDepartment == 'all') && (contribution.contribution_period == selectedPeriodicity || selectedPeriodicity == 'all')"
+            v-if="(contribution.department_slug == selectedDepartment || selectedDepartment == 'all') && (contribution.contribution_period == selectedPeriodicity || selectedPeriodicity == 'all') && (contribution.version_starts_at == selectedPeriod || selectedPeriod == 'all')"
             v-bind:key="index"
             v-bind:checked="contribution.checked"
             v-bind:department_name="contribution.department_name"
@@ -54,6 +56,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import AdminContributorsListItem from '@/components/AdminContributorsListItem/AdminContributorsListItem'
 import FilterDepartments from '@/components/FilterDepartments/FilterDepartments'
@@ -75,8 +78,9 @@ export default {
   data () {
     return {
       checked: false,
-      selectedPeriodicity: 'all',
       selectedDepartment: 'all',
+      selectedPeriodicity: 'all',
+      selectedPeriod : 'all',
       contributions: [],
       
       selectedContributions: []

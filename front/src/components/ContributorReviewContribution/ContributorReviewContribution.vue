@@ -37,6 +37,8 @@
             </tr>
           </table>
 
+          <div v-if="department_slug == 'subsidaries'" class="col-lg-11 mb-4">hello</div>
+
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your comment</p>
           <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
           <p v-else class="col-lg-12 mb-0 pl-0">The contributor didn't write any comment for this contribution</p>
@@ -91,15 +93,27 @@ export default {
 
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
+    const department_slug = this.$route.query.department_slug
 
-    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
-      .then((response) => {
-        this.$data.data = response.data
-      })
+    if (department_slug == 'raf') {
+      axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
+        .then((response) => {
+          this.$data.data = response.data
+        })
 
-      .catch((error) => {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log(error)
+        })
+    } else if (department_slug == 'subsidaries') {
+      axios.get('http://localhost:3000/api/versionView/'+ contribution_id +'/version/'+ version_id)
+        .then((response) => {
+          this.$data.data = response.data
+        })
+
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   },
 
   methods: {
@@ -129,6 +143,7 @@ export default {
       const data = this.$data.data
       this.$root.$data.formInput = {
         comment_contributor: data.input.comment_contributor,
+        highlight: data.input.highlight,
         contribution_id: data.contribution.contribution_id,
         contribution_limit: data.contribution.contribution_limit,
         contribution_threshold: data.contribution.contribution_threshold,

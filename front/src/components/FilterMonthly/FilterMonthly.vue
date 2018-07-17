@@ -1,6 +1,10 @@
 <template>
   <div class="col-lg-2 pr-3 pl-0">
-    <b-form-select id="filter-monthly" v-model="selected" :options="options" v-on:change="updateFilter($event)"></b-form-select>
+    <b-form-select id="filter-monthly" v-model="selected" :options="options" v-on:change="updateFilter($event)">
+      <template slot="first">
+        <option value="null" disabled>Month</option>
+      </template>
+    </b-form-select>
   </div>
 </template>
 
@@ -12,7 +16,7 @@ export default {
 
   data () {
     return {
-      selected: 'all',
+      selected: null,
       options: [
         { value: 'all', text: 'All'},
         { value: moment().format('YYYY-MM-01T00:00:00.000') + 'Z', text: moment().subtract(1, 'months').format('MMMM YYYY') },

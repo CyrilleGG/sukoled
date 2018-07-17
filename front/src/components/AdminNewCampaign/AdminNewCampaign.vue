@@ -71,7 +71,7 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="message" class="col-lg-12" v-model="message" placeholder="Write your request..." :rows="4"></b-form-textarea>
+              <b-form-textarea id="message" class="col-lg-12" v-model="message" placeholder="Write your request..." :rows="6" :no-resize="true"></b-form-textarea>
 
             </div>
           </div>

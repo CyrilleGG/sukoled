@@ -39,19 +39,21 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-radio-group id="departments" class="col-lg-6 my-2" v-model="selectedDepartment" :options="departments" name="departments"></b-form-radio-group>
+              <b-form-radio-group id="departments" class="col-lg-6 mb-4" v-model="selectedDepartment" :options="departments" v-on:change="input.contributions = []" name="departments"></b-form-radio-group>
 
-              <b-list-group v-if="selectedDepartment == 'raf'" class="col-lg-6">
-                <b-list-group-item v-for="(contribution, index) in contributions.raf" :key="index">
-                  <b-form-checkbox v-model="input.contributions" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
-                </b-list-group-item>
-              </b-list-group>
+              <div v-if="selectedDepartment == 'raf'" class="col-lg-12 rounded contribution-list">
+                <div class="row pl-3">
+                  <b-form-checkbox class="col-lg-12 my-2 mx-0" v-on:change="allRaf ($event)">All</b-form-checkbox>
+                  <b-form-checkbox v-for="(contribution, index) in contributions.raf" class="col-lg-4 my-2 mx-0" v-model="input.contributions" :key="index" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
+                </div>
+              </div>
 
-              <b-list-group v-else class="col-lg-6">
-                <b-list-group-item v-for="(contribution, index) in contributions.subsidaries" :key="index">
-                  <b-form-checkbox v-model="input.contributions" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
-                </b-list-group-item>
-              </b-list-group>
+              <div v-else-if="selectedDepartment == 'subsidaries'" class="col-lg-12 rounded contribution-list">
+                <div class="row pl-3">
+                  <b-form-checkbox class="col-lg-12 my-2 mx-0" v-on:change="allSubsidaries ($event)">All</b-form-checkbox>
+                  <b-form-checkbox v-for="(contribution, index) in contributions.subsidaries" class="col-lg-4 my-2 mx-0" v-model="input.contributions" :key="index" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -83,7 +85,7 @@
         </div>
 
         <b-modal v-if="input.contributions.length > 0" id="confirm" ref="confirm" hide-footer>
-          <p>You are about to send an email in order to recover <span>{{ displayNumOfcontributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
+          <p>You are about to send an email in order to recover <span>{{ displayNumOfContributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
           <p id="display-message" class="p-3 rounded">{{ message }}</p>
           <b-button size="md" v-on:click="closeModal ()">Cancel</b-button>
           <b-button class="green" v-on:click="createCampaign ()" replace size="md">Confirm</b-button>
@@ -123,24 +125,24 @@ export default {
         { value: 'quarterly', text: 'Quarterly' }
       ],
       months: [
-        { value: moment( moment().year() + '-01-01' ).month(0).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'January' },
-        { value: moment( moment().year() + '-01-01' ).month(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'February' },
-        { value: moment( moment().year() + '-01-01' ).month(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'March' },
-        { value: moment( moment().year() + '-01-01' ).month(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'April' },
-        { value: moment( moment().year() + '-01-01' ).month(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'May' },
-        { value: moment( moment().year() + '-01-01' ).month(5).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'June' },
-        { value: moment( moment().year() + '-01-01' ).month(6).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'July' },
-        { value: moment( moment().year() + '-01-01' ).month(7).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'August' },
-        { value: moment( moment().year() + '-01-01' ).month(8).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'September' },
-        { value: moment( moment().year() + '-01-01' ).month(9).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'October' },
-        { value: moment( moment().year() + '-01-01' ).month(10).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'November' },
-        { value: moment( moment().year() + '-01-01' ).month(11).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'December' }
+        { value: moment( moment().year() + '-01-01' ).month(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'January' },
+        { value: moment( moment().year() + '-01-01' ).month(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'February' },
+        { value: moment( moment().year() + '-01-01' ).month(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'March' },
+        { value: moment( moment().year() + '-01-01' ).month(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'April' },
+        { value: moment( moment().year() + '-01-01' ).month(5).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'May' },
+        { value: moment( moment().year() + '-01-01' ).month(6).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'June' },
+        { value: moment( moment().year() + '-01-01' ).month(7).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'July' },
+        { value: moment( moment().year() + '-01-01' ).month(8).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'August' },
+        { value: moment( moment().year() + '-01-01' ).month(9).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'September' },
+        { value: moment( moment().year() + '-01-01' ).month(10).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'October' },
+        { value: moment( moment().year() + '-01-01' ).month(11).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'November' },
+        { value: moment( moment().add(1, 'years').year() + '-01-01' ).month(0).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'December' }
       ], 
       quarters: [
-        { value: moment( moment().year() + '-01-01' ).quarter(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q1' },
-        { value: moment( moment().year() + '-01-01' ).quarter(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q2' },
-        { value: moment( moment().year() + '-01-01' ).quarter(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q3' },
-        { value: moment( moment().year() + '-01-01' ).quarter(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q4' }
+        { value: moment( moment().year() + '-01-01' ).quarter(2).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q1' },
+        { value: moment( moment().year() + '-01-01' ).quarter(3).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q2' },
+        { value: moment( moment().year() + '-01-01' ).quarter(4).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q3' },
+        { value: moment( moment().add(1, 'years').year() + '-01-01' ).quarter(1).format('YYYY-MM-DDTHH:mm:ss.000') + 'Z', text: 'Q4' }
       ],
 
       departments:[
@@ -153,7 +155,7 @@ export default {
       },
 
       input: {
-        starts_at: '',
+        starts_at: moment().format('YYYY-MM-01T00:00:00.000') + 'Z',
         ends_at: '',
         contributions: []
         // message: null
@@ -195,7 +197,45 @@ export default {
   },
 
   methods: {
-    displayNumOfcontributions () {
+    allRaf (check) {
+      const raf = this.$data.contributions.raf
+      var contributions = this.$data.input.contributions
+      if (check == true) {
+        for (var i = 0; i < raf.length; i++) {
+          for (var j = 0; j < contributions.length; j++) {
+            if (raf[i].contribution_id == contributions[j].contribution_id) {
+              this.$data.input.contributions.splice(j, 1)
+            }
+          }
+          this.$data.input.contributions.push(raf[i])
+        }
+      } else {
+        for (var i = 0; i < contributions.length; i++) {
+          this.$data.input.contributions.splice(i)
+        }
+      }
+    },
+
+    allSubsidaries (check) {
+      const subsidaries = this.$data.contributions.subsidaries
+      var contributions = this.$data.input.contributions
+      if (check == true) {
+        for (var i = 0; i < subsidaries.length; i++) {
+          for (var j = 0; j < contributions.length; j++) {
+            if (raf[i].contribution_id == contributions[j].contribution_id) {
+              this.$data.input.contributions.splice(j, 1)
+            }
+          }
+          this.$data.input.contributions.push(subsidaries[i])
+        }
+      } else {
+        for (var i = 0; i < contributions.length; i++) {
+          this.$data.input.contributions.splice(i)
+        }
+      }
+    },
+    
+    displayNumOfContributions () {
       if (this.$data.input.contributions.length > 0 && this.$data.input.contributions.length > 1) {
         return this.$data.input.contributions.length + ' contributions'
       } else if (this.$data.input.contributions.length = 1) {
@@ -205,18 +245,19 @@ export default {
 
     displayPeriod () {
       var period = this.$data.input.starts_at
+      var year = moment().year()
       if (period.length > 0) {
         if (period.length > 2) {
           for (var i = 0; i < this.$data.months.length; i++) {
             if (period == this.$data.months[i].value) {
-              return this.$data.months[i].text
+              return this.$data.months[i].text + ' ' + year
               break
             }
           }
         } else {
           for (var i = 0; i < this.$data.quarters.length; i++) {
             if (period == this.$data.quarters[i].value) {
-              return this.$data.quarters[i].text
+              return this.$data.quarters[i].text + ' ' + year
               break
             }
           }
@@ -281,10 +322,11 @@ export default {
   font-size: 1.2rem;
 }
 
-#AdminNewCampaign .list-group {
-  max-height: 160px;
+#AdminNewCampaign .contribution-list {
+  max-height: 200px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
   overflow: scroll;
-  overflow-x:hidden;
+  overflow-x: hidden;
 }
 
 #AdminNewCampaign #message {

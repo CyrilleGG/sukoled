@@ -48,6 +48,12 @@
       </div>
     </div>
 
+    <b-modal id="confirm" ref="confirm" hide-footer>
+      <p>Are you sure to resend a contribution request ?</p>
+      <b-button class="purple" v-on:click="closeModal ()" size="md">Cancel</b-button>
+      <b-button class="green" v-on:click="closeModal ()" replace size="md">Confirm</b-button>
+    </b-modal>
+
     <!-- <p>{{ selectedContributions }}</p> -->
 
   </div> 
@@ -92,6 +98,8 @@ export default {
       .then((response) => {
         for (var i = 0; i < response.data.contributions.length; i++) {
           response.data.contributions[i].checked = false
+          response.data.contributions[i].version_starts_at = moment(response.data.contributions[i].version_starts_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
+          response.data.contributions[i].version_ends_at = moment(response.data.contributions[i].version_ends_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
         }
         this.$data.contributions = response.data.contributions
       })
@@ -145,6 +153,10 @@ export default {
           this.$data.selectedContributions.splice(i)
         }
       }
+    },
+
+    closeModal () {
+      this.$refs.confirm.hide()
     }
   }
 }
@@ -161,6 +173,28 @@ export default {
   height: 60px;
   color: #999999;
   box-shadow: 0px 7px 7px rgba(0,0,0,0.05);
+}
+
+#confirm .purple {
+  border-color: #8e44ad;
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+
+#confirm .purple:hover {
+  border-color: #793a93;
+  background-color: #793a93;
+}
+
+#confirm .green {
+  border-color: #2ecc71;
+  color: #ffffff;
+  background-color: #2ecc71;
+}
+
+#confirm .green:hover {
+  border-color: #29b362;
+  background-color: #29b362;
 }
 
 </style>

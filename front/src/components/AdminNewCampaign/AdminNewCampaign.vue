@@ -87,7 +87,7 @@
         <b-modal v-if="input.contributions.length > 0" id="confirm" ref="confirm" hide-footer>
           <p>You are about to send an email in order to recover <span>{{ displayNumOfContributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
           <p id="display-message" class="p-3 rounded">{{ message }}</p>
-          <b-button size="md" v-on:click="closeModal ()">Cancel</b-button>
+          <b-button class="purple" v-on:click="closeModal ()" size="md">Cancel</b-button>
           <b-button class="green" v-on:click="createCampaign ()" replace size="md">Confirm</b-button>
         </b-modal>
 
@@ -244,24 +244,12 @@ export default {
     },
 
     displayPeriod () {
-      var period = this.$data.input.starts_at
+      var periodicity = this.$data.selectedPeriodicity
       var year = moment().year()
-      if (period.length > 0) {
-        if (period.length > 2) {
-          for (var i = 0; i < this.$data.months.length; i++) {
-            if (period == this.$data.months[i].value) {
-              return this.$data.months[i].text + ' ' + year
-              break
-            }
-          }
-        } else {
-          for (var i = 0; i < this.$data.quarters.length; i++) {
-            if (period == this.$data.quarters[i].value) {
-              return this.$data.quarters[i].text + ' ' + year
-              break
-            }
-          }
-        }
+      if (periodicity == 'monthly') {
+        return moment(this.$data.input.starts_at).subtract(1, 'months').format('MMMM YYYY')
+      } else {
+        return 'Q' + moment(this.$data.input.starts_at).subtract(1, 'quarters').format('Q YYYY')
       }
     },
 
@@ -288,6 +276,10 @@ export default {
             console.log(error)
           })
       }
+    },
+
+    closeModal () {
+      this.$refs.confirm.hide()
     }
   }
 }

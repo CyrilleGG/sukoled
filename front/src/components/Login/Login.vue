@@ -8,17 +8,20 @@
 
       <div id="welcome" class="col-lg-3 pt-5">
         <div class="row">
-          <h1 class="col-lg-12 mb-3 text-center">Natixis</h1>
-          <h3 class="col-lg-12 text-center">Welcome</h3>
-          <h4 class="col-lg-8 mx-auto mb-5 text-center">Please, enter your username and password</h4>
+          <h1 class="col-lg-12 mb-0 text-center">Natixis</h1>
+          <p class="col-lg-12 mb-5 text-center text-uppercase">Hestia</p>
+          <h3 class="col-lg-12 mt-3 text-center">Welcome</h3>
+          <h4 class="col-lg-8 mx-auto mb-3 text-center">Please, enter your username and password</h4>
 
-          <b-form id="login" class="col-lg-12 mt-3">
+          <b-form id="login" class="col-lg-12 my-3">
             <div class="row">
               <b-form-input id="username" class="col-lg-9 mx-auto my-2 rounded-0" v-model="input.username" type="text" placeholder="Username" name="username" autocomplete="off"></b-form-input>
               <b-form-input id="password" class="col-lg-9 mx-auto my-2 rounded-0" v-model="input.password" type="password" placeholder="Password" name="password"></b-form-input>
               <b-button class="col-lg-9 mx-auto my-2 rounded-0 purple" v-on:click.prevent="login()">Login</b-button>
             </div>
           </b-form>
+          
+          <p id="error" class="col-lg-9 mx-auto border border-danger p-3 text-danger">The username or password is incorrect.</p>
         </div>
       </div>
 
@@ -43,14 +46,16 @@ export default {
     }
   },
 
+  updated() {
+    document.getElementById('error').style.display = 'none'
+  },
+
   methods: {
     login () {
       if (this.input.username !== '' && this.input.password !== '') {
         axios.post('http://localhost:3000/api/login', this.input)
 
           .then((response) => {
-            console.log('Success!')
-
             this.$emit('auth', true)
             this.$root.$data.userInfo = response.data
 
@@ -65,11 +70,11 @@ export default {
           })
 
           .catch((error) => {
-            console.log('NOPE')
+            document.getElementById('error').style.display = 'flex'
           })
 
       } else {
-        console.log('Please, enter a username and a password')
+        document.getElementById('error').style.display = 'flex'
       }
     }
   }
@@ -78,6 +83,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+#Login {
+  max-height: 100vh;
+  overflow: hidden;
+}
 
 #Login #welcome {
   background-color: #ffffff;
@@ -93,6 +103,11 @@ export default {
 
 #Login #welcome h4 {
   font-size: 1rem;
+}
+#Login #welcome #error {
+  display: none;
+  font-size: 0.9rem;
+  box-sizing: border-box;
 }
 
 #Login .purple {

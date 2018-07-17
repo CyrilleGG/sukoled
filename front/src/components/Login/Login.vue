@@ -1,14 +1,28 @@
 <template>
-  <div class="form-container">
-    <form id="login-form">
+  <div id="Login" class="container-fluid">
+    <div class="row">
 
-      <input id="username" v-model="input.username" type="text" placeholder="Username" name="username" autocomplete="off">
+      <div class="col-lg-9 px-0">
+        <img src="@/assets/welcome.png" class="w-100" alt="Welcome image">
+      </div>
 
-      <input id="password" v-model="input.password" type="password" placeholder="Password" name="password">
+      <div id="welcome" class="col-lg-3 pt-5">
+        <div class="row">
+          <h1 class="col-lg-12 mb-3 text-center">Natixis</h1>
+          <h3 class="col-lg-12 text-center">Welcome</h3>
+          <h4 class="col-lg-8 mx-auto mb-5 text-center">Please, enter your username and password</h4>
 
-      <input type="submit" value="Login" v-on:click.prevent="login()">
-      
-    </form>
+          <b-form id="login" class="col-lg-12 mt-3">
+            <div class="row">
+              <b-form-input id="username" class="col-lg-9 mx-auto my-2 rounded-0" v-model="input.username" type="text" placeholder="Username" name="username" autocomplete="off"></b-form-input>
+              <b-form-input id="password" class="col-lg-9 mx-auto my-2 rounded-0" v-model="input.password" type="password" placeholder="Password" name="password"></b-form-input>
+              <b-button class="col-lg-9 mx-auto my-2 rounded-0 purple" v-on:click.prevent="login()">Login</b-button>
+            </div>
+          </b-form>
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 
@@ -64,16 +78,32 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  form {
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 20vh;
-  }
 
-  input {
-    display: block;
-    max-width: 10%;
-  }
+#Login #welcome {
+  background-color: #ffffff;
+}
+
+#Login #welcome h1 {
+  color: #8e44ad;
+}
+
+#Login #welcome h3 {
+  font-size: 1.2rem;
+}
+
+#Login #welcome h4 {
+  font-size: 1rem;
+}
+
+#Login .purple {
+  border-color: #8e44ad;
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+
+#Login .purple:hover {
+  border-color: #793a93;
+  background-color: #793a93;
+}
+
 </style>

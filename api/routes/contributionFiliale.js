@@ -3,7 +3,6 @@
 var knex = require('../utilities/database')
 // Module permettant de générer un UUID, ici V4.
 const uuidv4 = require('uuid/v4');
-const xlsx = require('xlsx');
 
 // Creation d'une contribution : on envoie au front le department_slug et le version_name pour l'affichage.
 // Ce fichier sert dans les cas où le contributeur participe pour la première ou énième fois.
@@ -21,15 +20,13 @@ module.exports = {
         const comment_contributor = req.body.comment_contributor
         const contribution_id = req.body.contribution_id
         const highlight = req.body.highlight
-        const file_csv = xlsx.utils.sheet_to_csv(req.body.file_binary, {
-            FS: ";"
-        })
 
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
         .insert({
             // Informations remplies par le contributeur
-            file_csv: file_csv,
+            file_csv: req.body.file_csv,
+            file_json: req.body.file_json,
             file_binary:req.body.file_binary,
             comment_contributor: comment_contributor,
             highlight:highlight,
@@ -46,10 +43,14 @@ module.exports = {
         })
             .then(function(response){
             // Ici, on sort de la fonction pour éviter qu'elle reboucle.
+            console.log('SUCCESS')
             res.json(null)
         })
         .catch(function(err) {
-            console.log(err)
+            console.log('ERREUR', err)
+            res.json({
+                error: 'yes'
+            })
         });
     },
 

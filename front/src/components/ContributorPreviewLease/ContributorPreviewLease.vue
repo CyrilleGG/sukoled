@@ -107,7 +107,6 @@ export default {
       // console.log(self.$props.inputs.excel)
 
       var blob = new Blob([self.$props.inputs.excel], {
-        // type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         type : 'text/plain'
       });
 
@@ -117,6 +116,8 @@ export default {
       reader.addEventListener('loadend', (e) => {
         let data = new FormData();
         data.append('file_binary', e.srcElement.result);
+        data.append('file_csv', self.$props.inputs.csv);
+        data.append('file_json', self.$props.inputs.json);
         data.append('comment_contributor', self.$props.inputs.comment_contributor);
         data.append('highlight', self.$props.inputs.highlight);
         data.append('contribution_id', self.$props.inputs.contribution_id);
@@ -128,8 +129,6 @@ export default {
           axios.post('http://localhost:3000/api/contributionFiliale/' + version_id, data,
           {
             headers: {
-              // 'Content-Type': 'application/x-www-form-urlencoded'
-              // 'Content-Type': 'multipart/form-data'
               'Content-Type': 'multipart/form-data'
             }
           }

@@ -106,6 +106,8 @@
 </template>
 
 <script>
+import xlsx from 'xlsx'
+
 export default {
   name: 'ContributorFormLease',
 
@@ -121,6 +123,8 @@ export default {
     return {
       inputs: {
         excel: null,
+        csv: null,
+        json: null,
         comment_contributor: '',
         highlight: '',
         version_id: this.$route.query.version_id,
@@ -151,9 +155,32 @@ export default {
       this.$data.inputs.additionalFiles.push(this.$refs.additionalFiles.files[0])
     },
 
-    submit () {
-      this.$root.$data.formInput = this.$data.inputs
-      this.$router.replace( {name: 'contributor-preview-contribution'} )
+   submit () {
+      const self = this;
+
+      const reader = new FileReader();
+      reader.addEventListener('loadend', (e) => {
+        const wb = xlsx.read(e.srcElement.result, {
+            type: 'binary',
+            bookType: 'xlsx'
+        });
+
+        const ws = wb.Sheets[wb.SheetNames[0]];
+
+        const csv = xlsx.utils.sheet_to_csv(ws, {
+            FS: ";"
+        });
+
+        const json = xlsx.utils.sheet_to_json(ws, {});
+
+        self.$data.inputs.csv = csv
+        self.$data.inputs.json = JSON.stringify(json[0])
+
+        self.$root.$data.formInput = self.$data.inputs
+        self.$router.replace( {name: 'contributor-preview-contribution'} )
+      });
+
+      reader.readAsBinaryString(self.$data.inputs.excel);
     }
   }
 }

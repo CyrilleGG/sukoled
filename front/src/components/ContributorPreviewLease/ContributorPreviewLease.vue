@@ -12,33 +12,22 @@
           <div class="col-lg-12 pl-5">
             <div v-if="inputs.excel !== null" class="row pl-3">
 
-              <!-- <table class="col-lg-11 d-block mb-3 rounded">
+              <table class="col-lg-11 d-block mb-3 rounded">
                 <tr class="row">
 
                   <th class="col-lg-6 py-3 pl-5">Name</th>
-                  <th class="col-lg-2 py-3 text-center">January</th>
-                  <th class="col-lg-2 py-3 text-center">February</th>
-                  <th class="col-lg-2 py-3 text-center">March</th>
+                  <th class="col-lg-3 py-3 text-center">{{ lastMonth () }}</th>
+                  <th class="col-lg-3 py-3 text-center">{{ month () }}</th>
 
                 </tr>
-                <tr class="row">
+                <tr v-for="(value, key, index) in json" class="row" :key="index">
 
-                  <td class="col-lg-6 py-3 pl-5">Q1Gross EAD*</td>
-                  <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
-                  <td class="col-lg-2 py-3 text-center">€ 7,2 m</td>
-                  <td class="col-lg-2 py-3 text-center last">€ 7,2 m</td>
-
-                </tr>
-                <tr class="row">
-
-                  <td class="col-lg-6 py-3 pl-5">Net EAD*</td>
-                  <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
-                  <td class="col-lg-2 py-3 text-center">€ 80 bm</td>
-                  <td class="col-lg-2 py-3 text-center last">€ 80 bm</td>
+                  <td class="col-lg-6 py-3 pl-5"> {{ key }} </td>
+                  <td class="col-lg-3 py-3 text-center">€ 7,2 m</td>
+                  <td class="col-lg-3 py-3 text-center last">{{ value }}</td>
 
                 </tr>
-              </table> -->
-              {{ inputs.excel }}
+              </table>
 
             </div>
           </div>
@@ -83,6 +72,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 export default {
   name: 'ContributorPreviewLease',
@@ -95,19 +85,31 @@ export default {
     'inputs'
   ],
 
+  data () {
+    return {
+      json: null
+    }
+  },
+
+  created() {
+    this.$data.json = JSON.parse(this.$props.inputs.json)
+  },
+
   methods: {
+    month () {
+      return moment().subtract(1, 'months').format('MMMM')
+    },
+
+    lastMonth () {
+      return moment().subtract(2, 'months').format('MMMM')
+    },
+    
     sendContribution () {
 
-    // console.log(this.$route.query)
-    const version_id = this.$props.inputs.version_id
-
-      // console.log(this.$data)
-
+      const version_id = this.$props.inputs.version_id
       const self = this
-      // console.log(self.$props.inputs.excel)
 
       var blob = new Blob([self.$props.inputs.excel], {
-        // type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         type : 'text/plain'
       });
 
@@ -117,6 +119,8 @@ export default {
       reader.addEventListener('loadend', (e) => {
         let data = new FormData();
         data.append('file_binary', e.srcElement.result);
+        data.append('file_csv', self.$props.inputs.csv);
+        data.append('file_json', self.$props.inputs.json);
         data.append('comment_contributor', self.$props.inputs.comment_contributor);
         data.append('highlight', self.$props.inputs.highlight);
         data.append('contribution_id', self.$props.inputs.contribution_id);
@@ -128,8 +132,6 @@ export default {
           axios.post('http://localhost:3000/api/contributionFiliale/' + version_id, data,
           {
             headers: {
-              // 'Content-Type': 'application/x-www-form-urlencoded'
-              // 'Content-Type': 'multipart/form-data'
               'Content-Type': 'multipart/form-data'
             }
           }

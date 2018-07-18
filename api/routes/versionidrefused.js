@@ -15,7 +15,6 @@ module.exports = {
         const contribution_id = req.params.contribution_id;
         const input_value_id = req.body.input_value_id;
         const modules = require('./modules');
-        const file = await modules.getFile(version_id);
         const version = await modules.getVersionById(version_id);
         const contributionValues = await modules.getContributionValuesById(input_value_id);
 
@@ -23,7 +22,9 @@ module.exports = {
             // Informations remplies par le contributeur
             comment_admin: req.body.comment_admin,
             // Informations remplies automatiquement mais nécessaire pour la DB
-            file_binary: file,
+            file_binary: version[0].file_binary,
+            file_csv: version[0].file_csv,
+            file_json: version[0].file_json,
             id: new_version_id,
             name: version[0].name,
             contribution_id: contribution_id,

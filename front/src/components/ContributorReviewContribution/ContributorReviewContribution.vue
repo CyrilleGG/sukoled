@@ -37,7 +37,22 @@
             </tr>
           </table>
 
-          <div v-if="department_slug == 'subsidaries'" class="col-lg-11 mb-4">hello</div>
+          <table v-if="department_slug == 'subsidaries'" class="col-lg-12 d-block mb-4 rounded">
+            <tr class="row">
+
+              <th class="col-lg-6 py-3 pl-5">Name</th>
+              <th class="col-lg-3 py-3 text-center">{{ lastMonth () }}</th>
+              <th class="col-lg-3 py-3 text-center">{{ month () }}</th>
+
+            </tr>
+            <tr v-for="(value, key, index) in data.input.version_file" class="row" :key="index">
+
+              <td class="col-lg-6 py-3 pl-5">{{ key }}</td>
+              <td class="col-lg-3 py-3 text-center">xx-1</td>
+              <td class="col-lg-3 py-3 text-center last">{{ value }}</td>
+
+            </tr>
+          </table>
 
           <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your comment</p>
           <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
@@ -100,7 +115,6 @@ export default {
         .then((response) => {
           this.$data.data = response.data
         })
-
         .catch((error) => {
           console.log(error)
         })
@@ -108,8 +122,8 @@ export default {
       axios.get('http://localhost:3000/api/versionView/'+ contribution_id +'/version/'+ version_id)
         .then((response) => {
           this.$data.data = response.data
+          this.$data.data.input.version_file = JSON.parse(this.$data.data.input.version_file)
         })
-
         .catch((error) => {
           console.log(error)
         })

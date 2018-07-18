@@ -25,7 +25,7 @@ module.exports = {
                     comment_admin: version[0].comment_admin,
                     comment_contributor: version[0].comment_contributor,
                     highlight: version[0].highlight,
-                    version_file: version[0].file_binary // Envoyé : file_binary
+                    version_file: version[0].file_json // Envoyé : file_binary
                 },
                 
             };

@@ -90,7 +90,7 @@ app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version) // u
 var createPolicies = require('./routes/createPolicies')
 app.get('/api/createPolicies', createPolicies.sendJSONDataPolicies)
 app.post('/api/createPolicies', createPolicies.sendInfoToDBPolicies)
-app.delete('/api/createPolicies', createPolicies.deletePolicies)
+app.delete('/api/createPolicies/:policy_id', createPolicies.deletePolicies)
 
 var contributions = require('./routes/contributions')
 app.get('/api/contributions', contributions.list)

@@ -1,10 +1,3 @@
-<template>
-    <div>
-        <p> hey </p>
-        <canvas id="myChart" width="400" height="400"></canvas>
-    </div>
-</template>
-
 <script>
 import { Bar } from 'vue-chartjs'
 
@@ -12,26 +5,50 @@ export default {
     name: 'ViewInternalRatingGraph',
 
     extends: Bar,
-    mounted () {
-        this.renderChart(data, options)
+    data () {
+        return {
+            data: {
+                    labels: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-', 'BBB', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-', 'CCC', 'CC+', 'CC', 'CC-', 'C+', 'C', 'C-', 'Default'],
+                    boxWidth:2,
+                    datasets: [
+                        {
+                            label: 'March-18',
+                            backgroundColor: '#f87979',
+                            data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                        },
+                        {
+                            label: 'February-18',
+                            backgroundColor:'orange',
+                            data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                        },
+                        {
+                            label: 'December-17',
+                            backgroundColor:'lightgreen',
+                            data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                        }
+                ]
+            },
+            options :{
+                title: {
+                    display:true,
+                    text: 'Distribution of grades',
+                    fontSize:'15'
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            offsetGridLines: true
+                        }
+                    }]
+                },
+                cornerRadius:20,
+                responsive: true,
+                maintainAspectRatio: false
+            },
+        }
     },
-
-    data (){
-        data: {
-        labels:['January', 'February'];
-        datasets:[
-            {
-            label: 'GitHub Commits',
-            backgroundColor: '#f87979',
-            data: [40, 20]
-            }
-        ]}
-    }
+    mounted () {
+        this.renderChart(this.data, this.options)
+    },
 }
 </script>
-
-<style scoped>
-template p {
-    background-color:white;
-}
-</style>

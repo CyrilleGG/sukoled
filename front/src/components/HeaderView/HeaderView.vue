@@ -16,8 +16,9 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
-        <b-nav-item class="mx-3" :to="{ path: '../view/internal-rating' }" replace>Other Inputs</b-nav-item>
-        <b-nav-item class="mx-3" :to="{ path: '../viewer' }" replace>Risk Appetite</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ path: '../view/internal-rating' }" replace>Internal Rating</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ path: '../viewer' }" replace>Top 20</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ path: '../view/breakdown' }" replace>Breakdown</b-nav-item>
         <b-nav-item class="mx-3" href="#">Highlights</b-nav-item>
 
       </b-collapse>

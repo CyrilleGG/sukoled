@@ -39,13 +39,17 @@ export default {
   ],
 
   mounted () {
+    const role = this.$root.$data.userInfo.role
     const letter = this.$route.path[1]
-    if (letter == 'a') {
-      document.getElementById('admin').classList.add('active')
-    } else if (letter == 'c') {
-      document.getElementById('contributor').classList.add('active')
-    } else {
-      document.getElementById('viewer').classList.add('active')
+
+    if (role == 'mod') {
+      if (letter == 'a') {
+        document.getElementById('admin').classList.add('active')
+      } else if (letter == 'c') {
+        document.getElementById('contributor').classList.add('active')
+      } else {
+        document.getElementById('viewer').classList.add('active')
+      }
     }
   },
 
@@ -78,9 +82,19 @@ export default {
   transition: 0.3s ease;
 }
 
-#header .navbar-nav .nav-item:hover, #header .navbar-nav .nav-item:hover a, #header .navbar-nav .nav-item:hover, #header .navbar-nav .active a  {
+#header .navbar-nav .nav-item:hover,
+#header .navbar-nav .nav-item:hover a,
+#header .navbar-nav .nav-item:hover,
+#header .navbar-nav .active a  {
   color: #8e44ad;
 }
+
+#header .navbar .nav-item a.active {
+  color: #8e44ad;
+  background-color: #ffffff;
+}
+
+#header .navbar-nav .active a 
 
 #header #second-nav .nav-item .nav-link, #header #second-nav #burger-menu {
   display: flex;

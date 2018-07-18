@@ -15,7 +15,7 @@
             <div class="box-rating box-rating-yellow">{{ internal_rating }}</div>
         </td>
         <td v-else>
-            
+            {{ internal_rating }}
         </td>
     </tr>
             

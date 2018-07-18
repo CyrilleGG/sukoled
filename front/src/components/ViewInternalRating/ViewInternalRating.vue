@@ -8,48 +8,28 @@
       <div class="col-lg-10 mx-auto">
 
         <div class="row mb-5">
-          <h2 class="col-lg-12 pl-0 text-uppercase">Top 20</h2>
-          <h4 class="col-lg-7 pl-0">Indicators in €m - (source : GCM/ Credit reporting. Financial Department)</h4>
+          <h2 class="col-lg-12 pl-0 text-uppercase">Breakdown Internal Rating</h2>
+          <h4 class="col-lg-7 pl-0">Indicators internal rating</h4>
 
           <div class="w-100"></div>
           <div class="col-lg-12 mt-3 pt-1 divider"></div>
         </div>
         
         <div class="row">
-          <div class="col-lg-9 pl-0">
-            <view-top-20-list />
+          <div class="col-lg-7 pl-0">
+            <view-internal-rating-list />
           </div>
-          <div class="col-lg-3">
-            <view-comment class="border right-column"
-              v-for="(comment, index) in comments"
-              v-bind:key="index"
-              v-bind:title="comment.title"
-              v-bind:comment="comment.comment"
-            />
-
-
-
-            <div id="view-comment" class="row">
-              <div class="ml-4 mt-1 mr-4 mb-3 view-result-box">
-                <div id="view-comment-header" class="text-center">
-                  Result - corriger le rendu
-                </div>
-
-                <table class="table table-striped col-lg-2">
-                  <view-result
-                    v-for="(result, index) in results"
-                    v-bind:key="index"
-                    v-bind:date="result.date"
-                    v-bind:number="result.number"
-                  />
-                </table>
-
-              </div>
-            </div>
-
-
+          
+          <div class="col-lg-5">
+            <view-internal-rating-list-right />
 
           </div>
+        </div>
+
+        <div class="row graph-row">
+          <div class="col-lg-12 graph border">
+            <view-internal-rating-graph/>
+          </div>  
         </div>
 
       </div>
@@ -63,20 +43,20 @@
 import Header from '@/components/Header/Header'
 import HeaderView from '@/components/HeaderView/HeaderView'
 import Footer from '@/components/Footer/Footer'
-import ViewTop20List from '@/components/ViewTop20List/ViewTop20List'
-import ViewComment from '@/components/ViewComment/ViewComment'
-import ViewResult from '@/components/ViewResult/ViewResult'
+import ViewInternalRatingList from '@/components/ViewInternalRatingList/ViewInternalRatingList'
+import ViewInternalRatingListRight from '@/components/ViewInternalRatingListRight/ViewInternalRatingListRight'
+import ViewInternalRatingGraph from '@/components/ViewInternalRatingGraph/ViewInternalRatingGraph'
 
 export default {
-  name: 'Viewer',
+  name: 'ViewInternalRating',
 
   components: {
     Header,
     HeaderView,
     Footer,
-    ViewTop20List,
-    ViewComment,
-    ViewResult
+    ViewInternalRatingList,
+    ViewInternalRatingListRight,
+    ViewInternalRatingGraph
   },
 
   data () {
@@ -183,5 +163,13 @@ td {
     text-align:right
 }
 
+.graph-row {
+  margin-right:0;
+  margin-top:15px;
+}
+
+.graph{
+  background-color:#fff;
+}
 
 </style>

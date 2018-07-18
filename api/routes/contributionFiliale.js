@@ -43,8 +43,7 @@ module.exports = {
         })
             .then(function(response){
             // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-            console.log('SUCCESS')
-            res.json(null)
+            res.json('ok')
         })
         .catch(function(err) {
             console.log('ERREUR', err)

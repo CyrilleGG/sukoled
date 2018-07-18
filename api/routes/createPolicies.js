@@ -38,22 +38,36 @@ module.exports = {
         const departments = await modules.getDepartments();
         const users = await modules.getUsers();
 
+        const policies = await knex.select(
+            'policy.id AS policy_id',
+            'policy.user_id AS user_id',
+            'contribution.id AS contribution_id',
+            'contribution.name AS contribution_name',
+        )
+            .from('policies as policy')
+            .innerJoin('contributions as contribution', 'policy.contribution_id', 'contribution.id')
+        
         const data = {
-            departments,
-            users
+            users,
+            policies
         }
+
         res.status(200).json(data);
     },
 
     deletePolicies:async function(req, res) {
 
-        var contribution_id = req.params.contribution_id;
-        let user_id = req.params.user_id;
+        var policy_id = req.params.policy_id;
         knex('policies')
         .where({
-            'policies.contribution_id':contribution_id,
-            'policies.user_id':user_id
+            'policies.id':policy_id
         })
         .del()
+            .then(function (response) {
+                res.json('ok');
+            })
+            .catch(function (err) {
+                res.json(err)
+            })
     }
 }

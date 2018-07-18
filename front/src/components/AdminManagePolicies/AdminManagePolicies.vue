@@ -46,12 +46,12 @@
                 </div>
               </b-form>
 
-              <!-- <div class="col-lg-12 mb-3 pl-5">
-                <div class="d-inline-block mr-2 user">
-                  <p class="d-inline-block mb-0 px-2">username</p>
-                  <div class="d-inline-block pr-3 pl-2">X</div>
+              <div class="col-lg-12 mb-3 pl-5">
+                <div class="d-inline-block mr-2 user" v-for="(policy, index) in policies" :key="index" v-if="policy.contribution_id == selectedContribution">
+                  <p class="d-inline-block mb-0 px-2">{{ policy.user_id }}</p>
+                  <div class="d-inline-block pr-3 pl-2" v-on:click="removeUser (policy.policy_id)">X</div>
                 </div>
-              </div> -->
+              </div>
 
             </div>
 
@@ -87,7 +87,8 @@ export default {
       search: '',
       contributions: [],
       selectedContribution: null,
-      users: []
+      users: [],
+      policies: []
     }
   },
 
@@ -110,17 +111,16 @@ export default {
         }
       })
       .catch((error) => {
-        console.log('No contribs')
+        console.log(error)
       })
 
-      axios.get('http://localhost:3000/api/createPolicies')
+    axios.get('http://localhost:3000/api/createPolicies')
       .then((response) => {
-        for (var i = 0; i < response.data.users.length; i++) {
-          this.$data.users.push(response.data.users[i])
-        }
+        this.$data.users = response.data.users
+        this.$data.policies = response.data.policies
       })
       .catch((error) => {
-        console.log('No contribs')
+        console.log(error)
       })
   },
 
@@ -136,17 +136,40 @@ export default {
   },
 
   methods: {
-    addUser (username) {
+    addUser (user_id) {
       axios.post('http://localhost:3000/api/createPolicies', {
         contribution_id: this.$data.selectedContribution,
-        user_id: username
+        user_id: user_id
       })
         .then((response) => {
-          console.log('success')
+          axios.get('http://localhost:3000/api/createPolicies')
+            .then((response) => {
+              this.$data.users = response.data.users
+              this.$data.policies = response.data.policies
+            })
+            .catch((error) => {
+              console.log(error)
+            })
         }).catch((error) => {
           console.log(error)
         })
-    }
+    },
+
+    removeUser (policy_id) {
+      axios.delete('http://localhost:3000/api/createPolicies/'+ policy_id)
+        .then((response) => {
+          axios.get('http://localhost:3000/api/createPolicies')
+            .then((response) => {
+              this.$data.users = response.data.users
+              this.$data.policies = response.data.policies
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        }).catch((error) => {
+          console.log(error)
+        })
+    },
   }
 }
 </script>

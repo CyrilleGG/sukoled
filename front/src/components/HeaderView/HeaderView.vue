@@ -12,13 +12,13 @@
             <template slot="button-content">
               eeeeee
             </template>
-            <b-dropdown-item href="#" v-on:click="logout()">Log out</b-dropdown-item>
+            <b-dropdown-item href="#">Log out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
         <b-nav-item class="mx-3" :to="{ path: '../view/internal-rating' }" replace>Internal Rating</b-nav-item>
         <b-nav-item class="mx-3" :to="{ path: '../viewer' }" replace>Top 20</b-nav-item>
-        <b-nav-item class="mx-3" :to="{ path: '../view/breakdown' }" replace>Breakdown</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ path: '../view/economic-sector' }" replace>Economic sector</b-nav-item>
         <b-nav-item class="mx-3" href="#">Highlights</b-nav-item>
 
       </b-collapse>

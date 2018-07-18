@@ -39,13 +39,17 @@ export default {
   ],
 
   mounted () {
+    const role = this.$root.$data.userInfo.role
     const letter = this.$route.path[1]
-    if (letter == 'a') {
-      document.getElementById('admin').classList.add('active')
-    } else if (letter == 'c') {
-      document.getElementById('contributor').classList.add('active')
-    } else {
-      document.getElementById('viewer').classList.add('active')
+
+    if (role == 'admin') {
+      if (letter == 'a') {
+        document.getElementById('admin').classList.add('active')
+      } else if (letter == 'c') {
+        document.getElementById('contributor').classList.add('active')
+      } else {
+        document.getElementById('viewer').classList.add('active')
+      }
     }
   },
 

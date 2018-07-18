@@ -7,6 +7,7 @@ import CreateNewCampaign from '@/components/CreateNewCampaign/Createnewcampaign'
 import Login from '@/components/Login/Login'
 
 import Viewer from '@/components/Viewer/Viewer'
+import ViewInternalRating from '@/components/ViewInternalRating/ViewInternalRating'
 
 import Contributor from '@/components/Contributor/Contributor'
 import ContributorSendContribution from '@/components/ContributorSendContribution/ContributorSendContribution'
@@ -33,6 +34,10 @@ export default new Router({
       name: 'viewer',
       path: '/viewer',
       component: Viewer
+    }, {
+      name: 'view-internal-rating',
+      path: '/view/internal-rating',
+      component: ViewInternalRating
     }, {
       name: 'contributor',
       path: '/contributor',

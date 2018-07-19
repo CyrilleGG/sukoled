@@ -5,9 +5,9 @@
         <td v-else-if="evolution < 0" scope="row" class="text-danger text-center text-uppercase"> {{ evolution }} </td>
         <td v-else scope="row" class="text-dark text-center text-uppercase equal"> = </td>
         <td class="text-uppercase">{{ counterparty }}</td>
-        <td>{{ date_2 }}</td>
-        <td>{{ date_1 }}</td>
-        <td>{{ limit }}</td>
+        <td class="text-center">{{ date_2 }}</td>
+        <td class="text-center">{{ date_1 }}</td>
+        <td class="text-center">{{ limit }}</td>
         <td v-if="internal_rating == 'A+' || internal_rating == 'AA+' || internal_rating == 'AAA+' || internal_rating == 'A' || internal_rating == 'AA' || internal_rating == 'AAA' || internal_rating == 'A-' || internal_rating == 'AA-' || internal_rating == 'AAA-'" class="text-center">
             <div class="box-rating box-rating-green">{{ internal_rating }}</div>
         </td>

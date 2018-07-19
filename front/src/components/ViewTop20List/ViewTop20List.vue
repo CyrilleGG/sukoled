@@ -13,8 +13,8 @@
                         v-bind:key="index"
                         v-bind:date="date.date"
                     />
-                    <th scope="col" class="text-uppercase">Limit</th>
-                    <th scope="col" class="text-center text-uppercase">Internal Rating</th>
+                    <th scope="col" class="text-uppercase text-center">Limit</th>
+                    <th scope="col" class="text-uppercase text-center">Internal Rating</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,7 +79,7 @@ export default {
                     counterparty: "Axa S.A",
                     date_2: "1 808",
                     date_1: "1 228",
-                    limit: "2 631",
+                    limit: "2",
                     internal_rating: "AA-"
                 },
                 {

@@ -32,7 +32,7 @@
             <div id="view-comment" class="row">
               <div class="ml-4 mt-1 mr-4 mb-3 view-result-box">
                 <div id="view-comment-header" class="text-center">
-                  Result - corriger le rendu
+                  Result
                 </div>
 
                 <table class="table table-striped col-lg-2">

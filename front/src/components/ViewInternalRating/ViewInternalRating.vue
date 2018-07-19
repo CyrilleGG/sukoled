@@ -61,30 +61,7 @@ export default {
 
   data () {
     return {
-      comments: [
-        {
-            title:"Comments",
-            comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
-        }
-      ],
-      results: [
-        {
-          date:"2018-03-01 00:00:00",
-          number:"20 931"
-        },
-        {
-          date:"2018-02-01 00:00:00",
-          number:"20 934"
-        }
-        ,{
-          date:"2017-12-01 00:00:00",
-          number:"20 937"
-        }
-        ,{
-          date:"2016-12-01 00:00:00",
-          number:"20 1000"
-        }
-      ]
+      // c
     }
   },
 

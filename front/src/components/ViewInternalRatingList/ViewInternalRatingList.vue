@@ -7,11 +7,13 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-center text-uppercase">Basel segment</th>
-                    <view-top-20-list-header-item
+                    <th
                         v-for="(date, index) in dates"
                         v-bind:key="index"
                         v-bind:date="date.date"
-                    />
+                    >
+                        <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }}</div>
+                    </th>
                     <th scope="col" class="text-center text-uppercase">Evolution</th>
                 </tr>
             </thead>
@@ -44,9 +46,9 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import ViewInternalRatingListItem from '@/components/ViewInternalRatingListItem/ViewInternalRatingListItem'
-import ViewTop20ListHeaderItem from '@/components/ViewTop20ListHeaderItem/ViewTop20ListHeaderItem'
 import ViewInternalRatingListBottomItem from '@/components/ViewInternalRatingListBottomItem/ViewInternalRatingListBottomItem'
 
 export default {
@@ -54,7 +56,6 @@ export default {
 
     components: {
         ViewInternalRatingListItem,
-        ViewTop20ListHeaderItem,
         ViewInternalRatingListBottomItem
     },
 
@@ -107,6 +108,12 @@ export default {
                     evolutions:"-"
                 }
             ]
+        }
+    },
+
+    methods: {
+        moment (date) {
+            return moment(date).format('MMMM-YY')
         }
     }
 }

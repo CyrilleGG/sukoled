@@ -84,11 +84,16 @@
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
 
-              <div id="additional-files-input">
-                <label id="additional-files-label" class="text-uppercase" for="excel">
-                  <span class="d-inline-block mr-3 rounded-circle text-center align-middle font-weight-light">+</span> Add elements
+              <div class="col-lg-12 my-2" v-for="(file, index) in inputs.additionalFiles" v-if="inputs.additionalFiles !== []" :key="index">
+                <img src="@/assets/icons/file.png" class="d-inline-block" width="35px" alt="Additional file">
+                <p class="d-inline-block ml-3">{{ file.name }}</p>
+              </div>
+
+              <div id="additional-files-input" class="col-lg-12 my-2">
+                <label id="additional-files-label" class="text-uppercase" for="additional-files">
+                  <span class="d-inline-block mr-3 rounded-circle text-center align-middle font-weight-light">+</span> Add an element
                 </label>
-                <input id="additional-files" ref="additionalFiles" class="d-none" v-on:change="uploadFile ()" type="file" name="additional-files">
+                <input id="additional-files" class="d-none" ref="additionalFilesInput" v-on:change="uploadFile ()" type="file" name="additional-files">
                 <!-- <p id="highlights" class="col-lg-12" v-model="inputs.additionalFiles" placeholder="Write your highlights..." :rows="4" name="highlights"></p> -->
               </div>
 
@@ -127,6 +132,7 @@ export default {
         json: null,
         comment_contributor: '',
         highlight: '',
+        additionalFiles: [],
         version_id: this.$route.query.version_id,
         user_id: this.$root.$data.userInfo.user_id,
         contribution_id: this.$route.query.contribution_id,
@@ -152,7 +158,7 @@ export default {
     },
 
     uploadFile () {
-      this.$data.inputs.additionalFiles.push(this.$refs.additionalFiles.files[0])
+      this.$data.inputs.additionalFiles.push(this.$refs.additionalFilesInput.files[0])
     },
 
    submit () {

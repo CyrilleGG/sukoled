@@ -4,7 +4,7 @@
     <Header :role="this.$root.$data.userInfo.role" />
     <header-view/>
 
-    <div class="row py-5 page-content">
+    <div class="row page-content basel-padding">
         <div class="col-lg-10 mx-auto">
 
             <div class="row mb-5">
@@ -21,11 +21,13 @@
                         <thead>
                             <tr>
                                 <th/>
-                                <view-top-20-list-header-item
+                                <th
                                     v-for="(date, index) in dates"
                                     v-bind:key="index"
                                     v-bind:date="date.date"
-                                class = "text-center text-uppercase"/>
+                                >
+                                    <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }}</div>
+                                </th>
                             </tr>
                             <tr>
                                 <th scope="col" class="basel-border"> Basel segment </th>
@@ -80,17 +82,28 @@
             </div>
         </div>
     </div>
+
+    <div class="row graph-row basel-bg-white basel-margin graph">
+        <div class="col-lg-12 border">
+            <view-basel-segment-graph/>
+        </div>  
+    </div>
+
     <Footer />
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import moment from 'moment'
+
 import Header from '@/components/Header/Header'
 import HeaderView from '@/components/HeaderView/HeaderView'
 import Footer from '@/components/Footer/Footer'
-import ViewTop20ListHeaderItem from '@/components/ViewTop20ListHeaderItem/ViewTop20ListHeaderItem'
 import ViewBaselSegmentList from '@/components/ViewBaselSegmentList/ViewBaselSegmentList'
 import ViewComment from '@/components/ViewComment/ViewComment'
+import ViewBaselSegmentGraph from '@/components/ViewBaselSegmentGraph/ViewBaselSegmentGraph'
 
 export default {
   name: 'ViewBaselSegment',
@@ -99,9 +112,9 @@ export default {
     Header,
     HeaderView,
     Footer,
-    ViewTop20ListHeaderItem,
     ViewBaselSegmentList,
     ViewComment,
+    ViewBaselSegmentGraph
   },
 
   data () {
@@ -117,7 +130,7 @@ export default {
                 date:"2017-12-01 00:00:00"
             },
             {
-                date:"2017-9-01 00:00:00"
+                date:"2017-09-01 00:00:00"
             }
         ],
         basel_segment: [
@@ -218,6 +231,12 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'contrib') {
       this.$router.replace({ name: 'contributor' })
     }
+  },
+
+  methods: {
+    moment (date) {
+      return moment(date).format('MMMM-YY')
+    }
   }
 }
 </script>
@@ -226,7 +245,7 @@ export default {
 
 #Viewer .page-content {
   margin-top: 98px;
-  min-height: 85vh;
+  /* min-height: 85vh; */
 }
 
 #Viewer .page-content h2 {
@@ -305,6 +324,18 @@ td {
 td.basel-border>div>div{
     text-align:center;
     width:50%;
+}
+
+.basel-bg-white{
+    background-color:white;
+}
+
+.basel-margin{
+    margin-bottom:15px !important
+}
+
+.graph{
+    margin:15px;
 }
 
 </style>

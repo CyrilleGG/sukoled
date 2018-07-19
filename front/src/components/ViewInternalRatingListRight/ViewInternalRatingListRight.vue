@@ -7,11 +7,13 @@
             <thead>
                 <tr>
                     <th/>
-                    <view-top-20-list-header-item
+                    <th
                         v-for="(date, index) in dates"
                         v-bind:key="index"
                         v-bind:date="date.date"
-                    />
+                    >
+                        <div scope="col" class="text-uppercase"> {{ moment(date.date) }}</div>
+                    </th>
                     <th/>
                 </tr>
                 <tr>
@@ -45,9 +47,9 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import ViewInternalRatingListRightItem from '@/components/ViewInternalRatingListRightItem/ViewInternalRatingListRightItem'
-import ViewTop20ListHeaderItem from '@/components/ViewTop20ListHeaderItem/ViewTop20ListHeaderItem'
 import ViewInternalRatingListRightBottomItem from '@/components/ViewInternalRatingListRightBottomItem/ViewInternalRatingListRightBottomItem'
 
 export default {
@@ -55,7 +57,6 @@ export default {
 
     components: {
         ViewInternalRatingListRightItem,
-        ViewTop20ListHeaderItem,
         ViewInternalRatingListRightBottomItem
     },
 
@@ -92,6 +93,12 @@ export default {
                     result_1:"BBB",
                 }
             ]
+        }
+    },
+
+    methods: {
+        moment (date) {
+            return moment(date).format('MMMM-YY')
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
 
-        <th scope="col" class="text-uppercase">{{ moment (date) }}</th>
+  <th scope="col" class="text-uppercase text-center">{{ moment (date) }}</th>
                         
 </template>
 

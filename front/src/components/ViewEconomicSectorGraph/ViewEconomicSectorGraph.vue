@@ -45,7 +45,8 @@ export default {
                         categoryPercentage: 0.5,
                         barPercentage: 0.8,
                         gridLines: {
-                            offsetGridLines: true
+                            offsetGridLines: true,
+                            display:false
                         },
                         // barThickness:7,
                         stacked:false

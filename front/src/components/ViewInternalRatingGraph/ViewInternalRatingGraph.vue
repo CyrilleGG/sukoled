@@ -37,7 +37,8 @@ export default {
                 scales: {
                     xAxes: [{
                         gridLines: {
-                            offsetGridLines: true
+                            offsetGridLines: true,
+                            display:false
                         }
                     }]
                 },

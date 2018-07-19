@@ -15,9 +15,9 @@
                     <th/>
                 </tr>
                 <tr>
-                    <th scope="col">Internal rating</th>
-                    <th scope="col">Specialized Lending</th>
-                    <th scope="col">Corporates</th>
+                    <th scope="col" class="text-center">Internal rating</th>
+                    <th scope="col" class="text-center">Specialized Lending</th>
+                    <th scope="col" class="text-center">Corporates</th>
                 </tr>
             </thead>
             <tbody>

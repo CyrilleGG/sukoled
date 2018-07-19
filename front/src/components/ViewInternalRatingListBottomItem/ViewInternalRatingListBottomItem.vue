@@ -3,9 +3,9 @@
     <tr class="view-list-item">
 
         <td>{{ name }}</td>
-        <td>{{ result_3 }}</td>
-        <td>{{ result_2 }}</td>
-        <td>{{ result_1 }}</td>
+        <td class="text-center">{{ result_3 }}</td>
+        <td class="text-center">{{ result_2 }}</td>
+        <td class="text-center">{{ result_1 }}</td>
         <td v-if="evolutions == '+'" class="text-center">
             <div class="arrow-up">&rarr;</div>
         </td>

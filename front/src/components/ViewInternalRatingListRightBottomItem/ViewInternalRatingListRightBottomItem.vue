@@ -3,8 +3,8 @@
     <tr class="view-list-item">
 
         <td>{{ title }}</td>
-        <td>{{ result_2 }}</td>
-        <td>{{ result_1 }}</td>
+        <td class="text-center">{{ result_2 }}</td>
+        <td class="text-center">{{ result_1 }}</td>
 
     </tr> 
 

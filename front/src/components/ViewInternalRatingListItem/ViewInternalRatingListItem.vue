@@ -1,10 +1,10 @@
 <template>
 
     <tr class="view-list-item">
-        <td> {{ title }} </td>
-        <td>{{ date_3 }}</td>
-        <td>{{ date_2 }}</td>
-        <td>{{ date_1 }}</td>
+        <td>{{ title }}</td>
+        <td class="text-center">{{ date_3 }}</td>
+        <td class="text-center">{{ date_2 }}</td>
+        <td class="text-center">{{ date_1 }}</td>
         <td v-if="evolution == '+'" class="text-center">
             <div class="arrow-up">&rarr;</div>
         </td>

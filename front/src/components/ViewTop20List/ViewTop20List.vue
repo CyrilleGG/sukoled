@@ -64,63 +64,11 @@ export default {
         ViewTop20ListBottomItem
     },
 
-    data() {
-        return {
-            top20s: [
-                {
-                    evolution: "0",
-                    counterparty: "Groupe Arnault",
-                    date_2: "3 201",
-                    date_1: "3 253",
-                    limit: "3 598",
-                    internal_rating: "A-"
-                },
-                {
-                    evolution: "+1",
-                    counterparty: "Axa S.A",
-                    date_2: "1 808",
-                    date_1: "1 228",
-                    limit: "2",
-                    internal_rating: "AA-"
-                },
-                {
-                    evolution: "-1",
-                    counterparty: "Total SA",
-                    date_2: "1 563",
-                    date_1: "1 228",
-                    limit: "2 689",
-                    internal_rating: "AA-"
-                },
-                {
-                    evolution: "0",
-                    counterparty: "Trafigura",
-                    date_2: "1 494",
-                    date_1: "1 525",
-                    limit: "1 768",
-                    internal_rating: "BBB-"
-                }
-            ],
-            dates: [
-                {
-                    date:"2018-03-01 00:00:00"
-                },
-                {
-                    date:"2018-02-01 00:00:00"
-                }
-            ],
-            total: [
-                {
-                    result:"222"
-                },
-                {
-                    result:"333"
-                },
-                {
-                    result:"444"
-                }
-            ]
-        }
-    },
+    props: [
+        'dates',
+        'top20s',
+        'total'
+    ],
 
   methods: {
     moment (date) {

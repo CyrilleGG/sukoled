@@ -17,11 +17,23 @@
         
         <div class="row">
           <div class="col-lg-7 pl-0">
-            <view-internal-rating-list />
+            <view-internal-rating-list 
+              v-for="(internal, index) in internal_rating"
+              v-bind:key="index"
+              v-bind:ratings="internal.ratings"
+              v-bind:dates="internal.dates"
+              v-bind:total="internal.total"
+            />
           </div>
           
           <div class="col-lg-5">
-            <view-internal-rating-list-right />
+            <view-internal-rating-list-right 
+              v-for="(internal, index) in internal_rating_right"
+              v-bind:key="index"
+              v-bind:ratings="internal.ratings"
+              v-bind:dates="internal.dates"
+              v-bind:total="internal.total"
+            />
 
           </div>
         </div>
@@ -61,7 +73,92 @@ export default {
 
   data () {
     return {
-      // c
+        internal_rating: [
+          {
+            ratings: [
+              {
+                title: "AAA/AA+/AA-",
+                date_3: "21.0%",
+                date_2: "35.1%",
+                date_1: "26.2%",
+                evolution: "-"
+              }, {
+                title: "A+/A/A-",
+                date_3: "26.1%",
+                date_2: "20.5%",
+                date_1: "22.4%",
+                evolution: "+"
+              }, {
+                title: "BBB+/BB/BB-",
+                date_3: "25.5%",
+                date_2: "21.3%",
+                date_1: "24.7%",
+                evolution: "="
+              },
+            ],
+            dates: [
+                {
+                  date:"2018-03-01 00:00:00"
+                },
+                {
+                  date:"2018-02-01 00:00:00"
+                },
+                {
+                  date:"2017-12-01 00:00:00"
+                }
+            ],
+            total: [
+              {
+                name:"Total",
+                result_3:"100%",
+                result_2:"100%",
+                result_1:"100%",
+                evolutions:"+"
+              }, {
+                name:"Weighted average",
+                result_3:"BBB+",
+                result_2:"A-",
+                result_1:"BBB+",
+                evolutions:"-"
+              }
+            ]
+        }
+      ],
+      internal_rating_right: [
+        {
+          ratings: [
+            {
+              title: "AAA/AA+/AA-",
+              date_2: "21.0%",
+              date_1: "35.1%"
+            }, {
+              title: "A+/A/A-",
+              date_2: "20.5%",
+              date_1: "22.4%"
+            }, {
+              title: "BBB+/BB/BB-",
+              date_2: "21.3%",
+              date_1: "24.7%"
+            },
+          ],
+          dates: [
+              {
+                date:"2018-03-01 00:00:00"
+              }
+          ],
+          total: [
+            {
+              title:"Total",
+              result_2:"100%",
+              result_1:"100%",
+            }, {
+              title:"Weighted average",
+              result_2:"BB+",
+              result_1:"BBB",
+            }
+          ]
+        }
+      ]
     }
   },
 

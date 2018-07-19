@@ -60,39 +60,15 @@ export default {
         ViewInternalRatingListRightBottomItem
     },
 
+    props: [
+        'dates',
+        'ratings',
+        'total'
+    ],
+
     data() {
         return {
-            ratings: [
-                {
-                    title: "AAA/AA+/AA-",
-                    date_2: "21.0%",
-                    date_1: "35.1%"
-                }, {
-                    title: "A+/A/A-",
-                    date_2: "20.5%",
-                    date_1: "22.4%"
-                }, {
-                    title: "BBB+/BB/BB-",
-                    date_2: "21.3%",
-                    date_1: "24.7%"
-                },
-            ],
-            dates: [
-                {
-                    date:"2018-03-01 00:00:00"
-                }
-            ],
-            total: [
-                {
-                    title:"Total",
-                    result_2:"100%",
-                    result_1:"100%",
-                }, {
-                    title:"Weighted average",
-                    result_2:"BB+",
-                    result_1:"BBB",
-                }
-            ]
+            // c
         }
     },
 

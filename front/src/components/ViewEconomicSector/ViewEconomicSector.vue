@@ -16,7 +16,12 @@
 
         <div class="row graph-row">
           <div class="col-lg-12 graph border">
-            <view-economic-sector-graph/>
+            <view-economic-sector-graph
+              v-for="(graph, index) in economic_graph"
+              v-bind:key="index"
+              v-bind:data="graph.data"
+              v-bind:options="graph.options"
+            />
           </div>  
         </div>
 
@@ -58,12 +63,65 @@ export default {
 
     data () {
         return {
-            comments: [
-                {
-                    title:"Comments",
-                    comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
-                }
-            ]
+          comments: [
+              {
+                  title:"Comments",
+                  comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
+              }
+          ],
+          economic_graph: [
+            {
+              data: {
+                labels: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-', 'BBB', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-', 'CCC', 'CC+', 'CC', 'CC-', 'C+', 'C', 'C-', 'Default'],
+                boxWidth:2,
+                datasets: [
+                  {
+                      label: 'March-18',
+                      backgroundColor: '#f87979',
+                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                  },
+                  {
+                      label: 'February-18',
+                      backgroundColor:'orange',
+                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                  },
+                  {
+                      label: 'December-17',
+                      backgroundColor:'lightgreen',
+                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                  }
+                ]
+              },
+              options :{
+                title: {
+                  display:true,
+                  text: 'Distribution of grades',
+                  fontSize:'15'
+                },
+                scales: {
+                  xAxes: [{
+                    gridLines: {
+                      offsetGridLines: true
+                    },
+                    stacked:false
+                  }],
+                  yAxes: [{
+                    categoryPercentage: 0.5,
+                    barPercentage: 0.8,
+                    gridLines: {
+                      offsetGridLines: true,
+                      display:false
+                    },
+                    // barThickness:7,
+                    stacked:false
+                  }]
+                },
+                cornerRadius:20,
+                responsive: true,
+                maintainAspectRatio: true,
+              },
+            }
+          ]
         }
     },
 

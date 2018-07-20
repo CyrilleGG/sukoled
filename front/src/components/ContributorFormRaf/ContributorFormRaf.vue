@@ -7,7 +7,8 @@
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">1</span>
 
-          <h3 class="col-lg-12 mb-5 pl-5">Share your contribution</h3>
+          <h3 class="col-lg-12 mb-0 pl-5">Enter your RAF contribution</h3>
+          <p class="col-lg-12 mb-5 pl-5 font-italic">{{ data.contribution[0].name }}</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
@@ -15,7 +16,7 @@
               <div v-for="(input, index) in data.inputs" v-bind:key="index" v-if="input.input_type !== 'textarea'" class="col-lg-12 pl-0">
                 <label :for="input.input_slug">{{ input.input_name }}</label>
                 <b-form-input :id="input.input_slug" class="d-inline-block w-25 ml-2" v-model="inputs.contribution_values.input_value" :type="input.input_type" :name="input.input_slug" autocomplete="off"></b-form-input>
-                <p class="d-inline-block ml-3">in million</p>
+                <p class="d-inline-block ml-3">in millions</p>
               </div>
 
             </div>
@@ -24,17 +25,17 @@
 
 
 
-        <b-form-group class="row mb-5 rounded py-4 pl-5 pr-5 content">
+        <b-form-group class="row mb-3 rounded py-4 pl-5 pr-5 content">
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Write your comments</h3>
-          <p class="col-lg-12 mb-5 pl-5">Write down your comments and annotations, regarding your contribution</p>
+          <h3 class="col-lg-12 mb-2 pl-5">Write your remarks</h3>
+          <p class="col-lg-12 mb-5 pl-5">Enter your comments and annotations</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write your comments..." :rows="8" :no-resize="true" name="comments"></b-form-textarea>
+              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write here..." :rows="8" :no-resize="true" name="comments"></b-form-textarea>
 
             </div>
           </div>

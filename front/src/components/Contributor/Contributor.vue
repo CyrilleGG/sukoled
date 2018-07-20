@@ -8,8 +8,8 @@
 
         <div class="row mb-5">
           <h2 class="col-lg-12 text-center">Hi! Welcome back to the Hestia</h2>
-          <p v-if="numOfAlerts > 1" id="sub-title" class="col-lg-12 text-center">{{ numOfAlerts }} elements require your attention. Please, check the details.</p>
-          <p v-else id="sub-title" class="col-lg-12 text-center">{{ numOfAlerts }} element requires your attention. Please, check the details.</p>
+          <p v-if="numOfAlerts > 1" id="sub-title" class="col-lg-12 text-center">{{ numOfAlerts }} elements require your attention. Do not hesitate to check the details.</p>
+          <p v-else id="sub-title" class="col-lg-12 text-center">{{ numOfAlerts }} element requires your attention. Do not hesitate to check the details.</p>
         </div>
 
         <div class="row mb-5">
@@ -18,14 +18,15 @@
 
         <div class="row mb-5">
           <h2 class="col-lg-12 pl-0 text-uppercase">History</h2>
-          <h4 class="col-lg-7 pl-0">You can consult your old contributions here</h4>
+          <h4 class="col-lg-7 pl-0">You can consult your latest contributions sent</h4>
 
           <div class="w-100"></div>
           <div class="col-lg-12 mt-3 pt-1 divider"></div>
         </div>
 
         <div class="row">
-          <contributor-contributions-list v-bind:contributions="contributions.done" />
+          <contributor-contributions-list v-if="contributions.done.length > 0" v-bind:contributions="contributions.done" />
+          <p class="col-lg-12">You have no history.</p>
         </div>
 
       </div>
@@ -72,11 +73,11 @@ export default {
 
     axios.get('http://localhost:3000/api/contributor/'+ this.$root.$data.userInfo.username)
       .then((response) => {
-        for (var i = 0; i < response.data.waiting.length; i++) {
-          this.$data.contributions.waiting = response.data.waiting
+        for (var i = 0; i < response.data.data.waiting.length; i++) {
+          this.$data.contributions.waiting = response.data.data.waiting
         }
-        for (var i = 0; i < response.data.done.length; i++) {
-          this.$data.contributions.done = response.data.done
+        for (var i = 0; i < response.data.data.done.length; i++) {
+          this.$data.contributions.done = response.data.data.done
         }
       })
 

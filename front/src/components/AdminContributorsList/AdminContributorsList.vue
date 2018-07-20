@@ -18,7 +18,7 @@
           <p class="col-lg-1 my-auto text-uppercase">Type</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Order</p>
           <p class="col-lg-2 my-auto text-uppercase">Name</p>
-          <p class="col-lg-2 my-auto text-center text-uppercase">Last request</p>
+          <p class="col-lg-2 my-auto text-center text-uppercase">Deadline</p>
           <p class="col-lg-2 my-auto text-center text-uppercase">Last iteration</p>
           <p class="col-lg-1 my-auto text-center text-uppercase">Status</p>
           <p class="col-lg-2 my-auto text-right text-uppercase">Action</p>
@@ -35,7 +35,7 @@
             v-bind:department_slug="contribution.department_slug"
             v-bind:order="contribution.contribution_order"
             v-bind:name="contribution.contribution_name"
-            v-bind:starts_at="contribution.version_starts_at"
+            v-bind:ends_at="contribution.version_ends_at"
             v-bind:modified_at="contribution.version_created_at"
             v-bind:status_admin="contribution.version_status_admin"
             v-bind:contribution_id="contribution.contribution_id"

@@ -1,5 +1,5 @@
 <template>
-      <div id="preview-raf" class="col-lg-8  my-auto mx-auto">
+      <div id="preview-raf" class="col-lg-7  my-auto mx-auto">
 
 
 
@@ -15,8 +15,7 @@
               <table class="col-lg-11 d-block mb-3 rounded">
                 <tr class="row">
 
-                  <th class="col-lg-4 py-3 pl-3">Name</th>
-                  <th class="col-lg-2 py-3 text-center">{{ lastMonth () }}</th>
+                  <th class="col-lg-6 py-3 pl-3">Name</th>
                   <th class="col-lg-2 py-3 text-center">{{ month () }}</th>
                   <th class="col-lg-2 py-3 text-center">Limit</th>
                   <th class="col-lg-2 py-3 text-center">Threshold</th>
@@ -24,8 +23,7 @@
                 </tr>
                 <tr class="row">
 
-                  <td class="col-lg-4 py-3 pl-3">{{ inputs.contribution_values.input_name }}</td>
-                  <td class="col-lg-2 py-3 text-center">xx-1</td>
+                  <td class="col-lg-6 py-3 pl-3">{{ inputs.contribution_values.input_name }}</td>
                   <td class="col-lg-2 py-3 text-center new">{{ inputs.contribution_values.input_value }}</td>
                   <td class="col-lg-2 py-3 text-center">{{ inputs.contribution_limit }}</td>
                   <td class="col-lg-2 py-3 text-center">{{ inputs.contribution_threshold }}</td>
@@ -39,17 +37,17 @@
 
 
 
-        <div class="row mb-5 rounded py-4 pl-5 pr-5 content">
+        <div class="row mb-3 rounded py-4 pl-5 pr-5 content">
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
-          <h3 class="col-lg-12 mb-5 pl-5">Preview your comments</h3>
+          <h3 class="col-lg-12 mb-5 pl-5">Preview of your remarks</h3>
           <p class="col-lg-12 mb-3 pl-5">{{ inputs.comment_contributor }}</p>
         </div>
 
 
         <div id="actions" class="row">
-          <b-button class="purple" :to="{ path: './', query: { contribution_id: inputs.contribution_id, version_id: inputs.version_id } }" size="md">Back</b-button>
-          <b-button class="ml-auto green"  v-on:click="sendContribution ()" size="md">Confirm</b-button>
+          <b-button class="ml-auto mr-2 purple" :to="{ path: './', query: { contribution_id: inputs.contribution_id, version_id: inputs.version_id } }" size="md">Edit</b-button>
+          <b-button class="green"  v-on:click="sendContribution ()" size="md">Confirm</b-button>
         </div>
 
       </div>

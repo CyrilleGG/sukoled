@@ -52,6 +52,18 @@ module.exports.getContributionValuesById = async function (valueId) {
         });
 }
 
+module.exports.getFilesByVersionId = async function (versionId) {
+    return knex('files')
+        .select('id as file_id', 'name', 'binary')
+        .where({ 'version_id': versionId })
+        .then((result) => {
+            return result
+        })
+        .catch((err) => {
+            return []
+        });
+}
+
 // Envoie des versions liés à la contribution
 module.exports.getVersionWContributionId = async function(contributionId){
     return knex('versions')

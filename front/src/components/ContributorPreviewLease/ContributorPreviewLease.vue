@@ -15,16 +15,14 @@
               <table class="col-lg-11 d-block mb-3 rounded">
                 <tr class="row">
 
-                  <th class="col-lg-6 py-3 pl-5">Name</th>
-                  <th class="col-lg-3 py-3 text-center">{{ lastMonth () }}</th>
-                  <th class="col-lg-3 py-3 text-center">{{ month () }}</th>
+                  <th class="col-lg-8 py-3 pl-5">Name</th>
+                  <th class="col-lg-4 py-3 text-center">{{ month () }}</th>
 
                 </tr>
                 <tr v-for="(value, key, index) in json" class="row" :key="index">
 
-                  <td class="col-lg-6 py-3 pl-5"> {{ key }} </td>
-                  <td class="col-lg-3 py-3 text-center">€ 7,2 m</td>
-                  <td class="col-lg-3 py-3 text-center last">{{ value }}</td>
+                  <td class="col-lg-8 py-3 pl-5"> {{ key }} </td>
+                  <td class="col-lg-4 py-3 text-center last">{{ value }}</td>
 
                 </tr>
               </table>
@@ -39,7 +37,8 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your comments</h3>
-          <p class="col-lg-12 mb-3 pl-5">{{ inputs.comment_contributor }}</p>
+          <p v-if="inputs.comment_contributor !== '' || null" class="col-lg-12 mb-3 pl-5">{{ inputs.comment_contributor }}</p>
+          <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't write any comment for this contribution</p>
         </div>
 
 
@@ -48,21 +47,31 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your highlights</h3>
-          <p class="col-lg-12 mb-3 pl-5">{{ inputs.highlight }}</p>
+          <p v-if="inputs.highlight !== '' || null" class="col-lg-12 mb-3 pl-5">{{ inputs.highlight }}</p>
+          <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't write any highlight for this contribution</p>
         </div>
 
 
 
-        <div class="row mb-5 rounded py-4 pl-5 pr-5 content">
+        <div id="additional-elements" class="row mb-5 rounded py-4 pl-5 pr-5 content">
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">4</span>
 
-          <h3 class="col-lg-12 mb-5 pl-5">Preview your additional elements</h3>
-          <!-- <p class="col-lg-12 mb-3 pl-5">{{additionalFiles}}</p> -->
+          <h3 class="col-lg-12 mb-5 pl-5">Preview of other elements</h3>
+          <div class="col-lg-12 my-2" v-if="inputs.additionalFiles.length > 0">
+            <div v-for="(file, index) in inputs.additionalFiles" class="mb-2" :key="index">
+              <img v-if="file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml'" :id="index" :alt="file.name">
+              <div v-else>
+                <img src="@/assets/icons/file.png" class="d-inline-block icon" height="35px" alt="Additional file">
+                <p class="d-inline-block ml-3">{{ file.name }}</p>
+              </div>
+            </div>
+          </div>
+          <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't upload any additional element for this contribution</p>
         </div>
 
 
         <div id="actions" class="row">
-          <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
+          <b-button class="purple" :to="{ path: './', query: { contribution_id: inputs.contribution_id, version_id: inputs.version_id } }" replace size="md">Back</b-button>
           <b-button class="ml-auto green" size="md" v-on:click.prevent='sendContribution()'>Confirm</b-button>
         </div>
 
@@ -87,12 +96,17 @@ export default {
 
   data () {
     return {
-      json: null
+      json: null,
+      files: null,
     }
   },
 
   created() {
     this.$data.json = JSON.parse(this.$props.inputs.json)
+  },
+
+  mounted() {
+    this.readFiles ()
   },
 
   methods: {
@@ -103,28 +117,79 @@ export default {
     lastMonth () {
       return moment().subtract(2, 'months').format('MMMM')
     },
+
+    readFiles () {
+      const files = this.$props.inputs.additionalFiles
+
+      files.forEach((file, i) => {
+        var output = document.getElementById(i)
+        var reader = new FileReader()
+
+        reader.addEventListener('load', function() {
+          output.src = reader.result
+        }, false)
+
+        reader.readAsDataURL(file)
+      })
+    },
+
+    readmultifiles(arrayOfFiles) {
+      var files = []
+      var reader = new FileReader();  
+      function readFile(index) {
+        if (index >= arrayOfFiles.length) return;
+        var file = arrayOfFiles[index];
+        reader.onload = function(e) {
+          // get file content
+          var bin = e.target.result;
+          // do sth with bin
+          files.push(bin)
+          readFile(index+1)
+        }
+        reader.readAsBinaryString(file);
+      }
+      readFile(0);
+      this.$data.files = files
+    },
     
     sendContribution () {
-
       const version_id = this.$props.inputs.version_id
-      const self = this
+      const self = this;
+      var files = [];
+      
+      files.push(self.$props.inputs.excel);
+      self.$props.inputs.additionalFiles.forEach(file => {
+        files.push(file);
+      })
 
-      var blob = new Blob([self.$props.inputs.excel], {
+      var blob = new Blob([files], {
         type : 'text/plain'
       });
 
-      const reader = new FileReader();
+      this.readmultifiles(files)
 
-      // This fires after the blob has been read/loaded.
-      reader.addEventListener('loadend', (e) => {
+      let additionalFilesNames = ''
+        self.$props.inputs.additionalFiles.forEach(file => {
+          if (additionalFilesNames == '') {
+            additionalFilesNames = file.name
+          } else {
+            additionalFilesNames = additionalFilesNames + ',' + file.name
+          }
+        })
+
+      setTimeout(() => {
+        // This fires after the blob has been read/loaded.
         let data = new FormData();
-        data.append('file_binary', e.srcElement.result);
         data.append('file_csv', self.$props.inputs.csv);
         data.append('file_json', self.$props.inputs.json);
         data.append('comment_contributor', self.$props.inputs.comment_contributor);
         data.append('highlight', self.$props.inputs.highlight);
         data.append('contribution_id', self.$props.inputs.contribution_id);
         data.append('user_id', self.$root.$data.userInfo.user_id);
+        this.$data.files.forEach((file, i) => {
+          data.append('file_' + i, file)
+        });
+        data.append('files_names', additionalFilesNames);
 
         // Envoyer les valeurs des inputs au back
         if (self.$props.inputs.excel !== null) {
@@ -146,10 +211,10 @@ export default {
         } else {
           console.log('Please, complete every step')
         }
-      });
+      }, 100)
 
       // Start reading the blob as text.
-      reader.readAsText(blob);
+      // reader.readAsText(blob);
     }
   }
 }
@@ -186,6 +251,15 @@ export default {
 
 #preview-lease table .last {
   background-color: rgba(126,68,170, 0.2);
+}
+
+#preview-lease #additional-elements img {
+  height: 200px;
+}
+
+#preview-lease #additional-elements .icon {
+  width: 35px;
+  height: 35px;
 }
 
 #preview-lease .purple {

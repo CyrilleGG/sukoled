@@ -17,9 +17,29 @@ module.exports = {
         const modules = require('./modules')
         const version = await modules.getVersionById(version_id);
         const user_id = req.body.user_id;
-        const comment_contributor = req.body.comment_contributor
-        const contribution_id = req.body.contribution_id
-        const highlight = req.body.highlight
+        const comment_contributor = req.body.comment_contributor;
+        const contribution_id = req.body.contribution_id;
+        const highlight = req.body.highlight;
+        const files = [];
+        const regex = /(file_[1-9])/
+        for (var key in req.body) {
+            if (regex.test(key)) {
+                let id = uuidv4();
+                files.push({
+                    id: id,
+                    binary: req.body[key],
+                    version_id: new_version_id,
+                    contribution_id: contribution_id,
+                    user_id: user_id
+                })
+            }
+        }
+        if (req.body.files_names !== '') {
+            const files_names = req.body.files_names.split(',');
+            for (var i = 0; i < files_names.length; i++) {
+                files[i]['name'] = files_names[i]
+            }
+        }
 
         return knex('versions')
         // Insertion des données dans la table 'contributions' - id est généré précédemment
@@ -27,7 +47,7 @@ module.exports = {
             // Informations remplies par le contributeur
             file_csv: req.body.file_csv,
             file_json: req.body.file_json,
-            file_binary:req.body.file_binary,
+            file_binary:req.body.file_0,
             comment_contributor: comment_contributor,
             highlight:highlight,
             // Informations remplies automatiquement mais nécessaire pour la DB
@@ -42,15 +62,17 @@ module.exports = {
             user_id: user_id
         })
             .then(function(response){
-            // Ici, on sort de la fonction pour éviter qu'elle reboucle.
-            res.json('ok')
-        })
-        .catch(function(err) {
-            console.log('ERREUR', err)
-            res.json({
-                error: 'yes'
+                return knex.batchInsert('files', files)
+                    .then(function(responseB) {
+                        res.json('ok')
+                    })
+                    .catch(function(err) {
+                        res.json(err)
+                    })
             })
-        });
+            .catch(function(err) {
+                res.json(err)
+            });
     },
 
     sendJSONDataFiliale: async function (req, res) {

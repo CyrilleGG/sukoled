@@ -8,7 +8,7 @@
 
         <div class="row mb-3 rounded py-4 px-5 content">
 
-          <h3 class="col-lg-12 pl-0">Review the contribution</h3>
+          <h3 class="col-lg-12 pl-0">Review your contribution</h3>
           <p class="col-lg-12 mb-4 pl-0 font-italic">{{ data.contribution.contribution_name }}</p>
 
           <div v-if="data.input.comment_admin !== null" id="admin-comment" class="col-lg-12 mb-4 rounded p-3">
@@ -19,8 +19,7 @@
           <table v-if="department_slug == 'raf'" class="col-lg-12 d-block mb-4 rounded">
             <tr class="row">
 
-              <th class="col-lg-4 py-3 pl-5">Name</th>
-              <th class="col-lg-2 py-3 text-center">{{ lastMonth () }}</th>
+              <th class="col-lg-6 py-3 pl-5">Name</th>
               <th class="col-lg-2 py-3 text-center">{{ month () }}</th>
               <th class="col-lg-2 py-3 text-center">Limit</th>
               <th class="col-lg-2 py-3 text-center">Threshold</th>
@@ -28,8 +27,7 @@
             </tr>
             <tr class="row">
 
-              <td class="col-lg-4 py-3 pl-5">{{ data.input.input_name }}</td>
-              <td class="col-lg-2 py-3 text-center">xx-1</td>
+              <td class="col-lg-6 py-3 pl-5">{{ data.input.input_name }}</td>
               <td class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
               <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_limit }}</td>
               <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_threshold }}</td>
@@ -40,26 +38,41 @@
           <table v-if="department_slug == 'subsidaries'" class="col-lg-12 d-block mb-4 rounded">
             <tr class="row">
 
-              <th class="col-lg-6 py-3 pl-5">Name</th>
-              <th class="col-lg-3 py-3 text-center">{{ lastMonth () }}</th>
-              <th class="col-lg-3 py-3 text-center">{{ month () }}</th>
+              <th class="col-lg-8 py-3 pl-5">Name</th>
+              <th class="col-lg-4 py-3 text-center">{{ month () }}</th>
 
             </tr>
             <tr v-for="(value, key, index) in data.input.version_file" class="row" :key="index">
 
-              <td class="col-lg-6 py-3 pl-5">{{ key }}</td>
-              <td class="col-lg-3 py-3 text-center">xx-1</td>
-              <td class="col-lg-3 py-3 text-center last">{{ value }}</td>
+              <td class="col-lg-8 py-3 pl-5">{{ key }}</td>
+              <td class="col-lg-4 py-3 text-center last">{{ value }}</td>
 
             </tr>
           </table>
 
-          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your comment</p>
-          <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
-          <p v-else class="col-lg-12 mb-0 pl-0">The contributor didn't write any comment for this contribution</p>
+          <div class="col-lg-12">
+            <div class="row">
+              <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Your comment</p>
+              <p v-if="data.input.comment_contributor == '' || data.input.comment_contributor == null" class="col-lg-12 pl-0 text-danger">You didn't write any comment for this contribution</p>
+              <p v-else class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
+            </div>
+          </div>
 
-          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's highlights</p>
-          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">higlights du contributeur</p>
+          <div v-if="data.input.highlight !== null" class="col-lg-12">
+            <div class="row">
+              <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Your highlights</p>
+              <p v-if="data.input.highlight == '' || data.input.highlight == null" class="col-lg-12 pl-0 text-danger">You didn't write any highlight for this contribution</p>
+              <p v-else class="col-lg-12 mb-3 pl-0 light">{{ data.input.highlight }}</p>
+            </div>
+          </div>
+
+          <div v-if="data.input.highlight !== null" class="col-lg-12">
+            <div class="row">
+              <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Elements you added for this contribution</p>
+              <p v-if="data.input.highlight == '' || data.input.highlight == null" class="col-lg-12 pl-0 text-danger">You didn't upload any additional element for this contribution</p>
+              <p v-else class="col-lg-12 mb-3 pl-0 light">{{ data.input.highlight }}</p>
+            </div>
+          </div>
 
         </div>
 

@@ -1,33 +1,53 @@
-// api/routes/login
-const db = require('../db');
-var users = require('../db/users.js');
+'use strict';
+
+/**
+ * Module dependencies.
+ */
+
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const passportJWT = require('passport-jwt');
-var jwtOptions = {}
+
+const users = require('../db/users');
+
+const jwtOptions = {}
 const ExtractJwt = passportJWT.ExtractJwt;
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = '$Tne"é9:§§"__ù';
 
-// Envoie des données reçus depuis le front (username & password) et envoie vers la database.
-// Si les données correspondent, alors on donne un token
+/**
+ * Authenticate a user.
+ */
 
 module.exports = (req, res) => {
-    if (req.body.username && req.body.password) {
-        var username = req.body.username;
-        var password = req.body.password;
-    }
-    // Si l'utilisateur (front) existe dans la database, on passe à l'étape suivante, sinon on renvoie un message d'erreur.
-    var user = users[_.findIndex(users, {username:username})];
-    if(!user){
-        res.status(401).json({message:"L'utilisateur n'a pas été trouvé"});
-    }
-    else if(user.password === req.body.password) {
-        // Si le mot de passe correspond au pseudonyme utilisateur, on envoie un token, sinon on renvoie un message d'erreur.
-        var payload = {id: user.id};
-        var token = jwt.sign(payload, jwtOptions.secretOrKey);
-        res.json({token:token, username:username, role:user.role, user_id:user.id});
-    } else {
-        res.status(401).json({message:"Le mot de passe ne correspond pas"});
-    }
-}
+  if (req.body.username && req.body.password) {
+    var username = req.body.username;
+  }
+
+  var user = users[_.findIndex(users, {
+    username: username
+  })];
+
+  var payload = {
+    id: user.id
+  };
+
+  if (!user) {
+    return res.status(401).json({
+      statusCode: 401,
+      message: "L'utilisateur n'a pas été trouvé"
+    });
+  } else if (user.password === req.body.password) {
+    return res.json({
+      token: jwt.sign(payload, jwtOptions.secretOrKey),
+      username: username,
+      role: user.role,
+      user_id: user.id
+    });
+  } else {
+    return res.status(401).json({
+      statusCode: 401,
+      message: "Le mot de passe ne correspond pas"
+    });
+  }
+};

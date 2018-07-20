@@ -40,7 +40,12 @@
 
         <div class="row graph-row">
           <div class="col-lg-12 graph border">
-            <view-internal-rating-graph/>
+            <view-internal-rating-graph
+              v-for="(graph, index) in internal_graph"
+              v-bind:key="index"
+              v-bind:data="graph.data"
+              v-bind:options="graph.options"
+            />
           </div>  
         </div>
 
@@ -157,6 +162,49 @@ export default {
               result_1:"BBB",
             }
           ]
+        }
+      ],
+      internal_graph: [
+        {
+          data: {
+            labels: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-', 'BBB', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-', 'CCC', 'CC+', 'CC', 'CC-', 'C+', 'C', 'C-', 'Default'],
+            boxWidth:2,
+            datasets: [
+              {
+                  label: 'March-18',
+                  backgroundColor: '#f87979',
+                  data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+              },
+              {
+                  label: 'February-18',
+                  backgroundColor:'orange',
+                  data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+              },
+              {
+                  label: 'December-17',
+                  backgroundColor:'lightgreen',
+                  data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+              }
+            ]
+          },
+          options :{
+            title: {
+              display:true,
+              text: 'Distribution of grades',
+              fontSize:'15'
+            },
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  offsetGridLines: true,
+                  display:false
+                }
+              }]
+            },
+            cornerRadius:20,
+            responsive: true,
+            maintainAspectRatio: false
+          },
         }
       ]
     }

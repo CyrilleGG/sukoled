@@ -15,16 +15,14 @@
               <table class="col-lg-11 d-block mb-3 rounded">
                 <tr class="row">
 
-                  <th class="col-lg-6 py-3 pl-5">Name</th>
-                  <th class="col-lg-3 py-3 text-center">{{ lastMonth () }}</th>
-                  <th class="col-lg-3 py-3 text-center">{{ month () }}</th>
+                  <th class="col-lg-8 py-3 pl-5">Name</th>
+                  <th class="col-lg-4 py-3 text-center">{{ month () }}</th>
 
                 </tr>
                 <tr v-for="(value, key, index) in json" class="row" :key="index">
 
-                  <td class="col-lg-6 py-3 pl-5"> {{ key }} </td>
-                  <td class="col-lg-3 py-3 text-center">€ 7,2 m</td>
-                  <td class="col-lg-3 py-3 text-center last">{{ value }}</td>
+                  <td class="col-lg-8 py-3 pl-5"> {{ key }} </td>
+                  <td class="col-lg-4 py-3 text-center last">{{ value }}</td>
 
                 </tr>
               </table>
@@ -39,7 +37,8 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your comments</h3>
-          <p class="col-lg-12 mb-3 pl-5">{{ inputs.comment_contributor }}</p>
+          <p v-if="inputs.comment_contributor !== '' || null" class="col-lg-12 mb-3 pl-5">{{ inputs.comment_contributor }}</p>
+          <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't write any comment for this contribution</p>
         </div>
 
 
@@ -48,7 +47,8 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your highlights</h3>
-          <p class="col-lg-12 mb-3 pl-5">{{ inputs.highlight }}</p>
+          <p v-if="inputs.highlight !== '' || null" class="col-lg-12 mb-3 pl-5">{{ inputs.highlight }}</p>
+          <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't write any highlight for this contribution</p>
         </div>
 
 
@@ -56,8 +56,8 @@
         <div id="additional-elements" class="row mb-5 rounded py-4 pl-5 pr-5 content">
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">4</span>
 
-          <h3 class="col-lg-12 mb-5 pl-5">Preview your additional elements</h3>
-          <div class="col-lg-12 my-2" v-if="inputs.additionalFiles !== []">
+          <h3 class="col-lg-12 mb-5 pl-5">Preview of other elements</h3>
+          <div class="col-lg-12 my-2" v-if="inputs.additionalFiles.length > 0">
             <div v-for="(file, index) in inputs.additionalFiles" class="mb-2" :key="index">
               <img v-if="file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml'" :id="index" :alt="file.name">
               <div v-else>
@@ -66,6 +66,7 @@
               </div>
             </div>
           </div>
+          <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't upload any additional element for this contribution</p>
         </div>
 
 

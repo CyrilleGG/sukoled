@@ -19,7 +19,7 @@
       </p>
 
       <p class="col-lg-2 my-auto text-center">
-        {{ moment (starts_at) }}
+        {{ moment (ends_at) }}
       </p>
 
       <p class="col-lg-2 my-auto text-center">
@@ -58,7 +58,7 @@ export default {
     'checked',
     'order',
     'name',
-    'starts_at',
+    'ends_at',
     'modified_at',
     'status_admin',
     'contribution_id',

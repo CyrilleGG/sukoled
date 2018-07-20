@@ -8,7 +8,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">1</span>
 
           <h3 class="col-lg-12 mb-2 pl-5">Share your contribution</h3>
-          <p class="col-lg-12 mb-5 pl-5">Upload your new Excel file here and wait until it is uploaded. The file must be in the required format.</p>
+          <p class="col-lg-12 mb-5 pl-5">Upload your Excel file and wait until it is uploaded. The file must be in the required format.</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
@@ -42,13 +42,13 @@
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Write your comment</h3>
-          <p class="col-lg-12 mb-5 pl-5">Write down your comments and annotations, regarding your contribution</p>
+          <h3 class="col-lg-12 mb-2 pl-5">Write your comments</h3>
+          <p class="col-lg-12 mb-5 pl-5">Enter your comments and annotations</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write your comments..." :rows="8" :no-resize="true" name="comments"></b-form-textarea>
+              <b-form-textarea id="comments" class="col-lg-12" v-model="inputs.comment_contributor" placeholder="Write here..." :rows="8" :no-resize="true" name="comments"></b-form-textarea>
 
             </div>
           </div>
@@ -61,12 +61,12 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
           <h3 class="col-lg-12 mb-2 pl-5">Write your highlights</h3>
-          <p class="col-lg-12 mb-5 pl-5">Write down your highlights regarding your contribution</p>
+          <p class="col-lg-12 mb-5 pl-5">Enter your highlights regarding your contribution</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="highlights" class="col-lg-12" v-model="inputs.highlight" placeholder="Write your highlights..." :rows="8" :no-resize="true" name="highlights"></b-form-textarea>
+              <b-form-textarea id="highlights" class="col-lg-12" v-model="inputs.highlight" placeholder="Write here..." :rows="8" :no-resize="true" name="highlights"></b-form-textarea>
 
             </div>
           </div>
@@ -74,12 +74,12 @@
 
 
 
-        <b-form-group class="row mb-5 rounded py-4 pl-5 pr-5 content">
+        <b-form-group class="row mb-3 rounded py-4 pl-5 pr-5 content">
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">4</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Add other elements</h3>
-          <p class="col-lg-12 mb-5 pl-5">You can upload additional elements (text, image) in order to complete your contribution</p>
+          <h3 class="col-lg-12 mb-2 pl-5">Add other elements (optional)</h3>
+          <p class="col-lg-12 mb-5 pl-5">You can add a text file or an image representing a graphic or other</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row pl-3">
@@ -92,7 +92,7 @@
 
               <div id="additional-files-input" class="col-lg-12 my-2">
                 <label id="additional-files-label" class="text-uppercase" for="additional-files">
-                  <span class="d-inline-block mr-3 rounded-circle text-center align-middle font-weight-light">+</span> Add an element
+                  <span class="d-inline-block mr-3 rounded-circle text-center align-middle font-weight-light">+</span> Add elements
                 </label>
                 <input id="additional-files" class="d-none" ref="additionalFilesInput" v-on:change="uploadFile ()" type="file" name="additional-files">
                 <!-- <p id="highlights" class="col-lg-12" v-model="inputs.additionalFiles" placeholder="Write your highlights..." :rows="4" name="highlights"></p> -->

@@ -20,7 +20,6 @@ module.exports = {
         const comment_contributor = req.body.comment_contributor;
         const contribution_id = req.body.contribution_id;
         const highlight = req.body.highlight;
-        const files_names = req.body.files_names.split(',');
         const files = [];
         const regex = /(file_[1-9])/
         for (var key in req.body) {
@@ -35,8 +34,11 @@ module.exports = {
                 })
             }
         }
-        for (var i = 0; i < files_names.length; i++) {
-            files[i]['name'] = files_names[i]
+        if (req.body.files_names !== '') {
+            const files_names = req.body.files_names.split(',');
+            for (var i = 0; i < files_names.length; i++) {
+                files[i]['name'] = files_names[i]
+            }
         }
 
         return knex('versions')

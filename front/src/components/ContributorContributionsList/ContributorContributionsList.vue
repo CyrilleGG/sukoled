@@ -5,7 +5,7 @@
       <p class="col-lg-2 my-auto text-uppercase">Type</p>
       <p class="col-lg-3 my-auto text-uppercase">Name</p>
       <p class="col-lg-2 my-auto text-uppercase">Deadline</p>
-      <p class="col-lg-2 my-auto text-center text-uppercase">Last iteration</p>
+      <p class="col-lg-2 my-auto text-center text-uppercase">Modification</p>
       <p class="col-lg-2 my-auto text-uppercase">Status</p>
       <p class="col-lg-1 my-auto text-right text-uppercase">Action</p>
 

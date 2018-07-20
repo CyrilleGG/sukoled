@@ -13,7 +13,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">1</span>
 
           <h3 class="col-lg-12 mb-2 pl-5">When do you want to start ?</h3>
-          <p class="col-lg-12 mb-5 pl-5">Select a month or a quarter</p>
+          <p class="col-lg-12 mb-5 pl-5">Select a quarter or a month</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row">
@@ -33,7 +33,7 @@
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Which contributions do you want?</h3>
+          <h3 class="col-lg-12 mb-2 pl-5">Which contributions do you need?</h3>
           <p class="col-lg-12 mb-5 pl-5">Select the contributions from which you need data</p>
 
           <div class="col-lg-12 pl-5">
@@ -65,13 +65,13 @@
           
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
-          <h3 class="col-lg-12 mb-2 pl-5">Want to add instructions?</h3>
-          <p class="col-lg-12 mb-5 pl-5">You can enter a message that will be sent to all concerned contributors</p>
+          <h3 class="col-lg-12 mb-2 pl-5">Any instructions?</h3>
+          <p class="col-lg-12 mb-5 pl-5">You can enter a message that will be linked to your request</p>
 
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-textarea id="message" class="col-lg-12" v-model="message" placeholder="Write your request..." :rows="6" :no-resize="true"></b-form-textarea>
+              <b-form-textarea id="message" class="col-lg-12" v-model="message" placeholder="Write here..." :rows="6" :no-resize="true"></b-form-textarea>
 
             </div>
           </div>
@@ -84,8 +84,14 @@
           </div>
         </div>
 
-        <b-modal v-if="input.contributions.length > 0" id="confirm" ref="confirm" hide-footer>
-          <p>You are about to send an email in order to recover <span>{{ displayNumOfContributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
+        <b-modal v-if="input.contributions.length > 0 && message == null" id="confirm" ref="confirm" hide-footer>
+          <p>You are about to send a contribution request in order to recover <span>{{ displayNumOfContributions () }}</span> for <span>{{ displayPeriod () }}</span>.</p>
+          <b-button class="purple" v-on:click="closeModal ()" size="md">Cancel</b-button>
+          <b-button class="green" v-on:click="createCampaign ()" replace size="md">Confirm</b-button>
+        </b-modal>
+
+        <b-modal v-else-if="input.contributions.length > 0" id="confirm" ref="confirm" hide-footer>
+          <p>You are about to send a contribution request in order to recover <span>{{ displayNumOfContributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
           <p id="display-message" class="p-3 rounded">{{ message }}</p>
           <b-button class="purple" v-on:click="closeModal ()" size="md">Cancel</b-button>
           <b-button class="green" v-on:click="createCampaign ()" replace size="md">Confirm</b-button>

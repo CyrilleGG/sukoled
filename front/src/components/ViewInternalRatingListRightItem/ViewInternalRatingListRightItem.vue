@@ -2,8 +2,8 @@
 
     <tr class="view-list-item">
         <td> {{ title }} </td>
-        <td>{{ date_2 }}</td>
-        <td>{{ date_1 }}</td>
+        <td class="text-center">{{ date_2 }}</td>
+        <td class="text-center">{{ date_1 }}</td>
     </tr>
             
 </template>

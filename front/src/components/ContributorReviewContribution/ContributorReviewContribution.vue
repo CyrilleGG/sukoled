@@ -126,7 +126,7 @@ export default {
     if (department_slug == 'raf') {
       axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
         .then((response) => {
-          this.$data.data = response.data
+          this.$data.data = response.data.data
         })
         .catch((error) => {
           console.log(error)
@@ -134,7 +134,7 @@ export default {
     } else if (department_slug == 'subsidaries') {
       axios.get('http://localhost:3000/api/versionView/'+ contribution_id +'/version/'+ version_id)
         .then((response) => {
-          this.$data.data = response.data
+          this.$data.data = response.data.data
           this.$data.data.input.version_file = JSON.parse(this.$data.data.input.version_file)
         })
         .catch((error) => {

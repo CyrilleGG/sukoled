@@ -96,12 +96,12 @@ export default {
   created () {
     axios.get('http://localhost:3000/api/contributions')
       .then((response) => {
-        for (var i = 0; i < response.data.contributions.length; i++) {
-          response.data.contributions[i].checked = false
-          response.data.contributions[i].version_starts_at = moment(response.data.contributions[i].version_starts_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
-          response.data.contributions[i].version_ends_at = moment(response.data.contributions[i].version_ends_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
+        for (var i = 0; i < response.data.data.length; i++) {
+          response.data.data[i].checked = false
+          response.data.data[i].version_starts_at = moment(response.data.data[i].version_starts_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
+          response.data.data[i].version_ends_at = moment(response.data.data[i].version_ends_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
         }
-        this.$data.contributions = response.data.contributions
+        this.$data.contributions = response.data.data
       })
 
       .catch((error) => {

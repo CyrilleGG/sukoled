@@ -17,7 +17,13 @@
         
         <div class="row">
           <div class="col-lg-9 pl-0">
-            <view-top-20-list />
+            <view-top-20-list 
+              v-for="(top, index) in tops"
+              v-bind:key="index"
+              v-bind:top20s="top.top20s"
+              v-bind:total="top.total"
+              v-bind:dates="top.dates"
+            />
           </div>
           <div class="col-lg-3">
             <view-comment class="border right-column"
@@ -32,7 +38,7 @@
             <div id="view-comment" class="row">
               <div class="ml-4 mt-1 mr-4 mb-3 view-result-box">
                 <div id="view-comment-header" class="text-center">
-                  Result - corriger le rendu
+                  Result
                 </div>
 
                 <table class="table table-striped col-lg-2">
@@ -103,6 +109,63 @@ export default {
         ,{
           date:"2016-12-01 00:00:00",
           number:"20 1000"
+        }
+      ],
+      tops :[
+        {
+          top20s: [
+            {
+              evolution: "0",
+              counterparty: "Groupe Arnault",
+              date_2: "3 201",
+              date_1: "3 253",
+              limit: "3 598",
+              internal_rating: "A-"
+            },
+            {
+              evolution: "+1",
+              counterparty: "Axa S.A",
+              date_2: "1 808",
+              date_1: "1 228",
+              limit: "2",
+              internal_rating: "AA-"
+            },
+            {
+              evolution: "-1",
+              counterparty: "Total SA",
+              date_2: "1 563",
+              date_1: "1 228",
+              limit: "2 689",
+              internal_rating: "AA-"
+            },
+            {
+              evolution: "0",
+              counterparty: "Trafigura",
+              date_2: "1 494",
+              date_1: "1 525",
+              limit: "1 768",
+              internal_rating: "BBB-"
+            }
+          ],
+          dates: [
+            {
+                date:"2018-03-01 00:00:00"
+            },
+            {
+                date:"2018-02-01 00:00:00"
+            }
+          ],
+          total: [
+            {
+                result:"222"
+            },
+            {
+                result:"333"
+            },
+            {
+                result:"444"
+            }
+          ]
         }
       ]
     }

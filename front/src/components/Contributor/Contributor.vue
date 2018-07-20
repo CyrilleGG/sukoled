@@ -73,11 +73,11 @@ export default {
 
     axios.get('http://localhost:3000/api/contributor/'+ this.$root.$data.userInfo.username)
       .then((response) => {
-        for (var i = 0; i < response.data.waiting.length; i++) {
-          this.$data.contributions.waiting = response.data.waiting
+        for (var i = 0; i < response.data.data.waiting.length; i++) {
+          this.$data.contributions.waiting = response.data.data.waiting
         }
-        for (var i = 0; i < response.data.done.length; i++) {
-          this.$data.contributions.done = response.data.done
+        for (var i = 0; i < response.data.data.done.length; i++) {
+          this.$data.contributions.done = response.data.data.done
         }
       })
 

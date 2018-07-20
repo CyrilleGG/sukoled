@@ -9,6 +9,7 @@ import Login from '@/components/Login/Login'
 import Viewer from '@/components/Viewer/Viewer'
 import ViewInternalRating from '@/components/ViewInternalRating/ViewInternalRating'
 import ViewEconomicSector from '@/components/ViewEconomicSector/ViewEconomicSector'
+import ViewBaselSegment from '@/components/ViewBaselSegment/ViewBaselSegment'
 
 import Contributor from '@/components/Contributor/Contributor'
 import ContributorSendContribution from '@/components/ContributorSendContribution/ContributorSendContribution'
@@ -40,9 +41,13 @@ export default new Router({
       path: '/view/internal-rating',
       component: ViewInternalRating
     }, {
-      name: 'view-economic-ector',
+      name: 'view-economic-sector',
       path: '/view/economic-sector',
       component: ViewEconomicSector
+    }, {
+      name: 'view-basel-segment',
+      path:'/view/basel-segment',
+      component: ViewBaselSegment
     }, {
       name: 'contributor',
       path: '/contributor',

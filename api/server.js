@@ -6,15 +6,10 @@ const _ = require('lodash');
 const express = require('express'); // appelle express dans une variable
 const app = express(); // équivaut à une instance de express
 const busboy = require('express-busboy');
-const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const Strategy = require('passport-local').Strategy;
 const passportJWT = require('passport-jwt');
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
-const mysql = require('mysql');
-const db = require('./db');
-var knex = require('./utilities/database')
 
 // Appel de CORS, pour éviter les problèmes côté client lors des appels à la BDD
 var cors = require('cors');
@@ -27,75 +22,54 @@ var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = '$Tne"é9:§§"__ù';
 
-var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-    // console.log('payload received', jwt_payload);
-    //database call:
-    var user = users[_.findIndex(users, {id: jwt_payload.id})];
-    if (user) {
-        next(null, user);
-    } else {
-        next(null, false);
-    }
+var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
+  // console.log('payload received', jwt_payload);
+  //database call:
+  var user = users[_.findIndex(users, { id: jwt_payload.id })];
+  if (user) {
+    next(null, user);
+  } else {
+    next(null, false);
+  }
 });
 passport.use(strategy);
 app.use(passport.initialize());
 
 
-// Routes
-app.get('/api/', function(req, res) { res.json({message: "Express is up!"}); });
+
+// Authentication.
 app.post('/api/login', require('./routes/login'));
 
-var contributionId = require('./routes/contributionId')
-app.get('/api/contribution/:contribution_id', contributionId.sendInfoToClient) // user_id
+// Campaign-related routes.
+app.post('/api/campaign', require('./routes/campaigns/new'));
+app.get('/api/campaign', require('./routes/campaigns/find'));
 
-var campaign = require('./routes/campaign.js')
-app.post('/api/campaign', campaign.sendInfoToDBCampaign) // /:contribution_id ?
-app.get('/api/campaign', campaign.SendJSONDataCampaign)
+// Contribution-related routes.
+app.get('/api/contributions', require('./routes/contributions/getContributions'));
+app.get('/api/contributionRaf/:contribution_id/version/:version_id/user/:user_id', require('./routes/contributions/getContributionRaf'));
+app.get('/api/contribution/:contribution_id', require('./routes/contributions/getContribution'));
+app.get('/api/contributionFiliale/:version_id/user/:user_id', require('./routes/contributions/getContributionFiliale'));
+app.post('/api/contributionRaf/:version_id', require('./routes/contributions/newContributionRaf'));
+app.post('/api/contributionFiliale/:version_id', require('./routes/contributions/newContributionFiliale'));
 
-// Route pour récupérer les données d'une version
-var versionView = require('./routes/versionView');
-app.get('/api/versionView/:contribution_id/version/:version_id', versionView.SendJSONDataContribView) // version_id
-// app.post('/api/contributionView/:version_id', contributionView.SendInfoToClientContribView)
-// app.get('/api/contributionView/:version_id', require('./routes/versionid'))
+// Contributor-related routes.
+app.get('/api/contributor/:user_id', require('./routes/contributor/home'));
 
-// Routes pour refuser ou accepter une version : si refusé alors on crée une nouvelle version, si accepté alors on la patch
-var contribRefused = require('./routes/versionidrefused');
-var contribAccept = require('./routes/versionidaccept');
-app.get('/api/versionRefused/:version_id/', contribRefused.sendJSONDataRefuse); // user_id
-app.post('/api/versionRefused/:version_id/:contribution_id', contribRefused.sendInfoToDBRefuse); // version_id
-app.patch('/api/versionValidate/:version_id', contribAccept.sendInfoToDBValidate);
-app.patch('/api/versionSubmit/:version_id', contribAccept.sendInfoToDBSubmit);
+// Policy-related routes.
+app.get('/api/createPolicies', require('./routes/policies/getPolicy'));
+app.post('/api/createPolicies', require('./routes/policies/newPolicy'));
+app.delete('/api/createPolicies/:policy_id', require('./routes/policies/deletePolicy'));
 
-// Création d'une contribution : to delete
-var createcontrib = require('./routes/createcontrib');
-app.get('/api/createcontrib/:version_id', createcontrib.sendJSONData); // Pas de droits hors admin
-app.post('/api/createcontrib', createcontrib.sendInfoToDB);
+// Input-related routes.
+app.get('/api/inputs/:contribution_id/version/:version_id', require('./routes/inputs/getInputs'));
 
-// Contributeur : Création d'une version d'une contribution Non-Raf
-var contributionFiliale = require('./routes/contributionFiliale');
-app.get('/api/contributionFiliale/:version_id/user/:user_id', contributionFiliale.sendJSONDataFiliale); // :user_id
-app.post('/api/contributionFiliale/:version_id', contributionFiliale.sendInfoToDBFiliale);
-
-// Contributeur : Création d'une version d'une contribution Raf
-var contributionRaf = require('./routes/contributionRaf');
-app.get('/api/contributionRaf/:contribution_id/version/:version_id/user/:user_id', contributionRaf.sendJSONDataRaf); // user_id
-app.post('/api/contributionRaf/:version_id', contributionRaf.sendInfoToDBRaf);
-
-var contributor = require('./routes/contributor')
-app.get('/api/contributor/:user_id', contributor.home)
-
-var inputs = require('./routes/inputs')
-app.get('/api/inputs/:contribution_id/version/:version_id', inputs.version) // user_id
-
-var createPolicies = require('./routes/createPolicies')
-app.get('/api/createPolicies', createPolicies.sendJSONDataPolicies)
-app.post('/api/createPolicies', createPolicies.sendInfoToDBPolicies)
-app.delete('/api/createPolicies/:policy_id', createPolicies.deletePolicies)
-
-var contributions = require('./routes/contributions')
-app.get('/api/contributions', contributions.list)
-
+// Version-related routes.
+app.get('/api/versionRefused/:version_id', require('./routes/versions/getVersion'));
+app.post('/api/versionRefused/:version_id/:contribution_id', require('./routes/versions/newVersion'));
+app.patch('/api/versionValidate/:version_id', require('./routes/versions/validateVersion'));
+app.patch('/api/versionSubmit/:version_id', require('./routes/versions/submitVersion'));
+app.get('/api/versionView/:contribution_id/version/:version_id', require('./routes/versions/viewVersion'));
 
 app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé
-    console.log(`Example app listening on port ${PORT}!`)
+  console.log(`Hestia Server listening on port ${PORT}`)
 });

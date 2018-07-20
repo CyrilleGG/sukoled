@@ -1,6 +1,6 @@
 <template>
 
-        <td>{{ result }}</td>
+        <td class="text-center">{{ result }}</td>
                         
 </template>
 

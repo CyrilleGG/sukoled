@@ -181,11 +181,11 @@ export default {
 
     axios.get('http://localhost:3000/api/campaign/')
       .then((response) => {
-        for (var i = 0; i < response.data.length; i++) {
-          if (response.data[i].department_slug == 'raf') {
-            this.$data.contributions.raf.push(response.data[i])
+        for (var i = 0; i < response.data.data.length; i++) {
+          if (response.data.data[i].department_slug == 'raf') {
+            this.$data.contributions.raf.push(response.data.data[i])
           } else {
-            this.$data.contributions.subsidaries.push(response.data[i])
+            this.$data.contributions.subsidaries.push(response.data.data[i])
           }
         }
       })

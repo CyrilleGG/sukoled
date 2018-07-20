@@ -7,17 +7,19 @@
             <thead>
                 <tr>
                     <th/>
-                    <view-top-20-list-header-item
+                    <th
                         v-for="(date, index) in dates"
                         v-bind:key="index"
                         v-bind:date="date.date"
-                    />
+                    >
+                        <div scope="col" class="text-uppercase"> {{ moment(date.date) }}</div>
+                    </th>
                     <th/>
                 </tr>
                 <tr>
-                    <th scope="col">Internal rating</th>
-                    <th scope="col">Specialized Lending</th>
-                    <th scope="col">Corporates</th>
+                    <th scope="col" class="text-center">Internal rating</th>
+                    <th scope="col" class="text-center">Specialized Lending</th>
+                    <th scope="col" class="text-center">Corporates</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,9 +47,9 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment'
 
 import ViewInternalRatingListRightItem from '@/components/ViewInternalRatingListRightItem/ViewInternalRatingListRightItem'
-import ViewTop20ListHeaderItem from '@/components/ViewTop20ListHeaderItem/ViewTop20ListHeaderItem'
 import ViewInternalRatingListRightBottomItem from '@/components/ViewInternalRatingListRightBottomItem/ViewInternalRatingListRightBottomItem'
 
 export default {
@@ -55,43 +57,24 @@ export default {
 
     components: {
         ViewInternalRatingListRightItem,
-        ViewTop20ListHeaderItem,
         ViewInternalRatingListRightBottomItem
     },
 
+    props: [
+        'dates',
+        'ratings',
+        'total'
+    ],
+
     data() {
         return {
-            ratings: [
-                {
-                    title: "AAA/AA+/AA-",
-                    date_2: "21.0%",
-                    date_1: "35.1%"
-                }, {
-                    title: "A+/A/A-",
-                    date_2: "20.5%",
-                    date_1: "22.4%"
-                }, {
-                    title: "BBB+/BB/BB-",
-                    date_2: "21.3%",
-                    date_1: "24.7%"
-                },
-            ],
-            dates: [
-                {
-                    date:"2018-03-01 00:00:00"
-                }
-            ],
-            total: [
-                {
-                    title:"Total",
-                    result_2:"100%",
-                    result_1:"100%",
-                }, {
-                    title:"Weighted average",
-                    result_2:"BB+",
-                    result_1:"BBB",
-                }
-            ]
+            // c
+        }
+    },
+
+    methods: {
+        moment (date) {
+            return moment(date).format('MMMM-YY')
         }
     }
 }

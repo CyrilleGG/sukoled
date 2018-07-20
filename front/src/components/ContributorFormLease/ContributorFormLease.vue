@@ -87,6 +87,7 @@
               <div class="col-lg-12 my-2" v-for="(file, index) in inputs.additionalFiles" v-if="inputs.additionalFiles !== []" :key="index">
                 <img src="@/assets/icons/file.png" class="d-inline-block" width="35px" alt="Additional file">
                 <p class="d-inline-block ml-3">{{ file.name }}</p>
+                <img src="@/assets/icons/close.png" class="d-inline-block ml-3 delete" v-on:click="deleteFile (file.name)" width="15px" alt="Delete file">
               </div>
 
               <div id="additional-files-input" class="col-lg-12 my-2">
@@ -159,6 +160,14 @@ export default {
 
     uploadFile () {
       this.$data.inputs.additionalFiles.push(this.$refs.additionalFilesInput.files[0])
+    },
+
+    deleteFile (filename) {
+      this.$data.inputs.additionalFiles.forEach((file, index) => {
+        if (file.name == filename) {
+          this.$data.inputs.additionalFiles.splice(index, 1)
+        }
+      })
     },
 
    submit () {
@@ -250,6 +259,10 @@ export default {
 #form-lease textarea {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+}
+
+#form-lease .delete:hover {
+  cursor: pointer;
 }
 
 #form-lease #additional-files-input #additional-files-label {

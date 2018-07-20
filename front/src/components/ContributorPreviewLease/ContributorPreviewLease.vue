@@ -57,18 +57,20 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">4</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your additional elements</h3>
-          <div class="col-lg-12 my-2" v-for="(file, index) in inputs.additionalFiles" v-if="inputs.additionalFiles !== []" :key="index">
-            <img v-if="file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml'" :id="index" :alt="file.name" :key="index">
-            <div v-else>
-              <img src="@/assets/icons/file.png" class="d-inline-block icon" height="35px" alt="Additional file">
-              <p class="d-inline-block ml-3">{{ file.name }}</p>
+          <div class="col-lg-12 my-2" v-if="inputs.additionalFiles !== []">
+            <div v-for="(file, index) in inputs.additionalFiles" class="mb-2" :key="index">
+              <img v-if="file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml'" :id="index" :alt="file.name">
+              <div v-else>
+                <img src="@/assets/icons/file.png" class="d-inline-block icon" height="35px" alt="Additional file">
+                <p class="d-inline-block ml-3">{{ file.name }}</p>
+              </div>
             </div>
           </div>
         </div>
 
 
         <div id="actions" class="row">
-          <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
+          <b-button class="purple" :to="{ path: './', query: { contribution_id: inputs.contribution_id, version_id: inputs.version_id } }" replace size="md">Back</b-button>
           <b-button class="ml-auto green" size="md" v-on:click.prevent='sendContribution()'>Confirm</b-button>
         </div>
 

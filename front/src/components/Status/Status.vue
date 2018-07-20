@@ -19,8 +19,10 @@ export default {
     displayClass () {
       if (this.$props.status == 'not delivered') {
         return 'not-delivered'
-      } else if (this.$props.status == 'on hold') {
+      } else if (this.$props.status == 'hold' /*'on hold'*/) {
         return 'on-hold'
+      // } else if (this.$props.status == 'in progress') {
+      //   return 'in-progress'
       } else {
         return this.$props.status
       }
@@ -43,11 +45,11 @@ export default {
   background-color: #2ecc71;
 }
 
-.progress, .invalid {
+/* .in-progress*/.progress, .invalid {
   background-color: #fdad2a;
 }
 
-.hold, .not-delivered {
+.on-hold, .not-delivered {
   background-color: #f93519;
 }
 

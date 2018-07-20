@@ -103,10 +103,10 @@ export default {
 
     axios.get('http://localhost:3000/api/campaign')
       .then((response) => {
-        for (var i = 0; i < response.data.length; i++) {
+        for (var i = 0; i < response.data.data.length; i++) {
           this.$data.contributions.push({
-            value: response.data[i].contribution_id,
-            text: response.data[i].contribution_name
+            value: response.data.data[i].contribution_id,
+            text: response.data.data[i].contribution_name
           })
         }
       })
@@ -116,8 +116,8 @@ export default {
 
     axios.get('http://localhost:3000/api/createPolicies')
       .then((response) => {
-        this.$data.users = response.data.users
-        this.$data.policies = response.data.policies
+        this.$data.users = response.data.data.users
+        this.$data.policies = response.data.data.policies
       })
       .catch((error) => {
         console.log(error)
@@ -144,8 +144,8 @@ export default {
         .then((response) => {
           axios.get('http://localhost:3000/api/createPolicies')
             .then((response) => {
-              this.$data.users = response.data.users
-              this.$data.policies = response.data.policies
+              this.$data.users = response.data.data.users
+              this.$data.policies = response.data.data.policies
             })
             .catch((error) => {
               console.log(error)
@@ -160,8 +160,8 @@ export default {
         .then((response) => {
           axios.get('http://localhost:3000/api/createPolicies')
             .then((response) => {
-              this.$data.users = response.data.users
-              this.$data.policies = response.data.policies
+              this.$data.users = response.data.data.users
+              this.$data.policies = response.data.data.policies
             })
             .catch((error) => {
               console.log(error)

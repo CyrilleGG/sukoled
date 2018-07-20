@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
     .innerJoin('contributions as contribution', 'version.contribution_id', 'contribution.id')
     .innerJoin('departments as department', 'contribution.department_id', 'department.id')
     .groupBy('contribution_id')
-    .orderBy('version_created_at', 'desc')
+    .orderBy('version_created_at', 'asc');
 
   return res.status(200).json({
     statusCode: 200,

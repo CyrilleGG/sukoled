@@ -24,10 +24,10 @@ module.exports = async (req, res) => {
         contribution_name: contribution[0].name
       },
       input: {
-        comment_admin: version[0].comment_admin,
-        comment_contributor: version[0].comment_contributor,
-        highlight: version[0].highlight,
-        version_file: version[0].file_json
+        comment_admin: version.comment_admin,
+        comment_contributor: version.comment_contributor,
+        highlight: version.highlight,
+        version_file: version.file_json
       }
     }
   });

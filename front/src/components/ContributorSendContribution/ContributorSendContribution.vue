@@ -47,10 +47,10 @@ export default {
 
     axios.get('http://localhost:3000/api/contribution/'+ this.$route.query.contribution_id)
       .then((response) => {
-        if (response.data.department == 'raf') {
+        if (response.data.data.department == 'raf') {
           axios.get('http://localhost:3000/api/contributionRaf/'+ this.$route.query.contribution_id +'/version/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
             .then((response) => {
-              this.$data.data = response.data
+              this.$data.data = response.data.data
             })
 
             .catch((error) => {
@@ -59,7 +59,7 @@ export default {
         } else {
           axios.get('http://localhost:3000/api/contributionFiliale/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
             .then((response) => {
-              this.$data.data = response.data
+              this.$data.data = response.data.data
             })
 
             .catch((error) => {

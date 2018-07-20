@@ -89,7 +89,7 @@ export default {
 
     axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
       .then((response) => {
-        this.$data.data = response.data
+        this.$data.data = response.data.data
       })
 
       .catch((error) => {

@@ -57,7 +57,7 @@ export default {
 
           .then((response) => {
             this.$emit('auth', true)
-            this.$root.$data.userInfo = response.data
+            this.$root.$data.userInfo = response.data.data
 
             const role = this.$root.$data.userInfo.role
             if (role == 'mod') {

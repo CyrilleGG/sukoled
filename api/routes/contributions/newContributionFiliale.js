@@ -14,8 +14,31 @@ const getVersionById = require('../../services/getVersionById');
  */
 
 module.exports = async (req, res) => {
+  let new_version_id = uuidv4();
   let version = {};
+  let files = [];
+  let regex = /(file_[1-9])/;
+
+  for (var key in req.body) {
+    if (regex.test(key)) {
+      files.push({
+        id: uuidv4(),
+        binary: req.body[key],
+        version_id: new_version_id,
+        contribution_id: req.body.contribution_id,
+        user_id: req.body.user_id
+      })
+    }
+  }
+  if (req.body.files_names !== '') {
+    const files_names = req.body.files_names.split(',');
+    for (var i = 0; i < files_names.length; i++) {
+      files[i]['name'] = files_names[i]
+    }
+  }
+
   let newVersion;
+  let newFiles;
 
   try {
     version = await getVersionById(req.params.version_id);
@@ -29,8 +52,8 @@ module.exports = async (req, res) => {
   try {
     newVersion = await mysql('versions')
       .insert({
-        id: uuidv4(),
-        name: version[0].name,
+        id: new_version_id,
+        name: version.name,
         highlight: req.body.highlight,
         file_csv: req.body.file_csv,
         file_json: req.body.file_json,
@@ -38,8 +61,8 @@ module.exports = async (req, res) => {
         comment_contributor: req.body.comment_contributor,
         status_admin: 'delivered',
         status_contributor: 'pending',
-        starts_at: version[0].starts_at,
-        ends_at: version[0].ends_at,
+        starts_at: version.starts_at,
+        ends_at: version.ends_at,
         contribution_id: req.body.contribution_id,
         parent_version_id: req.params.version_id,
         user_id: req.body.user_id

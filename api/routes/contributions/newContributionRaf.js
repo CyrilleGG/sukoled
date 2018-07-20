@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 
-const mysql = require('../../utilities/mysql');
+const mysql = require('../../utilities/mysql')
+const uuidv4 = require('uuid/v4');
 
 const getVersionById = require('../../services/getVersionById');
 
@@ -20,12 +21,12 @@ module.exports = async (req, res) => {
   const versions = await mysql('versions')
     .insert({
       id: new_version_id,
-      name: version[0].name,
+      name: version.name,
       comment_contributor: req.body.comment_contributor,
       status_admin: 'delivered',
       status_contributor: 'pending',
-      starts_at: version[0].starts_at,
-      ends_at: version[0].ends_at,
+      starts_at: version.starts_at,
+      ends_at: version.ends_at,
       contribution_id: req.body.contribution_id,
       parent_version_id: req.params.version_id,
       user_id: req.body.user_id

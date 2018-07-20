@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 
+const mysql = require('../../utilities/mysql');
+
 const getDepartmentSlugByVersionId = require('../../services/getDepartmentSlugByVersionId');
 const getVersionNameById = require('../../services/getVersionById');
 const getContributionById = require('../../services/getContributionById');

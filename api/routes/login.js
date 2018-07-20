@@ -39,10 +39,12 @@ module.exports = (req, res) => {
     });
   } else if (user.password === req.body.password) {
     return res.json({
-      token: jwt.sign(payload, jwtOptions.secretOrKey),
-      username: username,
-      role: user.role,
-      user_id: user.id
+      data: {
+        token: jwt.sign(payload, jwtOptions.secretOrKey),
+        username: username,
+        role: user.role,
+        user_id: user.id 
+      }
     });
   } else {
     return res.status(401).json({

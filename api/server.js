@@ -70,6 +70,9 @@ app.patch('/api/versionValidate/:version_id', require('./routes/versions/validat
 app.patch('/api/versionSubmit/:version_id', require('./routes/versions/submitVersion'));
 app.get('/api/versionView/:contribution_id/version/:version_id', require('./routes/versions/viewVersion'));
 
+// DTM-related routes.
+app.get('/api/dtm/top/:year/:month', require('./routes/dtm/top'));
+
 app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé
   console.log(`Hestia Server listening on port ${PORT}`)
 });

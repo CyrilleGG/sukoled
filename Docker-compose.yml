@@ -1,16 +1,16 @@
 version: "3.1"
 
 services:
-  api:
-    image: "node:8-alpine"
-    restart: "unless-stopped"
-    command: "node /src/api/server.js"
-    volumes:
-      - "./api:/src/api"
-    ports:
-      - "3000:3000"
-    depends_on:
-      - "database"
+  # api:
+  #   image: "node:8-alpine"
+  #   restart: "unless-stopped"
+  #   command: "node /src/api/server.js"
+  #   volumes:
+  #     - "./api:/src/api"
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - "database"
 
   database:
     image: "mysql:5.7"

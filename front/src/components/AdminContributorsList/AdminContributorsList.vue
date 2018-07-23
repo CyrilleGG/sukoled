@@ -62,6 +62,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 import AdminContributorsListItem from '@/components/AdminContributorsListItem/AdminContributorsListItem'
@@ -94,7 +95,7 @@ export default {
   },
 
   created () {
-    axios.get('http://localhost:3000/api/contributions')
+    http.get('contributions')
       .then((response) => {
         for (var i = 0; i < response.data.data.length; i++) {
           response.data.data[i].checked = false

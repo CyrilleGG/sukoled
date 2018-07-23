@@ -92,6 +92,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 import Footer from '@/components/Footer/Footer'
@@ -124,7 +125,7 @@ export default {
     const department_slug = this.$route.query.department_slug
 
     if (department_slug == 'raf') {
-      axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
+      http.get('inputs/'+ contribution_id +'/version/'+ version_id)
         .then((response) => {
           this.$data.data = response.data.data
         })
@@ -132,7 +133,7 @@ export default {
           console.log(error)
         })
     } else if (department_slug == 'subsidaries') {
-      axios.get('http://localhost:3000/api/versionView/'+ contribution_id +'/version/'+ version_id)
+      http.get('versionView/'+ contribution_id +'/version/'+ version_id)
         .then((response) => {
           this.$data.data = response.data.data
           this.$data.data.input.version_file = JSON.parse(this.$data.data.input.version_file)

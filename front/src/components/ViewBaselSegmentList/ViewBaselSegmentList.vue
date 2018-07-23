@@ -15,6 +15,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 
 import ViewBaselSegmentListItem from '@/components/ViewBaselSegmentListItem/ViewBaselSegmentListItem'
 

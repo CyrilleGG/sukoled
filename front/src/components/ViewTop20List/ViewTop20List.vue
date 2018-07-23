@@ -51,6 +51,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 import ViewTop20ListItem from '@/components/ViewTop20ListItem/ViewTop20ListItem'

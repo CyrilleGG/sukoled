@@ -32,6 +32,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 
 export default {
   name: 'Login',
@@ -53,7 +54,7 @@ export default {
   methods: {
     login () {
       if (this.input.username !== '' && this.input.password !== '') {
-        axios.post('http://localhost:3000/api/login', this.input)
+        http.post('login', this.input)
 
           .then((response) => {
             this.$emit('auth', true)

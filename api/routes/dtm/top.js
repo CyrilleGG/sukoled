@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
     .orderBy('SUM_MT_EXPO_GLOBAL', 'DESC')
     .limit(20);
 
-    const total_current = await oracle('dtm')
+  const total_current = await oracle('dtm')
     .sum('MT_EXPO_GLOBAL AS sum_mt_expo_global')
     .where({
       IND_RAFGEN: '0',
@@ -64,6 +64,7 @@ module.exports = async (req, res) => {
     .andWhere(function () {
       this.where('MT_EXPO_GLOBAL', '>', '0').orWhere('CD_INSTRUMENT', '=', 'CASH FINANCEMENT CT')
     })
+    .groupBy('ANNEE', 'MOIS')
     .limit(20);
 
   const total_reference = await oracle('dtm')
@@ -84,8 +85,8 @@ module.exports = async (req, res) => {
     .andWhere(function () {
       this.where('MT_EXPO_GLOBAL', '>', '0').orWhere('CD_INSTRUMENT', '=', 'CASH FINANCEMENT CT')
     })
+    .groupBy('ANNEE', 'MOIS')
     .limit(20);
-
 
   return res.status(200).json({
     statusCode: 200,
@@ -93,8 +94,8 @@ module.exports = async (req, res) => {
     data: {
       companies: companies_current,
       total: {
-        current: total_current[0].sum_mt_expo_global,
-        reference: total_reference[0].sum_mt_expo_global
+        current: total_current[0].sum_mt_expo_global / 1000000,
+        reference: total_reference[0].sum_mt_expo_global / 1000000
       }
     }
   });

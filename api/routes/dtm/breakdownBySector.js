@@ -25,7 +25,10 @@ module.exports = async (req, res) => {
       ANNEE: req.params.year,
       MOIS: req.params.month
     })
-    .andWhereNot('IND_BAL2', '3-RETAIL')
+    .andWhereNot({
+      IND_BAL2: '3-RETAIL'
+    })
+    .whereNotIn('CD_REGRP_ACT_ECO_INT', ['', 'ZZZ'])
     .groupBy('CD_REGRP_ACT_ECO_INT');
 
   return res.status(200).json({

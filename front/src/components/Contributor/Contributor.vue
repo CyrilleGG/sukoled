@@ -26,7 +26,7 @@
 
         <div class="row">
           <contributor-contributions-list v-if="contributions.done.length > 0" v-bind:contributions="contributions.done" />
-          <p class="col-lg-12">You have no history.</p>
+          <p v-else class="col-lg-12">You have no history.</p>
         </div>
 
       </div>

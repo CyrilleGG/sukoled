@@ -98,7 +98,7 @@ export default {
   data () {
     return {
       json: null,
-      files: null,
+      files: null
     }
   },
 
@@ -123,14 +123,16 @@ export default {
       const files = this.$props.inputs.additionalFiles
 
       files.forEach((file, i) => {
-        var output = document.getElementById(i)
-        var reader = new FileReader()
+        if (file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/svg+xml') {
+          var output = document.getElementById(i)
+          var reader = new FileReader()
 
-        reader.addEventListener('load', function() {
-          output.src = reader.result
-        }, false)
+          reader.addEventListener('load', function() {
+            output.src = reader.result
+          }, false)
 
-        reader.readAsDataURL(file)
+          reader.readAsDataURL(file)
+        }
       })
     },
 
@@ -161,22 +163,28 @@ export default {
       files.push(self.$props.inputs.excel);
       self.$props.inputs.additionalFiles.forEach(file => {
         files.push(file);
-      })
+      });
 
       var blob = new Blob([files], {
         type : 'text/plain'
       });
 
-      this.readmultifiles(files)
+      this.readmultifiles(files);
 
-      let additionalFilesNames = ''
-        self.$props.inputs.additionalFiles.forEach(file => {
-          if (additionalFilesNames == '') {
-            additionalFilesNames = file.name
-          } else {
-            additionalFilesNames = additionalFilesNames + ',' + file.name
-          }
-        })
+      let additionalFilesNames = '';
+      let additionalFilesTypes = '';
+      self.$props.inputs.additionalFiles.forEach(file => {
+        if (additionalFilesNames == '') {
+          additionalFilesNames = file.name;
+        } else {
+          additionalFilesNames = additionalFilesNames + ',' + file.name;
+        }
+        if (additionalFilesTypes == '') {
+          additionalFilesTypes = file.type;
+        } else {
+          additionalFilesTypes = additionalFilesTypes + ',' + file.type;
+        }
+      });
 
       setTimeout(() => {
         // This fires after the blob has been read/loaded.
@@ -188,9 +196,10 @@ export default {
         data.append('contribution_id', self.$props.inputs.contribution_id);
         data.append('user_id', self.$root.$data.userInfo.user_id);
         this.$data.files.forEach((file, i) => {
-          data.append('file_' + i, file)
+          data.append('file_' + i, file);
         });
         data.append('files_names', additionalFilesNames);
+        data.append('files_types', additionalFilesTypes);
 
         // Envoyer les valeurs des inputs au back
         if (self.$props.inputs.excel !== null) {

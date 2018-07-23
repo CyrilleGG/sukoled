@@ -21,6 +21,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 
 export default {
   name: 'CreateNewCampaign',
@@ -44,7 +45,7 @@ export default {
     sendToDb () {
       // Envoyer ces infos au back
       if (this.input.user_id !== '' && this.input.starts_at !== '' && this.input.ends_at !=='' && this.input.contribution_id !=='' && this.input.name !=='') {
-        axios.post('http://localhost:3000/api/campaign/', this.input)
+        http.post('campaign/', this.input)
 
           .then((response) => {
             console.log('Success!')

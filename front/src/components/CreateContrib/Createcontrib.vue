@@ -33,6 +33,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 
 export default {
   name: 'CreateContrib',
@@ -70,7 +71,7 @@ export default {
     sendToDb () {
       // Envoyer ces infos au back
       if (this.input.name !== '' && this.input.period !== '' && this.input.user_id !== '' && this.input.department_id !== '' && this.input.limit !== '' && this.input.threshold !== '' && this.input.input !== '' && this.input.inputName !== '' && this.input.description !== '' && this.input.file !== '' && this.input.starts_at !== '' && this.input.ends_at !=='') {
-        axios.post('http://localhost:3000/api/createcontrib', this.input)
+        http.post('createcontrib', this.input)
 
           .then((response) => {
             console.log('Success!')

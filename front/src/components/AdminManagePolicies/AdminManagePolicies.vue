@@ -70,6 +70,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
@@ -101,7 +102,7 @@ export default {
       this.$router.replace({ name: 'viewer' })
     }
 
-    axios.get('http://localhost:3000/api/campaign')
+    http.get('campaign')
       .then((response) => {
         for (var i = 0; i < response.data.data.length; i++) {
           this.$data.contributions.push({
@@ -114,7 +115,7 @@ export default {
         console.log(error)
       })
 
-    axios.get('http://localhost:3000/api/createPolicies')
+    http.get('createPolicies')
       .then((response) => {
         this.$data.users = response.data.data.users
         this.$data.policies = response.data.data.policies
@@ -137,12 +138,12 @@ export default {
 
   methods: {
     addUser (user_id) {
-      axios.post('http://localhost:3000/api/createPolicies', {
+      http.post('createPolicies', {
         contribution_id: this.$data.selectedContribution,
         user_id: user_id
       })
         .then((response) => {
-          axios.get('http://localhost:3000/api/createPolicies')
+          http.get('createPolicies')
             .then((response) => {
               this.$data.users = response.data.data.users
               this.$data.policies = response.data.data.policies
@@ -156,9 +157,9 @@ export default {
     },
 
     removeUser (policy_id) {
-      axios.delete('http://localhost:3000/api/createPolicies/'+ policy_id)
+      http.delete('createPolicies/'+ policy_id)
         .then((response) => {
-          axios.get('http://localhost:3000/api/createPolicies')
+          http.get('createPolicies')
             .then((response) => {
               this.$data.users = response.data.data.users
               this.$data.policies = response.data.data.policies

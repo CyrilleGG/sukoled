@@ -16,6 +16,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
@@ -45,10 +46,10 @@ export default {
       this.$router.replace({ name: 'viewer' })
     }
 
-    axios.get('http://localhost:3000/api/contribution/'+ this.$route.query.contribution_id)
+    http.get('contribution/'+ this.$route.query.contribution_id)
       .then((response) => {
         if (response.data.data.department == 'raf') {
-          axios.get('http://localhost:3000/api/contributionRaf/'+ this.$route.query.contribution_id +'/version/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
+          http.get('contributionRaf/'+ this.$route.query.contribution_id +'/version/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
             .then((response) => {
               this.$data.data = response.data.data
             })
@@ -57,7 +58,7 @@ export default {
               console.log(error)
             })
         } else {
-          axios.get('http://localhost:3000/api/contributionFiliale/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
+          http.get('contributionFiliale/'+ this.$route.query.version_id +'/user/'+ this.$root.$data.userInfo.username)
             .then((response) => {
               this.$data.data = response.data.data
             })

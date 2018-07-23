@@ -40,6 +40,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
@@ -71,7 +72,7 @@ export default {
       this.$router.replace({ name: 'viewer' })
     }
 
-    axios.get('http://localhost:3000/api/contributor/'+ this.$root.$data.userInfo.username)
+    http.get('contributor/'+ this.$root.$data.userInfo.username)
       .then((response) => {
         for (var i = 0; i < response.data.data.waiting.length; i++) {
           this.$data.contributions.waiting = response.data.data.waiting

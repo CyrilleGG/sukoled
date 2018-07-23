@@ -16,11 +16,12 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
-        <b-nav-item class="mx-3" :to="{ path: '../viewer' }" replace>Top 20</b-nav-item>
-        <b-nav-item class="mx-3" :to="{ path: '../view/internal-rating' }" replace>Internal Rating</b-nav-item>
-        <b-nav-item class="mx-3" :to="{ path: '../view/economic-sector' }" replace>Economic sector</b-nav-item>
-        <b-nav-item class="mx-3" :to="{ path: '../view/basel-segment' }" replace>Basel segment</b-nav-item>
-        <b-nav-item class="mx-3" href="#">Highlights</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ name: 'viewer' }" replace>Top 20</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ name: 'view-internal-rating' }" replace>Internal Rating</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ name: 'view-economic-sector' }" replace>Economic sector</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ name: 'view-basel-segment' }" replace>Basel segment</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ name: 'view-business-line' }" replace>Business line</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ name: 'view-highlight' }" replace>Highlights</b-nav-item>
 
       </b-collapse>
     </b-navbar>

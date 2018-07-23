@@ -10,6 +10,8 @@ import Viewer from '@/components/Viewer/Viewer'
 import ViewInternalRating from '@/components/ViewInternalRating/ViewInternalRating'
 import ViewEconomicSector from '@/components/ViewEconomicSector/ViewEconomicSector'
 import ViewBaselSegment from '@/components/ViewBaselSegment/ViewBaselSegment'
+import ViewBusinessLine from '@/components/ViewBusinessLine/ViewBusinessLine'
+import ViewHighlight from '@/components/ViewHighlight/ViewHighlight'
 
 import Contributor from '@/components/Contributor/Contributor'
 import ContributorSendContribution from '@/components/ContributorSendContribution/ContributorSendContribution'
@@ -46,8 +48,16 @@ export default new Router({
       component: ViewEconomicSector
     }, {
       name: 'view-basel-segment',
-      path:'/view/basel-segment',
+      path: '/view/basel-segment',
       component: ViewBaselSegment
+    }, {
+      name: 'view-business-line',
+      path: '/view/business-line',
+      component:ViewBusinessLine
+    }, {
+      name: 'view-highlight',
+      path: '/view/highlight',
+      component:ViewHighlight
     }, {
       name: 'contributor',
       path: '/contributor',

@@ -4,8 +4,11 @@
  * Module dependencies.
  */
 
-const mysql = require('../../utilities/mysql')
+const mysql = require('../../utilities/mysql');
+const sendgrid = require('../../utilities/sendgrid');
 const uuidv4 = require('uuid/v4');
+
+const email = require('../../emails/newCampaign');
 
 /**
  * Create a new campaign.
@@ -33,6 +36,10 @@ module.exports = async (req, res) => {
       message: 'Internal Server Error'
     });
   }
+
+  try {
+    sendgrid.send(email(req.body.department_name));
+  } catch (err) {}
 
   return res.status(201).json({
     statusCode: 201,

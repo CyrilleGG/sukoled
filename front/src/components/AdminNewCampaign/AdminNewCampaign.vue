@@ -164,8 +164,8 @@ export default {
       input: {
         starts_at: moment().format('YYYY-MM-01T00:00:00.000') + 'Z',
         ends_at: '',
-        contributions: []
-        // message: null
+        contributions: [],
+        department_name: ''
       },
       message: null
     }
@@ -271,10 +271,11 @@ export default {
       for (var i = 0; i < contributions.length; i++) {
         http.post('campaign/', {
           contribution_id: contributions[i].contribution_id,
+          contribution_name: contributions[i].contribution_name,
           version_name: version_name,
           user_id: this.$root.$data.userInfo.user_id,
           starts_at: this.$data.input.starts_at,
-          ends_at: this.$data.input.ends_at,
+          ends_at: this.$data.input.ends_at
         })
           .then((response) => {
             this.$router.replace( {name: 'admin'} )

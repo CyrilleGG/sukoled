@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (department_name) => {
+module.exports = (contribution_name) => {
   return {
     to: 'hack@loic.io',
     from: 'hack@loic.io',
@@ -9,7 +9,7 @@ module.exports = (department_name) => {
       <br><br>
 
       Our new campaign has just been launched, and I am writing to receive your
-      <strong>monthly contribution</strong> on <strong>${department_name}</strong>.
+      <strong>monthly contribution</strong> on <strong>${contribution_name}</strong>.
       To complete our reporting and ensure the viability of information, please send us
       your contribution <strong>as soon as possible</strong>.
       <br><br>

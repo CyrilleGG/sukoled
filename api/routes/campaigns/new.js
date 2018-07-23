@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    sendgrid.send(email(req.body.department_name));
+    sendgrid.send(email(req.body.contribution_name));
   } catch (err) {}
 
   return res.status(201).json({

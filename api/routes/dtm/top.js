@@ -47,10 +47,11 @@ module.exports = async (req, res) => {
     .limit(20);
 
     companies_current.forEach(company => {
-      company.sum_mt_expo_global = company.sum_mt_expo_global / 1000000;
+      company.sum_mt_expo_global = Math.round(company.sum_mt_expo_global / 1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      company.max_mt_limite_tgr = Math.round(company.max_mt_limite_tgr / 1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     });
 
-  const total_current = await oracle('dtm')
+  let total_current = await oracle('dtm')
     .sum('MT_EXPO_GLOBAL AS sum_mt_expo_global')
     .where({
       IND_RAFGEN: '0',
@@ -71,7 +72,9 @@ module.exports = async (req, res) => {
     .groupBy('ANNEE', 'MOIS')
     .limit(20);
 
-  const total_reference = await oracle('dtm')
+    // total_current = Math.round(total_current / 1000000);
+
+  let total_reference = await oracle('dtm')
     .sum('MT_EXPO_GLOBAL AS sum_mt_expo_global')
     .where({
       IND_RAFGEN: '0',
@@ -91,6 +94,8 @@ module.exports = async (req, res) => {
     })
     .groupBy('ANNEE', 'MOIS')
     .limit(20);
+
+    // total_reference = Math.round(total_reference / 1000000);
 
   return res.status(200).json({
     statusCode: 200,

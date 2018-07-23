@@ -1,18 +1,18 @@
 <template>
 
     <tr class="view-list-item">
-        <td v-if="evolution > 0"  scope="row" class="text-success text-center text-uppercase" >{{ evolution }}</td>
+        <td v-if="evolution > 0"  scope="row" class="text-success text-center text-uppercase" >+{{ evolution }}</td>
         <td v-else-if="evolution < 0" scope="row" class="text-danger text-center text-uppercase">{{ evolution }}</td>
         <td v-else scope="row" class="text-dark text-center text-uppercase equal"> = </td>
-        <td class="text-uppercase">{{ counterparty }}</td>
-        <td class="text-center">{{ date_2 }}</td>
-        <td class="text-center">{{ date_1 }}</td>
+        <td class="text-uppercase">{{ name }}</td>
+        <td class="text-center">{{ value }}</td>
         <td class="text-center">{{ limit }}</td>
-        <td v-if="internal_rating == 'AAA' || internal_rating == 'AA+' || internal_rating == 'AA-' || internal_rating == 'AA' || internal_rating == 'A+' || internal_rating == 'A' || internal_rating == 'A-' || internal_rating == 'BBB+' || internal_rating == 'BBB' || internal_rating == 'BBB-'" class="text-center">
-            <span class="d-block text-center align-middle box-rating box-rating-green">{{ internal_rating }}</span>
+        <td v-if="!rating" class="text-center">Not rated</td>
+        <td v-else-if="rating == 'AAA' || rating == 'AA+' || rating == 'AA-' || rating == 'AA' || rating == 'A+' || rating == 'A' || rating == 'A-' || rating == 'BBB+' || rating == 'BBB' || rating == 'BBB-'" class="text-center">
+            <span class="d-block text-center align-middle box-rating box-rating-green">{{ rating }}</span>
         </td>
         <td v-else class="text-center">
-            <span class="d-block text-center align-middle box-rating box-rating-yellow">{{ internal_rating }}</span>
+            <span class="d-block text-center align-middle box-rating box-rating-yellow">{{ rating }}</span>
         </td>
     </tr>
             
@@ -29,19 +29,21 @@ export default {
   },
 
   props: [
-    'evolution',
-    'counterparty',
-    'date_2',
-    'date_1',
+    'name',
+    'value',
     'limit',
-    'internal_rating'
+    'rating'
   ],
 
   data () {
     return {
-      // c
+      evolution: null
     }
-  }
+  },
+
+  created() {
+      this.$data.evolution = Math.floor(Math.random() * 3) - 1
+  },
 }
 </script>
 
@@ -53,8 +55,7 @@ export default {
 }
 
 .view-list-item:hover {
-  background-color: #8e44ad;
-  color:white;
+  background-color: #dddddd;
 }
 
 .table td {

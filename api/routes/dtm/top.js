@@ -46,6 +46,10 @@ module.exports = async (req, res) => {
     .orderBy('SUM_MT_EXPO_GLOBAL', 'DESC')
     .limit(20);
 
+    companies_current.forEach(company => {
+      company.sum_mt_expo_global = company.sum_mt_expo_global / 1000000;
+    });
+
   const total_current = await oracle('dtm')
     .sum('MT_EXPO_GLOBAL AS sum_mt_expo_global')
     .where({

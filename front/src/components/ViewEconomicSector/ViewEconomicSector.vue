@@ -44,6 +44,11 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import { http } from '../../http'
+import moment from 'moment'
+
 import Header from '@/components/Header/Header'
 import HeaderView from '@/components/HeaderView/HeaderView'
 import Footer from '@/components/Footer/Footer'
@@ -51,87 +56,93 @@ import ViewEconomicSectorGraph from '@/components/ViewEconomicSectorGraph/ViewEc
 import ViewComment from '@/components/ViewComment/ViewComment'
 
 export default {
-    name: 'ViewEconomicSector',
+  name: 'ViewEconomicSector',
 
-    components: {
-        Header,
-        HeaderView,
-        Footer,
-        ViewEconomicSectorGraph,
-        ViewComment
-    },
+  components: {
+      Header,
+      HeaderView,
+      Footer,
+      ViewEconomicSectorGraph,
+      ViewComment
+  },
 
-    data () {
-        return {
-          comments: [
+  data () {
+    return {
+      comments: [
+        {
+          title:"Comments",
+          comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
+        }
+      ],
+      economic_graph: [
+        {
+          data: {
+            labels: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-', 'BBB', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-', 'CCC', 'CC+', 'CC', 'CC-', 'C+', 'C', 'C-', 'Default'],
+            boxWidth:2,
+            datasets: [
               {
-                  title:"Comments",
-                  comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
+                label: 'March-18',
+                backgroundColor: '#f87979',
+                data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+              }, {
+                label: 'February-18',
+                backgroundColor:'orange',
+                data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+              }, {
+                label: 'December-17',
+                backgroundColor:'lightgreen',
+                data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
               }
-          ],
-          economic_graph: [
-            {
-              data: {
-                labels: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-', 'BBB', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-', 'CCC', 'CC+', 'CC', 'CC-', 'C+', 'C', 'C-', 'Default'],
-                boxWidth:2,
-                datasets: [
-                  {
-                      label: 'March-18',
-                      backgroundColor: '#f87979',
-                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
-                  },
-                  {
-                      label: 'February-18',
-                      backgroundColor:'orange',
-                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
-                  },
-                  {
-                      label: 'December-17',
-                      backgroundColor:'lightgreen',
-                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
-                  }
-                ]
-              },
-              options :{
-                title: {
-                  display:true,
-                  text: 'Distribution of grades',
-                  fontSize:'15'
+            ]
+          },
+          options :{
+            title: {
+              display:true,
+              text: 'Distribution of grades',
+              fontSize:'15'
+            },
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  offsetGridLines: true
                 },
-                scales: {
-                  xAxes: [{
-                    gridLines: {
-                      offsetGridLines: true
-                    },
-                    stacked:false
-                  }],
-                  yAxes: [{
-                    categoryPercentage: 0.5,
-                    barPercentage: 0.8,
-                    gridLines: {
-                      offsetGridLines: true,
-                      display:false
-                    },
-                    // barThickness:7,
-                    stacked:false
-                  }]
+                stacked:false
+              }],
+              yAxes: [{
+                categoryPercentage: 0.5,
+                barPercentage: 0.8,
+                gridLines: {
+                  offsetGridLines: true,
+                  display:false
                 },
-                cornerRadius:20,
-                responsive: true,
-                maintainAspectRatio: true,
-              },
-            }
-          ]
+                // barThickness:7,
+                stacked:false
+              }]
+            },
+            cornerRadius:20,
+            responsive: true,
+            maintainAspectRatio: true,
+          },
         }
-    },
-
-    created () {
-        if (!this.$parent.$data.auth) {
-        this.$router.replace({ name: 'login' })
-        } else if (this.$root.$data.userInfo.role == 'contrib') {
-        this.$router.replace({ name: 'contributor' })
-        }
+      ]
     }
+  },
+
+  created () {
+    if (!this.$parent.$data.auth) {
+    this.$router.replace({ name: 'login' })
+    } else if (this.$root.$data.userInfo.role == 'contrib') {
+    this.$router.replace({ name: 'contributor' })
+    }
+
+    http.get('dtm/breakdown/sector/'+ moment().year() +'/'+ moment().subtract(1, 'months').month())
+      .then(response => {
+        console.log(response.data.data)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 }
 </script>
 

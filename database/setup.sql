@@ -1,12 +1,3 @@
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
 # Dump of table contributions
 # ------------------------------------------------------------
 
@@ -15,14 +6,17 @@ DROP TABLE IF EXISTS `contributions`;
 CREATE TABLE `contributions` (
   `id` varchar(36) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
-  `period` enum('monthly','quaterly') NOT NULL DEFAULT 'monthly',
+  `period` enum('monthly','quarterly') NOT NULL,
   `order` smallint(6) NOT NULL,
   `limit` smallint(6) DEFAULT NULL,
   `threshold` smallint(6) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `department_id` varchar(36) NOT NULL DEFAULT '',
   `user_id` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `unit` enum('percent','million','billion','bp') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `department_id` (`department_id`),
+  CONSTRAINT `contributions_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -34,12 +28,13 @@ DROP TABLE IF EXISTS `contributions_inputs`;
 
 CREATE TABLE `contributions_inputs` (
   `id` varchar(36) NOT NULL DEFAULT '',
-  `input_type` enum('smalltext','longtext','number','file') NOT NULL,
+  `input_type` enum('textarea','text','file') NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text,
   `priority` smallint(6) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `contribution_id` varchar(36) NOT NULL DEFAULT '',
+  `slug` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `contribution_id` (`contribution_id`),
   CONSTRAINT `contributions_inputs_ibfk_1` FOREIGN KEY (`contribution_id`) REFERENCES `contributions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -118,9 +113,9 @@ CREATE TABLE `dtm` (
   `IND_INTGPE` int(11) DEFAULT NULL,
   `IND_GBP` int(11) DEFAULT NULL,
   `IND_GCE` int(11) DEFAULT NULL,
-  `IND_RAFGEN` int(11) DEFAULT NULL,
-  `IND_RAFMDO` int(11) DEFAULT NULL,
-  `IND_RAFPOOL` int(11) DEFAULT NULL,
+  `IND_RAFGEN` tinyint(1) DEFAULT NULL,
+  `IND_RAFMDO` smallint(6) DEFAULT NULL,
+  `IND_RAFPOOL` tinyint(1) DEFAULT NULL,
   `IND_BAL2` varchar(255) DEFAULT NULL,
   `CD_ACTIVITE_NIV2` varchar(255) DEFAULT NULL,
   `LB_ACTIVITE_NIV2` varchar(255) DEFAULT NULL,
@@ -206,6 +201,29 @@ CREATE TABLE `dtm` (
 
 
 
+# Dump of table files
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `files`;
+
+CREATE TABLE `files` (
+  `id` varchar(36) NOT NULL DEFAULT '',
+  `name` varchar(255) DEFAULT NULL,
+  `binary` blob NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `version_id` varchar(36) NOT NULL DEFAULT '',
+  `contribution_id` varchar(36) NOT NULL,
+  `user_id` text NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `contribution_id` (`contribution_id`),
+  KEY `version_id` (`version_id`),
+  CONSTRAINT `files_ibfk_1` FOREIGN KEY (`contribution_id`) REFERENCES `contributions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `files_ibfk_2` FOREIGN KEY (`version_id`) REFERENCES `versions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Dump of table policies
 # ------------------------------------------------------------
 
@@ -234,30 +252,21 @@ DROP TABLE IF EXISTS `versions`;
 CREATE TABLE `versions` (
   `id` varchar(36) NOT NULL DEFAULT '',
   `name` varchar(255) DEFAULT NULL,
-  `status_admin` enum('done','progress','hold','delivered') NOT NULL,
-  `status_contributor` enum('done','pending','not delivered','invalid') DEFAULT NULL,
-  `starts_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:01',
-  `ends_at` timestamp NOT NULL DEFAULT '1970-01-01 00:00:01',
+  `status_admin` enum('done','progress','hold','delivered','closed') NOT NULL,
+  `status_contributor` enum('done','pending','not delivered','invalid','closed') NOT NULL,
+  `starts_at` datetime DEFAULT NULL,
+  `ends_at` datetime DEFAULT NULL,
   `comment_contributor` text,
   `comment_admin` text,
   `highlight` text,
-  `file_binary` bit(64) NOT NULL,
+  `file_binary` blob NOT NULL,
   `file_csv` bit(64) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `parent_version_id` varchar(36) DEFAULT '',
   `contribution_id` varchar(36) NOT NULL,
   `user_id` text NOT NULL,
+  `file_json` json NOT NULL,
   PRIMARY KEY (`id`),
   KEY `contribution_id` (`contribution_id`),
   CONSTRAINT `versions_ibfk_2` FOREIGN KEY (`contribution_id`) REFERENCES `contributions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

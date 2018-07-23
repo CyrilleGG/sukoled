@@ -31,6 +31,10 @@ module.exports = async (req, res) => {
     .whereNotIn('CD_REGRP_ACT_ECO_INT', ['', 'ZZZ'])
     .groupBy('CD_REGRP_ACT_ECO_INT');
 
+    breakdown.forEach(sector => {
+      sector.mt_expo_global = Math.round(sector.mt_expo_global / 1000000);
+    });
+
   return res.status(200).json({
     statusCode: 200,
     message: 'Ok',

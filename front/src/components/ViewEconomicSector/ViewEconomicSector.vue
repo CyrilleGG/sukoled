@@ -7,7 +7,7 @@
     <div class="row py-5 page-content">
       <div class="col-lg-10 mx-auto">
 
-        <div class="row mb-5">
+        <div class="row mb-4">
           <h2 class="col-lg-12 pl-0 text-uppercase">Breakdown by economic sector</h2>
 
           <div class="w-100"></div>
@@ -16,7 +16,7 @@
 
         <div class="row graph-row">
           <div class="col-lg-12 graph border">
-            <view-economic-sector-graph
+            <view-economic-sector-graph v-if="data !== null"
               v-for="(graph, index) in economic_graph"
               v-bind:key="index"
               v-bind:data="graph.data"
@@ -68,6 +68,7 @@ export default {
 
   data () {
     return {
+      data: null,
       comments: [
         {
           title:"Comments",
@@ -77,25 +78,25 @@ export default {
       economic_graph: [
         {
           data: {
-            labels: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-', 'BBB', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-', 'CCC', 'CC+', 'CC', 'CC-', 'C+', 'C', 'C-', 'Default'],
+            labels: [],
             boxWidth:2,
             datasets: [
               {
                 label: 'March-18',
                 backgroundColor: '#f87979',
-                data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                data:[]
               }, {
                 label: 'February-18',
                 backgroundColor:'orange',
-                data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                data:[]
               }, {
                 label: 'December-17',
                 backgroundColor:'lightgreen',
-                data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                data:[]
               }
             ]
           },
-          options :{
+          options: {
             title: {
               display:true,
               text: 'Distribution of grades',
@@ -119,6 +120,13 @@ export default {
                 stacked:false
               }]
             },
+            tooltips: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return tooltipItem.xLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' million euros'
+                }
+              }
+            },
             cornerRadius:20,
             responsive: true,
             maintainAspectRatio: true,
@@ -137,7 +145,37 @@ export default {
 
     http.get('dtm/breakdown/sector/'+ moment().year() +'/'+ moment().subtract(1, 'months').month())
       .then(response => {
-        console.log(response.data.data)
+        const sectors = response.data.data
+        sectors.forEach(sector => {
+          this.$data.economic_graph[0].data.labels.push(sector.lb_regrp_act_eco_int)
+          this.$data.economic_graph[0].data.datasets[0].label = moment().subtract(2, 'months').format('MMMM-YY')
+          this.$data.economic_graph[0].data.datasets[0].data.push(sector.mt_expo_global)
+        });
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    
+    http.get('dtm/breakdown/sector/'+ moment().year() +'/'+ moment().subtract(2, 'months').month())
+      .then(response => {
+        const sectors = response.data.data
+        sectors.forEach(sector => {
+          this.$data.economic_graph[0].data.datasets[1].label = moment().subtract(3, 'months').format('MMMM-YY')
+          this.$data.economic_graph[0].data.datasets[1].data.push(sector.mt_expo_global)
+        });
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    
+    http.get('dtm/breakdown/sector/'+ moment().subtract(1, 'years').year() +'/'+ moment().month(11).format('MM'))
+      .then(response => {
+        const sectors = response.data.data
+        sectors.forEach(sector => {
+          this.$data.economic_graph[0].data.datasets[2].label = moment().subtract(1, 'years').month(11).format('MMMM-YY')
+          this.$data.economic_graph[0].data.datasets[2].data.push(sector.mt_expo_global)
+        });
+        this.$data.data = response.data.data[0].lb_regrp_act_eco_int
       })
       .catch(error => {
         console.log(error)

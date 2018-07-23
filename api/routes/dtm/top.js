@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const oracle = require('../../utilities/oracle')
+const oracle = require('../../utilities/oracle');
 
 /**
  * DTM Top 20.

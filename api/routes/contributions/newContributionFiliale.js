@@ -29,13 +29,21 @@ module.exports = async (req, res) => {
         user_id: req.body.user_id
       })
     }
-  }
+  };
+
   if (req.body.files_names !== '') {
     const files_names = req.body.files_names.split(',');
     for (var i = 0; i < files_names.length; i++) {
       files[i]['name'] = files_names[i]
     }
-  }
+  };
+
+  if (req.body.files_types !== '') {
+    const files_types = req.body.files_types.split(',');
+    for (var i = 0; i < files_types.length; i++) {
+      files[i]['type'] = files_types[i]
+    }
+  };
 
   let newVersion;
   let newFiles;
@@ -67,6 +75,15 @@ module.exports = async (req, res) => {
         parent_version_id: req.params.version_id,
         user_id: req.body.user_id
       });
+  } catch (err) {
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Internal Server Error'
+    });
+  }
+
+  try {
+    newFiles = await mysql.batchInsert('files', files)
   } catch (err) {
     return res.status(500).json({
       statusCode: 500,

@@ -18,9 +18,9 @@ module.exports = async (version_id) => {
       .where({
         'version_id': version_id
       })
-      .select('id as file_id', 'name AS file_name', 'binary AS file_binary');
+      .select('id as file_id', 'name AS file_name', 'binary AS file_binary', 'type AS file_type');
   } catch (err) {
-    return '';
+    return files;
   }
 
   return files;

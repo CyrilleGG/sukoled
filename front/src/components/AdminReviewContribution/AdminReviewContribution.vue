@@ -65,8 +65,16 @@
           <div v-if="data.input.highlight !== null" class="col-lg-12">
             <div class="row">
               <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Elements added for this contribution</p>
-              <p v-if="data.input.highlight == '' || data.input.highlight == null" class="col-lg-12 pl-0 text-danger">The contributor didn't upload any additional element for this contribution</p>
-              <p v-else class="col-lg-12 mb-3 pl-0 light">{{ data.input.highlight }}</p>
+              <div class="col-lg-12 my-2" v-if="data.input.additionalFiles.length > 0">
+                <div v-for="(file, index) in data.input.additionalFiles" class="mb-2" :key="index">
+                  <img v-if="file.file_type == 'image/png' || file.file_type == 'image/jpeg' || file.file_type == 'image/svg+xml'" :id="index" :alt="file.name">
+                  <div v-else>
+                    <img src="@/assets/icons/file.png" class="d-inline-block icon" height="35px" alt="Additional file">
+                    <p class="d-inline-block ml-3">{{ file.name }}</p>
+                  </div>
+                </div>
+              </div>
+              <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't upload any additional element for this contribution</p>
             </div>
           </div>
 
@@ -170,6 +178,12 @@ export default {
     }
   },
 
+  mounted() {
+    setTimeout(() => {
+      this.readFiles()
+    }, 100);
+  },
+
   methods: {
     month () {
       return moment().subtract(1, 'months').format('MMMM')
@@ -177,6 +191,21 @@ export default {
 
     lastMonth () {
       return moment().subtract(2, 'months').format('MMMM')
+    },
+
+    readFiles () {
+      const files = this.$data.data.input.additionalFiles
+
+      files.forEach((file, i) => {
+        if (file.file_type == 'image/png' || file.file_type == 'image/jpeg' || file.file_type == 'image/svg+xml') {
+          var binary = file.file_binary
+          var type = file.file_type
+          var url = "data:" + type + ';base64,/' + binary
+          var output = document.getElementById(i)
+          
+          output.src = url
+        }
+      })
     },
 
     displayComment () {

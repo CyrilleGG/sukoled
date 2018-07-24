@@ -145,6 +145,8 @@ module.exports = async (req, res) => {
   breakdown_current.forEach(line => {
     line.sum_mt_expo_global = line.sum_mt_expo_global / 1000000;
     total_current += line.sum_mt_expo_global;
+    line.sum_mt_expo_global = Math.round(line.sum_mt_expo_global).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    total_current = Math.round(total_current);
 
     if (line.ind_core_business == 'CIB') {
       if (line.ind_business_line == 'Global Market') {
@@ -157,6 +159,8 @@ module.exports = async (req, res) => {
   breakdown_previous.forEach(line => {
     line.sum_mt_expo_global = line.sum_mt_expo_global / 1000000;
     total_previous += line.sum_mt_expo_global;
+    line.sum_mt_expo_global = Math.round(line.sum_mt_expo_global).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    total_previous = Math.round(total_previous);
 
     if (line.ind_core_business == 'CIB') {
       if (line.ind_business_line == 'Global Market') {
@@ -169,6 +173,8 @@ module.exports = async (req, res) => {
   breakdown_reference.forEach(line => {
     line.sum_mt_expo_global = line.sum_mt_expo_global / 1000000;
     total_reference += line.sum_mt_expo_global;
+    line.sum_mt_expo_global = Math.round(line.sum_mt_expo_global).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    total_reference = Math.round(total_reference);
 
     if (line.ind_core_business == 'CIB') {
       if (line.ind_business_line == 'Global Market') {

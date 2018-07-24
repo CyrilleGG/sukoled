@@ -18,7 +18,8 @@
         <div class="row">
           <div class="col-lg-9 pl-0">
 
-            <view-top-20-list v-bind:top_companies="top_companies" v-bind:results="results" />
+            <p v-if="results == null">Loading...</p>
+            <view-top-20-list v-else v-bind:top_companies="top_companies" v-bind:results="results" />
 
           </div>
           <div class="col-lg-3">

@@ -8,37 +8,26 @@
                 <tr>
                     <th scope="col" class="text-center text-uppercase">Evolution</th>
                     <th scope="col" class="text-uppercase">Counterparty</th>
-                    <th
-                        v-for="(date, index) in dates"
-                        v-bind:key="index"
-                        v-bind:date="date.date"
-                    >
-                        <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }}</div>
-                    </th>
+                    <th v-if="top_companies !== null" scope="col" class="text-center">{{ currentMonth () }}</th>
                     <th scope="col" class="text-uppercase text-center">Limit</th>
                     <th scope="col" class="text-uppercase text-center">Internal Rating</th>
                 </tr>
             </thead>
             <tbody>
                 <view-top-20-list-item
-                    v-for="(top20, index) in top20s"
+                    v-for="(company, index) in top_companies"
                     v-bind:key="index"
-                    v-bind:evolution="top20.evolution"
-                    v-bind:counterparty="top20.counterparty"
-                    v-bind:date_2="top20.date_2"
-                    v-bind:date_1="top20.date_1"
-                    v-bind:limit="top20.limit"
-                    v-bind:internal_rating="top20.internal_rating"
+                    v-bind:name="company.lb_raf_tet"
+                    v-bind:value="company.sum_mt_expo_global"
+                    v-bind:limit="company.max_mt_limite_tgr"
+                    v-bind:rating="company.cd_note_int_like_sp_raf_tet"
                 />
                 <tr class="view-list-item">
-                    <td/>
+                    <td></td>
                     <td>Total</td>
-                    <view-top-20-list-bottom-item
-                        v-for="(result, index) in total"
-                        v-bind:key="index"
-                        v-bind:result="result.result"
-                    />
-                    <td/>
+                    <td v-if="results !== null" class="text-center">{{ results.current }}</td>
+                    <td></td>
+                    <td></td>
                 </tr>
 
             </tbody>
@@ -51,28 +40,26 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 import ViewTop20ListItem from '@/components/ViewTop20ListItem/ViewTop20ListItem'
-import ViewTop20ListBottomItem from '@/components/ViewTop20ListBottomItem/ViewTop20ListBottomItem'
 
 export default {
     name: 'ViewTop20List',
 
     components: {
-        ViewTop20ListItem,
-        ViewTop20ListBottomItem
+        ViewTop20ListItem
     },
 
     props: [
-        'dates',
-        'top20s',
-        'total'
+        'top_companies',
+        'results'
     ],
 
   methods: {
-    moment (date) {
-      return moment(date).format('MMMM-YY')
+    currentMonth () {
+      return moment().subtract(1, 'months').format('MMMM-YY')
     }
   }
 }

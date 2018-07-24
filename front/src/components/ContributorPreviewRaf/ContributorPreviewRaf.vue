@@ -56,6 +56,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 export default {
@@ -80,7 +81,7 @@ export default {
 
     sendContribution () {
       const inputs = this.$props.inputs
-      axios.post('http://localhost:3000/api/contributionRaf/'+ inputs.version_id, inputs)
+      http.post('contributionRaf/'+ inputs.version_id, inputs)
         .then((response) => {
           this.$router.replace( {name: 'contributor'} )
         })

@@ -122,6 +122,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 import Header from '@/components/Header/Header'
@@ -157,7 +158,7 @@ export default {
     const department_slug = this.$route.query.department_slug
 
     if (department_slug == 'raf') {
-      axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
+      http.get('inputs/'+ contribution_id +'/version/'+ version_id)
         .then((response) => {
           this.$data.data = response.data.data
         })
@@ -166,7 +167,7 @@ export default {
           console.log(error)
         })
     } else if (department_slug == 'subsidaries') {
-      axios.get('http://localhost:3000/api/versionView/'+ contribution_id +'/version/'+ version_id)
+      http.get('versionView/'+ contribution_id +'/version/'+ version_id)
         .then((response) => {
           this.$data.data = response.data.data
           this.$data.data.input.version_file = JSON.parse(this.$data.data.input.version_file)
@@ -257,7 +258,7 @@ export default {
     },
 
     sendModificationRequest () {
-      axios.post('http://localhost:3000/api/versionRefused/'+ this.$route.query.version_id +'/'+ this.$route.query.contribution_id, {
+      http.post('versionRefused/'+ this.$route.query.version_id +'/'+ this.$route.query.contribution_id, {
         user_id: this.$root.$data.userInfo.user_id,
         comment_admin: this.$data.comment_admin,
         input_value_id: this.$data.data.input.input_value_id
@@ -271,7 +272,7 @@ export default {
     },
 
     acceptContribution () {
-      axios.patch('http://localhost:3000/api/versionValidate/'+ this.$route.query.version_id)
+      http.patch('versionValidate/'+ this.$route.query.version_id)
         .then((response) => {
           this.$router.replace({ name: 'admin' })
         })
@@ -283,7 +284,7 @@ export default {
     submitContribution () {
       const input = this.$data.data.input
       
-      axios.patch('http://localhost:3000/api/versionSubmit/'+ this.$route.query.version_id, input)
+      http.patch('versionSubmit/'+ this.$route.query.version_id, input)
         .then((response) => {
           this.$router.replace({ name: 'admin' })
         })

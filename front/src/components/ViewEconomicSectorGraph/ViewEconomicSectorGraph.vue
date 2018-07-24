@@ -12,7 +12,9 @@ export default {
         }
     },
     mounted () {
-        this.renderChart(this.data, this.options)
+        setTimeout(() => {
+            this.renderChart(this.data, this.options)
+        }, 1);
     },
 }
 </script>

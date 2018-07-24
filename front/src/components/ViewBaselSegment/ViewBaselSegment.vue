@@ -99,6 +99,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 import Header from '@/components/Header/Header'

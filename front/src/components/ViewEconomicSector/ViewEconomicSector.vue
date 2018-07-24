@@ -7,7 +7,7 @@
     <div class="row py-5 page-content">
       <div class="col-lg-10 mx-auto">
 
-        <div class="row mb-5">
+        <div class="row mb-4">
           <h2 class="col-lg-12 pl-0 text-uppercase">Breakdown by economic sector</h2>
 
           <div class="w-100"></div>
@@ -16,7 +16,7 @@
 
         <div class="row graph-row">
           <div class="col-lg-12 graph border">
-            <view-economic-sector-graph
+            <view-economic-sector-graph v-if="data !== null"
               v-for="(graph, index) in economic_graph"
               v-bind:key="index"
               v-bind:data="graph.data"
@@ -44,6 +44,11 @@
 </template>
 
 <script>
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import { http } from '../../http'
+import moment from 'moment'
+
 import Header from '@/components/Header/Header'
 import HeaderView from '@/components/HeaderView/HeaderView'
 import Footer from '@/components/Footer/Footer'
@@ -51,87 +56,131 @@ import ViewEconomicSectorGraph from '@/components/ViewEconomicSectorGraph/ViewEc
 import ViewComment from '@/components/ViewComment/ViewComment'
 
 export default {
-    name: 'ViewEconomicSector',
+  name: 'ViewEconomicSector',
 
-    components: {
-        Header,
-        HeaderView,
-        Footer,
-        ViewEconomicSectorGraph,
-        ViewComment
-    },
+  components: {
+      Header,
+      HeaderView,
+      Footer,
+      ViewEconomicSectorGraph,
+      ViewComment
+  },
 
-    data () {
-        return {
-          comments: [
+  data () {
+    return {
+      data: null,
+      comments: [
+        {
+          title:"Comments",
+          comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of March 2018 (compared to 16.7% as of end of February 2018)."
+        }
+      ],
+      economic_graph: [
+        {
+          data: {
+            labels: [],
+            boxWidth:2,
+            datasets: [
               {
-                  title:"Comments",
-                  comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
+                label: 'March-18',
+                backgroundColor: '#f87979',
+                data:[]
+              }, {
+                label: 'February-18',
+                backgroundColor:'orange',
+                data:[]
+              }, {
+                label: 'December-17',
+                backgroundColor:'lightgreen',
+                data:[]
               }
-          ],
-          economic_graph: [
-            {
-              data: {
-                labels: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-', 'BBB', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-', 'CCC', 'CC+', 'CC', 'CC-', 'C+', 'C', 'C-', 'Default'],
-                boxWidth:2,
-                datasets: [
-                  {
-                      label: 'March-18',
-                      backgroundColor: '#f87979',
-                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
-                  },
-                  {
-                      label: 'February-18',
-                      backgroundColor:'orange',
-                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
-                  },
-                  {
-                      label: 'December-17',
-                      backgroundColor:'lightgreen',
-                      data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
-                  }
-                ]
-              },
-              options :{
-                title: {
-                  display:true,
-                  text: 'Distribution of grades',
-                  fontSize:'15'
+            ]
+          },
+          options: {
+            title: {
+              display:true,
+              text: 'Distribution of grades',
+              fontSize:'15'
+            },
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  offsetGridLines: true
                 },
-                scales: {
-                  xAxes: [{
-                    gridLines: {
-                      offsetGridLines: true
-                    },
-                    stacked:false
-                  }],
-                  yAxes: [{
-                    categoryPercentage: 0.5,
-                    barPercentage: 0.8,
-                    gridLines: {
-                      offsetGridLines: true,
-                      display:false
-                    },
-                    // barThickness:7,
-                    stacked:false
-                  }]
+                stacked:false
+              }],
+              yAxes: [{
+                categoryPercentage: 0.5,
+                barPercentage: 0.8,
+                gridLines: {
+                  offsetGridLines: true,
+                  display:false
                 },
-                cornerRadius:20,
-                responsive: true,
-                maintainAspectRatio: true,
-              },
-            }
-          ]
+                // barThickness:7,
+                stacked:false
+              }]
+            },
+            tooltips: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return tooltipItem.xLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' million euros'
+                }
+              }
+            },
+            cornerRadius:20,
+            responsive: true,
+            maintainAspectRatio: true,
+          },
         }
-    },
-
-    created () {
-        if (!this.$parent.$data.auth) {
-        this.$router.replace({ name: 'login' })
-        } else if (this.$root.$data.userInfo.role == 'contrib') {
-        this.$router.replace({ name: 'contributor' })
-        }
+      ]
     }
+  },
+
+  created () {
+    if (!this.$parent.$data.auth) {
+    this.$router.replace({ name: 'login' })
+    } else if (this.$root.$data.userInfo.role == 'contrib') {
+    this.$router.replace({ name: 'contributor' })
+    }
+
+    http.get('dtm/breakdown/sector/'+ moment().year() +'/'+ moment().subtract(1, 'months').month())
+      .then(response => {
+        const sectors = response.data.data
+        sectors.forEach(sector => {
+          this.$data.economic_graph[0].data.labels.push(sector.lb_regrp_act_eco_int)
+          this.$data.economic_graph[0].data.datasets[0].label = moment().subtract(2, 'months').format('MMMM-YY')
+          this.$data.economic_graph[0].data.datasets[0].data.push(sector.mt_expo_global)
+        });
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    
+    http.get('dtm/breakdown/sector/'+ moment().year() +'/'+ moment().subtract(2, 'months').month())
+      .then(response => {
+        const sectors = response.data.data
+        sectors.forEach(sector => {
+          this.$data.economic_graph[0].data.datasets[1].label = moment().subtract(3, 'months').format('MMMM-YY')
+          this.$data.economic_graph[0].data.datasets[1].data.push(sector.mt_expo_global)
+        });
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    
+    http.get('dtm/breakdown/sector/'+ moment().subtract(1, 'years').year() +'/'+ moment().month(11).format('MM'))
+      .then(response => {
+        const sectors = response.data.data
+        sectors.forEach(sector => {
+          this.$data.economic_graph[0].data.datasets[2].label = moment().subtract(1, 'years').month(11).format('MMMM-YY')
+          this.$data.economic_graph[0].data.datasets[2].data.push(sector.mt_expo_global)
+        });
+        this.$data.data = response.data.data[0].lb_regrp_act_eco_int
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 }
 </script>
 

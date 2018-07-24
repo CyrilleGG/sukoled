@@ -81,6 +81,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 export default {
@@ -203,7 +204,7 @@ export default {
         // Envoyer les valeurs des inputs au back
         if (self.$props.inputs.excel !== null) {
 
-          axios.post('http://localhost:3000/api/contributionFiliale/' + version_id, data,
+          http.post('contributionFiliale/' + version_id, data,
           {
             headers: {
               'Content-Type': 'multipart/form-data'

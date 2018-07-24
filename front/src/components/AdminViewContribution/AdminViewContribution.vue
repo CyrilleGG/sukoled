@@ -55,6 +55,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 import Header from '@/components/Header/Header'
@@ -87,7 +88,7 @@ export default {
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
 
-    axios.get('http://localhost:3000/api/inputs/'+ contribution_id +'/version/'+ version_id)
+    http.get('inputs/'+ contribution_id +'/version/'+ version_id)
       .then((response) => {
         this.$data.data = response.data.data
       })

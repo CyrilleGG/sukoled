@@ -72,7 +72,7 @@ export default {
       comments: [
         {
           title:"Comments",
-          comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
+          comment:"The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of March 2018 (compared to 16.7% as of end of February 2018)."
         }
       ],
       economic_graph: [

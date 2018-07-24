@@ -22,6 +22,7 @@
         <b-nav-item class="mx-3" :to="{ name: 'view-basel-segment' }" replace>Basel segment</b-nav-item>
         <b-nav-item class="mx-3" :to="{ name: 'view-business-line' }" replace>Business line</b-nav-item>
         <b-nav-item class="mx-3" :to="{ name: 'view-highlight' }" replace>Highlights</b-nav-item>
+        <b-nav-item class="mx-3" :to="{ name: 'view-lease' }" replace>Lease</b-nav-item>
 
       </b-collapse>
     </b-navbar>

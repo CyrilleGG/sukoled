@@ -16,7 +16,8 @@
 
         <div class="row graph-row">
           <div class="col-lg-12 graph border">
-            <view-economic-sector-graph v-if="data !== null"
+            <p v-if="data == null">Loading...</p>
+            <view-economic-sector-graph v-else
               v-for="(graph, index) in economic_graph"
               v-bind:key="index"
               v-bind:data="graph.data"

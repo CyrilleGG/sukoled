@@ -17,7 +17,8 @@
         
         <div class="row">
           <div class="col-lg-7 pl-0">
-                <table class="table table-striped border">
+                <p v-if="total.current == null">Loading...</p>
+                <table v-else class="table table-striped border">
                     <thead>
                         <tr>
                             <th scope="col"></th>
@@ -25,9 +26,8 @@
                             <th
                                 v-for="(date, index) in dates"
                                 v-bind:key="index"
-                                v-bind:date="date.date"
                             >
-                                <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }}</div>
+                                <div scope="col" class="text-uppercase text-center"> {{ date }}</div>
                             </th>
                         </tr>
                     </thead>
@@ -37,108 +37,63 @@
                         <tr>
                             <td rowspan="10" class="text-center table-title rotate"> <div>CIB</div> </td>
                         </tr>
-                        <tr
-                            v-for="(cib, index) in cibs"
-                            v-bind:key="index"
-                            v-bind:business_name="cib.business_name"
-                            v-bind:info_3="cib.info_3"
-                            v-bind:info_2="cib.info_2"
-                            v-bind:info_1="cib.info_1"
-                        >
-                            <td class="text-left"> {{ cib.business_name }} </td>
-                            <td class="text-center"> {{ cib.info_3 }} </td>
-                            <td class="text-center"> {{ cib.info_2 }} </td>
-                            <td class="text-center"> {{ cib.info_1 }} </td>
+                        <tr v-for="(cib, cibindex) in cibs.current" v-bind:key="'cib'+cibindex">
+                            <td class="text-left"> {{ cib.ind_business_line }} </td>
+                            <td class="text-center"> {{ cib.sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ cibs.previous[cibindex].sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ cibs.reference[cibindex].sum_mt_expo_global }} </td>
                         </tr>
+
+
                         <tr>
                             <td rowspan="4" class="text-center table-title rotate"> <div>SFS</div> </td>
                         </tr>
-
-
-                        <tr
-                            v-for="(sfs, index) in sfss"
-                            v-bind:key="index"
-                            v-bind:business_name="sfs.business_name"
-                            v-bind:info_3="sfs.info_3"
-                            v-bind:info_2="sfs.info_2"
-                            v-bind:info_1="sfs.info_1"
-                        >
-                            <td class="text-left"> {{ sfs.business_name }} </td>
-                            <td class="text-center"> {{ sfs.info_3 }} </td>
-                            <td class="text-center"> {{ sfs.info_2 }} </td>
-                            <td class="text-center"> {{ sfs.info_1 }} </td>
+                        <tr v-for="(sfs, sfsindex) in sfss.current" v-bind:key="'sfs'+sfsindex">
+                            <td class="text-left"> {{ sfs.ind_business_line }} </td>
+                            <td class="text-center"> {{ sfs.sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ sfss.previous[sfsindex].sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ sfss.reference[sfsindex].sum_mt_expo_global }} </td>
                         </tr>
 
 
-                        <tr
-                            v-for="(insurance, index) in insurances"
-                            v-bind:key="index"
-                            v-bind:info_3="insurance.info_3"
-                            v-bind:info_2="insurance.info_2"
-                            v-bind:info_1="insurance.info_1"
-                        >
-                            <td colspan="2" class="table-title text-left"> Insurance </td>                            
-                            <td class="text-center"> {{ insurance.info_3 }} </td>
-                            <td class="text-center"> {{ insurance.info_2 }} </td>
-                            <td class="text-center"> {{ insurance.info_1 }} </td>
+                        <tr v-for="(insurance, insuranceindex) in insurances.current" v-bind:key="'insurance'+insuranceindex">
+                            <td colspan="2" class="table-title text-left"> Insurance </td>
+                            <td class="text-center"> {{ insurance.sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ insurances.previous[insuranceindex].sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ insurances.reference[insuranceindex].sum_mt_expo_global }} </td>
                         </tr>
                         
 
-                        <tr
-                            v-for="(awm, index) in awms"
-                            v-bind:key="index"
-                            v-bind:info_3="awm.info_3"
-                            v-bind:info_2="awm.info_2"
-                            v-bind:info_1="awm.info_1"
-                        >
-                            <td colspan="2" class="table-title text-left"> AWM </td>                            
-                            <td class="text-center"> {{ awm.info_3 }} </td>
-                            <td class="text-center"> {{ awm.info_2 }} </td>
-                            <td class="text-center"> {{ awm.info_1 }} </td>
+                        <tr v-for="(awm, awmindex) in awms.current" v-bind:key="'awm'+awmindex">
+                            <td colspan="2" class="table-title text-left"> AWM </td>
+                            <td class="text-center"> {{ awm.sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ awms.previous[awmindex].sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ awms.reference[awmindex].sum_mt_expo_global }} </td>
                         </tr>
 
 
-                        <tr
-                            v-for="(coface, index) in cofaces"
-                            v-bind:key="index"
-                            v-bind:info_3="coface.info_3"
-                            v-bind:info_2="coface.info_2"
-                            v-bind:info_1="coface.info_1"
-                        >
-                            <td colspan="2" class="table-title text-left"> Coface </td>                            
-                            <td class="text-center"> {{ coface.info_3 }} </td>
-                            <td class="text-center"> {{ coface.info_2 }} </td>
-                            <td class="text-center"> {{ coface.info_1 }} </td>
+                        <tr v-for="(coface, cofaceindex) in cofaces.current" v-bind:key="'coface'+cofaceindex">
+                            <td colspan="2" class="table-title text-left"> Coface </td>
+                            <td class="text-center"> {{ coface.sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ cofaces.previous[cofaceindex].sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ cofaces.reference[cofaceindex].sum_mt_expo_global }} </td>
                         </tr>
                         
                         
-                        <tr
-                            v-for="(act, index) in other_activities"
-                            v-bind:key="index"
-                            v-bind:info_3="act.info_3"
-                            v-bind:info_2="act.info_2"
-                            v-bind:info_1="act.info_1"
-                        >
-                            <td colspan="2" class="table-title text-left"> Other Activities </td>                            
-                            <td class="text-center"> {{ act.info_3 }} </td>
-                            <td class="text-center"> {{ act.info_2 }} </td>
-                            <td class="text-center"> {{ act.info_1 }} </td>
+                        <tr v-for="(other, otherindex) in other_activities.current" v-bind:key="'other'+otherindex">
+                            <td colspan="2" class="table-title text-left"> Insurance </td>
+                            <td class="text-center"> {{ other.sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ other_activities.previous[otherindex].sum_mt_expo_global }} </td>
+                            <td class="text-center"> {{ other_activities.reference[otherindex].sum_mt_expo_global }} </td>
                         </tr>
 
 
-                        <tr
-                            v-for="(tot, index) in total"
-                            v-bind:key="index"
-                            v-bind:business_name="tot.business_name"
-                            v-bind:info_3="tot.info_3"
-                            v-bind:info_2="tot.info_2"
-                            v-bind:info_1="tot.info_1"
-                        >
+                        <tr>
                             <td class="text-center"></td>
-                            <td class="text-center"> {{ tot.business_name }} </td>
-                            <td class="text-center"> {{ tot.info_3 }} </td>
-                            <td class="text-center"> {{ tot.info_2 }} </td>
-                            <td class="text-center"> {{ tot.info_1 }} </td>
+                            <td class="text-center">Total</td>
+                            <td class="text-center">{{ total.current }}</td>
+                            <td class="text-center">{{ total.previous }}</td>
+                            <td class="text-center">{{ total.reference }}</td>
                         </tr>
 
 
@@ -166,6 +121,7 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
 
 import Header from '@/components/Header/Header'
@@ -192,127 +148,45 @@ export default {
             }
         ],
         dates: [
-            {
-                date:"2018-03-01 00:00:00"
-            },
-            {
-                date:"2018-02-01 00:00:00"
-            },
-            {
-                date:"2017-12-01 00:00:00"
-            }
+            moment().subtract(2, 'months').format('MMMM-YY'),
+            moment().subtract(3, 'months').format('MMMM-YY'),
+            moment().subtract(1, 'years').month(11).format('MMMM-YY')
         ],
-        cibs: [
-            {
-                business_name:"Global Market",
-                info_3:"68 014",
-                info_2:"69 014",
-                info_1:"69 014"             
-            },
-            {
-                business_name:"Investment Banking",
-                info_3:"26,1%",
-                info_2:"20,5%",
-                info_1:"22,4%"             
-            },
-            {
-                business_name:"Energy & Natural Resource",
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"             
-            },
-            {
-                business_name:"Insurance",
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"             
-            },
-            {
-                business_name:"AWM",
-                info_3:"15,1%",
-                info_2:"12,4%",
-                info_1:"14,5%"             
-            },{
-                business_name:"Global Market",
-                info_3:"68 014",
-                info_2:"69 014",
-                info_1:"69 014"             
-            },
-            {
-                business_name:"Investment Banking",
-                info_3:"26,1%",
-                info_2:"20,5%",
-                info_1:"22,4%"             
-            },
-            {
-                business_name:"Energy & Natural Resource",
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"             
-            },
-            {
-                business_name:"Insurance",
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"             
-            }
-        ],
-        sfss:[
-            {
-                business_name:"Insurance",
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"    
-            },
-            {
-                business_name:"Insurance",
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"             
-            },
-            {
-                business_name:"Insurance",
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"             
-            }
-        ],
-        insurances:[
-            {
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"
-            }
-        ],
-        awms:[
-            {
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"
-            }
-        ],
-        cofaces:[
-            {
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"
-            }
-        ],
-        other_activities:[
-            {
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"
-            }
-        ],
-        total:[
-            {
-                business_name:"Total",
-                info_3:"25,5%",
-                info_2:"21,3%",
-                info_1:"24,7%"
-            }
-        ]
+        cibs: {
+            current: [],
+            previous: [],
+            reference: []
+        },
+        sfss: {
+            current: [],
+            previous: [],
+            reference: []
+        },
+        insurances: {
+            current: [],
+            previous: [],
+            reference: []
+        },
+        awms: {
+            current: [],
+            previous: [],
+            reference: []
+        },
+        cofaces: {
+            current: [],
+            previous: [],
+            reference: []
+        },
+        other_activities: {
+            current: [],
+            previous: [],
+            reference: []
+        },
+        total: {
+            current: null,
+            previous: null,
+            reference: null
+        }
     }
   },
 
@@ -322,6 +196,63 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'contrib') {
       this.$router.replace({ name: 'contributor' })
     }
+
+    http.get('dtm/breakdown/line/'+ moment().year() +'/'+ moment().subtract(1, 'months').month())
+        .then(response => {
+            response.data.data.current.breakdown_current.forEach(line => {
+                if (line.ind_core_business == 'CIB') {
+                    this.$data.cibs.current.push(line)
+                } else if (line.ind_core_business == 'SFS') {
+                    this.$data.sfss.current.push(line)
+                } else if (line.ind_core_business == 'Insurance') {
+                    this.$data.insurances.current.push(line)
+                } else if (line.ind_core_business == 'AWM') {
+                    this.$data.awms.current.push(line)
+                } else if (line.ind_core_business == 'Coface') {
+                    this.$data.cofaces.current.push(line)
+                } else {
+                    this.$data.other_activities.current.push(line)
+                }
+            })
+            this.$data.total.current = response.data.data.current.total_current.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+
+            response.data.data.previous.breakdown_previous.forEach(line => {
+                if (line.ind_core_business == 'CIB') {
+                    this.$data.cibs.previous.push(line)
+                } else if (line.ind_core_business == 'SFS') {
+                    this.$data.sfss.previous.push(line)
+                } else if (line.ind_core_business == 'Insurance') {
+                    this.$data.insurances.previous.push(line)
+                } else if (line.ind_core_business == 'AWM') {
+                    this.$data.awms.previous.push(line)
+                } else if (line.ind_core_business == 'Coface') {
+                    this.$data.cofaces.previous.push(line)
+                } else {
+                    this.$data.other_activities.previous.push(line)
+                }
+            })
+            this.$data.total.previous = response.data.data.previous.total_previous.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+
+            response.data.data.reference.breakdown_reference.forEach(line => {
+                if (line.ind_core_business == 'CIB') {
+                    this.$data.cibs.reference.push(line)
+                } else if (line.ind_core_business == 'SFS') {
+                    this.$data.sfss.reference.push(line)
+                } else if (line.ind_core_business == 'Insurance') {
+                    this.$data.insurances.reference.push(line)
+                } else if (line.ind_core_business == 'AWM') {
+                    this.$data.awms.reference.push(line)
+                } else if (line.ind_core_business == 'Coface') {
+                    this.$data.cofaces.reference.push(line)
+                } else {
+                    this.$data.other_activities.reference.push(line)
+                }
+            })
+            this.$data.total.reference = response.data.data.reference.total_reference.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+        })
+        .catch(error => {
+            console.log(error)
+        })
   },
 
   methods: {

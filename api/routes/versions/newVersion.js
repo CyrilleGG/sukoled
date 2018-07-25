@@ -4,11 +4,12 @@
  * Module dependencies.
  */
 
-const mysql = require('../../utilities/mysql')
+const mysql = require('../../utilities/mysql');
 const uuidv4 = require('uuid/v4');
 
 const getVersionById = require('../../services/getVersionById');
-const getContributionValuesById = require('../../services/getContributionValuesById')
+const getFilesByVersionId = require('../../services/getFilesByVersionId');
+const getContributionValuesById = require('../../services/getContributionValuesById');
 
 /**
  * Create new version.
@@ -24,10 +25,10 @@ module.exports = async (req, res) => {
   const version = await getVersionById(version_id);
 
   if (!req.body.input_value_id) {
-    contributionValues = await getContributionValuesById(req.body.input_value_id);
+    files = await getFilesByVersionId(version_id);
   } else {
-    files = await getFilesByVersionId(version_id)
-  }
+    contributionValues = await getContributionValuesById(req.body.input_value_id);
+  };
 
   const versions = await mysql.insert({
     id: new_version_id,
@@ -68,5 +69,5 @@ module.exports = async (req, res) => {
       statusCode: 201,
       message: 'Created'
     });
-  }
+  };
 };

@@ -11,6 +11,10 @@
             <h2 class="col-lg-12 pl-0 text-uppercase">Breakdown by Basel Segment</h2>
             <h4 class="col-lg-7 pl-0">Indicators in €m - (source : GCM/ Credit reporting)</h4>
 
+            <div class="col-lg-2 ml-auto pr-0 text-right">
+              <b-button id="print" class="purple" v-on:click="printPage ()" size="small">Print</b-button>
+            </div>
+
             <div class="w-100"></div>
             <div class="col-lg-12 mt-3 pt-1 divider"></div>
             </div>
@@ -292,6 +296,12 @@ export default {
   methods: {
     moment (date) {
       return moment(date).format('MMMM-YY')
+    },
+
+    printPage () {
+      document.getElementById('print').style.display = 'none'
+      window.print()
+      document.getElementById('print').style.display = 'inline-block'
     }
   }
 }
@@ -397,6 +407,16 @@ td.basel-border>div>div{
 .size-graph {
     max-width:85%;
     flex:0 0 85%;
+
+.purple {
+  border-color: #8e44ad;
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+
+.purple:hover {
+  border-color: #793a93;
+  background-color: #793a93;
 }
 
 </style>

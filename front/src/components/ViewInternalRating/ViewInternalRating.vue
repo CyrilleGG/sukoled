@@ -11,6 +11,10 @@
           <h2 class="col-lg-12 pl-0 text-uppercase">Breakdown Internal Rating</h2>
           <h4 class="col-lg-7 pl-0">Indicators internal rating</h4>
 
+          <div class="col-lg-2 ml-auto pr-0 text-right">
+              <b-button id="print" class="purple" v-on:click="printPage ()" size="small">Print</b-button>
+          </div>
+
           <div class="w-100"></div>
           <div class="col-lg-12 mt-3 pt-1 divider"></div>
         </div>
@@ -216,6 +220,14 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'contrib') {
       this.$router.replace({ name: 'contributor' })
     }
+  },
+
+  methods: {
+    printPage () {
+      document.getElementById('print').style.display = 'none'
+      window.print()
+      document.getElementById('print').style.display = 'inline-block'
+    }
   }
 }
 </script>
@@ -292,6 +304,17 @@ td {
 
 .graph{
   background-color:#fff;
+}
+
+.purple {
+  border-color: #8e44ad;
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+
+.purple:hover {
+  border-color: #793a93;
+  background-color: #793a93;
 }
 
 </style>

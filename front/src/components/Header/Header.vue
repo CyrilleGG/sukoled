@@ -73,7 +73,7 @@ export default {
 }
 
 #header img {
-  max-height: 20px;
+  max-height: 30px;
 }
 
 #header .navbar .nav-item a {
@@ -93,8 +93,6 @@ export default {
   color: #8e44ad;
   background-color: #ffffff;
 }
-
-#header .navbar-nav .active a 
 
 #header #second-nav .nav-item .nav-link, #header #second-nav #burger-menu {
   display: flex;

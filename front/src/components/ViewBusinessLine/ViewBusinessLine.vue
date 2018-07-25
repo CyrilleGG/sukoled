@@ -287,11 +287,6 @@ export default {
   margin-bottom:15px;
 }
 
-
-
-
-
-
 #view-comment {
   border-radius: 5px 5px 0 0;
   background-color: #ffffff;
@@ -322,8 +317,8 @@ table {
 }
 
 .table-title {
-    background:#000;
-    color:white;
+    background:#464b5a;
+    color: #ffffff;
 }
 
 td {

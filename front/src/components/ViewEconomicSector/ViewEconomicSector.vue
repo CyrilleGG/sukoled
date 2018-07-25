@@ -88,15 +88,15 @@ export default {
             datasets: [
               {
                 label: 'March-18',
-                backgroundColor: '#f87979',
+                backgroundColor: '#FF8B94',
                 data:[]
               }, {
                 label: 'February-18',
-                backgroundColor:'orange',
+                backgroundColor:'#FFD3B6',
                 data:[]
               }, {
                 label: 'December-17',
-                backgroundColor:'lightgreen',
+                backgroundColor:'#DCEDC1',
                 data:[]
               }
             ]

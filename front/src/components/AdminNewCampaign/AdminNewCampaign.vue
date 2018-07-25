@@ -80,7 +80,7 @@
 
         <div id="actions" class="row">
           <div class="col-lg-12 px-0 text-right">
-            <b-button class="mx-1 purple" v-b-modal.confirm size="md">Submit</b-button>
+            <b-button class="mx-1 purple" v-on:click="message = message.replace(/\n/g, '<br>')" v-b-modal.confirm size="md">Submit</b-button>
           </div>
         </div>
 
@@ -92,7 +92,7 @@
 
         <b-modal v-else-if="input.contributions.length > 0" id="confirm" ref="confirm" hide-footer>
           <p>You are about to send a contribution request in order to recover <span>{{ displayNumOfContributions () }}</span> for <span>{{ displayPeriod () }}</span>, with the following message :</p>
-          <p id="display-message" class="p-3 rounded">{{ message }}</p>
+          <p id="display-message" v-html="message" class="p-3 rounded">{{ message }}</p>
           <b-button class="purple" v-on:click="closeModal ()" size="md">Cancel</b-button>
           <b-button class="green" v-on:click="createCampaign ()" replace size="md">Confirm</b-button>
         </b-modal>
@@ -328,6 +328,7 @@ export default {
 #AdminNewCampaign #message {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+  white-space: pre-wrap;
 }
 
 #AdminNewCampaign #confirm span {

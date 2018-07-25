@@ -44,7 +44,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" v-on:click="submit ()" size="md">Submit</b-button>
+          <b-button class="ml-auto green" v-on:click="inputs.comment_contributor = inputs.comment_contributor.replace(/\n/g, '<br>'); submit ()" size="md">Submit</b-button>
         </div>
 
       </b-form>

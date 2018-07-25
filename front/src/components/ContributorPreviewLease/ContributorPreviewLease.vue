@@ -37,7 +37,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">2</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your comments</h3>
-          <p v-if="inputs.comment_contributor !== '' || null" class="col-lg-12 mb-3 pl-5">{{ inputs.comment_contributor }}</p>
+          <p v-if="inputs.comment_contributor !== '' || null" v-html="inputs.comment_contributor" class="col-lg-12 mb-3 pl-5"></p>
           <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't write any comment for this contribution</p>
         </div>
 
@@ -47,7 +47,7 @@
           <span class="position-absolute d-inline-block rounded-circle text-center align-middle step">3</span>
 
           <h3 class="col-lg-12 mb-5 pl-5">Preview your highlights</h3>
-          <p v-if="inputs.highlight !== '' || null" class="col-lg-12 mb-3 pl-5">{{ inputs.highlight }}</p>
+          <p v-if="inputs.highlight !== '' || null" v-html="inputs.highlight" class="col-lg-12 mb-3 pl-5"></p>
           <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't write any highlight for this contribution</p>
         </div>
 

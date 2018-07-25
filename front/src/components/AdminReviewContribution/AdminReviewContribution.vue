@@ -50,7 +50,7 @@
             <div class="row">
               <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Contributor's comment</p>
               <p v-if="data.input.comment_contributor == '' || data.input.comment_contributor == null" class="col-lg-12 pl-0 text-danger">The contributor didn't write any comment for this contribution</p>
-              <p v-else class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
+              <p v-else v-html="data.input.comment_contributor" class="col-lg-12 mb-3 pl-0 light"></p>
             </div>
           </div>
 
@@ -58,7 +58,7 @@
             <div class="row">
               <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Contributor's highlights</p>
               <p v-if="data.input.highlight == '' || data.input.highlight == null" class="col-lg-12 pl-0 text-danger">The contributor didn't write any highlight for this contribution</p>
-              <p v-else class="col-lg-12 mb-3 pl-0 light">{{ data.input.highlight }}</p>
+              <p v-else v-html="data.input.highlight" class="col-lg-12 mb-3 pl-0 light"></p>
             </div>
           </div>
 
@@ -83,11 +83,10 @@
             <b-form-group id="comment-group" class="row">
               <b-form-textarea id="admin-comment" class="col-lg-12" v-model="comment_admin" placeholder="Write your feedback..." :rows="8" :no-resize="true"></b-form-textarea>
             </b-form-group>
-
             <div class="row">
               <div class="col-lg-12 px-0 text-right">
                 <b-button class="mx-1 purple" size="md" v-on:click="hideComment ()">Cancel</b-button>
-                <b-button class="mx-1 orange" v-on:click="sendModificationRequest ()" replace size="md">Send</b-button>
+                <b-button class="mx-1 orange" v-on:click="comment_admin = comment_admin.replace(/\n/g, '<br>'); sendModificationRequest ()" replace size="md">Send</b-button>
               </div>
             </div>
 
@@ -195,18 +194,22 @@ export default {
     },
 
     readFiles () {
-      const files = this.$data.data.input.additionalFiles
+      if (this.$data.data !== null) {
+        const files = this.$data.data.input.additionalFiles
 
-      files.forEach((file, i) => {
-        if (file.file_type == 'image/png' || file.file_type == 'image/jpeg' || file.file_type == 'image/svg+xml') {
-          var binary = file.file_binary
-          var type = file.file_type
-          var url = "data:" + type + ';base64,/' + binary
-          var output = document.getElementById(i)
-          
-          output.src = url
+        if (!files) {} else {
+          files.forEach((file, i) => {
+            if (file.file_type == 'image/png' || file.file_type == 'image/jpeg' || file.file_type == 'image/svg+xml') {
+              var binary = file.file_binary
+              var type = file.file_type
+              var url = "data:" + type + ';base64,/' + binary
+              var output = document.getElementById(i)
+              
+              output.src = url
+            }
+          })
         }
-      })
+      }
     },
 
     displayComment () {

@@ -6,9 +6,7 @@
                 <p class="mb-0 text-uppercase">{{ name }}</p>
                 <p class="font-italic">{{ department }}</p>
             </div>
-            <div class="comment-highlight">
-                {{ highlight }}
-            </div>
+            <div v-html="highlight" class="comment-highlight"></div>
         </div>
     </div>
 

@@ -30,7 +30,7 @@
 
               </div>
 
-              <p id="download" class="col-lg-12">or download <a href="#">the example (200 Mo)</a></p>
+              <p id="download" class="col-lg-12">or download <a href="#" download="TEMPLATE.xlsx">the example (200 Mo)</a></p>
 
             </div>
           </div>
@@ -87,7 +87,7 @@
               <div class="col-lg-12 my-2" v-for="(file, index) in inputs.additionalFiles" v-if="inputs.additionalFiles !== []" :key="index">
                 <img src="@/assets/icons/file.png" class="d-inline-block" width="35px" alt="Additional file">
                 <p class="d-inline-block ml-3">{{ file.name }}</p>
-                <img src="@/assets/icons/close.png" class="d-inline-block ml-3 delete" v-on:click="deleteFile (file.name)" width="15px" alt="Delete file">
+                <img src="@/assets/icons/close.png" class="d-inline-block ml-3 delete" v-on:click="deleteFile (file.name)" width="10px" alt="Delete file">
               </div>
 
               <div id="additional-files-input" class="col-lg-12 my-2">
@@ -105,7 +105,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" v-on:click="submit ()" size="md">Submit</b-button>
+          <b-button class="ml-auto green" v-on:click="inputs.comment_contributor = inputs.comment_contributor.replace(/\n/g, '<br>'); inputs.highlight = inputs.highlight.replace(/\n/g, '<br>'); submit ()" size="md">Submit</b-button>
         </div>
 
       </b-form>

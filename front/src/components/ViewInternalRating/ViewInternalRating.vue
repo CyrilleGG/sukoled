@@ -176,17 +176,17 @@ export default {
             datasets: [
               {
                   label: 'March-18',
-                  backgroundColor: '#f87979',
+                  backgroundColor: '#FF8B94',
                   data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
               },
               {
                   label: 'February-18',
-                  backgroundColor:'orange',
+                  backgroundColor:'#FFD3B6',
                   data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
               },
               {
                   label: 'December-17',
-                  backgroundColor:'lightgreen',
+                  backgroundColor:'#DCEDC1',
                   data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
               }
             ]

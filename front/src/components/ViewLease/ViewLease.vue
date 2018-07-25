@@ -5,214 +5,213 @@
     <header-view/>
 
     <div class="row py-5 page-content">
-      <div class="col-lg-10 mx-auto">
+        <div class="col-lg-10 mx-auto">
 
-        <div class="row mb-5">
-          <h2 class="col-lg-12 pl-0">Lease</h2>
-          <h4 class="col-lg-7 pl-0">Credit Risk indicators €m - (source : Natixis Lease)</h4>
+            <div class="row mb-5">
+            <h2 class="col-lg-12 pl-0">Lease</h2>
+            <h4 class="col-lg-7 pl-0">Credit Risk indicators €m - (source : Natixis Lease)</h4>
 
-          <div class="w-100"></div>
-          <div class="col-lg-12 mt-3 pt-1 divider"></div>
-        </div>
-        
-        <div class="row">
-          <div class="col-lg-9 pl-0">
-                <table class="table table-striped border">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-uppercase text-center">Exposure</th>
-                            <th
-                                v-for="(date, index) in dates"
+            <div class="w-100"></div>
+            <div class="col-lg-12 mt-3 pt-1 divider"></div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-9 pl-0">
+                    <table class="table table-striped border">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-uppercase">Exposure</th>
+                                <th
+                                    v-for="(date, index) in dates"
+                                    v-bind:key="index"
+                                    v-bind:date="date.date"
+                                >
+                                    <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }}</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <tr
+                                v-for="(exposure, index) in exposures"
                                 v-bind:key="index"
-                                v-bind:date="date.date"
+                                v-bind:business_name="exposure.business_name"
+                                v-bind:info_7="exposure.info_7"
+                                v-bind:info_6="exposure.info_6"
+                                v-bind:info_5="exposure.info_5"
+                                v-bind:info_4="exposure.info_4"
+                                v-bind:info_3="exposure.info_3"
+                                v-bind:info_2="exposure.info_2"
+                                v-bind:info_1="exposure.info_1"
                             >
-                                <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }}</div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                                <td class="text-left"> {{ exposure.business_name }} </td>
+                                <td class="text-center"> {{ exposure.info_7 }} </td>
+                                <td class="text-center"> {{ exposure.info_6 }} </td>
+                                <td class="text-center"> {{ exposure.info_5 }} </td>
+                                <td class="text-center"> {{ exposure.info_4 }} </td>
+                                <td class="text-center"> {{ exposure.info_3 }} </td>
+                                <td class="text-center"> {{ exposure.info_2 }} </td>
+                                <td class="text-center"> {{ exposure.info_1 }} </td>
+                            </tr>
 
 
-                        <tr
-                            v-for="(exposure, index) in exposures"
+                        </tbody>
+                    </table>
+
+
+                    <table class="table table-striped border">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-uppercase" colspan="3">Business line</th>
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <tr
+                                v-for="(rwa, index) in rwas"
+                                v-bind:key="index"
+                                v-bind:business_name="rwa.business_name"
+                                v-bind:info_7="rwa.info_7"
+                                v-bind:info_6="rwa.info_6"
+                                v-bind:info_5="rwa.info_5"
+                                v-bind:info_4="rwa.info_4"
+                                v-bind:info_3="rwa.info_3"
+                                v-bind:info_2="rwa.info_2"
+                                v-bind:info_1="rwa.info_1"
+                            >
+                                <td class="text-left title-size"> {{ rwa.business_name }} </td>
+                                <td class="text-center"> {{ rwa.info_7 }} </td>
+                                <td class="text-center"> {{ rwa.info_6 }} </td>
+                                <td class="text-center"> {{ rwa.info_5 }} </td>
+                                <td class="text-center"> {{ rwa.info_4 }} </td>
+                                <td class="text-center"> {{ rwa.info_3 }} </td>
+                                <td class="text-center"> {{ rwa.info_2 }} </td>
+                                <td class="text-center"> {{ rwa.info_1 }} </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+
+                    <table class="table table-striped border">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-uppercase" colspan="3">Default</th>
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <tr
+                                v-for="(def, index) in defaults"
+                                v-bind:key="index"
+                                v-bind:business_name="def.business_name"
+                                v-bind:info_7="def.info_7"
+                                v-bind:info_6="def.info_6"
+                                v-bind:info_5="def.info_5"
+                                v-bind:info_4="def.info_4"
+                                v-bind:info_3="def.info_3"
+                                v-bind:info_2="def.info_2"
+                                v-bind:info_1="def.info_1"
+                            >
+                                <td class="text-left title-size"> {{ def.business_name }} </td>
+                                <td class="text-center"> {{ def.info_7 }} </td>
+                                <td class="text-center"> {{ def.info_6 }} </td>
+                                <td class="text-center"> {{ def.info_5 }} </td>
+                                <td class="text-center"> {{ def.info_4 }} </td>
+                                <td class="text-center"> {{ def.info_3 }} </td>
+                                <td class="text-center"> {{ def.info_2 }} </td>
+                                <td class="text-center"> {{ def.info_1 }} </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+
+                    <table class="table table-striped border">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-uppercase" colspan="3">Cost of risk</th>
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                                <th scope="col" />
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <tr
+                                v-for="(risk, index) in risks"
+                                v-bind:key="index"
+                                v-bind:business_name="risk.business_name"
+                                v-bind:info_7="risk.info_7"
+                                v-bind:info_6="risk.info_6"
+                                v-bind:info_5="risk.info_5"
+                                v-bind:info_4="risk.info_4"
+                                v-bind:info_3="risk.info_3"
+                                v-bind:info_2="risk.info_2"
+                                v-bind:info_1="risk.info_1"
+                            >
+                                <td class="text-left title-size"> {{ risk.business_name }} </td>
+                                <td class="text-center"> {{ risk.info_7 }} </td>
+                                <td class="text-center"> {{ risk.info_6 }} </td>
+                                <td class="text-center"> {{ risk.info_5 }} </td>
+                                <td class="text-center"> {{ risk.info_4 }} </td>
+                                <td class="text-center"> {{ risk.info_3 }} </td>
+                                <td class="text-center"> {{ risk.info_2 }} </td>
+                                <td class="text-center"> {{ risk.info_1 }} </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+                    <div class="row other-element-container">
+                        <div class="col-lg-5 other-element mx-auto border"
+                            v-for="(doc, index) in documents"
                             v-bind:key="index"
-                            v-bind:business_name="exposure.business_name"
-                            v-bind:info_7="exposure.info_7"
-                            v-bind:info_6="exposure.info_6"
-                            v-bind:info_5="exposure.info_5"
-                            v-bind:info_4="exposure.info_4"
-                            v-bind:info_3="exposure.info_3"
-                            v-bind:info_2="exposure.info_2"
-                            v-bind:info_1="exposure.info_1"
+                            v-bind:doc="doc.url"
+                            v-bind:text="doc.text"
                         >
-                            <td class="text-left"> {{ exposure.business_name }} </td>
-                            <td class="text-center"> {{ exposure.info_7 }} </td>
-                            <td class="text-center"> {{ exposure.info_6 }} </td>
-                            <td class="text-center"> {{ exposure.info_5 }} </td>
-                            <td class="text-center"> {{ exposure.info_4 }} </td>
-                            <td class="text-center"> {{ exposure.info_3 }} </td>
-                            <td class="text-center"> {{ exposure.info_2 }} </td>
-                            <td class="text-center"> {{ exposure.info_1 }} </td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
-
-
-                <table class="table table-striped border">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-uppercase" colspan="3">Business line</th>
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                        </tr>
-                    </thead>
-                    <tbody>
-
-
-                        <tr
-                            v-for="(rwa, index) in rwas"
-                            v-bind:key="index"
-                            v-bind:business_name="rwa.business_name"
-                            v-bind:info_7="rwa.info_7"
-                            v-bind:info_6="rwa.info_6"
-                            v-bind:info_5="rwa.info_5"
-                            v-bind:info_4="rwa.info_4"
-                            v-bind:info_3="rwa.info_3"
-                            v-bind:info_2="rwa.info_2"
-                            v-bind:info_1="rwa.info_1"
-                        >
-                            <td class="text-left title-size"> {{ rwa.business_name }} </td>
-                            <td class="text-center"> {{ rwa.info_7 }} </td>
-                            <td class="text-center"> {{ rwa.info_6 }} </td>
-                            <td class="text-center"> {{ rwa.info_5 }} </td>
-                            <td class="text-center"> {{ rwa.info_4 }} </td>
-                            <td class="text-center"> {{ rwa.info_3 }} </td>
-                            <td class="text-center"> {{ rwa.info_2 }} </td>
-                            <td class="text-center"> {{ rwa.info_1 }} </td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
-
-
-                <table class="table table-striped border">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-uppercase" colspan="3">Default</th>
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                        </tr>
-                    </thead>
-                    <tbody>
-
-
-                        <tr
-                            v-for="(def, index) in defaults"
-                            v-bind:key="index"
-                            v-bind:business_name="def.business_name"
-                            v-bind:info_7="def.info_7"
-                            v-bind:info_6="def.info_6"
-                            v-bind:info_5="def.info_5"
-                            v-bind:info_4="def.info_4"
-                            v-bind:info_3="def.info_3"
-                            v-bind:info_2="def.info_2"
-                            v-bind:info_1="def.info_1"
-                        >
-                            <td class="text-left title-size"> {{ def.business_name }} </td>
-                            <td class="text-center"> {{ def.info_7 }} </td>
-                            <td class="text-center"> {{ def.info_6 }} </td>
-                            <td class="text-center"> {{ def.info_5 }} </td>
-                            <td class="text-center"> {{ def.info_4 }} </td>
-                            <td class="text-center"> {{ def.info_3 }} </td>
-                            <td class="text-center"> {{ def.info_2 }} </td>
-                            <td class="text-center"> {{ def.info_1 }} </td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
-
-
-                <table class="table table-striped border">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-uppercase" colspan="3">Cost of risk</th>
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                            <th scope="col" />
-                        </tr>
-                    </thead>
-                    <tbody>
-
-
-                        <tr
-                            v-for="(risk, index) in risks"
-                            v-bind:key="index"
-                            v-bind:business_name="risk.business_name"
-                            v-bind:info_7="risk.info_7"
-                            v-bind:info_6="risk.info_6"
-                            v-bind:info_5="risk.info_5"
-                            v-bind:info_4="risk.info_4"
-                            v-bind:info_3="risk.info_3"
-                            v-bind:info_2="risk.info_2"
-                            v-bind:info_1="risk.info_1"
-                        >
-                            <td class="text-left title-size"> {{ risk.business_name }} </td>
-                            <td class="text-center"> {{ risk.info_7 }} </td>
-                            <td class="text-center"> {{ risk.info_6 }} </td>
-                            <td class="text-center"> {{ risk.info_5 }} </td>
-                            <td class="text-center"> {{ risk.info_4 }} </td>
-                            <td class="text-center"> {{ risk.info_3 }} </td>
-                            <td class="text-center"> {{ risk.info_2 }} </td>
-                            <td class="text-center"> {{ risk.info_1 }} </td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
-
-                <div class="row">
-                    <div class="col-lg-6 other-element mx-auto border"
-                        v-for="(doc, index) in first_doc"
-                        v-bind:key="index"
-                        v-bind:doc="doc.url"
-                    >
-                        <img v-bind:src="doc.url">
+                            <div v-if="doc.url !== ''">
+                                <img v-bind:src="doc.url" class="border">
+                            </div>
+                            <div v-else>
+                                <p class="other-element-text"> {{ doc.text }} </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-6 other-element mx-auto border"
-                        v-for="(doc, index) in second_doc"
-                        v-bind:key="index"
-                        v-bind:doc="doc.url"
-                    >
-                        <img v-bind:src="doc.url">
-                    </div>
+
+
                 </div>
+                <div class="col-lg-3">
+                    <view-comment class="border right-column"
+                    v-for="(comment, index) in comments"
+                    v-bind:key="index"
+                    v-bind:title="comment.title"
+                    v-bind:comment="comment.comment"
+                    />
 
+                </div>
+            </div>
 
-          </div>
-          <div class="col-lg-3">
-            <view-comment class="border right-column"
-              v-for="(comment, index) in comments"
-              v-bind:key="index"
-              v-bind:title="comment.title"
-              v-bind:comment="comment.comment"
-            />
-
-          </div>
         </div>
-
-      </div>
     </div>
 
     <Footer />
@@ -319,14 +318,14 @@ export default {
                 info_1:"13 024"  
             }
         ],
-        first_doc : [
+        documents : [
             {
-                url:"@/assets/logo.png"
-            }
-        ],
-        second_doc : [
+                url:"https://support.content.office.net/fr-fr/media/5f8252c4-09fd-40a1-ae03-1d498f9dedfd.png",
+                text:""
+            },
             {
-                url:"@/assets/logo.png"
+                url:"",
+                text:"Ceci est un commentaire explicatif. Ou pas."
             }
         ]
     }
@@ -421,10 +420,33 @@ thead {
     width:14.5%;
 }
 
+.other-element-container {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    width:100%;
+}
+
 .other-element {
     background-color:white;
-    margin-right:15px !important;
     margin-left:15px !important;
+    margin-right:15px !important;
+    margin-bottom:15px;
+    padding:15px;
+    max-width:100%;
+    height:100%;
+}
+
+.other-element:nth-child(n+2) {
+    margin-right:-15px !important;
+}
+
+.other-element img {
+    max-width:100%;
+}
+
+.other-element-text {
+    margin-bottom:0px;
 }
 
 </style>

@@ -48,6 +48,7 @@ export default {
 <style scoped>
 
 #header-viewer {
+  z-index: 990;
   max-width: 101%;
   top:70px;
   height:40px;

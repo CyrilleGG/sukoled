@@ -1,12 +1,13 @@
 <template>
 
     <div id="view-comment" class="row">
-        <div class=" mt-3  mb-3 container-highlight">
+        <div class="mt-3 mb-3 container-highlight">
             <div id="view-comment-header" class="title-highlight">
-                {{ title }}
+                <p class="mb-0 text-uppercase">{{ name }}</p>
+                <p class="font-italic">{{ department }}</p>
             </div>
             <div class="comment-highlight">
-                {{ comment }}
+                {{ highlight }}
             </div>
         </div>
     </div>
@@ -25,8 +26,9 @@ export default {
     },
 
     props: [
-        'title',
-        'comment'
+        'name',
+        'department',
+        'highlight'
     ]
 }
 </script>
@@ -53,14 +55,17 @@ export default {
 }
 
 .title-highlight {
-    color:lightblue;
-    text-transform:uppercase;
+    color:#999999;
     width:100%;
     padding-left:1.5rem;
     padding-right:1.5rem;
     padding-bottom:2.5rem;
     border-bottom:1px solid #dee2e6;
     margin-bottom:1em;
+}
+
+.title-highlight p {
+    font-size: 0.8rem;
 }
 
 </style>

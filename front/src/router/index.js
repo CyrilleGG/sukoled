@@ -12,6 +12,7 @@ import ViewEconomicSector from '@/components/ViewEconomicSector/ViewEconomicSect
 import ViewBaselSegment from '@/components/ViewBaselSegment/ViewBaselSegment'
 import ViewBusinessLine from '@/components/ViewBusinessLine/ViewBusinessLine'
 import ViewHighlight from '@/components/ViewHighlight/ViewHighlight'
+import ViewLease from '@/components/ViewLease/ViewLease'
 
 import Contributor from '@/components/Contributor/Contributor'
 import ContributorSendContribution from '@/components/ContributorSendContribution/ContributorSendContribution'
@@ -57,7 +58,11 @@ export default new Router({
     }, {
       name: 'view-highlight',
       path: '/view/highlight',
-      component:ViewHighlight
+      component: ViewHighlight
+    }, {
+      name: 'view-lease',
+      path: '/view/lease',
+      component: ViewLease
     }, {
       name: 'contributor',
       path: '/contributor',

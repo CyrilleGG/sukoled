@@ -15,8 +15,9 @@
             <b-dropdown-item :to="{ name: 'view-basel-segment' }" replace>Basel segment</b-dropdown-item>
             <b-dropdown-item :to="{ name: 'view-business-line' }" replace>Business line</b-dropdown-item>
           </b-nav-item-dropdown>
-
+          
           <b-nav-item class="mx-3" :to="{ name: 'view-highlight' }" replace>Highlights</b-nav-item>
+          <b-nav-item class="mx-3" :to="{ name: 'view-lease' }" replace>Lease</b-nav-item>
         </b-navbar-nav>
 
       </b-collapse>

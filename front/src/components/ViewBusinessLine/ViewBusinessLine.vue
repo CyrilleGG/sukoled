@@ -1,5 +1,5 @@
 <template>
-  <div id="Viewer" class="container-fluid">
+  <div id="ViewBusinessLine" class="container-fluid">
 
     <Header :role="this.$root.$data.userInfo.role" />
     <header-view/>
@@ -10,6 +10,10 @@
         <div class="row mb-5">
           <h2 class="col-lg-12 pl-0 text-uppercase">Breakdown BY Business line</h2>
           <h4 class="col-lg-7 pl-0">Indicators in €m - (source : GCM/ Credit reporting)</h4>
+
+          <div class="col-lg-2 ml-auto pr-0 text-right">
+              <b-button id="print" class="purple" v-on:click="printPage ()" size="small">Print</b-button>
+          </div>
 
           <div class="w-100"></div>
           <div class="col-lg-12 mt-3 pt-1 divider"></div>
@@ -258,6 +262,12 @@ export default {
   methods: {
     moment (date) {
       return moment(date).format('MMMM-YY')
+    },
+
+    printPage () {
+        document.getElementById('print').style.display = 'none'
+        window.print()
+        document.getElementById('print').style.display = 'inline-block'
     }
   }
 }
@@ -265,25 +275,25 @@ export default {
 
 <style scoped>
 
-#Viewer .page-content {
+#ViewBusinessLine .page-content {
   margin-top: 98px;
   min-height: 85vh;
 }
 
-#Viewer .page-content h2 {
+#ViewBusinessLine .page-content h2 {
   font-size: 1.6rem;
 }
 
-#Viewer .page-content h4 {
+#ViewBusinessLine .page-content h4 {
   font-size: 1.2rem;
   color: #bbbbbb;
 }
 
-#Viewer .page-content .divider {
+#ViewBusinessLine .page-content .divider {
   background-color: #e7e7e7;
 }
 
-#Viewer .right-column {
+#ViewBusinessLine .right-column {
   margin-bottom:15px;
 }
 
@@ -338,6 +348,17 @@ td {
     -webkit-transform: rotate(-90.0deg);  /* Saf3.1+, Chrome */
     filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+}
+
+.purple {
+  border-color: #8e44ad;
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+
+.purple:hover {
+  border-color: #793a93;
+  background-color: #793a93;
 }
 
 

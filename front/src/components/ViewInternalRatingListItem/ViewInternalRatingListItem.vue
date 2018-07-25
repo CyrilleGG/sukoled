@@ -6,13 +6,17 @@
         <td class="text-center">{{ date_2 }}</td>
         <td class="text-center">{{ date_1 }}</td>
         <td v-if="evolution == '+'" class="text-center">
-            <div class="arrow-up">&rarr;</div>
+            <div class="arrow">
+                <span class="arrow-up">&rarr;</span>
+            </div>
         </td>
         <td v-else-if="evolution == '-'" class="text-center">
-            <div class="arrow-down">&rarr;</div>
+            <div class="arrow">
+                <span class="arrow-down">&rarr;</span>
+            </div>
         </td>
         <td v-else class="text-center">
-            &rarr;
+            <div class="arrow">&rarr;</div>
         </td>
     </tr>
             
@@ -62,6 +66,10 @@ export default {
 
 .equal {
     font-weight:bold;
+}
+
+.arrow span {
+    display: inline-block;
 }
 
 .arrow-up {

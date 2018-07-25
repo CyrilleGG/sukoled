@@ -32,12 +32,21 @@
             </tr>
           </table>
 
-          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's comment</p>
-          <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
-          <p v-else class="col-lg-12 mb-0 pl-0">The contributor didn't write any comment for this contribution</p>
+          <div class="col-lg-12">
+            <div class="row">
+              <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Contributor's comment</p>
+              <p v-if="data.input.comment_contributor == '' || data.input.comment_contributor == null" class="col-lg-12 pl-0 text-danger">The contributor didn't write any comment for this contribution</p>
+              <p v-else v-html="data.input.comment_contributor" class="col-lg-12 mb-3 pl-0 light"></p>
+            </div>
+          </div>
 
-          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's highlights</p>
-          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">higlights du contributeur</p>
+          <div v-if="data.input.highlight !== null" class="col-lg-12">
+            <div class="row">
+              <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Contributor's highlights</p>
+              <p v-if="data.input.highlight == '' || data.input.highlight == null" class="col-lg-12 pl-0 text-danger">The contributor didn't write any highlight for this contribution</p>
+              <p v-else v-html="data.input.highlight" class="col-lg-12 mb-3 pl-0 light"></p>
+            </div>
+          </div>
         </div>
 
         <div id="actions" class="row">

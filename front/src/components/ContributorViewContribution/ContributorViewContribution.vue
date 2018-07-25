@@ -1,5 +1,5 @@
 <template>
-  <div id="AdminViewContribution" class="container-fluid">
+  <div id="ContributorViewContribution" class="container-fluid">
 
     <Header :role="this.$root.$data.userInfo.role" />
 
@@ -32,12 +32,21 @@
             </tr>
           </table>
 
-          <p class="col-lg-12 mb-0 pl-0 font-weight-bold">Your comment</p>
-          <p v-if="data.input.comment_contributor !== null || data.input.comment_contributor !== ''" class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
-          <p v-else class="col-lg-12 mb-0 pl-0">The contributor didn't write any comment for this contribution</p>
+          <div class="col-lg-12">
+            <div class="row">
+              <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Your comment</p>
+              <p v-if="data.input.comment_contributor == '' || data.input.comment_contributor == null" class="col-lg-12 pl-0 text-danger">You didn't write any comment for this contribution</p>
+              <p v-else v-html="data.input.comment_contributor" class="col-lg-12 mb-3 pl-0 light"></p>
+            </div>
+          </div>
 
-          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-0 pl-0 font-weight-bold">Contributor's highlights</p>
-          <p v-if="data.input.highlight !== null" class="col-lg-12 mb-3 pl-0 light">higlights du contributeur</p>
+          <div v-if="data.input.highlight !== null" class="col-lg-12">
+            <div class="row">
+              <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Your highlights</p>
+              <p v-if="data.input.highlight == '' || data.input.highlight == null" class="col-lg-12 pl-0 text-danger">You didn't write any highlight for this contribution</p>
+              <p v-else v-html="data.input.highlight" class="col-lg-12 mb-3 pl-0 light"></p>
+            </div>
+          </div>
         </div>
 
         <div id="actions" class="row">
@@ -62,7 +71,7 @@ import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 
 export default {
-  name: 'AdminViewContribution',
+  name: 'ContributorViewContribution',
 
   components: {
     Header,
@@ -110,17 +119,17 @@ export default {
 
 <style scoped>
 
-#AdminViewContribution .page-content {
+#ContributorViewContribution .page-content {
   margin-top: 70px;
   min-height: 85vh;
 }
 
-#AdminViewContribution .content {
+#ContributorViewContribution .content {
   background-color: #ffffff;
   box-shadow: 5px 5px 30px rgba(0,0,0,0.1)
 }
 
-#AdminViewContribution .step {
+#ContributorViewContribution .step {
   left: -25px;
   top: 30px;
   width: 50px;
@@ -130,76 +139,76 @@ export default {
   background-color: #8e44ad;
 }
 
-#AdminViewContribution h3 {
+#ContributorViewContribution h3 {
   font-size: 1.2rem;
 }
 
-#AdminViewContribution table {
+#ContributorViewContribution table {
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   overflow: hidden;
 }
 
-#AdminViewContribution table tr:first-child {
+#ContributorViewContribution table tr:first-child {
   box-shadow: 0px 7px 7px rgba(0,0,0,0.05);
 }
 
-#AdminViewContribution table .last {
+#ContributorViewContribution table .last {
   background-color: rgba(126,68,170, 0.2);
 }
 
-#AdminViewContribution table #input {
+#ContributorViewContribution table #input {
   display: none;
 }
 
-#AdminViewContribution .light {
+#ContributorViewContribution .light {
   color: #999999;
 }
 
-#AdminViewContribution #request-modification {
+#ContributorViewContribution #request-modification {
   display: none;
 }
 
-#AdminViewContribution #admin-comment {
+#ContributorViewContribution #admin-comment {
   border: none;
   box-shadow: 0 5px 30px rgba(0,0,0,0.15);
 }
 
-#AdminViewContribution #cancel {
+#ContributorViewContribution #cancel {
   display: none;
 }
 
-#AdminViewContribution #submit {
+#ContributorViewContribution #submit {
   display: none;
 }
 
-#AdminViewContribution .purple {
+#ContributorViewContribution .purple {
   border-color: #8e44ad;
   color: #ffffff;
   background-color: #8e44ad;
 }
 
-#AdminViewContribution .purple:hover {
+#ContributorViewContribution .purple:hover {
   border-color: #793a93;
   background-color: #793a93;
 }
 
-#AdminViewContribution .orange {
+#ContributorViewContribution .orange {
   border-color: #fdad2a;
   background-color: #fdad2a;
 }
 
-#AdminViewContribution .orange:hover {
+#ContributorViewContribution .orange:hover {
   border-color: #e59d00;
   background-color: #e59d00;
 }
 
-#AdminViewContribution .green {
+#ContributorViewContribution .green {
   border-color: #2ecc71;
   color: #ffffff;
   background-color: #2ecc71;
 }
 
-#AdminViewContribution .green:hover {
+#ContributorViewContribution .green:hover {
   border-color: #29b362;
   background-color: #29b362;
 }

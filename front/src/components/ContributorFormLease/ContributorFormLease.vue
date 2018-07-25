@@ -30,7 +30,7 @@
 
               </div>
 
-              <p id="download" class="col-lg-12">or download <a href="#">the example (200 Mo)</a></p>
+              <p id="download" class="col-lg-12">or download <a href="./" download="TEMPLATE.xlsx">the example (200 Mo)</a></p>
 
             </div>
           </div>
@@ -105,7 +105,7 @@
 
         <div id="actions" class="row">
           <b-button class="purple" :to="{ path: './'}" replace size="md">Back</b-button>
-          <b-button class="ml-auto green" v-on:click="submit ()" size="md">Submit</b-button>
+          <b-button class="ml-auto green" v-on:click="inputs.comment_contributor = inputs.comment_contributor.replace(/\n/g, '<br>'); inputs.highlight = inputs.highlight.replace(/\n/g, '<br>'); submit ()" size="md">Submit</b-button>
         </div>
 
       </b-form>

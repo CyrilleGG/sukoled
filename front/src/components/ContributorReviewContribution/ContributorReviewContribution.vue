@@ -11,9 +11,9 @@
           <h3 class="col-lg-12 pl-0">Review your contribution</h3>
           <p class="col-lg-12 mb-4 pl-0 font-italic">{{ data.contribution.contribution_name }}</p>
 
-          <div v-if="data.input.comment_admin !== null" id="admin-comment" class="col-lg-12 mb-4 rounded p-3">
-            <img src="@/assets/icons/warning.png" width="40px" alt="Warning">
-            <p class="d-inline-block mb-0 ml-3">{{ data.input.comment_admin }}</p>
+          <div v-if="data.input.comment_admin !== null" id="admin-comment" class="col-lg-12 d-flex mb-4 rounded p-3">
+            <img src="@/assets/icons/warning.png" class="my-auto" width="40px" alt="Warning">
+            <p v-html="data.input.comment_admin" class="d-inline-block mb-0 ml-4"></p>
           </div>
 
           <table v-if="department_slug == 'raf'" class="col-lg-12 d-block mb-4 rounded">
@@ -54,7 +54,7 @@
             <div class="row">
               <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Your comment</p>
               <p v-if="data.input.comment_contributor == '' || data.input.comment_contributor == null" class="col-lg-12 pl-0 text-danger">You didn't write any comment for this contribution</p>
-              <p v-else class="col-lg-12 mb-3 pl-0 light">{{ data.input.comment_contributor }}</p>
+              <p v-else v-html="data.input.comment_contributor" class="col-lg-12 mb-3 pl-0 light"></p>
             </div>
           </div>
 
@@ -62,7 +62,7 @@
             <div class="row">
               <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Your highlights</p>
               <p v-if="data.input.highlight == '' || data.input.highlight == null" class="col-lg-12 pl-0 text-danger">You didn't write any highlight for this contribution</p>
-              <p v-else class="col-lg-12 mb-3 pl-0 light">{{ data.input.highlight }}</p>
+              <p v-else v-html="data.input.highlight" class="col-lg-12 mb-3 pl-0 light"></p>
             </div>
           </div>
 

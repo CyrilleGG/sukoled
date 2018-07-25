@@ -13,6 +13,7 @@ import ViewBaselSegment from '@/components/ViewBaselSegment/ViewBaselSegment'
 import ViewBusinessLine from '@/components/ViewBusinessLine/ViewBusinessLine'
 import ViewHighlight from '@/components/ViewHighlight/ViewHighlight'
 import ViewLease from '@/components/ViewLease/ViewLease'
+import ViewRaf from '@/components/ViewRaf/ViewRaf'
 
 import Contributor from '@/components/Contributor/Contributor'
 import ContributorSendContribution from '@/components/ContributorSendContribution/ContributorSendContribution'
@@ -63,6 +64,10 @@ export default new Router({
       name: 'view-lease',
       path: '/view/lease',
       component: ViewLease
+    }, {
+      name: 'view-raf',
+      path: '/view/raf',
+      component: ViewRaf
     }, {
       name: 'contributor',
       path: '/contributor',

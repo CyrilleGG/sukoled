@@ -4,12 +4,12 @@
     <Header :role="this.$root.$data.userInfo.role" />
     <header-view/>
 
-    <div class="row page-content basel-padding">
+    <div class="row py-5 page-content basel-padding">
         <div class="col-lg-10 mx-auto">
 
             <div class="row mb-5">
-            <h2 class="col-lg-12 pl-0 text-uppercase">Top 20</h2>
-            <h4 class="col-lg-7 pl-0">Indicators in €m - (source : GCM/ Credit reporting. Financial Department)</h4>
+            <h2 class="col-lg-12 pl-0 text-uppercase">Breakdown by Basel Segment</h2>
+            <h4 class="col-lg-7 pl-0">Indicators in €m - (source : GCM/ Credit reporting)</h4>
 
             <div class="col-lg-2 ml-auto pr-0 text-right">
               <b-button id="print" class="purple" v-on:click="printPage ()" size="small">Print</b-button>
@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div class="basel-bg-white graph col-lg-10 mx-auto border">
+    <div class="basel-bg-white graph col-lg-10 mx-auto border size-graph">
         <view-basel-segment-graph 
             v-for="(graph, index) in basel_graph"
             v-bind:key="index"
@@ -403,6 +403,10 @@ td.basel-border>div>div{
 .graph{
     margin:15px;
 }
+
+.size-graph {
+    max-width:85%;
+    flex:0 0 85%;
 
 .purple {
   border-color: #8e44ad;

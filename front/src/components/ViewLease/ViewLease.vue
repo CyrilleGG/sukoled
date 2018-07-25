@@ -26,7 +26,7 @@
                                     v-bind:key="index"
                                     v-bind:date="date.date"
                                 >
-                                    <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }}</div>
+                                    <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }} </div>
                                 </th>
                             </tr>
                         </thead>

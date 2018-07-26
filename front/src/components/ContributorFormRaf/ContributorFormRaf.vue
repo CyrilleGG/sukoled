@@ -16,7 +16,7 @@
               <div v-for="(input, index) in data.inputs" v-bind:key="index" v-if="input.input_type !== 'textarea'" class="col-lg-12 pl-0">
                 <label :for="input.input_slug">{{ input.input_name }}</label>
                 <b-form-input :id="input.input_slug" class="d-inline-block w-25 ml-2" v-model="inputs.contribution_values.input_value" :type="input.input_type" :name="input.input_slug" autocomplete="off"></b-form-input>
-                <p class="d-inline-block ml-3">in {{ data.contribution[0].unit }}s</p>
+                <p v-if="data.contribution[0].unit !== null" class="d-inline-block ml-3">in {{ data.contribution[0].unit }}s</p>
               </div>
 
             </div>

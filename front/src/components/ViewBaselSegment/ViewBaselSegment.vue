@@ -407,6 +407,7 @@ td.basel-border>div>div{
 .size-graph {
     max-width:85%;
     flex:0 0 85%;
+}
 
 .purple {
   border-color: #8e44ad;

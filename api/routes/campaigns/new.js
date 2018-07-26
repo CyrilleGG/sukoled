@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
         starts_at: req.body.starts_at,
         ends_at: req.body.ends_at,
         file_binary: 'null',
-        status_admin: 'hold',
+        status_admin: 'on hold',
         status_contributor: 'not delivered'
       });
   } catch (err) {

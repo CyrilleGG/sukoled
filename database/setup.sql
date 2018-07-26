@@ -252,7 +252,7 @@ DROP TABLE IF EXISTS `versions`;
 CREATE TABLE `versions` (
   `id` varchar(36) NOT NULL DEFAULT '',
   `name` varchar(255) DEFAULT NULL,
-  `status_admin` enum('done','progress','hold','delivered','closed') NOT NULL,
+  `status_admin` enum('done','in progress','on hold','delivered','closed') NOT NULL,
   `status_contributor` enum('done','pending','not delivered','invalid','closed') NOT NULL,
   `starts_at` datetime DEFAULT NULL,
   `ends_at` datetime DEFAULT NULL,

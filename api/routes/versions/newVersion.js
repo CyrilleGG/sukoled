@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
     contribution_id: req.params.contribution_id,
     parent_version_id: version_id,
     user_id: req.body.user_id,
-    status_admin: 'progress',
+    status_admin: 'in progress',
     status_contributor: 'invalid',
     starts_at: version.starts_at,
     ends_at: version.ends_at,

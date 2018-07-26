@@ -18,7 +18,7 @@
             <div class="w-100"></div>
             <div class="col-lg-12 mt-3 pt-1 divider"></div>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-9 pl-0">
                     <table class="table table-striped border">
@@ -63,7 +63,7 @@
                         </thead>
                         <tbody>
 
-                            <view-basel-segment-list 
+                            <view-basel-segment-list
                                 v-for="(basel, index) in basel_segment"
                                 v-bind:key="index"
                                 v-bind:title="basel.title"
@@ -88,7 +88,7 @@
     </div>
 
     <div class="basel-bg-white graph col-lg-10 mx-auto border size-graph">
-        <view-basel-segment-graph 
+        <view-basel-segment-graph
             v-for="(graph, index) in basel_graph"
             v-bind:key="index"
             v-bind:data="graph.data"

@@ -43,7 +43,7 @@ module.exports = (req, res) => {
         token: jwt.sign(payload, jwtOptions.secretOrKey),
         username: username,
         role: user.role,
-        user_id: user.id 
+        user_id: user.id
       }
     });
   } else {

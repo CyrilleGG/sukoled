@@ -15,6 +15,7 @@ services:
   database:
     image: "mysql:5.7"
     restart: "unless-stopped"
+    command: mysqld --sql_mode=""
     environment:
       MYSQL_ROOT_PASSWORD: "WuY6WCxU"
       MYSQL_DATABASE: "hestia"

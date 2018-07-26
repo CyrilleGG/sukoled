@@ -52,7 +52,7 @@ export default {
         inputName:'',
         description:'',
         file:'',
-        status_admin:'hold',
+        status_admin:'on hold',
         status_contributor:'not delivered',
         starts_at:'2018-06-20 10:37:07.288293+00',
         ends_at:'2018-06-20 10:37:07.288293+01'

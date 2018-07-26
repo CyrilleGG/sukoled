@@ -124,5 +124,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# SQL setup
+database/setup.sql
 
 # End of https://www.gitignore.io/api/node,linux,macos,windows

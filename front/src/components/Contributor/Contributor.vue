@@ -33,7 +33,7 @@
     </div>
 
     <Footer />
-    
+
   </div>
 </template>
 
@@ -80,13 +80,12 @@ export default {
         for (var i = 0; i < response.data.data.done.length; i++) {
           this.$data.contributions.done = response.data.data.done
         }
-      })
 
+        this.$data.numOfAlerts = this.$data.contributions.waiting.length
+      })
       .catch((error) => {
         console.log(error)
       })
-    
-    this.$data.numOfAlerts = this.$data.contributions.waiting.length + 1
   }
 }
 </script>

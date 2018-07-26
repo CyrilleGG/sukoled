@@ -22,6 +22,7 @@ services:
       MYSQL_USER: "natixis"
       MYSQL_PASSWORD: "RpT4nvTV"
     volumes:
+      - "./database:/docker-entrypoint-initdb.d"
       - "hestia:/var/lib/mysql"
     ports:
       - "3306:3306"

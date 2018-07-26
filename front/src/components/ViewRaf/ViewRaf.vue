@@ -11,6 +11,10 @@
             <h2 class="col-lg-12 pl-0">RAF</h2>
             <h4 class="col-lg-7 pl-0">Risk Appetite Framework indicators</h4>
 
+            <div class="col-lg-2 ml-auto pr-0 text-right">
+                <b-button id="print" class="purple" v-on:click="printPage ()" size="small">Print</b-button>
+            </div>
+
             <div class="w-100"></div>
             <div class="col-lg-12 mt-3 pt-1 divider"></div>
             </div>
@@ -42,70 +46,248 @@
                 </thead>
                 <tbody>
 
-
                     <tr>
-                        <td class="text-left rotate row-name"><div> I.R Risk </div></td>
-                        <td class="text-center"> Stress Test +/- 200 bp </td>
+                        <td rowspan="2" class="text-center table-title rotate">         <div>I.R Risk</div> 
+                        </td>
+                    <tr
+                        v-for="(data, index) in risks"
+                        v-bind:key="index"
+                        v-bind:name="data.name"
+                        v-bind:info_5="data.info_5"
+                        v-bind:info_4="data.info_4"
+                        v-bind:info_3="data.info_3"
+                        v-bind:info_2="data.info_2"
+                        v-bind:info_1="data.info_1"
+                        v-bind:limit="data.limit"
+                        v-bind:threshold="data.treshold"
+                        v-bind:remarks="data.remarks"
+                    >
+                        <td class="text-center"> {{ data.name }} </td>
                         <td class="text-center"> <span class="dot"/> </td>
-                        <td class="text-center"> - </td>
-                        <td class="text-center"> € 466.9m </td>
-                        <td class="text-center"> -€ 525m </td>
-                        <td class="text-center"> -€ 559.4m </td>
-                        <td class="text-center"> -€ 659.4m </td>
+                        <td v-if="data.info_5 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_5 }} </td>
+                        <td v-if="data.info_4 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_4 }} </td>
+                        <td v-if="data.info_3 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_3 }} </td>
+                        <td v-if="data.info_2 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_2 }} </td>
+                        <td v-if="data.info_1 == ''" class="text-center data-now">
+                            <div> NA </div>
+                        </td>
+                        <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
                         <td colspan="2" class="raf-gradient"> 
                             <span class="line-orange"/>
                             <span class="dot position-3"/>
-                            <span class="limit-text"> -€700M </span>
+                            <span class="limit-text"> {{ data.limit }} </span>
                             <span class="line-red"/> 
-                            <span class="threshold-text"> 9% </span>
+                            <span class="threshold-text"> {{ data.threshold }} </span>
                         </td>
-                        <td class="text-center remarks"> Remarks longue pour tester la place que ça pourra prendre </td>
+                        <td class="text-center remarks"> {{ data.remarks }} </td>
                     </tr>
 
+
                     <tr>
-                        <td rowspan="3" class="text-left rotate row-name row-name-second"><div> Solvency </div></td>
-                        <td class="text-center"> Stress Test +/- 200 bp </td>
+                        <td rowspan="4" class="text-center table-title rotate">         <div>Solvency</div> 
+                        </td>
+                    <tr
+                        v-for="(data, index) in solvency"
+                        v-bind:key="index"
+                        v-bind:name="data.name"
+                        v-bind:info_5="data.info_5"
+                        v-bind:info_4="data.info_4"
+                        v-bind:info_3="data.info_3"
+                        v-bind:info_2="data.info_2"
+                        v-bind:info_1="data.info_1"
+                        v-bind:limit="data.limit"
+                        v-bind:threshold="data.treshold"
+                        v-bind:remarks="data.remarks"
+                    >
+                        <td class="text-center"> {{ data.name }} </td>
                         <td class="text-center"> <span class="dot"/> </td>
-                        <td class="text-center"> - </td>
-                        <td class="text-center"> € 466.9m </td>
-                        <td class="text-center"> -€ 525m </td>
-                        <td class="text-center"> -€ 559.4m </td>
-                        <td class="text-center"> -€ 659.4m </td>
+                        <td v-if="data.info_5 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_5 }} </td>
+                        <td v-if="data.info_4 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_4 }} </td>
+                        <td v-if="data.info_3 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_3 }} </td>
+                        <td v-if="data.info_2 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_2 }} </td>
+                        <td v-if="data.info_1 == ''" class="text-center data-now">
+                            <div> NA </div>
+                        </td>
+                        <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
                         <td colspan="2" class="raf-gradient"> 
-                            <span class="line-orange"/> 
-                            <span class="line-red"/>
-                        </td>
-                        <td class="text-center"> Remarks </td>
-                    </tr>
-
-                    <tr>
-                        <td class="text-center"> Stress Test +/- 200 bp </td>
-                        <td class="text-center"> <span class="dot"/> </td>
-                        <td class="text-center"> - </td>
-                        <td class="text-center"> € 466.9m </td>
-                        <td class="text-center"> -€ 525m </td>
-                        <td class="text-center"> -€ 559.4m </td>
-                        <td class="text-center"> -€ 659.4m </td>
-                        <td colspan="2" class="raf-gradient">
-                            <span class="line-orange"/> 
+                            <span class="line-orange"/>
+                            <span class="dot position-3"/>
+                            <span class="limit-text"> {{ data.limit }} </span>
                             <span class="line-red"/> 
+                            <span class="threshold-text"> {{ data.threshold }} </span>
                         </td>
-                        <td class="text-center"> Remarks </td>
+                        <td class="text-center remarks"> {{ data.remarks }} </td>
                     </tr>
 
+
                     <tr>
-                        <td class="text-center"> Stress Test +/- 200 bp </td>
-                        <td class="text-center"> <span class="dot"/> </td>
-                        <td class="text-center"> - </td>
-                        <td class="text-center"> € 466.9m </td>
-                        <td class="text-center"> -€ 525m </td>
-                        <td class="text-center"> -€ 559.4m </td>
-                        <td class="text-center"> -€ 659.4m </td>
-                        <td colspan="2" class="raf-gradient">
-                            <span class="line-orange"/> 
-                            <span class="line-red"/>
+                        <td rowspan="4" class="text-center table-title rotate">         <div>Insurance <br/> Risk</div> 
                         </td>
-                        <td class="text-center"> Remarks </td>
+                    <tr
+                        v-for="(data, index) in insurance"
+                        v-bind:key="index"
+                        v-bind:name="data.name"
+                        v-bind:info_5="data.info_5"
+                        v-bind:info_4="data.info_4"
+                        v-bind:info_3="data.info_3"
+                        v-bind:info_2="data.info_2"
+                        v-bind:info_1="data.info_1"
+                        v-bind:limit="data.limit"
+                        v-bind:threshold="data.treshold"
+                        v-bind:remarks="data.remarks"
+                    >
+                        <td class="text-center"> {{ data.name }} </td>
+                        <td class="text-center"> <span class="dot"/> </td>
+                        <td v-if="data.info_5 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_5 }} </td>
+                        <td v-if="data.info_4 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_4 }} </td>
+                        <td v-if="data.info_3 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_3 }} </td>
+                        <td v-if="data.info_2 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_2 }} </td>
+                        <td v-if="data.info_1 == ''" class="text-center data-now">
+                            <div> NA </div>
+                        </td>
+                        <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
+                        <td colspan="2" class="raf-gradient"> 
+                            <span class="line-orange"/>
+                            <span class="dot position-3"/>
+                            <span class="limit-text"> {{ data.limit }} </span>
+                            <span class="line-red"/> 
+                            <span class="threshold-text"> {{ data.threshold }} </span>
+                        </td>
+                        <td class="text-center remarks"> {{ data.remarks }} </td>
+                    </tr>
+
+
+                    <tr>
+                        <td rowspan="2" class="text-center table-title rotate">         <div>A. M.</div> 
+                        </td>
+                    <tr
+                        v-for="(data, index) in am"
+                        v-bind:key="index"
+                        v-bind:name="data.name"
+                        v-bind:info_5="data.info_5"
+                        v-bind:info_4="data.info_4"
+                        v-bind:info_3="data.info_3"
+                        v-bind:info_2="data.info_2"
+                        v-bind:info_1="data.info_1"
+                        v-bind:limit="data.limit"
+                        v-bind:threshold="data.treshold"
+                        v-bind:remarks="data.remarks"
+                    >
+                        <td class="text-center"> {{ data.name }} </td>
+                        <td class="text-center"> <span class="dot"/> </td>
+                        <td v-if="data.info_5 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_5 }} </td>
+                        <td v-if="data.info_4 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_4 }} </td>
+                        <td v-if="data.info_3 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_3 }} </td>
+                        <td v-if="data.info_2 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_2 }} </td>
+                        <td v-if="data.info_1 == ''" class="text-center data-now">
+                            <div> NA </div>
+                        </td>
+                        <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
+                        <td colspan="2" class="raf-gradient"> 
+                            <span class="line-orange"/>
+                            <span class="dot position-3"/>
+                            <span class="limit-text"> {{ data.limit }} </span>
+                            <span class="line-red"/> 
+                            <span class="threshold-text"> {{ data.threshold }} </span>
+                        </td>
+                        <td class="text-center remarks"> {{ data.remarks }} </td>
+                    </tr>
+
+
+                    <tr>
+                        <td rowspan="3" class="text-center table-title rotate">         <div>Finan Part.</div> 
+                        </td>
+                    <tr
+                        v-for="(data, index) in finan"
+                        v-bind:key="index"
+                        v-bind:name="data.name"
+                        v-bind:info_5="data.info_5"
+                        v-bind:info_4="data.info_4"
+                        v-bind:info_3="data.info_3"
+                        v-bind:info_2="data.info_2"
+                        v-bind:info_1="data.info_1"
+                        v-bind:limit="data.limit"
+                        v-bind:threshold="data.treshold"
+                        v-bind:remarks="data.remarks"
+                    >
+                        <td class="text-center"> {{ data.name }} </td>
+                        <td class="text-center"> <span class="dot"/> </td>
+                        <td v-if="data.info_5 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_5 }} </td>
+                        <td v-if="data.info_4 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_4 }} </td>
+                        <td v-if="data.info_3 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_3 }} </td>
+                        <td v-if="data.info_2 == ''" class="text-center">
+                            <div> - </div>
+                        </td>
+                        <td v-else class="text-center"> {{ data.info_2 }} </td>
+                        <td v-if="data.info_1 == ''" class="text-center data-now">
+                            <div> NA </div>
+                        </td>
+                        <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
+                        <td colspan="2" class="raf-gradient"> 
+                            <span class="line-orange"/>
+                            <span class="dot position-3"/>
+                            <span class="limit-text"> {{ data.limit }} </span>
+                            <span class="line-red"/> 
+                            <span class="threshold-text"> {{ data.threshold }} </span>
+                        </td>
+                        <td class="text-center remarks"> {{ data.remarks }} </td>
                     </tr>
 
 
@@ -160,6 +342,126 @@ export default {
                 date:"2017-08-01 00:00:00"
             }
         ],
+        risks: [
+            {
+                name:"Stress Test +/-200bp",
+                info_5:"",
+                info_4:"€ 466.9m",
+                info_3:"- € 525m",
+                info_2:"- € 559.4m",
+                info_1:"- € 659.4m",
+                limit:"-€700M",
+                threshold:"",
+                remarks:"Test de remarks un peu longue pour tester la boîte vvvvv vvvvv vvvvv vvvvv vvvvv vvvvv"
+            }
+        ],
+        solvency: [
+            {
+                name:"CET 1 Ratio",
+                info_5:"11.5%",
+                info_4:"10.7%",
+                info_3:"10.7%",
+                info_2:"10.7%",
+                info_1:"10.8%",
+                limit:"10.5%",
+                threshold:"9%",
+                remarks:""
+            },
+            {
+                name:"Stress Test +/-200bp",
+                info_5:"14.7%",
+                info_4:"15.7%",
+                info_3:"16.7%",
+                info_2:"13.7%",
+                info_1:"15.7%",
+                limit:"14%",
+                threshold:"12.5",
+                remarks:""
+            },
+            {
+                name:"Stress Test +/-200bp",
+                info_5:"€2.9bn",
+                info_4:"€3.9bn",
+                info_3:"€3.9bn",
+                info_2:"€2.9bn",
+                info_1:"",
+                limit:"",
+                threshold:"",
+                remarks:""
+            }
+        ],
+        insurance: [
+            {
+                name:"SCR Coverage ratio",
+                info_5:"154.5%",
+                info_4:"134.5%",
+                info_3:"133.5%",
+                info_2:"134.25%",
+                info_1:"",
+                limit:"110%",
+                threshold:"90%",
+                remarks:""
+            },
+            {
+                name:"Natixis Assurance",
+                info_5:"117%",
+                info_4:"117%",
+                info_3:"117%",
+                info_2:"117%",
+                info_1:"117%",
+                limit:"",
+                threshold:"",
+                remarks:"Test de remarks un peu longue pour tester la boîte vvvvv vvvvv vvvvv vvvvv vvvvv vvvvv"
+            },
+            {
+                name:"CEGC combined ratio",
+                info_5:"-",
+                info_4:"70%",
+                info_3:"73%",
+                info_2:"72%",
+                info_1:"70%",
+                limit:"",
+                threshold:"",
+                remarks:""
+            },
+        ],
+        am: [
+            {
+                name:"Ratio incidents/GOI",
+                info_5:"4.26%",
+                info_4:"3.76%",
+                info_3:"4.26%",
+                info_2:"4.26%",
+                info_1:"",
+                limit:"5%",
+                threshold:"10%",
+                remarks:""
+            },
+        ],
+        finan: [
+            {
+                name:"Private Equity",
+                info_5:"€0.865bn",
+                info_4:"0.722bn",
+                info_3:"0.722bn",
+                info_2:"0.722bn",
+                info_1:"-€677.4bn",
+                limit:"1.3bn",
+                threshold:"1.5bn",
+                remarks:""
+            },
+            {
+                name:"Coface Combined ratio",
+                info_5:"-",
+                info_4:"86%",
+                info_3:"86%",
+                info_2:"86%",
+                info_1:"-€677.4bn",
+                limit:"95%",
+                threshold:"130%",
+                remarks:""
+            },
+        ]
     }
   },
 
@@ -174,6 +476,12 @@ export default {
   methods: {
     moment (date) {
         return moment(date).format('MMMM') ;
+    },
+    
+    printPage () {
+      document.getElementById('print').style.display = 'none'
+      window.print()
+      document.getElementById('print').style.display = 'inline-block'
     }
   }
 }
@@ -332,6 +640,21 @@ thead {
 
 tr .remarks{
     max-width:250px;
+}
+
+.data-now {
+    font-weight:bold;
+}
+
+.purple {
+  border-color: #8e44ad;
+  color: #ffffff;
+  background-color: #8e44ad;
+}
+
+.purple:hover {
+  border-color: #793a93;
+  background-color: #793a93;
 }
 
 </style>

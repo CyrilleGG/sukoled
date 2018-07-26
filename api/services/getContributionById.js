@@ -15,7 +15,7 @@ module.exports = async (contribution_id) => {
 
   try {
     contribution = await mysql('contributions')
-      .select('id AS contribution_id', 'name', 'period', 'limit', 'threshold')
+      .select('id AS contribution_id', 'name', 'period', 'limit', 'threshold', 'unit')
       .where({
         'id': contribution_id
       });

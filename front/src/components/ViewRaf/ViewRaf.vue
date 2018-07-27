@@ -542,6 +542,7 @@ thead {
     position:relative;
     overflow-y:hidden;
     overflow-x:hidden;
+    -webkit-print-color-adjust: exact;
 }
 
 .raf-limit {
@@ -568,7 +569,7 @@ thead {
     white-space: nowrap;
     width: 1.5em;
     height:100%;
-    background:#464b5a;
+    background-color:#464b5a;
     color: #ffffff;
 }
 
@@ -650,11 +651,13 @@ tr .remarks{
   border-color: #8e44ad;
   color: #ffffff;
   background-color: #8e44ad;
+  -webkit-print-color-adjust: exact;
 }
 
 .purple:hover {
   border-color: #793a93;
   background-color: #793a93;
+  -webkit-print-color-adjust: exact;
 }
 
 </style>

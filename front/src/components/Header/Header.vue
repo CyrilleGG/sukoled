@@ -2,7 +2,23 @@
   <div id="header" class="row fixed-top">
 
     <div class="col-lg-2 d-flex justify-content-center align-items-center">
-      <img src="@/assets/logo.png" alt="Natixis logo">
+      <b-navbar-nav v-if="role == 'mod'">
+        <b-nav-item id="viewer" class="mx-3" :to="{ name: 'admin' }">
+          <img src="@/assets/logo.png" alt="Natixis logo">
+        </b-nav-item>
+      </b-navbar-nav>
+
+      <b-navbar-nav v-else-if="role == 'contrib'">
+        <b-nav-item id="viewer" class="mx-3" :to="{ name: 'contributor' }">
+          <img src="@/assets/logo.png" alt="Natixis logo">
+        </b-nav-item>
+      </b-navbar-nav>
+
+      <b-navbar-nav v-else-if="role == 'user'">
+        <b-nav-item id="viewer" class="mx-3" :to="{ name: 'viewer' }">
+          <img src="@/assets/logo.png" alt="Natixis logo">
+        </b-nav-item>
+      </b-navbar-nav>
     </div>
 
     <b-navbar toggleable='lg' class="col-lg-10 py-0 pl-5 pr-0">

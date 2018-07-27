@@ -77,10 +77,12 @@ export default {
 
 .box-rating-green {
     background-color:#2ecc71;
+    -webkit-print-color-adjust: exact;
 }
 
 .box-rating-yellow {
     background-color:#fdad2a;
+    -webkit-print-color-adjust: exact;
 }
 
 </style>

@@ -178,6 +178,7 @@ export default {
 
 table {
     margin-bottom:0;
+    -webkit-print-color-adjust: exact;
 }
 
 tr:first-child{

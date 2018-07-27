@@ -327,7 +327,7 @@ table {
 }
 
 .table-title {
-    background:#464b5a;
+    background-color:#464b5a;
     color: #ffffff;
 }
 
@@ -360,6 +360,5 @@ td {
   border-color: #793a93;
   background-color: #793a93;
 }
-
 
 </style>

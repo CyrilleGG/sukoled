@@ -74,7 +74,7 @@
                   </div>
                 </div>
               </div>
-              <p v-else class="col-lg-12 mb-3 pl-5 text-danger">You didn't upload any additional element for this contribution</p>
+              <p v-else class="col-lg-12 mb-3 pl-0 text-danger">The contributor didn't upload any additional element for this contribution</p>
             </div>
           </div>
 

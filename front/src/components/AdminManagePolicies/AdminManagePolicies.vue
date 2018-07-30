@@ -7,7 +7,7 @@
       <div class="col-lg-6 mx-auto">
 
         <div class="row mb-5">
-          <h2 class="col-lg-12 pl-0 text-uppercase">Manage policies</h2>
+          <h2 class="col-lg-12 pl-0 text-uppercase">Contribution Access</h2>
           <h4 class="col-lg-7 pl-0">Manage from here the users policies</h4>
 
           <div class="w-100"></div>
@@ -20,7 +20,7 @@
 
             <div class="row mb-5 rounded py-4 pl-3 pr-5 content">
 
-              <h3 class="col-lg-12 mb-5 pl-3">Select the contribution you would like to manage</h3>
+              <h3 class="col-lg-12 mb-5 pl-3">Select the contribution</h3>
 
               <b-form-select id="filter-contributions" class="col-lg-5 mb-3 ml-3" v-model="selectedContribution" :options="this.contributions"></b-form-select>
 
@@ -30,7 +30,7 @@
 
             <div class="row mb-5 rounded py-4 pl-3 pr-5 content">
 
-              <h3 class="col-lg-12 mb-5 pl-3">Manage the users that can contribute to this contribution</h3>
+              <h3 class="col-lg-12 mb-5 pl-3">Add or remove users for this contribution</h3>
 
               <b-form class="col-lg-12 mb-5 pl-3">
                 <b-form-group class="row mb-0 pl-3">

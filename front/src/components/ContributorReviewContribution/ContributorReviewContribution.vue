@@ -11,8 +11,8 @@
           <h3 class="col-lg-12 pl-0">Review your contribution</h3>
           <p class="col-lg-12 mb-4 pl-0 font-italic">{{ data.contribution.contribution_name }}</p>
 
-          <div v-if="data.input.comment_admin !== null" id="admin-comment" class="col-lg-12 d-flex mb-4 rounded p-3">
-            <img src="@/assets/icons/warning.png" class="my-auto" width="40px" alt="Warning">
+          <div v-if="data.input.comment_admin !== null" id="admin-comment" class="col-lg-12 d-flex align-items-center ali mb-4 rounded p-3">
+            <img src="@/assets/icons/warning.png" width="40px" alt="Warning">
             <p v-html="data.input.comment_admin" class="d-inline-block mb-0 ml-4"></p>
           </div>
 
@@ -221,9 +221,9 @@ export default {
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-#ContributorReviewContribution #admin-comment p {
+/* #ContributorReviewContribution #admin-comment p {
   line-height: 40px;
-}
+} */
 
 #ContributorReviewContribution table {
   box-shadow: 0 0 20px rgba(0,0,0,0.1);

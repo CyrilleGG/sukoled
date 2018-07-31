@@ -186,6 +186,7 @@ export default {
         }
       });
 
+
       setTimeout(() => {
         // This fires after the blob has been read/loaded.
         let data = new FormData();
@@ -222,9 +223,6 @@ export default {
           console.log('Please, complete every step')
         }
       }, 100)
-
-      // Start reading the blob as text.
-      // reader.readAsText(blob);
     }
   }
 }

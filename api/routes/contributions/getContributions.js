@@ -26,14 +26,11 @@ module.exports = async (req, res) => {
     'contribution.order AS contribution_order'
   )
     .from('versions as version')
-    .leftOuterJoin('versions as version2', function () {
-      this.on('version.contribution_id', '=', 'version.contribution_id').andOn('version.created_at', '>', 'version2.created_at')
-    })
+    .whereIn('version.created_at', mysql.max('created_at').from('versions').groupBy('ends_at'))
     .innerJoin('contributions as contribution', 'version.contribution_id', 'contribution.id')
     .innerJoin('departments as department', 'contribution.department_id', 'department.id')
-    .groupBy('contribution_id')
-    .orderBy('version_created_at', 'asc');
-
+    .orderBy('version_ends_at', 'desc');
+  
   return res.status(200).json({
     statusCode: 200,
     message: 'Ok',

@@ -25,7 +25,7 @@
                 <tr class="view-list-item">
                     <td></td>
                     <td>Total</td>
-                    <td v-if="results !== null" class="text-center">{{ results.current }}</td>
+                    <td v-if="results !== null" class="text-center font-weight-bold">{{ results.current }}</td>
                     <td></td>
                     <td></td>
                 </tr>

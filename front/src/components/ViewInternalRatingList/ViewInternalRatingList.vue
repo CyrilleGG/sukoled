@@ -6,7 +6,7 @@
         <table class="table table-striped border">
             <thead>
                 <tr>
-                    <th scope="col" class="text-center text-uppercase">Basel segment</th>
+                    <th scope="col" class="text-center text-uppercase">Internal rating</th>
                     <th
                         v-for="(date, index) in dates"
                         v-bind:key="index"

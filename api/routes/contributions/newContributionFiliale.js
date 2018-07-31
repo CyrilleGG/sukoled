@@ -76,6 +76,7 @@ module.exports = async (req, res) => {
         user_id: req.body.user_id
       });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({
       statusCode: 500,
       message: 'Internal Server Error'
@@ -85,6 +86,7 @@ module.exports = async (req, res) => {
   try {
     newFiles = await mysql.batchInsert('files', files)
   } catch (err) {
+    console.log(err);
     return res.status(500).json({
       statusCode: 500,
       message: 'Internal Server Error'

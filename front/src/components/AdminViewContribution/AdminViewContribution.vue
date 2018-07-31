@@ -4,7 +4,7 @@
     <Header :role="this.$root.$data.userInfo.role" />
 
     <div v-if="this.data !== null" class="row py-5 page-content">
-      <div class="col-lg-8  my-auto mx-auto">
+      <div class="col-lg-7  my-auto mx-auto">
 
         <div class="row mb-3 rounded py-4 pl-5 content">
 
@@ -13,8 +13,7 @@
           <table v-if="department_slug == 'raf'" class="col-lg-11 d-block mb-4 rounded">
             <tr class="row">
 
-              <th class="col-lg-4 py-3 pl-5">Name</th>
-              <th class="col-lg-2 py-3 text-center">{{ lastMonth () }}</th>
+              <th class="col-lg-6 py-3 pl-3">Name</th>
               <th class="col-lg-2 py-3 text-center">{{ month () }}</th>
               <th class="col-lg-2 py-3 text-center">Limit</th>
               <th class="col-lg-2 py-3 text-center">Threshold</th>
@@ -22,10 +21,8 @@
             </tr>
             <tr class="row">
 
-              <td class="col-lg-4 py-3 pl-5">{{ data.input.input_name }}</td>
-              <td class="col-lg-2 py-3 text-center">xx-1</td>
-              <td id="value" class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
-              <td id="input" class="col-lg-2 py-3 text-center last"><b-form-input :id="data.input.input_slug" class="text-center" v-model="data.input.input_value" type="text" :name="data.input.input_slug"></b-form-input></td>
+              <td class="col-lg-6 py-3 pl-3">{{ data.input.input_name }}</td>
+              <td class="col-lg-2 py-3 text-center last">{{ data.input.input_value }}</td>
               <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_limit }}</td>
               <td class="col-lg-2 py-3 text-center">{{ data.contribution.contribution_threshold }}</td>
 
@@ -110,10 +107,6 @@ export default {
   methods: {
     month () {
       return moment().subtract(1, 'months').format('MMMM')
-    },
-
-    lastMonth () {
-      return moment().subtract(2, 'months').format('MMMM')
     }
   }
 }

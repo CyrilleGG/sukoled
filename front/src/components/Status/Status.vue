@@ -17,10 +17,8 @@ export default {
 
   methods: {
     displayClass () {
-      if (this.$props.status == 'not delivered') {
-        return 'not-delivered'
-      } else if (this.$props.status == 'on hold') {
-        return 'on-hold'
+      if (this.$props.status == 'not sent') {
+        return 'not-sent'
       } else if (this.$props.status == 'in progress') {
         return 'in-progress'
       } else {
@@ -49,7 +47,7 @@ export default {
   background-color: #fdad2a;
 }
 
-.on-hold, .not-delivered {
+.unreceived, .not-sent {
   background-color: #f93519;
 }
 

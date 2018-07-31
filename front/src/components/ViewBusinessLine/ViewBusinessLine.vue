@@ -95,9 +95,9 @@
                         <tr>
                             <td class="text-center"></td>
                             <td class="text-center">Total</td>
-                            <td class="text-center">{{ total.current }}</td>
-                            <td class="text-center">{{ total.previous }}</td>
-                            <td class="text-center">{{ total.reference }}</td>
+                            <td class="text-center font-weight-bold">{{ total.current }}</td>
+                            <td class="text-center font-weight-bold">{{ total.previous }}</td>
+                            <td class="text-center font-weight-bold">{{ total.reference }}</td>
                         </tr>
 
 

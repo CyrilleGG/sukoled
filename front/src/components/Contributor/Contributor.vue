@@ -72,6 +72,8 @@ export default {
       this.$router.replace({ name: 'viewer' })
     }
 
+    this.$root.$data.formInput = null
+
     http.get('contributor/'+ this.$root.$data.userInfo.username)
       .then((response) => {
         for (var i = 0; i < response.data.data.waiting.length; i++) {

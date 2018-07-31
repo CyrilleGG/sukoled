@@ -27,8 +27,8 @@ module.exports = async (req, res) => {
         starts_at: req.body.starts_at,
         ends_at: req.body.ends_at,
         file_binary: 'null',
-        status_admin: 'on hold',
-        status_contributor: 'not delivered'
+        status_admin: 'unreceived',
+        status_contributor: 'not sent'
       });
   } catch (err) {
     return res.status(500).json({

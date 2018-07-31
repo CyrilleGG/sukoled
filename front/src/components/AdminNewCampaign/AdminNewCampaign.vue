@@ -80,7 +80,8 @@
 
         <div id="actions" class="row">
           <div class="col-lg-12 px-0 text-right">
-            <b-button class="mx-1 purple" v-on:click="message = message.replace(/\n/g, '<br>')" v-b-modal.confirm size="md">Submit</b-button>
+            <b-button v-if="message == null" class="mx-1 purple" v-b-modal.confirm size="md">Submit</b-button>
+            <b-button v-else class="mx-1 purple" v-on:click="message = message.replace(/\n/g, '<br>')" v-b-modal.confirm size="md">Submit</b-button>
           </div>
         </div>
 
@@ -197,9 +198,9 @@ export default {
 
   updated() {
     if (this.$data.selectedPeriodicity == 'monthly') {
-      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('27', 'days').format('YYYY-MM-DDT00:00:00.000') + 'Z'
+      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('20', 'days').format('YYYY-MM-DDT00:00:00.000') + 'Z'
     } else {
-      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('2', 'months').add('27', 'days').format('YYYY-MM-DDT00:00:00.000') + 'Z'
+      this.$data.input.ends_at = moment(this.$data.input.starts_at).add('20', 'days').format('YYYY-MM-DDT00:00:00.000') + 'Z'
     }
   },
 
@@ -264,9 +265,9 @@ export default {
       const contributions = this.$data.input.contributions
       var version_name = 'Report for '
       if (this.$data.selectedPeriodicity == 'monthly') {
-        version_name = version_name + moment(this.$data.input.starts_at).format('MMMM YYYY')
+        version_name = version_name + moment(this.$data.input.starts_at).subtract(1, 'months').format('MMMM YYYY')
       } else {
-        version_name = version_name + 'Q' + moment(this.$data.input.starts_at).quarter() + ' ' + moment().year()
+        version_name = version_name + 'Q' + moment(this.$data.input.starts_at).subtract(1, 'quarters').format('Q YYYY')
       }
       for (var i = 0; i < contributions.length; i++) {
         http.post('campaign/', {

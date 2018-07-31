@@ -25,38 +25,31 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-uppercase">Exposure</th>
-                                <th
-                                    v-for="(date, index) in dates"
-                                    v-bind:key="index"
-                                    v-bind:date="date.date"
-                                >
-                                    <div scope="col" class="text-uppercase text-center"> {{ moment(date.date) }} </div>
-                                </th>
+                                <th v-for="(date, dateindex) in dates" :key="dateindex" class="text-center">{{ date }}</th>
                             </tr>
                         </thead>
                         <tbody>
 
 
-                            <tr
-                                v-for="(exposure, index) in exposures"
-                                v-bind:key="index"
-                                v-bind:business_name="exposure.business_name"
-                                v-bind:info_7="exposure.info_7"
-                                v-bind:info_6="exposure.info_6"
-                                v-bind:info_5="exposure.info_5"
-                                v-bind:info_4="exposure.info_4"
-                                v-bind:info_3="exposure.info_3"
-                                v-bind:info_2="exposure.info_2"
-                                v-bind:info_1="exposure.info_1"
-                            >
-                                <td class="text-left"> {{ exposure.business_name }} </td>
-                                <td class="text-center"> {{ exposure.info_7 }} </td>
-                                <td class="text-center"> {{ exposure.info_6 }} </td>
-                                <td class="text-center"> {{ exposure.info_5 }} </td>
-                                <td class="text-center"> {{ exposure.info_4 }} </td>
-                                <td class="text-center"> {{ exposure.info_3 }} </td>
-                                <td class="text-center"> {{ exposure.info_2 }} </td>
-                                <td class="text-center"> {{ exposure.info_1 }} </td>
+                            <tr>
+                                <td class="text-left font-weight-bold">Gross EAD*</td>
+                                <td v-for="(item, grossindex) in exposure.grossEAD" :key="grossindex" class="text-center">{{ item }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-weight-bold">Net EAD*</td>
+                                <td v-for="(item, exposurenetindex) in exposure.netEAD" :key="exposurenetindex" class="text-center">{{ item }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-italic">out of which Real Estate Leasing net EAD</td>
+                                <td v-for="(item, realEstateindex) in exposure.realEstate" :key="realEstateindex" class="text-center">{{ item }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-italic">out of which Equipment Leasing net EAD</td>
+                                <td v-for="(item, equipmentindex) in exposure.equipment" :key="equipmentindex" class="text-center">{{ item }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-italic">out of which Renewable Energy net EAD</td>
+                                <td v-for="(item, renewableindex) in exposure.renewable" :key="renewableindex" class="text-center">{{ item }}</td>
                             </tr>
 
 
@@ -67,37 +60,21 @@
                     <table class="table table-striped border">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-uppercase" colspan="3">Business line</th>
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
+                                <th scope="col" class="text-uppercase">RWA</th>
+                                <th class="text-center">   </th>
+                                <th class="text-center">   </th>
                             </tr>
                         </thead>
                         <tbody>
 
 
-                            <tr
-                                v-for="(rwa, index) in rwas"
-                                v-bind:key="index"
-                                v-bind:business_name="rwa.business_name"
-                                v-bind:info_7="rwa.info_7"
-                                v-bind:info_6="rwa.info_6"
-                                v-bind:info_5="rwa.info_5"
-                                v-bind:info_4="rwa.info_4"
-                                v-bind:info_3="rwa.info_3"
-                                v-bind:info_2="rwa.info_2"
-                                v-bind:info_1="rwa.info_1"
-                            >
-                                <td class="text-left title-size"> {{ rwa.business_name }} </td>
-                                <td class="text-center"> {{ rwa.info_7 }} </td>
-                                <td class="text-center"> {{ rwa.info_6 }} </td>
-                                <td class="text-center"> {{ rwa.info_5 }} </td>
-                                <td class="text-center"> {{ rwa.info_4 }} </td>
-                                <td class="text-center"> {{ rwa.info_3 }} </td>
-                                <td class="text-center"> {{ rwa.info_2 }} </td>
-                                <td class="text-center"> {{ rwa.info_1 }} </td>
+                            <tr>
+                                <td class="text-left font-weight-bold">RWA Credit</td>
+                                <td v-for="(item, creditindex) in rwa.rwaCredit" :key="creditindex" class="text-center">{{ item }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-weight-bold">RWA Operational</td>
+                                <td v-for="(item, operationalindex) in rwa.rwaOperational" :key="operationalindex" class="text-center">{{ item }}</td>
                             </tr>
 
 
@@ -108,37 +85,21 @@
                     <table class="table table-striped border">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-uppercase" colspan="3">Default</th>
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
+                                <th scope="col" class="text-uppercase">Default</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
 
 
-                            <tr
-                                v-for="(def, index) in defaults"
-                                v-bind:key="index"
-                                v-bind:business_name="def.business_name"
-                                v-bind:info_7="def.info_7"
-                                v-bind:info_6="def.info_6"
-                                v-bind:info_5="def.info_5"
-                                v-bind:info_4="def.info_4"
-                                v-bind:info_3="def.info_3"
-                                v-bind:info_2="def.info_2"
-                                v-bind:info_1="def.info_1"
-                            >
-                                <td class="text-left title-size"> {{ def.business_name }} </td>
-                                <td class="text-center"> {{ def.info_7 }} </td>
-                                <td class="text-center"> {{ def.info_6 }} </td>
-                                <td class="text-center"> {{ def.info_5 }} </td>
-                                <td class="text-center"> {{ def.info_4 }} </td>
-                                <td class="text-center"> {{ def.info_3 }} </td>
-                                <td class="text-center"> {{ def.info_2 }} </td>
-                                <td class="text-center"> {{ def.info_1 }} </td>
+                            <tr>
+                                <td class="text-left font-weight-bold">Defaulted Exposure</td>
+                                <td v-for="(item, exposureindex) in defaulted.exposure" :key="exposureindex" class="text-center">{{ item }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-weight-bold">% of defaulted net EAD</td>
+                                <td v-for="(item, defaultednetindex) in defaulted.netEAD" :key="defaultednetindex" class="text-center">{{ item }}</td>
                             </tr>
 
 
@@ -149,37 +110,21 @@
                     <table class="table table-striped border">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-uppercase" colspan="3">Cost of risk</th>
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
-                                <th scope="col" />
+                                <th scope="col" class="text-uppercase">Cost of risk</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
 
 
-                            <tr
-                                v-for="(risk, index) in risks"
-                                v-bind:key="index"
-                                v-bind:business_name="risk.business_name"
-                                v-bind:info_7="risk.info_7"
-                                v-bind:info_6="risk.info_6"
-                                v-bind:info_5="risk.info_5"
-                                v-bind:info_4="risk.info_4"
-                                v-bind:info_3="risk.info_3"
-                                v-bind:info_2="risk.info_2"
-                                v-bind:info_1="risk.info_1"
-                            >
-                                <td class="text-left title-size"> {{ risk.business_name }} </td>
-                                <td class="text-center"> {{ risk.info_7 }} </td>
-                                <td class="text-center"> {{ risk.info_6 }} </td>
-                                <td class="text-center"> {{ risk.info_5 }} </td>
-                                <td class="text-center"> {{ risk.info_4 }} </td>
-                                <td class="text-center"> {{ risk.info_3 }} </td>
-                                <td class="text-center"> {{ risk.info_2 }} </td>
-                                <td class="text-center"> {{ risk.info_1 }} </td>
+                            <tr>
+                                <td class="text-left font-weight-bold">Cost of risk</td>
+                                <td v-for="(item, costindex) in costOfRisk.costOfRisk" :key="costindex" class="text-center">{{ item }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-weight-bold">Cost of risk in % of net EAD</td>
+                                <td v-for="(item, costnetindex) in costOfRisk.netEAD" :key="costnetindex" class="text-center">{{ item }}</td>
                             </tr>
 
 
@@ -196,7 +141,7 @@
                             <div v-if="doc.url !== ''">
                                 <img v-bind:src="doc.url" class="border">
                             </div>
-                            <div v-else>
+                            <div>
                                 <p class="other-element-text"> {{ doc.text }} </p>
                             </div>
                         </div>
@@ -205,12 +150,8 @@
 
                 </div>
                 <div class="col-lg-3">
-                    <view-comment class="border right-column"
-                    v-for="(comment, index) in comments"
-                    v-bind:key="index"
-                    v-bind:title="comment.title"
-                    v-bind:comment="comment.comment"
-                    />
+                    <view-comment class="border right-column" v-bind:title="'Comments'" v-bind:comment="comments[comments.length - 1]" />
+                    <view-comment class="border right-column" v-bind:title="'Highlights'" v-bind:comment="highlights[comments.length - 1]" />
 
                 </div>
             </div>
@@ -225,8 +166,8 @@
 <script>
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { http } from '../../http'
 import moment from 'moment'
-import momentfquarter from 'moment-fquarter'
 
 import Header from '@/components/Header/Header'
 import HeaderView from '@/components/HeaderView/HeaderView'
@@ -245,83 +186,29 @@ export default {
 
   data () {
     return {
-        comments: [
-            {
-                title:"Comments",
-                comment:"Business Line comment. The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
-            }
-        ],
-        dates: [
-            {
-                date:"2018-03-01 00:00:00"
-            },
-            {
-                date:"2018-02-01 00:00:00"
-            },
-            {
-                date:"2017-04-01 00:00:00"
-            },
-            {
-                date:"2017-05-01 00:00:00"
-            },
-            {
-                date:"2017-08-01 00:00:00"
-            },
-            {
-                date:"2017-09-01 00:00:00"
-            },
-            {
-                date:"2017-12-01 00:00:00"
-            }
-        ],
-        exposures: [
-            {
-                business_name:"Grass EAD",
-                info_7:"12 568",
-                info_6:"12 745",
-                info_5:"12 815",
-                info_4:"13 815",
-                info_3:"12 815",
-                info_2:"13 005",
-                info_1:"13 024"             
-            }
-        ],
-        rwas : [
-            {
-                business_name:"Grass EAD",
-                info_7:"12 568",
-                info_6:"12 745",
-                info_5:"12 815",
-                info_4:"13 815",
-                info_3:"12 815",
-                info_2:"13 005",
-                info_1:"13 024"  
-            }
-        ],
-        defaults : [
-            {
-                business_name:"Grass EAD",
-                info_7:"12 568",
-                info_6:"12 745",
-                info_5:"12 815",
-                info_4:"13 815",
-                info_3:"12 815",
-                info_2:"13 005",
-                info_1:"13 024"  
-            }
-        ],
-        risks : [
-            {
-                business_name:"Grass EAD",
-                info_7:"12 568",
-                info_6:"12 745",
-                info_5:"12 815",
-                info_4:"13 815",
-                info_3:"12 815",
-                info_2:"13 005",
-                info_1:"13 024"  
-            }
-        ],
+        dates: [],
+        exposure: {
+            grossEAD: [],
+            netEAD: [],
+            realEstate: [],
+            equipment: [],
+            renewable: []
+        },
+        rwa: {
+            rwaCredit: [],
+            rwaOperational: [],
+            total: []
+        },
+        defaulted: {
+            exposure: [],
+            netEAD: []
+        },
+        costOfRisk: {
+            costOfRisk: [],
+            netEAD: []
+        },
+        comments: [],
+        highlights: [],
         documents : [
             {
                 url:"https://support.content.office.net/fr-fr/media/5f8252c4-09fd-40a1-ae03-1d498f9dedfd.png",
@@ -341,13 +228,39 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'contrib') {
       this.$router.replace({ name: 'contributor' })
     }
+
+    http.get('subsidaries/Lease')
+        .then(response => {
+            var json
+            response.data.data.forEach((subsidary, index) => {
+                if (index < 6) {
+                    this.$data.dates.push('Q' + moment(subsidary.ends_at).subtract(1, 'months').format('Q YYYY'))
+                    this.$data.comments.push(subsidary.comment_contributor)
+                    this.$data.highlights.push(subsidary.highlight)
+                    json = JSON.parse(subsidary.file_json)
+                    this.$data.exposure.grossEAD.push(json['Gross EAD*'])
+                    this.$data.exposure.netEAD.push(json['Net EAD*'])
+                    this.$data.exposure.realEstate.push(json['out of which Real Estate Leasing net EAD'])
+                    this.$data.exposure.equipment.push(json['out of which Equipment Leasing net EAD'])
+                    this.$data.exposure.renewable.push(json['out of which Renewable Energy net EAD'])
+                    this.$data.rwa.rwaCredit.push(json['RWA Credit'])
+                    this.$data.rwa.rwaOperational.push(json['RWA Operational'])
+                    this.$data.rwa.total.push(json['Total RWA'])
+                    this.$data.defaulted.exposure.push(json['Defaulted exposure'])
+                    this.$data.defaulted.netEAD.push(json['% of defaulted net EAD'])
+                    this.$data.costOfRisk.costOfRisk.push(json['Cost of risk'])
+                    this.$data.costOfRisk.netEAD.push(json['Cost of risk in % of net EAD'])
+                }
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
   },
 
   methods: {
     moment (date) {
-        var value = moment(date).fquarter(1);
-        var value_second = moment(date).format('YYYY') ;
-        return value_second + "-Q" +value.quarter
+        return moment(date).format('Q YYYY')
     },
 
     printPage () {
@@ -424,6 +337,10 @@ thead {
 .table-title {
     background:#000;
     color:white;
+}
+
+tr>td:first-child {
+    width: 200px;
 }
 
 .title-size {

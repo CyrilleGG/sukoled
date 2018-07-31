@@ -78,6 +78,9 @@ app.get('/api/dtm/breakdown/line/:year/:month', require('./routes/dtm/breakdownB
 // Highlights-related routes.
 app.get('/api/highlights', require('./routes/dtm/highlights'));
 
+// Subisadries-related routes for front
+app.get('/api/subsidaries/:subsidary_name', require('./routes/subsidaries/getSubsidary'));
+
 app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé
   console.log(`Hestia Server listening on port ${PORT}`)
 });

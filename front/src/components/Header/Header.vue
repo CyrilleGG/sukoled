@@ -25,9 +25,17 @@
       <b-collapse is-nav id="nav-collapse">
 
         <b-navbar-nav v-if="role == 'mod'" id="main-nav">
-          <b-nav-item id="viewer" class="mx-3" :to="{ name: 'viewer' }">Dashboard</b-nav-item>
           <b-nav-item id="admin" class="mx-3" :to="{ name: 'admin' }">Admin</b-nav-item>
           <b-nav-item id="contributor" class="mx-3" :to="{ name: 'contributor' }">Contribute</b-nav-item>
+          <b-nav-item id="viewer" class="mx-3" :to="{ name: 'viewer' }">Dashboard</b-nav-item>
+        </b-navbar-nav>
+
+        <b-navbar-nav v-if="role == 'contrib'" id="main-nav">
+          <b-nav-item id="home" class="mx-3" :to="{ name: 'contributor' }">Home</b-nav-item>
+        </b-navbar-nav>
+
+        <b-navbar-nav v-if="role == 'user'" id="main-nav">
+          <b-nav-item id="home" class="mx-3" :to="{ name: 'viewer' }">Home</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav id="second-nav" class="ml-auto">

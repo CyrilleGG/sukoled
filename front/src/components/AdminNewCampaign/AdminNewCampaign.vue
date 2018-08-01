@@ -39,19 +39,19 @@
           <div class="col-lg-12 pl-5">
             <div class="row">
 
-              <b-form-radio-group id="departments" class="col-lg-6 mb-4" v-model="selectedDepartment" :options="departments" v-on:change="input.contributions = []" name="departments"></b-form-radio-group>
+              <b-form-radio-group id="departments" class="col-lg-6 mb-4" v-model="selectedDepartment" :options="departments" v-on:change="changeDepartment ()" name="departments"></b-form-radio-group>
 
               <div v-if="selectedDepartment == 'raf'" class="col-lg-12 rounded contribution-list">
                 <div class="row pl-3">
-                  <b-form-checkbox class="col-lg-12 my-2 mx-0" v-on:change="allRaf ($event)">All</b-form-checkbox>
-                  <b-form-checkbox v-for="(contribution, index) in contributions.raf" class="col-lg-4 my-2 mx-0" v-model="input.contributions" :key="index" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
+                  <b-form-checkbox class="col-lg-12 my-2 mx-0" v-on:change="allRaf ($event)" v-model="allChecked">All</b-form-checkbox>
+                  <b-form-checkbox v-for="(contribution, index) in contributions.raf" class="col-lg-4 my-2 mx-0" v-on:change="updateInputContributions ($event, contribution.contribution_id, contribution.department_slug)" v-bind:checked="contribution.checked" :key="index">{{ contribution.contribution_name }}</b-form-checkbox>
                 </div>
               </div>
 
               <div v-else-if="selectedDepartment == 'subsidaries'" class="col-lg-12 rounded contribution-list">
                 <div class="row pl-3">
-                  <b-form-checkbox class="col-lg-12 my-2 mx-0" v-on:change="allSubsidaries ($event)">All</b-form-checkbox>
-                  <b-form-checkbox v-for="(contribution, index) in contributions.subsidaries" class="col-lg-4 my-2 mx-0" v-model="input.contributions" :key="index" :value="contribution">{{ contribution.contribution_name }}</b-form-checkbox>
+                  <b-form-checkbox class="col-lg-12 my-2 mx-0" v-on:change="allSubsidaries ($event)" v-model="allChecked">All</b-form-checkbox>
+                  <b-form-checkbox v-for="(contribution, index) in contributions.subsidaries" class="col-lg-4 my-2 mx-0" v-on:change="updateInputContributions ($event, contribution.contribution_id, contribution.department_slug)" v-bind:checked="contribution.checked" :key="index">{{ contribution.contribution_name }}</b-form-checkbox>
                 </div>
               </div>
 
@@ -168,7 +168,8 @@ export default {
         contributions: [],
         department_name: ''
       },
-      message: null
+      message: null,
+      allChecked: false
     }
   },
 
@@ -184,6 +185,7 @@ export default {
     http.get('campaign/')
       .then((response) => {
         for (var i = 0; i < response.data.data.length; i++) {
+          response.data.data[i].checked = false
           if (response.data.data[i].department_slug == 'raf') {
             this.$data.contributions.raf.push(response.data.data[i])
           } else {
@@ -205,6 +207,17 @@ export default {
   },
 
   methods: {
+    changeDepartment () {
+      this.$data.allChecked = false
+      this.$data.contributions.raf.forEach(raf => {
+        raf.checked = false
+      })
+      this.$data.contributions.subsidaries.forEach(subsidary => {
+        subsidary.checked = false
+      })
+      this.$data.input.contributions.splice(0)
+    },
+    
     allRaf (check) {
       const raf = this.$data.contributions.raf
       var contributions = this.$data.input.contributions
@@ -215,12 +228,14 @@ export default {
               this.$data.input.contributions.splice(j, 1)
             }
           }
+          this.$data.contributions.raf[i].checked = true
           this.$data.input.contributions.push(raf[i])
         }
       } else {
         for (var i = 0; i < contributions.length; i++) {
-          this.$data.input.contributions.splice(i)
+          this.$data.contributions.raf[i].checked = false
         }
+        this.$data.input.contributions.splice(0)
       }
     },
 
@@ -234,11 +249,57 @@ export default {
               this.$data.input.contributions.splice(j, 1)
             }
           }
+          this.$data.contributions.subsidaries[i].checked = true
           this.$data.input.contributions.push(subsidaries[i])
         }
       } else {
         for (var i = 0; i < contributions.length; i++) {
-          this.$data.input.contributions.splice(i)
+          this.$data.contributions.subsidaries[i].checked = false
+        }
+        this.$data.input.contributions.splice(0)
+      }
+    },
+
+    updateInputContributions (event, id, slug) {
+      if (event == true) {
+        if (slug == 'raf') {
+          this.$data.contributions.raf.forEach(raf => {
+            if (raf.contribution_id == id) {
+              raf.checked = true
+              this.$data.input.contributions.push(raf)
+            }
+          })
+        } else {
+          this.$data.contributions.subsidaries.forEach(subsidary => {
+            if (subsidary.contribution_id == id) {
+              subsidary.checked = true
+              this.$data.input.contributions.push(subsidary)
+            }
+          })
+        }
+      } else {
+        if (slug == 'raf') {
+          this.$data.contributions.raf.forEach(raf => {
+            if (raf.contribution_id == id) {
+              raf.checked = false
+              this.$data.input.contributions.forEach((contribution, index) => {
+                if (contribution.contribution_id == id) {
+                  this.$data.input.contributions.splice(index, 1)
+                }
+              })
+            }
+          })
+        } else {
+          this.$data.contributions.subsidaries.forEach(subsidary => {
+            if (subsidary.contribution_id == id) {
+              subsidary.checked = false
+              this.$data.input.contributions.forEach((contribution, index) => {
+                if (contribution.contribution_id == id) {
+                  this.$data.input.contributions.splice(index, 1)
+                }
+              })
+            }
+          })
         }
       }
     },

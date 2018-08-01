@@ -135,7 +135,7 @@ export default {
       }
     },
 
-    all (check) {                                               // bug : dernier élément du tableau contributions push dans selectedContributions
+    all (check) {
       const contributions = this.$data.contributions
       var selected = this.$data.selectedContributions
       if (check == true) {

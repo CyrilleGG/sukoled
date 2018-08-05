@@ -22,5 +22,23 @@ module.exports = [
     username: 'antoine.p',
     password: 'test',
     role: 'contrib'
+  },
+  {
+    id: 4,
+    username: 'fabrice.d',
+    password: 'test',
+    role: 'contrib'
+  },
+  {
+    id: 5,
+    username: 'valentin.p',
+    password: 'test',
+    role: 'contrib'
+  },
+  {
+    id: 6,
+    username: 'jocelyn.p',
+    password: 'test',
+    role: 'contrib'
   }
 ];

@@ -11,6 +11,7 @@ const mysql = require('../../utilities/mysql');
  */
 
 module.exports = async (req, res) => {
+
   const contributions = await mysql.select(
     'version.id AS version_id',
     'version.parent_version_id',
@@ -26,10 +27,11 @@ module.exports = async (req, res) => {
     'contribution.order AS contribution_order'
   )
     .from('versions as version')
-    .whereIn('version.created_at', mysql.max('created_at').from('versions').groupBy('ends_at'))
+    .orderBy('version.created_at', 'desc')
     .innerJoin('contributions as contribution', 'version.contribution_id', 'contribution.id')
     .innerJoin('departments as department', 'contribution.department_id', 'department.id')
-    .orderBy('version_ends_at', 'desc');
+    .whereIn('version.created_at', mysql.max('v2.created_at').from('versions as v2').groupBy('v2.ends_at', 'v2.contribution_id'))
+    .orderBy('version_created_at', 'desc');
   
   return res.status(200).json({
     statusCode: 200,
@@ -37,3 +39,6 @@ module.exports = async (req, res) => {
     data: contributions
   });
 };
+
+// 'contribution_id', 'ends_at'
+// 'ends_at', 'contribution_id'

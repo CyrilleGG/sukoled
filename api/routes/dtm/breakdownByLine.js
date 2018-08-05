@@ -187,6 +187,7 @@ module.exports = async (req, res) => {
     statusCode: 200,
     message: 'Ok',
     data: {
+      date: req.params.year + '-' + req.params.month + '-01T00:00:00.000',
       current: { breakdown_current, total_current },
       previous: { breakdown_previous, total_previous },
       reference: { breakdown_reference, total_reference }

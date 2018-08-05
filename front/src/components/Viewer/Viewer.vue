@@ -100,7 +100,7 @@ export default {
       this.$router.replace({ name: 'contributor' })
     }
 
-    http.get('dtm/top/'+ moment().year() +'/'+ moment().subtract('1', 'months').month())
+    http.get('dtm/top/'+ moment().year() +'/05')
       .then(response => {
         this.$data.top_companies = response.data.data.companies
         this.$data.results = response.data.data.total

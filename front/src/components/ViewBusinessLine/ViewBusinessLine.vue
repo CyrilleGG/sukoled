@@ -20,7 +20,7 @@
         </div>
         
         <div class="row">
-          <div class="col-lg-7 pl-0">
+          <div class="col-lg-8 pl-0">
                 <p v-if="total.current == null">Loading...</p>
                 <table v-else class="table table-striped border">
                     <thead>
@@ -31,7 +31,7 @@
                                 v-for="(date, index) in dates"
                                 v-bind:key="index"
                             >
-                                <div scope="col" class="text-uppercase text-center"> {{ date }}</div>
+                                <div scope="col" class="text-uppercase text-center">{{ date }}</div>
                             </th>
                         </tr>
                     </thead>
@@ -85,7 +85,7 @@
                         
                         
                         <tr v-for="(other, otherindex) in other_activities.current" v-bind:key="'other'+otherindex">
-                            <td colspan="2" class="table-title text-left"> Insurance </td>
+                            <td colspan="2" class="table-title text-left"> Other Activities </td>
                             <td class="text-center"> {{ other.sum_mt_expo_global }} </td>
                             <td class="text-center"> {{ other_activities.previous[otherindex].sum_mt_expo_global }} </td>
                             <td class="text-center"> {{ other_activities.reference[otherindex].sum_mt_expo_global }} </td>
@@ -94,7 +94,7 @@
 
                         <tr>
                             <td class="text-center"></td>
-                            <td class="text-center">Total</td>
+                            <td class="text-center font-weight-bold">Total</td>
                             <td class="text-center font-weight-bold">{{ total.current }}</td>
                             <td class="text-center font-weight-bold">{{ total.previous }}</td>
                             <td class="text-center font-weight-bold">{{ total.reference }}</td>
@@ -104,7 +104,7 @@
                     </tbody>
                 </table>
           </div>
-          <div class="col-lg-5">
+          <div class="col-lg-4">
             <view-comment class="border right-column"
               v-for="(comment, index) in comments"
               v-bind:key="index"
@@ -151,11 +151,7 @@ export default {
                 comment:"Business Line comment. The 20 biggest corporates represent 16.5% in the total corporate exposure as of end of Mars 2018 (compared to 16.7% as of end of February 2018)."
             }
         ],
-        dates: [
-            moment().subtract(2, 'months').format('MMMM-YY'),
-            moment().subtract(3, 'months').format('MMMM-YY'),
-            moment().subtract(1, 'years').month(11).format('MMMM-YY')
-        ],
+        dates: [],
         cibs: {
             current: [],
             previous: [],
@@ -201,8 +197,12 @@ export default {
       this.$router.replace({ name: 'contributor' })
     }
 
-    http.get('dtm/breakdown/line/'+ moment().year() +'/'+ moment().subtract(1, 'months').month())
+    http.get('dtm/breakdown/line/'+ moment().year() +'/05')
         .then(response => {
+            for (let i = 0; i < 2; i++) {
+                this.$data.dates.push(moment(response.data.data.date).subtract(i, 'months').format('MMMM-YYYY'))
+            }
+            this.$data.dates.push(moment(response.data.data.date).subtract(1, 'years').month(11).format('MMMM-YYYY'))
             response.data.data.current.breakdown_current.forEach(line => {
                 if (line.ind_core_business == 'CIB') {
                     this.$data.cibs.current.push(line)

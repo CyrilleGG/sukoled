@@ -24,14 +24,14 @@ module.exports = async (req, res) => {
     'contribution.name AS contribution_name'
   )
     .from('versions as version')
-    .orderBy('version.created_at', 'desc')
-    .whereIn('version.created_at', mysql.max('created_at').from('versions').groupBy('ends_at'))
     .innerJoin('contributions as contribution', 'version.contribution_id', 'contribution.id')
     .innerJoin('departments as department', 'contribution.department_id', 'department.id')
+    .whereIn('version.created_at', mysql.max('v2.created_at').from('versions as v2').groupBy('v2.ends_at', 'v2.contribution_id'))
     .innerJoin('policies', 'version.contribution_id', 'policies.contribution_id')
     .where({
       'policies.user_id': req.params.user_id,
-    });
+    })
+    .orderBy('version_created_at', 'desc');
 
   let waiting = [];
   let done = [];

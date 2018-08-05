@@ -91,7 +91,7 @@
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
                         </td>
-                        <td class="text-center remarks"> {{ data.remarks }} </td>
+                        <td class="text-center remarks"> Significant alert: TALEVERAS </td>
                     </tr>
 
 
@@ -140,7 +140,7 @@
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
                         </td>
-                        <td class="text-center remarks"> {{ data.remarks }} </td>
+                        <td class="text-center remarks">  </td>
                     </tr>
 
 
@@ -189,7 +189,7 @@
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
                         </td>
-                        <td class="text-center remarks"> {{ data.remarks }} </td>
+                        <td class="text-center remarks">  </td>
                     </tr>
 
 
@@ -238,7 +238,7 @@
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
                         </td>
-                        <td class="text-center remarks"> {{ data.remarks }} </td>
+                        <td class="text-center remarks">  </td>
                     </tr>
 
 
@@ -287,7 +287,7 @@
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
                         </td>
-                        <td class="text-center remarks"> {{ data.remarks }} </td>
+                        <td class="text-center remarks">  </td>
                     </tr>
 
 

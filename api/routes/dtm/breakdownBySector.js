@@ -38,6 +38,9 @@ module.exports = async (req, res) => {
   return res.status(200).json({
     statusCode: 200,
     message: 'Ok',
-    data: breakdown
+    data: {
+      breakdown: breakdown,
+      date: req.params.year + '-' + req.params.month + '-01T00:00:00.000'
+    }
   });
 };

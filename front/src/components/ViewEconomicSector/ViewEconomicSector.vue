@@ -148,39 +148,41 @@ export default {
     this.$router.replace({ name: 'contributor' })
     }
 
-    http.get('dtm/breakdown/sector/'+ moment().year() +'/'+ moment().subtract(1, 'months').month())
+    http.get('dtm/breakdown/sector/'+ moment().year() +'/05')
       .then(response => {
-        const sectors = response.data.data
+        const sectors = response.data.data.breakdown
         sectors.forEach(sector => {
           this.$data.economic_graph[0].data.labels.push(sector.lb_regrp_act_eco_int)
-          this.$data.economic_graph[0].data.datasets[0].label = moment().subtract(2, 'months').format('MMMM-YY')
+          this.$data.economic_graph[0].data.datasets[0].label = moment(response.data.data.date).format('MMMM-YY')
           this.$data.economic_graph[0].data.datasets[0].data.push(sector.mt_expo_global)
         });
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    
-    http.get('dtm/breakdown/sector/'+ moment().year() +'/'+ moment().subtract(2, 'months').month())
-      .then(response => {
-        const sectors = response.data.data
-        sectors.forEach(sector => {
-          this.$data.economic_graph[0].data.datasets[1].label = moment().subtract(3, 'months').format('MMMM-YY')
-          this.$data.economic_graph[0].data.datasets[1].data.push(sector.mt_expo_global)
-        });
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    
-    http.get('dtm/breakdown/sector/'+ moment().subtract(1, 'years').year() +'/'+ moment().month(11).format('MM'))
-      .then(response => {
-        const sectors = response.data.data
-        sectors.forEach(sector => {
-          this.$data.economic_graph[0].data.datasets[2].label = moment().subtract(1, 'years').month(11).format('MMMM-YY')
-          this.$data.economic_graph[0].data.datasets[2].data.push(sector.mt_expo_global)
-        });
-        this.$data.data = response.data.data[0].lb_regrp_act_eco_int
+
+        http.get('dtm/breakdown/sector/'+ moment().year() +'/04')
+          .then(response => {
+            const sectors = response.data.data.breakdown
+            sectors.forEach(sector => {
+              this.$data.economic_graph[0].data.datasets[1].label = moment(response.data.data.date).format('MMMM-YY')
+              this.$data.economic_graph[0].data.datasets[1].data.push(sector.mt_expo_global)
+            });
+
+            http.get('dtm/breakdown/sector/'+ moment().subtract(1, 'years').year() +'/'+ moment().month(11).format('MM'))
+              .then(response => {
+                const sectors = response.data.data.breakdown
+                sectors.forEach(sector => {
+                  this.$data.economic_graph[0].data.datasets[2].label = moment(response.data.data.date).month(11).format('MMMM-YY')
+                  this.$data.economic_graph[0].data.datasets[2].data.push(sector.mt_expo_global)
+                });
+                this.$data.data = response.data.data.breakdown[0].lb_regrp_act_eco_int
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          })
+
+          .catch(error => {
+            console.log(error)
+          })
+
       })
       .catch(error => {
         console.log(error)

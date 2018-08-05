@@ -24,7 +24,7 @@
                 />
                 <tr class="view-list-item">
                     <td></td>
-                    <td>Total</td>
+                    <td class="font-weight-bold">Total</td>
                     <td v-if="results !== null" class="text-center font-weight-bold">{{ results.current }}</td>
                     <td></td>
                     <td></td>

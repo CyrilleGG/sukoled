@@ -35,7 +35,7 @@
             <tr class="row">
 
               <th class="col-lg-8 py-3 pl-5">Name</th>
-              <th class="col-lg-4 py-3 text-center">{{ month () }}</th>
+              <th class="col-lg-4 py-3 text-center">{{ quarter () }}</th>
 
             </tr>
             <tr v-for="(value, key, index) in data.input.version_file" class="row" :key="index">
@@ -186,11 +186,11 @@ export default {
 
   methods: {
     month () {
-      return moment().subtract(1, 'months').format('MMMM')
+      return moment(this.$data.data.date).subtract(1, 'months').format('MMMM YY')
     },
 
-    lastMonth () {
-      return moment().subtract(2, 'months').format('MMMM')
+    quarter () {
+      return 'Q' + moment(this.$data.data.date).subtract(1, 'quarters').format('Q YYYY')
     },
 
     readFiles () {

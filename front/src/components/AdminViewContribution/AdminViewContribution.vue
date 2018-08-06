@@ -29,6 +29,21 @@
             </tr>
           </table>
 
+          <table v-if="department_slug == 'subsidaries'" class="col-lg-11 d-block mb-4 rounded">
+            <tr class="row">
+
+              <th class="col-lg-8 py-3 pl-5">Name</th>
+              <th class="col-lg-4 py-3 text-center">{{ quarter () }}</th>
+
+            </tr>
+            <tr v-for="(value, key, index) in data.input.version_file" class="row" :key="index">
+
+              <td class="col-lg-8 py-3 pl-5">{{ key }}</td>
+              <td class="col-lg-4 py-3 text-center last">{{ value }}</td>
+
+            </tr>
+          </table>
+
           <div class="col-lg-12">
             <div class="row">
               <p class="col-lg-12 mt-3 mb-1 pl-0 font-weight-bold">Contributor's comment</p>
@@ -93,20 +108,37 @@ export default {
 
     const contribution_id = this.$route.query.contribution_id
     const version_id = this.$route.query.version_id
+    const department_slug = this.$route.query.department_slug
 
-    http.get('inputs/'+ contribution_id +'/version/'+ version_id)
-      .then((response) => {
-        this.$data.data = response.data.data
-      })
+    if (department_slug == 'raf') {
+      http.get('inputs/'+ contribution_id +'/version/'+ version_id)
+        .then((response) => {
+          this.$data.data = response.data.data
+        })
 
-      .catch((error) => {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log(error)
+        })
+    } else if (department_slug == 'subsidaries') {
+      http.get('versionView/'+ contribution_id +'/version/'+ version_id)
+        .then((response) => {
+          this.$data.data = response.data.data
+          this.$data.data.input.version_file = JSON.parse(this.$data.data.input.version_file)
+        })
+
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   },
 
   methods: {
     month () {
-      return moment().subtract(1, 'months').format('MMMM')
+      return moment(this.$data.data.date).subtract(1, 'months').format('MMMM YY')
+    },
+
+    quarter () {
+      return 'Q' + moment(this.$data.data.date).subtract(1, 'quarters').format('Q YYYY')
     }
   }
 }

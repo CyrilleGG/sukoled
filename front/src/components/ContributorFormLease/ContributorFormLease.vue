@@ -137,7 +137,8 @@ export default {
         version_id: this.$route.query.version_id,
         user_id: this.$root.$data.userInfo.user_id,
         contribution_id: this.$route.query.contribution_id,
-        department_slug: this.$props.data.department_slug
+        department_slug: this.$props.data.department_slug,
+        date: this.$props.data.date
       }
     }
   },

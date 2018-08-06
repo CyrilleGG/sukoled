@@ -73,11 +73,7 @@ export default {
 
   methods: {
     month () {
-      return moment().subtract(1, 'months').format('MMMM')
-    },
-
-    lastMonth () {
-      return moment().subtract(2, 'months').format('MMMM')
+      return moment(this.$props.inputs.date).subtract(1, 'months').format('MMMM YY')
     },
 
     sendContribution () {

@@ -19,10 +19,10 @@ export default {
       selected: null,
       options: [
         { value: 'all', text: 'All'},
-        { value: moment( moment().quarter() ).format('YYYY-MM-01T00:00:00.000') + 'Z', text: 'Q' + moment().subtract(1, 'quarters').format('Q YYYY') },
-        { value: moment( moment().subtract(1, 'quarters').quarter() ).format('YYYY-MM-01T00:00:00.000') + 'Z', text: 'Q' + moment().subtract(2, 'quarters').format('Q YYYY') },
-        { value: moment( moment().subtract(2, 'quarters').quarter() ).format('YYYY-MM-01T00:00:00.000') + 'Z', text: 'Q' + moment().subtract(3, 'quarters').format('Q YYYY') },
-        { value: moment( moment().subtract(3, 'quarters').quarter() ).format('YYYY-MM-01T00:00:00.000') + 'Z', text: 'Q' + moment().subtract(4, 'quarters').format('Q YYYY') }
+        { value: moment( moment().subtract(1, 'quarters').format('YYYY-MM-21T00:00:00.000') ).add(2, 'months').format('YYYY-MM-21T00:00:00.000') + 'Z', text: 'Q' + moment().subtract(1, 'quarters').format('Q YYYY') },
+        { value: moment( moment().subtract(2, 'quarters').format('YYYY-MM-21T00:00:00.000') ).add(2, 'months').format('YYYY-MM-21T00:00:00.000') + 'Z', text: 'Q' + moment().subtract(2, 'quarters').format('Q YYYY') },
+        { value: moment( moment().subtract(3, 'quarters').format('YYYY-MM-21T00:00:00.000') ).add(2, 'months').format('YYYY-MM-21T00:00:00.000') + 'Z', text: 'Q' + moment().subtract(3, 'quarters').format('Q YYYY') },
+        { value: moment( moment().subtract(4, 'quarters').format('YYYY-MM-21T00:00:00.000') ).add(2, 'months').format('YYYY-MM-21T00:00:00.000') + 'Z', text: 'Q' + moment().subtract(4, 'quarters').format('Q YYYY') }
       ]
     }
   },

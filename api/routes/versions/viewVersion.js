@@ -35,7 +35,8 @@ module.exports = async (req, res) => {
         highlight: version.highlight,
         version_file: version.file_json,
         additionalFiles: files
-      }
+      },
+      date: version.ends_at
     }
   });
 };

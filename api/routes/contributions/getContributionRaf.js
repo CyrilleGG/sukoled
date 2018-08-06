@@ -7,9 +7,8 @@
 const mysql = require('../../utilities/mysql');
 
 const getDepartmentSlugByVersionId = require('../../services/getDepartmentSlugByVersionId');
-const getVersionNameById = require('../../services/getVersionById');
+const getVersionById = require('../../services/getVersionById');
 const getContributionById = require('../../services/getContributionById');
-const getAdminCommentByVersionId = require('../../services/getAdminCommentByVersionId');
 
 /**
  * Get a RAF contribution info.
@@ -17,9 +16,8 @@ const getAdminCommentByVersionId = require('../../services/getAdminCommentByVers
 
 module.exports = async (req, res) => {
   const department_slug = await getDepartmentSlugByVersionId(req.params.version_id);
-  const version_name = await getVersionNameById(req.params.version_id);
+  const version = await getVersionById(req.params.version_id);
   const contribution = await getContributionById(req.params.contribution_id);
-  const comment_admin = await getAdminCommentByVersionId(req.params.version_id);
 
   const inputs = await mysql.select(
     'input.id AS input_id',
@@ -38,10 +36,11 @@ module.exports = async (req, res) => {
     message: 'Ok',
     data: {
       department_slug,
-      version_name,
+      version_name: version.name,
       contribution,
-      comment_admin,
-      inputs
+      comment_admin: version.comment_admin,
+      inputs,
+      date: version.ends_at
     }
   });
 };

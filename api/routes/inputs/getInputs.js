@@ -21,7 +21,8 @@ module.exports = async (req, res) => {
     'value.value AS input_value',
     'version.comment_contributor AS comment_contributor',
     'version.comment_admin AS comment_admin',
-    'version.highlight AS highlight'
+    'version.highlight AS highlight',
+    'version.ends_at AS version_ends_at'
   )
     .from('contributions_values as value')
     .innerJoin('contributions_inputs as input', 'value.input_id', 'input.id')
@@ -46,7 +47,8 @@ module.exports = async (req, res) => {
     message: 'Ok',
     data: {
       input: inputs[0],
-      contribution: contributions[0]
+      contribution: contributions[0],
+      date: inputs[0].version_ends_at
     }
   });
 };

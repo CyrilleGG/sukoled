@@ -80,7 +80,8 @@ export default {
         contribution_id: this.$route.query.contribution_id,
         contribution_limit: this.$props.data.contribution[0].limit,
         contribution_threshold: this.$props.data.contribution[0].threshold,
-        department_slug: this.$props.data.department_slug
+        department_slug: this.$props.data.department_slug,
+        date: this.$props.data.date
       }
     }
   },

@@ -28,7 +28,7 @@
         <b-list-group id="contributors-list-items" class="row" flush>
           <admin-contributors-list-item
             v-for="(contribution, index) in contributions"
-            v-if="(contribution.department_slug == selectedDepartment || selectedDepartment == 'all') && (contribution.contribution_period == selectedPeriodicity || selectedPeriodicity == 'all') && (contribution.version_starts_at == selectedPeriod || selectedPeriod == 'all')"
+            v-if="(contribution.department_slug == selectedDepartment || selectedDepartment == 'all') && (contribution.contribution_period == selectedPeriodicity || selectedPeriodicity == 'all') && (contribution.version_ends_at == selectedPeriod || selectedPeriod == 'all')"
             v-bind:key="index"
             v-bind:checked="contribution.checked"
             v-bind:department_name="contribution.department_name"

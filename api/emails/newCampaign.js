@@ -2,7 +2,7 @@
 
 module.exports = (contribution_name) => {
   return {
-    to: 'hack@loic.io',
+    to: 't_pornin@etu-webschoolfactory.fr',
     from: 'hack@loic.io',
     subject: 'New campaign',
     html: `Hi there,

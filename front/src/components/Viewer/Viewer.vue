@@ -23,7 +23,7 @@
           <div class="col-lg-9 pl-0">
 
             <p v-if="results == null">Loading...</p>
-            <view-top-20-list v-else v-bind:top_companies="top_companies" v-bind:results="results" />
+            <view-top-20-list v-else v-bind:top_companies="top_companies" v-bind:results="results" v-bind:date="date" />
 
           </div>
           <div class="col-lg-3">
@@ -41,12 +41,12 @@
                   <th scope="col" id="result-header" colspan="2" class="border-top-0 text-center">Result</th>
                 </tr>
                 <tr scope="row">
-                  <td scope="col" class="text-right">{{ currentMonth () }} :</td>
-                  <td scope="col" class="text-left px-0">{{ results.current }}</td>
+                  <td scope="col" class="text-left">{{ currentMonth () }} :</td>
+                  <td scope="col" class="text-right">{{ results.current }}</td>
                 </tr>
                 <tr scope="row">
-                  <td scope="col" class="text-right">{{ referenceMonth () }} :</td>
-                  <td scope="col" class="text-left px-0">{{ results.reference }}</td>
+                  <td scope="col" class="text-left">{{ referenceMonth () }} :</td>
+                  <td scope="col" class="text-right">{{ results.reference }}</td>
                 </tr>
               </table>
             </div>
@@ -89,7 +89,8 @@ export default {
   data () {
     return {
       top_companies: [],
-      results: null
+      results: null,
+      date: null
     }
   },
 
@@ -104,6 +105,7 @@ export default {
       .then(response => {
         this.$data.top_companies = response.data.data.companies
         this.$data.results = response.data.data.total
+        this.$data.date = response.data.data.date
       })
       .catch(error => {
         console.log(error)
@@ -112,11 +114,11 @@ export default {
 
   methods: {
     currentMonth () {
-      return moment().subtract(1, 'months').format('MMMM-YY')
+      return moment(this.$data.date).format('MMMM-YY')
     },
 
     referenceMonth () {
-      return moment().subtract(1, 'years').month(11).format('MMMM-YY')
+      return moment(this.$data.date).subtract(1, 'years').month(11).format('MMMM-YY')
     },
 
     printPage () {

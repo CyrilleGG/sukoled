@@ -6,7 +6,6 @@
         <table class="table table-striped border">
             <thead>
                 <tr>
-                    <th scope="col" class="text-center text-uppercase">Evolution</th>
                     <th scope="col" class="text-uppercase">Counterparty</th>
                     <th v-if="top_companies !== null" scope="col" class="text-center">{{ currentMonth () }}</th>
                     <th scope="col" class="text-uppercase text-center">Limit</th>
@@ -23,7 +22,6 @@
                     v-bind:rating="company.cd_note_int_like_sp_raf_tet"
                 />
                 <tr class="view-list-item">
-                    <td></td>
                     <td class="font-weight-bold">Total</td>
                     <td v-if="results !== null" class="text-center font-weight-bold">{{ results.current }}</td>
                     <td></td>
@@ -54,12 +52,13 @@ export default {
 
     props: [
         'top_companies',
-        'results'
+        'results',
+        'date'
     ],
 
   methods: {
     currentMonth () {
-      return moment().subtract(1, 'months').format('MMMM-YY')
+      return moment(this.$props.date).format('MMMM-YY')
     }
   }
 }

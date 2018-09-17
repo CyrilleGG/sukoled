@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
       'CD_RAF_TETE AS cd_raf_tete',
       'ANNEE AS year',
       'MOIS AS month',
+      'IDT_PART as date',
       'CD_NOTE_INT_LIKE_SP_RAF_TET AS cd_note_int_like_sp_raf_tet',
   )
     .max('MT_LIMITE_TGR AS max_mt_limite_tgr')
@@ -98,10 +99,11 @@ module.exports = async (req, res) => {
     statusCode: 200,
     message: 'Ok',
     data: {
+      date: companies_current[0].month + '-01-' + companies_current[0].year,
       companies: companies_current,
       total: {
-        current: total_current / 1000000,
-        reference: total_reference / 1000000
+        current: Math.round(total_current / 1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "),
+        reference: Math.round(total_reference / 1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
       }
     }
   });

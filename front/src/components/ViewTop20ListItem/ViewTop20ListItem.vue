@@ -1,9 +1,6 @@
 <template>
 
     <tr class="view-list-item">
-        <td v-if="evolution > 0"  scope="row" class="text-success text-center text-uppercase" >+{{ evolution }}</td>
-        <td v-else-if="evolution < 0" scope="row" class="text-danger text-center text-uppercase">{{ evolution }}</td>
-        <td v-else scope="row" class="text-dark text-center text-uppercase equal"> = </td>
         <td class="text-uppercase">{{ name }}</td>
         <td class="text-center">{{ value }}</td>
         <td class="text-center">{{ limit }}</td>

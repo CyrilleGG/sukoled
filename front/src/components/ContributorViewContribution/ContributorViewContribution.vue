@@ -36,12 +36,62 @@
               <th class="col-lg-4 py-3 text-center">{{ quarter () }}</th>
 
             </tr>
-            <tr v-for="(value, key, index) in data.input.version_file" class="row" :key="index">
-
-              <td class="col-lg-8 py-3 pl-5">{{ key }}</td>
-              <td class="col-lg-4 py-3 text-center last">{{ value }}</td>
-
+            
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">Gross EAD*</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.exposure.grossEAD }}</td>
             </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">Net EAD*</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.exposure.netEAD }}</td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">out of which Real Estate Leasing net EAD</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.exposure.realEstate }}</td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">out of which Equipment Leasing net EAD</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.exposure.equipment }}</td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">out of which Renewable Energy net EAD</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.exposure.renewable }}</td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">RWA Credit</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.rwa.rwaCredit }}</td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">RWA Operational</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.rwa.rwaOperational }}</td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">Defaulted Exposure</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.defaulted.exposure }}</td>
+            </tr>
+            
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">% of defaulted net EAD</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.defaulted.netEAD }}</td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">Cost of risk</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.costOfRisk.costOfRisk }}</td>
+            </tr>
+
+            <tr class="row">
+              <td class="col-lg-8 py-3 pl-5">Cost of risk in % of net EAD</td>
+              <td class="col-lg-4 py-3 text-center last">{{ view_file.costOfRisk.netEAD }}</td>
+            </tr>
+
           </table>
 
           <div class="col-lg-12">
@@ -93,7 +143,29 @@ export default {
   data () {
     return {
       data: null,
-      department_slug: this.$route.query.department_slug
+      department_slug: this.$route.query.department_slug,
+      view_file: {
+        exposure: {
+          grossEAD: null,
+          netEAD: null,
+          realEstate: null,
+          equipment: null,
+          renewable: null
+        },
+        rwa: {
+          rwaCredit: null,
+          rwaOperational: null,
+          total: null
+        },
+        defaulted: {
+          exposure: null,
+          netEAD: null
+        },
+        costOfRisk: {
+          costOfRisk: null,
+          netEAD: null
+        }
+      }
     }
   },
 
@@ -120,7 +192,23 @@ export default {
     } else if (department_slug == 'subsidaries') {
       http.get('versionView/'+ contribution_id +'/version/'+ version_id)
         .then((response) => {
+          var json
           this.$data.data = response.data.data
+
+          json = JSON.parse(this.$data.data.input.version_file)
+          this.$data.view_file.exposure.grossEAD = json['Gross EAD*']
+          this.$data.view_file.exposure.netEAD = json['Net EAD*']
+          this.$data.view_file.exposure.realEstate = json['out of which Real Estate Leasing net EAD']
+          this.$data.view_file.exposure.equipment = json['out of which Equipment Leasing net EAD']
+          this.$data.view_file.exposure.renewable = json['out of which Renewable Energy net EAD']
+          this.$data.view_file.rwa.rwaCredit = json['RWA Credit']
+          this.$data.view_file.rwa.rwaOperational = json['RWA Operational']
+          this.$data.view_file.rwa.total = json['Total RWA']
+          this.$data.view_file.defaulted.exposure = json['Defaulted exposure']
+          this.$data.view_file.defaulted.netEAD = json['% of defaulted net EAD']
+          this.$data.view_file.costOfRisk.costOfRisk = json['Cost of risk']
+          this.$data.view_file.costOfRisk.netEAD = json['Cost of risk in % of net EAD']
+          
           this.$data.data.input.version_file = JSON.parse(this.$data.data.input.version_file)
         })
 

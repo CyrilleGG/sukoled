@@ -48,7 +48,7 @@
                 </div>
               </div>
 
-              <div v-else-if="selectedDepartment == 'subsidaries'" class="col-lg-12 rounded contribution-list">
+              <div v-else-if="selectedDepartment == 'subsidaries' && selectedPeriodicity == 'quarterly'" class="col-lg-12 rounded contribution-list">
                 <div class="row pl-3">
                   <b-form-checkbox class="col-lg-12 my-2 mx-0" v-on:change="allSubsidaries ($event)" v-model="allChecked">All</b-form-checkbox>
                   <b-form-checkbox v-for="(contribution, index) in contributions.subsidaries" class="col-lg-4 my-2 mx-0" v-on:change="updateInputContributions ($event, contribution.contribution_id, contribution.department_slug)" v-bind:checked="contribution.checked" :key="index">{{ contribution.contribution_name }}</b-form-checkbox>

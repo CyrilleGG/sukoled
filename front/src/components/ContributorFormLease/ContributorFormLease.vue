@@ -30,7 +30,7 @@
 
               </div>
 
-              <p id="download" class="col-lg-12">or download <a href="#" download="TEMPLATE.xlsx">the example (200 Mo)</a></p>
+              <p id="download" class="col-lg-12">or download <a href="@/assets/files/TEMPLATE.xlsx" download>the example (200 Mo)</a></p>
 
             </div>
           </div>

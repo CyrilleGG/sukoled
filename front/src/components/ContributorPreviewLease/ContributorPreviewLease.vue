@@ -190,12 +190,14 @@ export default {
       setTimeout(() => {
         // This fires after the blob has been read/loaded.
         let data = new FormData();
+
         data.append('file_csv', self.$props.inputs.csv);
         data.append('file_json', self.$props.inputs.json);
         data.append('comment_contributor', self.$props.inputs.comment_contributor);
         data.append('highlight', self.$props.inputs.highlight);
         data.append('contribution_id', self.$props.inputs.contribution_id);
         data.append('user_id', self.$root.$data.userInfo.user_id);
+
         this.$data.files.forEach((file, i) => {
           data.append('file_' + i, file);
         });

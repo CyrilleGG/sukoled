@@ -20,7 +20,9 @@
         </div>
         
         <div class="row">
-          <div class="col-lg-7 pl-0">
+          <p id="loada" class="col-lg-12">Loading...</p>
+
+          <div id="list" class="col-lg-7 pl-0 none">
             <view-internal-rating-list 
               v-for="(internal, index) in internal_rating"
               v-bind:key="index"
@@ -30,7 +32,7 @@
             />
           </div>
           
-          <div class="col-lg-5">
+          <div id="list-r" class="col-lg-5 none">
             <view-internal-rating-list-right 
               v-for="(internal, index) in internal_rating_right"
               v-bind:key="index"
@@ -67,6 +69,10 @@ import Footer from '@/components/Footer/Footer'
 import ViewInternalRatingList from '@/components/ViewInternalRatingList/ViewInternalRatingList'
 import ViewInternalRatingListRight from '@/components/ViewInternalRatingListRight/ViewInternalRatingListRight'
 import ViewInternalRatingGraph from '@/components/ViewInternalRatingGraph/ViewInternalRatingGraph'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import { http } from '../../http'
+import moment from 'moment'
 
 export default {
   name: 'ViewInternalRating',
@@ -98,7 +104,7 @@ export default {
                 date_1: "22.4%",
                 evolution: "+"
               }, {
-                title: "BBB+/BB/BB-",
+                title: "BBB+/BBB/BBB-",
                 date_3: "25.5%",
                 date_2: "21.3%",
                 date_1: "24.7%",
@@ -145,7 +151,7 @@ export default {
               date_2: "20.5%",
               date_1: "22.4%"
             }, {
-              title: "BBB+/BB/BB-",
+              title: "BBB+/BBB/BBB-",
               date_2: "21.3%",
               date_1: "24.7%"
             },
@@ -177,17 +183,17 @@ export default {
               {
                   label: 'March-18',
                   backgroundColor: '#FF8B94',
-                  data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                  data:[0, 2, 4, 100, 20, 30, 50, 25, 30, 27, 20, 12, 5, 2, 2, 0, 0, 0, 0, 0, 0, 8]
               },
               {
                   label: 'February-18',
                   backgroundColor:'#FFD3B6',
-                  data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                  data:[0, 1, 3, 200, 17, 24, 42, 21, 26, 23, 16, 9, 3, 1, 1, 1, 0, 0, 0, 0, 0, 5]
               },
               {
                   label: 'December-17',
                   backgroundColor:'#DCEDC1',
-                  data:[40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 2, 3, 70, 40, 20, 3, 0]
+                  data:[0, 1, 4, 130, 18, 27, 46, 25, 28, 24, 18, 10, 4, 1, 1, 1, 0, 0, 0, 0, 0, 7]
               }
             ]
           },
@@ -220,6 +226,13 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'contrib') {
       this.$router.replace({ name: 'contributor' })
     }
+
+    setTimeout(() => {
+      document.getElementById('loada').classList.add('none')
+      document.getElementById('list').classList.remove('none')
+      document.getElementById('list-r').classList.remove('none')
+      document.getElementById('lol').classList.remove('none')
+    }, 5000);
   },
 
   methods: {
@@ -315,6 +328,10 @@ td {
 .purple:hover {
   border-color: #793a93;
   background-color: #793a93;
+}
+
+.none {
+  display: none;
 }
 
 </style>

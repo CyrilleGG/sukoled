@@ -86,7 +86,7 @@
                         <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
                         <td colspan="2" class="raf-gradient"> 
                             <span class="line-orange"/>
-                            <span class="dot position-3"/>
+                            <span class="dot position-3" style="display: none"/>
                             <span class="limit-text"> {{ data.limit }} </span>
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
@@ -135,7 +135,7 @@
                         <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
                         <td colspan="2" class="raf-gradient"> 
                             <span class="line-orange"/>
-                            <span class="dot position-3"/>
+                            <span class="dot position-3" v-bind:style="{left: data.info_5}"/>
                             <span class="limit-text"> {{ data.limit }} </span>
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
@@ -184,7 +184,7 @@
                         <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
                         <td colspan="2" class="raf-gradient"> 
                             <span class="line-orange"/>
-                            <span class="dot position-3"/>
+                            <span class="dot position-3" style="left: 3%"/>
                             <span class="limit-text"> {{ data.limit }} </span>
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
@@ -233,7 +233,7 @@
                         <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
                         <td colspan="2" class="raf-gradient"> 
                             <span class="line-orange"/>
-                            <span class="dot position-3"/>
+                            <span class="dot position-3" style="left: 15%"/>
                             <span class="limit-text"> {{ data.limit }} </span>
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
@@ -282,7 +282,7 @@
                         <td v-else class="text-center data-now"> {{ data.info_1 }} </td>
                         <td colspan="2" class="raf-gradient"> 
                             <span class="line-orange"/>
-                            <span class="dot position-3"/>
+                            <span class="dot position-3" style="left: 10%"/>
                             <span class="limit-text"> {{ data.limit }} </span>
                             <span class="line-red"/> 
                             <span class="threshold-text"> {{ data.threshold }} </span>
@@ -591,7 +591,6 @@ thead {
 
 .dot.position-3{
     position:absolute;
-    left:16%;
     top:41%;
 }
 

@@ -20,8 +20,9 @@
             </div>
 
             <div class="row">
+                <p id="load" class="col-lg-12">Loading...</p>
                 <div class="col-lg-9 pl-0">
-                    <table class="table table-striped border">
+                    <table id="latable" class="table table-striped border none">
                         <thead>
                             <tr>
                                 <th/>
@@ -73,7 +74,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-3">
+                <div id="comment" class="col-lg-3 none">
 
                     <view-comment class="border right-column"
                     v-for="(comment, index) in comments"
@@ -291,6 +292,12 @@ export default {
     } else if (this.$root.$data.userInfo.role == 'contrib') {
       this.$router.replace({ name: 'contributor' })
     }
+
+    setTimeout(() => {
+        document.getElementById('load').classList.add('none')
+        document.getElementById('latable').classList.remove('none')
+        document.getElementById('comment').classList.remove('none')
+    }, 3000);
   },
 
   methods: {
@@ -418,6 +425,10 @@ td.basel-border>div>div{
 .purple:hover {
   border-color: #793a93;
   background-color: #793a93;
+}
+
+.none {
+    display: none;
 }
 
 </style>

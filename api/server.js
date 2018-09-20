@@ -74,7 +74,6 @@ app.get('/api/versionView/:contribution_id/version/:version_id', require('./rout
 app.get('/api/dtm/top/:year/:month', require('./routes/dtm/top'));
 app.get('/api/dtm/breakdown/sector/:year/:month', require('./routes/dtm/breakdownBySector'));
 app.get('/api/dtm/breakdown/line/:year/:month', require('./routes/dtm/breakdownByLine'));
-app.get('/api/dtm/breakdown/internal/:year/:month', require('./routes/dtm/breakdownByInternal'));
 
 // Highlights-related routes.
 app.get('/api/highlights', require('./routes/dtm/highlights'));

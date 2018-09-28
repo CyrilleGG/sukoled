@@ -128,3 +128,6 @@ $RECYCLE.BIN/
 database/setup.sql
 
 # End of https://www.gitignore.io/api/node,linux,macos,windows
+
+# VS Code
+hestia.code-workspace

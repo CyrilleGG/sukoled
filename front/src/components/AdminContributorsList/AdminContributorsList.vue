@@ -97,12 +97,29 @@ export default {
   created () {
     http.get('contributions')
       .then((response) => {
-        for (var i = 0; i < response.data.data.length; i++) {
-          response.data.data[i].checked = false
-          response.data.data[i].version_starts_at = moment(response.data.data[i].version_starts_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
-          response.data.data[i].version_ends_at = moment(response.data.data[i].version_ends_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
+        const wrong = response.data.data
+        let right = wrong
+
+        // console.log(wrong)
+        // console.log('---------------------------------')
+        // console.log(right)
+
+        for (let i = 0; i < wrong.length; i++) {
+          for (let j = 0; j < right.length; j++) {
+            if (wrong[i].contribution_id == right[j].contribution_id && wrong[i].version_ends_at == right[j].version_ends_at) {
+              if (wrong[i].version_status_admin !== right[j].version_status_admin && right[j].version_status_admin == 'unreceived') {
+                right.splice(j, 1)
+              }
+            }
+          }
         }
-        this.$data.contributions = response.data.data
+        
+        for (var i = 0; i < right.length; i++) {
+          right[i].checked = false
+          right[i].version_starts_at = moment(right[i].version_starts_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
+          right[i].version_ends_at = moment(right[i].version_ends_at).format('YYYY-MM-DDT00:00:00.000') + 'Z'
+        }
+        this.$data.contributions = right
       })
 
       .catch((error) => {

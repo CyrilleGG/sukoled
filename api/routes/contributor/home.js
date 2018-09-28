@@ -33,20 +33,9 @@ module.exports = async (req, res) => {
     })
     .orderBy('version_created_at', 'desc');
 
-  let waiting = [];
-  let done = [];
-
-  contributions.forEach(function (contribution) {
-    if (contribution.version_status_contributor !== 'done') {
-      waiting.push(contribution);
-    } else {
-      done.push(contribution);
-    }
-  });
-
   return res.status(200).json({
     statusCode: 200,
     message: 'Ok',
-    data: { waiting, done }
+    data: { contributions }
   });
 };

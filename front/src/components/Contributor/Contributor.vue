@@ -76,11 +76,35 @@ export default {
 
     http.get('contributor/'+ this.$root.$data.userInfo.username)
       .then((response) => {
-        for (var i = 0; i < response.data.data.waiting.length; i++) {
-          this.$data.contributions.waiting = response.data.data.waiting
+        const wrong = response.data.data.contributions
+        var right = wrong
+
+        for (let i = 0; i < wrong.length; i++) {
+          for (let j = 0; j < right.length; j++) {
+            if (wrong[i].contribution_id == right[j].contribution_id && wrong[i].version_ends_at == right[j].version_ends_at) {
+              if (wrong[i].version_status_contributor !== right[j].version_status_contributor && right[j].version_status_contributor == 'not sent') {
+                right.splice(j, 1)
+              }
+            }
+          }
         }
-        for (var i = 0; i < response.data.data.done.length; i++) {
-          this.$data.contributions.done = response.data.data.done
+
+        let waiting = [];
+        let done = [];
+
+        right.forEach(function (contribution) {
+          if (contribution.version_status_contributor !== 'done') {
+            waiting.push(contribution);
+          } else {
+            done.push(contribution);
+          }
+        });
+
+        for (var i = 0; i < waiting.length; i++) {
+          this.$data.contributions.waiting = waiting
+        }
+        for (var i = 0; i < done.length; i++) {
+          this.$data.contributions.done = done
         }
 
         this.$data.numOfAlerts = this.$data.contributions.waiting.length

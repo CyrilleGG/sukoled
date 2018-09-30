@@ -70,16 +70,19 @@ app.patch('/api/versionValidate/:version_id', require('./routes/versions/validat
 app.patch('/api/versionSubmit/:version_id', require('./routes/versions/submitVersion'));
 app.get('/api/versionView/:contribution_id/version/:version_id', require('./routes/versions/viewVersion'));
 
-// DTM-related routes.
+// DTM-related routes for front.
 app.get('/api/dtm/top/:year/:month', require('./routes/dtm/top'));
 app.get('/api/dtm/breakdown/sector/:year/:month', require('./routes/dtm/breakdownBySector'));
 app.get('/api/dtm/breakdown/line/:year/:month', require('./routes/dtm/breakdownByLine'));
 
-// Highlights-related routes.
+// Highlights-related routes for front.
 app.get('/api/highlights', require('./routes/dtm/highlights'));
 
 // Subisadries-related routes for front
 app.get('/api/subsidaries/:subsidary_name', require('./routes/subsidaries/getSubsidary'));
+
+// RAF-related routes for front
+app.get('/api/raf/', require('./routes/raf/getRaf'));
 
 app.listen(PORT, function () { // 3000 = port sur lequel le serveur va être lancé
   console.log(`Hestia Server listening on port ${PORT}`)

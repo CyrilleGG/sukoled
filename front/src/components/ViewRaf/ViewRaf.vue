@@ -363,7 +363,7 @@ export default {
                     this.$data.dates.push(raf.version_ends_at)
                 } else {
                     if (!this.$data.dates.includes(raf.version_ends_at)) {
-                        this.$data.dates.push(raf.version_ends_at)
+                        this.$data.dates.push((raf.version_ends_at))
                     }
                 }
 
@@ -393,22 +393,22 @@ export default {
                     this.$data.concentrationRisk.warehousing.threshold = raf.contribution_threshold
                     this.$data.concentrationRisk.warehousing.remark = raf.version_comment_contributor
                 } else if (raf.contribution_order == 18) {
-                    this.$data.creditRisk.country.values.push(raf.contribution_value)
-                    this.$data.creditRisk.country.limit = raf.contribution_limit
-                    this.$data.creditRisk.country.threshold = raf.contribution_threshold
-                    this.$data.creditRisk.country.remark = raf.version_comment_contributor
+                    this.$data.concentrationRisk.country.values.push(raf.contribution_value)
+                    this.$data.concentrationRisk.country.limit = raf.contribution_limit
+                    this.$data.concentrationRisk.country.threshold = raf.contribution_threshold
+                    this.$data.concentrationRisk.country.remark = raf.version_comment_contributor
                 } else if (raf.contribution_order == 20) {
-                    this.$data.creditRisk.individualRWA.values.push(raf.contribution_value)
-                    this.$data.creditRisk.individualRWA.limit = raf.contribution_limit
-                    this.$data.creditRisk.individualRWA.threshold = raf.contribution_threshold
-                    this.$data.creditRisk.individualRWA.remark = raf.version_comment_contributor
+                    this.$data.concentrationRisk.individualRWA.values.push(raf.contribution_value)
+                    this.$data.concentrationRisk.individualRWA.limit = raf.contribution_limit
+                    this.$data.concentrationRisk.individualRWA.threshold = raf.contribution_threshold
+                    this.$data.concentrationRisk.individualRWA.remark = raf.version_comment_contributor
                 } else if (raf.contribution_order == 27) {
                     this.$data.operationalRisk.ratioIncidents.values.push(raf.contribution_value)
                     this.$data.operationalRisk.ratioIncidents.limit = raf.contribution_limit
                     this.$data.operationalRisk.ratioIncidents.threshold = raf.contribution_threshold
                     this.$data.operationalRisk.ratioIncidents.remark = raf.version_comment_contributor
                 }
-            });
+            })
         })
         .catch(error => {
             console.log(error)
@@ -417,7 +417,11 @@ export default {
 
   methods: {
     moment (date) {
-        return moment(date).format('MMMM') ;
+        return moment(date).format('MMMM')
+    },
+
+    addDate (date, offset) {
+        return moment(date).add(offset, 'months').format('YYYY-MM-DDT22:00:00.000') + 'Z'
     },
     
     printPage () {

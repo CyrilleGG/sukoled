@@ -19,7 +19,11 @@ module.exports = async (req, res) => {
     .from('versions AS version')
     .innerJoin('contributions AS contribution', 'version.contribution_id', 'contribution.id')
     .innerJoin('departments AS department', 'contribution.department_id', 'department.id')
-    .whereRaw('version.status_admin = "done" AND department.slug = "subsidaries" AND version.ends_at IN (SELECT MAX(v2.ends_at) FROM versions AS v2)');
+    .whereRaw('version.status_admin = "done" AND department.slug = "subsidaries" AND version.ends_at')
+    .orderBy('version.created_at', 'desc')
+    .limit(1);
+
+    console.log(highlights)
 
   return res.status(200).json({
     statusCode: 200,

@@ -88,14 +88,14 @@
         </div>
     </div>
 
-    <div class="basel-bg-white graph col-lg-10 mx-auto border size-graph">
+    <!-- <div class="basel-bg-white graph col-lg-10 mx-auto border size-graph">
         <view-basel-segment-graph
             v-for="(graph, index) in basel_graph"
             v-bind:key="index"
             v-bind:data="graph.data"
             v-bind:options="graph.options"
         class="row col-lg-12"/>
-    </div>
+    </div> -->
 
     <Footer />
   </div>
@@ -130,16 +130,16 @@ export default {
     return {
         dates: [
             {
-                date:"2018-03-01 00:00:00"
+                date:"2018-05-01T00:00:00.000Z"
             },
             {
-                date:"2018-02-01 00:00:00"
+                date:"2018-04-01T00:00:00.000Z"
             },
             {
-                date:"2017-12-01 00:00:00"
+                date:"2017-12-01T00:00:00.000Z"
             },
             {
-                date:"2017-09-01 00:00:00"
+                date:"2017-09-01T00:00:00.000Z"
             }
         ],
         basel_segment: [
@@ -151,7 +151,7 @@ export default {
                     weight:"55,0%"
                     },
                     {
-                    exposure:"134 756",
+                    exposure:"134 466",
                     weight:"+2,7%"
                     },
                     {
@@ -167,11 +167,11 @@ export default {
                 title:"Specialized lending",
                 infos:[
                     {
-                    exposure:"22 485",
-                    weight:"8,3%"
+                    exposure:"22 482",
+                    weight:"8,9%"
                     },
                     {
-                    exposure:"22 456",
+                    exposure:"22 489",
                     weight:"-0,0%"
                     },
                     {
@@ -184,15 +184,115 @@ export default {
                     }
                 ]
             }, {
+                title:"Retail",
+                infos:[
+                    {
+                    exposure:"16 230",
+                    weight:"6,5%"
+                    },
+                    {
+                    exposure:"15 504",
+                    weight:"+4,7%"
+                    },
+                    {
+                    exposure:"15 429",
+                    weight:"+5,2%"
+                    },
+                    {
+                    exposure:"16 095",
+                    weight:"+0,8%"
+                    }
+                ]
+            }, {
+                title:"Sovereigns",
+                infos:[
+                    {
+                    exposure:"37 056",
+                    weight:"14,7%"
+                    },
+                    {
+                    exposure:"82 576",
+                    weight:"-55,1%"
+                    },
+                    {
+                    exposure:"51 572",
+                    weight:"-28,1%"
+                    },
+                    {
+                    exposure:"57 450",
+                    weight:"-35,5%"
+                    }
+                ]
+            }, {
+                title:"Financial institutions",
+                infos:[
+                    {
+                    exposure:"30 553",
+                    weight:"12,2%"
+                    },
+                    {
+                    exposure:"27 920",
+                    weight:"+9,4%"
+                    },
+                    {
+                    exposure:"28 474",
+                    weight:"+7,3%"
+                    },
+                    {
+                    exposure:"24 905",
+                    weight:"+22,7%"
+                    }
+                ]
+            }, {
+                title:"Securitization",
+                infos:[
+                    {
+                    exposure:"6 561",
+                    weight:"2,6%"
+                    },
+                    {
+                    exposure:"6 378",
+                    weight:"+2,9%"
+                    },
+                    {
+                    exposure:"6 296",
+                    weight:"+4,2%"
+                    },
+                    {
+                    exposure:"6 735",
+                    weight:"-2,6%"
+                    }
+                ]
+            }, {
+                title:"Not classified",
+                infos:[
+                    {
+                    exposure:"216",
+                    weight:"0,1%"
+                    },
+                    {
+                    exposure:"231",
+                    weight:"-6,1%"
+                    },
+                    {
+                    exposure:"158",
+                    weight:"+37,2%"
+                    },
+                    {
+                    exposure:"124",
+                    weight:"+74,7%"
+                    }
+                ]
+            }, {
                 title:"Total excluding BPCE",
                 infos:[
                     {
-                    exposure:"251 145",
+                    exposure:"251 233",
                     weight:"100%"
                     },
                     {
-                    exposure:"389 856",
-                    weight:"-13%"
+                    exposure:"289 564",
+                    weight:"-13,2%"
                     },
                     {
                     exposure:"258 675",
@@ -207,11 +307,11 @@ export default {
                 title:"Total including BPCE",
                 infos:[
                     {
-                    exposure:"314 486",
+                    exposure:"314 949",
                     weight:""
                     },
                     {
-                    exposure:"289 856",
+                    exposure:"336 530",
                     weight:"-6,4%"
                     },
                     {

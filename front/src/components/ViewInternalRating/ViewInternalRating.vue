@@ -113,13 +113,13 @@ export default {
             ],
             dates: [
                 {
-                  date:"2018-03-01 00:00:00"
+                  date:"2018-05-01T00:00:00.000Z"
                 },
                 {
-                  date:"2018-02-01 00:00:00"
+                  date:"2018-04-01T00:00:00.000Z"
                 },
                 {
-                  date:"2017-12-01 00:00:00"
+                  date:"2017-12-01T00:00:00.000Z"
                 }
             ],
             total: [
@@ -158,7 +158,7 @@ export default {
           ],
           dates: [
               {
-                date:"2018-03-01 00:00:00"
+                date:"2018-05-01T00:00:00.000Z"
               }
           ],
           total: [
@@ -181,12 +181,12 @@ export default {
             boxWidth:2,
             datasets: [
               {
-                  label: 'March-18',
+                  label: 'May-18',
                   backgroundColor: '#FF8B94',
                   data:[0, 2, 4, 100, 20, 30, 50, 25, 30, 27, 20, 12, 5, 2, 2, 0, 0, 0, 0, 0, 0, 8]
               },
               {
-                  label: 'February-18',
+                  label: 'April-18',
                   backgroundColor:'#FFD3B6',
                   data:[0, 1, 3, 200, 17, 24, 42, 21, 26, 23, 16, 9, 3, 1, 1, 1, 0, 0, 0, 0, 0, 5]
               },
